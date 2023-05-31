@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NightmareEchoes
+namespace NightmareEchoes.Grid
 {
-    public class MouseCursor : MonoBehaviour
+    public class GridProperties : MonoBehaviour
     {
         // Start is called before the first frame update
         void Start()
