@@ -8,8 +8,10 @@ namespace NightmareEchoes.Grid
 {
     public class TileMapManager : MonoBehaviour
     {
-        private Tilemap tm;
+        public Tilemap tm;
         private TilemapRenderer tmRenderer;
+
+        [SerializeField] public TileBase testTile;
 
         private void Awake()
         {
@@ -18,7 +20,7 @@ namespace NightmareEchoes.Grid
         }
         
         //Source: https://blog.unity.com/engine-platform/procedural-patterns-you-can-use-with-tilemaps-part-1
-        public static int[,] GenerateArray(int width, int height, bool empty)
+        public int[,] GenerateArray(int width, int height, bool empty)
         {
             var map = new int[width, height];
             for (var x = 0; x < map.GetUpperBound(0); x++)
@@ -38,7 +40,7 @@ namespace NightmareEchoes.Grid
             return map;
         }
         
-        public static void RenderMap(int[,] map, Tilemap tilemap, TileBase tile)
+        public void RenderMap(int[,] map, Tilemap tilemap, TileBase tile)
         {
             //Clear the map (ensures we dont overlap)
             tilemap.ClearAllTiles();
@@ -57,7 +59,7 @@ namespace NightmareEchoes.Grid
             }
         }
         
-        public static void UpdateMap(int[,] map, Tilemap tilemap) //Takes in our map and tilemap, setting null tiles where needed
+        public void UpdateMap(int[,] map, Tilemap tilemap) //Takes in our map and tilemap, setting null tiles where needed
         {
             for (int x = 0; x < map.GetUpperBound(0); x++)
             {
