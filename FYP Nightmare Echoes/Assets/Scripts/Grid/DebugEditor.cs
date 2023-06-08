@@ -17,7 +17,7 @@ namespace NightmareEchoes.Grid
             
             if(GUILayout.Button("CreateMap"))
             {
-                manager.RenderMap(manager.GenerateArray(10, 10, false), manager.tm, manager.testTile);
+                manager.RenderMap(manager.GenerateArray(manager.width, manager.length, false), manager.tilemap, manager.testTile);
             }
         }
     }

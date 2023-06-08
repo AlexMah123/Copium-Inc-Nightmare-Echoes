@@ -8,21 +8,24 @@ namespace NightmareEchoes.Grid
 {
     public class TileMapManager : MonoBehaviour
     {
-        public Tilemap tm;
-        private TilemapRenderer tmRenderer;
-
+        [SerializeField] public int width;
+        [SerializeField] public int length;
+        
         [SerializeField] public TileBase testTile;
-
+        
+        public Tilemap tilemap;
+        private TilemapRenderer tilemapRenderer;
+        
         private void Awake()
         {
-            tm = GetComponent<Tilemap>();
-            tmRenderer = GetComponent<TilemapRenderer>();
+            tilemap = GetComponent<Tilemap>();
+            tilemapRenderer = GetComponent<TilemapRenderer>();
         }
         
         //Source: https://blog.unity.com/engine-platform/procedural-patterns-you-can-use-with-tilemaps-part-1
-        public int[,] GenerateArray(int width, int height, bool empty)
+        public int[,] GenerateArray(int width, int length, bool empty)
         {
-            var map = new int[width, height];
+            var map = new int[width, length];
             for (var x = 0; x < map.GetUpperBound(0); x++)
             {
                 for (var y = 0; y < map.GetUpperBound(1); y++)
