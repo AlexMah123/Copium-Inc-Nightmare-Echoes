@@ -11,7 +11,7 @@ namespace NightmareEchoes.Enemy
 
         private void OnEnable()
         {
-            meleeEnemy.Object = gameObject;
+            meleeEnemy.Object = this.gameObject;
         }
 
         void Start()
@@ -19,7 +19,7 @@ namespace NightmareEchoes.Enemy
             Debug.Log(meleeEnemy.Name);
         }
 
-        void Update()
+        private void OnDisable()
         {
             meleeEnemy.ResetData();
         }

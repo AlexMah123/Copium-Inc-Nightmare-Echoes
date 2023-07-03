@@ -56,8 +56,8 @@ namespace NightmareEchoes.Enemy
         public void ResetData()
         {
             Object = null;
-            Health = _health;
-            Speed = _speed;
+            Health = 20;
+            Speed = 15;
             Energy = _energy;
             Type = _type;
         }
