@@ -8,11 +8,11 @@ namespace NightmareEchoes.Grid
     {
         //Output dimensions' valid patterns (T/F)
         //False = pattern is no longer valid
-        private bool[,] wave;
+        private bool[] wave = new bool[10];
         
         //Output dimensions' entropy value
         //Higher entropy = more patterns
-        private int[,] entropy;
+        private int[,] entropy = new int[10, 10];
         
         void Observe()
         {
@@ -38,6 +38,8 @@ namespace NightmareEchoes.Grid
             //##Init##
             //Define which tileset to use
             //Define size of the map
+            //Set all waves to True
+            //Set all entropies to highest
 
             //##Core##
             /* While entropy > 0

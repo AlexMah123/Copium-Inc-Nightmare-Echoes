@@ -14,6 +14,12 @@ namespace NightmareEchoes.Grid
         [SerializeField] string _tileName;
         [SerializeField] string _tileGroup; //For possible categorization (eg. cobble & brick tiles are grouped under Urban)
         
+        //WFC Definitions
+        [SerializeField] private int _northID;
+        [SerializeField] private int _southID;
+        [SerializeField] private int _eastID;
+        [SerializeField] private int _westID;
+        
         //Flags
         [SerializeField] bool _isPassable;
         [SerializeField] bool _isDestructable;
@@ -39,6 +45,30 @@ namespace NightmareEchoes.Grid
         {
             get => _tileGroup;
             set => _tileGroup = value;
+        }
+
+        public int NorthID
+        {
+            get => _northID;
+            set => _northID = value;
+        }
+
+        public int SouthID
+        {
+            get => _southID;
+            set => _southID = value;
+        }
+
+        public int EastID
+        {
+            get => _eastID;
+            set => _eastID = value;
+        }
+
+        public int WestID
+        {
+            get => _westID;
+            set => _westID = value;
         }
 
         public bool IsPassable
