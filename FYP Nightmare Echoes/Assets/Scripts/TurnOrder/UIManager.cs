@@ -14,6 +14,7 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] Button TestButton;
 
         [Header("Action Bar")]
+        [SerializeField] GameObject actionBarPanel;
         [SerializeField] TextMeshProUGUI turnOrderText;
         [SerializeField] Color playerTurn;
         [SerializeField] Color enemyTurn;
@@ -23,6 +24,11 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI unitHealthText;
         [SerializeField] TextMeshProUGUI unitSpeedText;
         public BaseUnit currentUnit;
+
+        private void Start()
+        {
+            
+        }
 
         private void Update()
         {
@@ -64,6 +70,7 @@ namespace NightmareEchoes.TurnOrder
         public void PlayerAttackButton()
         {
             TurnOrder.Instance.gameState = GameState.EnemyTurn;
+
         }
 
         
