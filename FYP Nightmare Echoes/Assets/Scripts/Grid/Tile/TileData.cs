@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-//created by JH
+//created by JH, editted by Alex
 namespace NightmareEchoes.Grid
 {
     [CreateAssetMenu(menuName = "Tile")] //I am not really sure about this
@@ -34,67 +34,67 @@ namespace NightmareEchoes.Grid
         public TileBase TileSprite
         {
             get => _tileSprite;
-            set => _tileSprite = value;
+            private set => _tileSprite = value;
         }
 
         public string TileName
         {
             get => _tileName;
-            set => _tileName = value;
+            private set => _tileName = value;
         }
 
         public string TileGroup
         {
             get => _tileGroup;
-            set => _tileGroup = value;
+            private set => _tileGroup = value;
         }
 
         public int NorthID
         {
             get => _northID;
-            set => _northID = value;
+            private set => _northID = value;
         }
 
         public int SouthID
         {
             get => _southID;
-            set => _southID = value;
+            private set => _southID = value;
         }
 
         public int EastID
         {
             get => _eastID;
-            set => _eastID = value;
+            private set => _eastID = value;
         }
 
         public int WestID
         {
             get => _westID;
-            set => _westID = value;
+            private set => _westID = value;
         }
 
         public bool IsPassable
         {
             get => _isPassable;
-            set => _isPassable = value;
+            private set => _isPassable = value;
         }
 
         public bool IsDestructable
         {
             get => _isDestructable;
-            set => _isDestructable = value;
+            private set => _isDestructable = value;
         }
 
         public int Cost
         {
             get => _cost;
-            set => _cost = value;
+            private set => _cost = value;
         }
 
         public TileType TileType
         {
             get => _tileType;
-            set => _tileType = value;
+            private set => _tileType = value;
         }
         #endregion
         

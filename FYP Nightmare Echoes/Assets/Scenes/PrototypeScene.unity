@@ -511,7 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minZoom: 3
   maxZoom: 8
-  timer: 1
+  timer: 0.5
 --- !u!1 &665438981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,7 +2132,7 @@ MonoBehaviour:
   length: 10
   testTile: {fileID: 11400000, guid: ae1440e9f3ef0844f93428fa8f22b60d, type: 2}
   tilemap: {fileID: 1093333553}
-  TileLocation: {x: 0, y: 0, z: 0}
+  TilePos: {x: 0, y: 0, z: 0}
 --- !u!1 &1211171091
 GameObject:
   m_ObjectHideFlags: 0
