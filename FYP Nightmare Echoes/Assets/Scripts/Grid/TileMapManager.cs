@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -15,9 +16,11 @@ namespace NightmareEchoes.Grid
         [SerializeField] public TileBase testTile;
         
         public Tilemap tilemap;
-        public Vector3Int TileLocation;
+        public Vector3Int TilePos;
         private TilemapRenderer tilemapRenderer;
-        
+
+        Vector3Int prevTilePos;
+
         private void Awake()
         {
             tilemap = GetComponent<Tilemap>();
@@ -93,10 +96,22 @@ namespace NightmareEchoes.Grid
         public void GetMouseTilePos()
         {
             Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            TileLocation = tilemap.WorldToCell(MousePos);
+            TilePos = tilemap.WorldToCell(MousePos);
 
-            if (tilemap.GetTile(TileLocation))
+            if (tilemap.GetTile(TilePos))
             {
+                if(prevTilePos != null)
+                {
+                    tilemap.SetTileFlags(prevTilePos, TileFlags.None);
+                    tilemap.SetColor(prevTilePos, Color.white);
+                }
+                 
+                tilemap.SetTileFlags(TilePos, TileFlags.None);
+                tilemap.SetColor(TilePos, Color.red);
+                prevTilePos = TilePos;
+
+
+
                 Debug.Log("Tile at" + MousePos);
             }
             else
