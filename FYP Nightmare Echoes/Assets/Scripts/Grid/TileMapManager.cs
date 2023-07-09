@@ -5,7 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-//created by Jian Hua, editted by Vinn
+//created by Jian Hua, editted by Vinn and Terrence
 namespace NightmareEchoes.Grid
 {
     public class TileMapManager : MonoBehaviour
@@ -14,10 +14,13 @@ namespace NightmareEchoes.Grid
         [SerializeField] public int length;
         
         [SerializeField] public TileBase testTile;
+
+        [SerializeField] public GameObject spawnTest;
         
         public Tilemap tilemap;
         public Vector3Int TilePos;
         private TilemapRenderer tilemapRenderer;
+        private Vector3 spawnPos;
 
         Vector3Int prevTilePos;
 
@@ -30,8 +33,12 @@ namespace NightmareEchoes.Grid
         public void Update()
         {
             if (Input.GetMouseButtonDown(0))
-            { 
+            {
                 GetMouseTilePos();
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                GetMouseTilePos2();
             }
         }
 
@@ -117,6 +124,18 @@ namespace NightmareEchoes.Grid
             else
             {
                 Debug.Log("No tile at " + MousePos);
+            }
+        }
+        //this section by Terrence, spawning on tiles proof of concept
+        public void GetMouseTilePos2()
+        {
+            Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            TilePos = tilemap.WorldToCell(MousePos);
+            spawnPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
+
+            if (tilemap.GetTile(TilePos))
+            {
+                Instantiate(spawnTest, spawnPos, Quaternion.identity);
             }
         }
     }
