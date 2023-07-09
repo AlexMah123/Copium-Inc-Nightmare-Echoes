@@ -27,6 +27,8 @@ namespace NightmareEchoes.Grid
         //Attributes
         [SerializeField] int _cost;
         [SerializeField] TileType _tileType;
+
+
     
         #region Class Properties
         public TileBase TileSprite

@@ -14,6 +14,7 @@ namespace NightmareEchoes.Grid
         [SerializeField] public TileBase testTile;
         
         public Tilemap tilemap;
+        public Vector3Int TileLocation;
         private TilemapRenderer tilemapRenderer;
         
         private void Awake()
@@ -21,7 +22,15 @@ namespace NightmareEchoes.Grid
             tilemap = GetComponent<Tilemap>();
             tilemapRenderer = GetComponent<TilemapRenderer>();
         }
-        
+
+        public void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            { 
+                GetMouseTilePos();
+            }
+        }
+
         //Source: https://blog.unity.com/engine-platform/procedural-patterns-you-can-use-with-tilemaps-part-1
         public int[,] GenerateArray(int width, int length, bool empty)
         {
@@ -61,7 +70,7 @@ namespace NightmareEchoes.Grid
                 }
             }
         }
-        
+
         public void UpdateMap(int[,] map, Tilemap tilemap) //Takes in our map and tilemap, setting null tiles where needed
         {
             for (int x = 0; x < map.GetUpperBound(0); x++)
@@ -78,8 +87,21 @@ namespace NightmareEchoes.Grid
                 }
             }
         }
-        
-        
-        
+
+
+        public void GetMouseTilePos()
+        {
+            Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            TileLocation = tilemap.WorldToCell(MousePos);
+
+            if (tilemap.GetTile(TileLocation))
+            {
+                Debug.Log("Tile at" + MousePos);
+            }
+            else
+            {
+                Debug.Log("No tile at " + MousePos);
+            }
+        }
     }
 }
