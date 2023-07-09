@@ -3,29 +3,40 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using NightmareEchoes.Unit;
+using System;
 
 namespace NightmareEchoes.TurnOrder
 {
     public class UIManager : MonoBehaviour
     {
+
         [SerializeField] Button TestButton;
-        [SerializeField] TextMeshProUGUI TurnOrderText;
+
+        [Header("Action Bar")]
+        [SerializeField] TextMeshProUGUI turnOrderText;
         [SerializeField] Color playerTurn;
         [SerializeField] Color enemyTurn;
 
+        [Header("Unit Info")]
+        [SerializeField] TextMeshProUGUI unitNameText;
+        [SerializeField] TextMeshProUGUI unitHealthText;
+        [SerializeField] TextMeshProUGUI unitSpeedText;
+        public BaseUnit currentUnit;
 
         private void Update()
         {
-            switch(TurnOrder.Instance.gameState)
+            #region ActionBar
+            switch (TurnOrder.Instance.gameState)
             {
                 case GameState.PlayerTurn:
                     //if button is not interactable, on players turn, enable it
-                    if(!TestButton.interactable)
+                    if (!TestButton.interactable)
                     {
                         TestButton.interactable = true;
                     }
-                    TurnOrderText.text = $"Player's Turn";
-                    TurnOrderText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
+                    turnOrderText.text = $"Player's Turn";
+                    turnOrderText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
 
                     break;
 
@@ -35,11 +46,19 @@ namespace NightmareEchoes.TurnOrder
                     {
                         TestButton.interactable = false;
                     }
-                    TurnOrderText.text = $"Enemy's Turn";
-                    TurnOrderText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
+                    turnOrderText.text = $"Enemy's Turn";
+                    turnOrderText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
 
                     break;
             }
+            #endregion
+
+            #region UnitInfo
+            unitNameText.text = $"Name: {currentUnit.Name}";
+            unitHealthText.text = $"Health: {currentUnit.Health}";
+            unitSpeedText.text = $"Speed: {currentUnit.Speed}";
+
+            #endregion
         }
 
         public void PlayerAttackButton()
