@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+//created by Jian Hua, editted by Vinn
 namespace NightmareEchoes.Grid
 {
     public class TileMapManager : MonoBehaviour

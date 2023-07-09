@@ -1,37 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.YamlDotNet.Serialization;
 using UnityEngine;
 
 namespace NightmareEchoes.TurnOrder
 {
     public class TurnOrder : MonoBehaviour
     {
-        GameState gameState;
+        public static TurnOrder Instance;
+        public GameState gameState;
+
+        [SerializeField] float delay;
+
+        private void Awake()
+        {
+            if(Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
+        }
 
         private void Start()
         {
             gameState = GameState.Start;
-            StartCoroutine(PlayerAction());
+            StartCoroutine(PlayerTurn());
         }
 
-        IEnumerator PlayerAction()
+        IEnumerator PlayerTurn()
         {
             Debug.Log(gameState);
-            yield return new WaitForSeconds(2f);
+            //yield return new WaitForSeconds(2f);
+            gameState = GameState.PlayerTurn;
 
-            gameState = GameState.EnemyTurn;
             yield return new WaitUntil(()=> gameState == GameState.EnemyTurn);
-            StartCoroutine(EnemyAction());
+            StartCoroutine(EnemyTurn());
         }
 
-        IEnumerator EnemyAction()
+        IEnumerator EnemyTurn()
         {
             Debug.Log(gameState);
-            yield break;
-            //yield return new WaitUntil(()=> gameState == GameState.PlayerTurn);
+            yield return new WaitForSeconds(delay);
+
+            gameState = GameState.PlayerTurn;
+            yield return new WaitUntil(()=> gameState == GameState.PlayerTurn);
+            StartCoroutine(PlayerTurn());
         }
 
+        IEnumerator CheckEffects()
+        {
+            yield break;
+        }
+
+        IEnumerator WinState()
+        {
+            yield break;
+        }
+
+        IEnumerator LoseState()
+        {
+            yield break;
+        }
     }
 
     public enum GameState
