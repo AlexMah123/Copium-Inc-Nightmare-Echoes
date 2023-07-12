@@ -6,14 +6,6 @@ namespace NightmareEchoes.Grid
 {
     public class WaveFunctionCollapse : MonoBehaviour
     {
-        //Output dimensions' valid patterns (T/F)
-        //False = pattern is no longer valid
-        private bool[] wave = new bool[10];
-        
-        //Output dimensions' entropy value
-        //Higher entropy = more patterns
-        private int[,] entropy = new int[10, 10];
-        
         void Observe()
         {
             //Find lowest nonzero entropy
@@ -33,11 +25,48 @@ namespace NightmareEchoes.Grid
             //Repeat until all neighbouring cells accounted for
         }
 
-        void Main()
+        List<int[]> FindLowestEntropy(int[,] matrix, int numberOfPatterns)
         {
+            //Find lowest entropy value;
+            int lowestEntropy = numberOfPatterns;
+            for (var x = 0; x < matrix.Rank; x++)
+            {
+                for (var z = 0; z < matrix.GetUpperBound(x); z++)
+                {
+                    if (matrix[x, z] >= lowestEntropy || matrix[x, z] == 0) continue;
+                    lowestEntropy = matrix[x, z];
+                }
+            }
+            
+            //Return null if lowest is 0
+            if (lowestEntropy == 0) return null;
+            
+            //Return all cells with lowest entropy
+            List<int[]> lowestEntropyCells = new List<int[]>();
+            for (var x = 0; x < matrix.Rank; x++)
+            {
+                for (var z = 0; z < matrix.GetUpperBound(x); z++)
+                {
+                    if (matrix[x, z] != lowestEntropy) continue;
+                    lowestEntropyCells.Add(new []{x,z});
+                }
+            }
+
+            return lowestEntropyCells;
+        }
+        
+        void Main(int x, int z)
+        {
+            //Output dimensions' valid patterns (T/F)
+            //False = pattern is no longer valid
+            bool[] wave = new bool[10];
+        
+            //Output dimensions' entropy value
+            //Higher entropy = more patterns
+            int[,] entropy = new int[x, z];
+ 
             //##Init##
             //Define which tileset to use
-            //Define size of the map
             //Set all waves to True
             //Set all entropies to highest
 
