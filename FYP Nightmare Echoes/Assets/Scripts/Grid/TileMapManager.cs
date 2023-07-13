@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using NightmareEchoes.TurnOrder;
 
-//created by Jian Hua, editted by Vinn and Terrence
+//created by Jian Hua, editted by Vinn and Terrence and Alex
 namespace NightmareEchoes.Grid
 {
     public class TileMapManager : MonoBehaviour
     {
+        [Header("Grid")]
         [SerializeField] public int width;
         [SerializeField] public int length;
-        
         [SerializeField] public TileBase testTile;
 
-        [SerializeField] public GameObject spawnTest;
         
         public Tilemap tilemap;
         public Vector3Int TilePos;
@@ -24,8 +24,9 @@ namespace NightmareEchoes.Grid
 
         Vector3Int prevTilePos;
 
-        //Pathfinding stuff
+        [Header("Pathfinding")]
         [SerializeField] private GameObject PlayerTest;
+        [SerializeField] public GameObject spawnTest;
         public float TransformPosZOffset;
         private bool PlayerOnScreen;
 
@@ -39,6 +40,11 @@ namespace NightmareEchoes.Grid
 
         public void Update()
         {
+            if (UIManager.Instance.gameIsPaused)
+            {
+                return;
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 GetMouseTilePos();
