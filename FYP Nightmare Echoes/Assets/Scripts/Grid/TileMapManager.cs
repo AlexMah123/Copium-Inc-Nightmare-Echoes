@@ -24,10 +24,17 @@ namespace NightmareEchoes.Grid
 
         Vector3Int prevTilePos;
 
+        //Pathfinding stuff
+        [SerializeField] private GameObject PlayerTest;
+        public float TransformPosZOffset;
+        private bool PlayerOnScreen;
+
+
         private void Awake()
         {
             tilemap = GetComponent<Tilemap>();
             tilemapRenderer = GetComponent<TilemapRenderer>();
+            PlayerOnScreen = false;
         }
 
         public void Update()
@@ -115,11 +122,20 @@ namespace NightmareEchoes.Grid
                  
                 tilemap.SetTileFlags(TilePos, TileFlags.None);
                 tilemap.SetColor(TilePos, Color.red);
+
+                if (PlayerOnScreen == false)
+                {
+                    PlayerOnScreen = true;
+                    PlayerTest = Instantiate(PlayerTest);
+                    PlayerTest.transform.position = new Vector3(MousePos.x, MousePos.y, MousePos.z +TransformPosZOffset);
+                }
+                else if (PlayerOnScreen == true)
+                {
+                    PlayerTest.transform.position = new Vector3(MousePos.x, MousePos.y, MousePos.z + TransformPosZOffset);
+                }
                 prevTilePos = TilePos;
 
-
-
-                Debug.Log("Tile at" + MousePos);
+            Debug.Log("Tile at" + MousePos);
             }
             else
             {
