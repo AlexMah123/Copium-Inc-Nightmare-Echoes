@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace NightmareEchoes.Grid
@@ -25,7 +26,7 @@ namespace NightmareEchoes.Grid
             //Repeat until all neighbouring cells accounted for
         }
 
-        List<int[]> FindLowestEntropy(int[,] matrix, int numberOfPatterns)
+        private List<int[]> FindLowestEntropy(int[,] matrix, int numberOfPatterns)
         {
             //Find lowest entropy value;
             int lowestEntropy = numberOfPatterns;
@@ -42,7 +43,7 @@ namespace NightmareEchoes.Grid
             if (lowestEntropy == 0) return null;
             
             //Return all cells with lowest entropy
-            List<int[]> lowestEntropyCells = new List<int[]>();
+            var lowestEntropyCells = new List<int[]>();
             for (var x = 0; x < matrix.Rank; x++)
             {
                 for (var z = 0; z < matrix.GetUpperBound(x); z++)
@@ -54,23 +55,54 @@ namespace NightmareEchoes.Grid
 
             return lowestEntropyCells;
         }
-        
-        void Main(int x, int z)
+
+        private static int CalculateTotalEntropy(int[,] matrix)
         {
-            //Output dimensions' valid patterns (T/F)
-            //False = pattern is no longer valid
-            bool[] wave = new bool[10];
+            var entropySum = matrix.Cast<int>().Sum();
+
+            return entropySum;
+        }
         
+        void Main(int x, int z, int n)
+        {
+            //Output dimensions' valid patterns (1=T/0=F)
+            //False = pattern is no longer valid
+            //n = number of patterns (placeholder rn)
+            var wave = new int[x, z, n];
+            
+            //Set all patterns to true
+            for (var i = 0; i < x; i++)
+            {
+                for (var j = 0; j < z; j++)
+                {
+                    for (var k = 0; k < n; k++)
+                    {
+                        wave[i, j, k] = 1;
+                    }
+                }
+            }
+                
             //Output dimensions' entropy value
             //Higher entropy = more patterns
-            int[,] entropy = new int[x, z];
- 
+            var entropy = new int[x, z];
+            
+            //Set all entropies to highest
+            for (var a = 0; a < x; a++)
+            {
+                for (var b = 0; b < z; b++)
+                {
+                    entropy[a, b] = n;
+                }
+            }
             //##Init##
             //Define which tileset to use
-            //Set all waves to True
-            //Set all entropies to highest
 
             //##Core##
+
+            while (CalculateTotalEntropy(entropy) > 0)
+            {
+                
+            }
             /* While entropy > 0
              * Observe
              * Collapse
