@@ -12,7 +12,7 @@ namespace NightmareEchoes.Unit.Enemy
             
         }
 
-        public override void Attack()
+        public override void BasicAttack()
         {
             
         }

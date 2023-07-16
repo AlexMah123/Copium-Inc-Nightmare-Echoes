@@ -5,21 +5,58 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
+    [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(BoxCollider2D))]
     public abstract class BaseUnit : MonoBehaviour
     {
-        [SerializeField] GameObject _object;
-        [SerializeField] string _name;
-        [SerializeField] int _health;
-        [SerializeField] int _speed;
-        [SerializeField] int _energy;
+        [Header("Unit Info")]
+        [SerializeField] protected string _name;
+        [SerializeField] protected int _health;
+        [SerializeField] protected int _speed;
+        [SerializeField] protected int _energy;
+        [SerializeField] protected Direction direction = Direction.North;
 
-        #region Class Properties
-        public GameObject Object
+        [Tooltip("Sprites are ordered in north, south, east, west")]
+        [SerializeField] List<Sprite> sprites = new List<Sprite>(); //ordered in NSEW
+
+        Animator animator;
+        SpriteRenderer spriteRenderer;
+
+        protected virtual void Awake()
         {
-            get => _object;
-            set => _object = value;
+            animator = GetComponent<Animator>();    
+            spriteRenderer = GetComponent<SpriteRenderer>();    
         }
 
+        protected virtual void Start()
+        {
+            
+        }
+
+        protected virtual void Update()
+        {
+            Debug.Log(direction);
+            switch(direction)
+            {
+                case Direction.North:
+                    spriteRenderer.sprite = sprites[(int)Direction.North];
+                    break;
+
+                case Direction.South:
+                    spriteRenderer.sprite = sprites[(int)Direction.South];
+                    break;
+
+                case Direction.East:
+                    spriteRenderer.sprite = sprites[(int)Direction.East];
+                    break;
+
+                case Direction.West:
+                    spriteRenderer.sprite = sprites[(int)Direction.West];
+                    break;
+
+            }
+        }
+
+        #region Class Properties
         public string Name
         {
             get => _name;
@@ -45,7 +82,7 @@ namespace NightmareEchoes.Unit
         }
         #endregion
 
-        public abstract void Attack();
+        public abstract void BasicAttack();
 
         public abstract void Passive();
 
@@ -55,5 +92,12 @@ namespace NightmareEchoes.Unit
 
         public abstract void Skill3();
 
+        public enum Direction
+        {
+            North = 0,
+            South = 1,
+            East = 2,
+            West = 3,
+        }
     }
 }

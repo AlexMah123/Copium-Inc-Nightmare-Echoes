@@ -7,19 +7,26 @@ namespace NightmareEchoes.Unit
     public class RangerHero : BaseUnit
     {
 
-        void Start()
+        protected override void Awake()
         {
+            base.Awake();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
 
         }
 
-        void Update()
+        #region Abilities()
+        public override void BasicAttack()
         {
-
-        }
-
-        public override void Attack()
-        {
-            
+            direction = Direction.West;
         }
 
         public override void Passive()
@@ -42,6 +49,7 @@ namespace NightmareEchoes.Unit
             
         }
 
-        
+        #endregion
+
     }
 }

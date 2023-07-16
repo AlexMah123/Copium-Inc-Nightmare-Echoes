@@ -12,18 +12,21 @@ namespace NightmareEchoes.TurnOrder
     {
         public static UIManager Instance;
 
-        [Header("Test Buttons")]
+        [Header("Test Buttons")] // basic attack
         [SerializeField] Button testButton;
 
-        [Header("Action Bar")]
-        [SerializeField] GameObject actionBarPanel;
+        [Header("Turn Order Bar")]
+        [SerializeField] GameObject turnOrderPanel;
         [SerializeField] TextMeshProUGUI turnOrderText;
         [SerializeField] Color playerTurn;
         [SerializeField] Color enemyTurn;
 
         [Header("Hotbar Info")]
-        [SerializeField] TextMeshProUGUI unitNameText;
+        [SerializeField] List<Button> turnOrderButtons;
+        [SerializeField] TextMeshProUGUI currentUnitNameText;
         public BaseUnit currentUnit;
+        
+        GameObject temporaryInspectedUnit;
 
         [Header("Settings")]
         [SerializeField] Button settingButton;
@@ -49,26 +52,20 @@ namespace NightmareEchoes.TurnOrder
 
         private void Update()
         {
-            #region ActionBar
+            #region TurnOrderBar
             switch (TurnOrder.Instance.gameState)
             {
                 case GameState.PlayerTurn:
-                    //if button is not interactable, on players turn, enable it
-                    if (!testButton.interactable)
-                    {
-                        testButton.interactable = true;
-                    }
+                    EnablePlayerUI(true);
+
                     turnOrderText.text = $"Player's Turn";
                     turnOrderText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
 
                     break;
 
                 case GameState.EnemyTurn:
-                    //if button is interactable, on enemy turn, enable it
-                    if (testButton.interactable)
-                    {
-                        testButton.interactable = false;
-                    }
+                    EnablePlayerUI(false);
+
                     turnOrderText.text = $"Enemy's Turn";
                     turnOrderText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
 
@@ -77,11 +74,16 @@ namespace NightmareEchoes.TurnOrder
             #endregion
 
             #region UnitInfo
-            unitNameText.text = $"Name: {currentUnit.Name}";
+            currentUnitNameText.text = $"{currentUnit.Name}";
             //unitHealthText.text = $"Health: {currentUnit.Health}";
             //unitSpeedText.text = $"Speed: {currentUnit.Speed}";
 
             #endregion
+
+            if(Input.GetMouseButtonDown(0)) // rightclick on an inspectable unit
+            {
+
+            }
         }
 
 
@@ -89,7 +91,7 @@ namespace NightmareEchoes.TurnOrder
         public void PlayerAttackButton()
         {
             TurnOrder.Instance.gameState = GameState.EnemyTurn;
-
+            currentUnit.BasicAttack();
         }
 
         public void SettingsButton()
@@ -110,5 +112,13 @@ namespace NightmareEchoes.TurnOrder
 
         #endregion
 
+
+        void EnablePlayerUI(bool enable)
+        {
+            foreach (Button button in turnOrderButtons)
+            {
+                button.interactable = enable;
+            }
+        }
     }
 }

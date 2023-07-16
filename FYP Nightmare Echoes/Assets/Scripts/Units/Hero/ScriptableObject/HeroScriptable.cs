@@ -69,9 +69,9 @@ namespace NightmareEchoes.Unit.Hero
 
         public enum EnemyType
         {
-            Melee = 1,
-            Range = 2,
-            Support = 3
+            Melee = 0,
+            Range = 1,
+            Support = 2
         }
     }
 
