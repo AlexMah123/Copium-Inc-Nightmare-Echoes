@@ -1,13 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using NightmareEchoes.Unit;
-using System;
+using NightmareEchoes.TurnOrder;
 
-namespace NightmareEchoes.TurnOrder
+namespace NightmareEchoes.UI
 {
+
     public class UIManager : MonoBehaviour
     {
         public static UIManager Instance;
@@ -26,7 +26,6 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI currentUnitNameText;
         public BaseUnit currentUnit;
         
-        GameObject temporaryInspectedUnit;
 
         [Header("Settings")]
         [SerializeField] Button settingButton;
@@ -53,7 +52,7 @@ namespace NightmareEchoes.TurnOrder
         private void Update()
         {
             #region TurnOrderBar
-            switch (TurnOrder.Instance.gameState)
+            switch (TurnOrderManager.Instance.gameState)
             {
                 case GameState.PlayerTurn:
                     EnablePlayerUI(true);
@@ -90,7 +89,7 @@ namespace NightmareEchoes.TurnOrder
         #region Button Functions
         public void PlayerAttackButton()
         {
-            TurnOrder.Instance.gameState = GameState.EnemyTurn;
+            //TurnOrder.Instance.gameState = GameState.EnemyTurn;
             currentUnit.BasicAttack();
         }
 
@@ -120,5 +119,6 @@ namespace NightmareEchoes.TurnOrder
                 button.interactable = enable;
             }
         }
+        
     }
 }

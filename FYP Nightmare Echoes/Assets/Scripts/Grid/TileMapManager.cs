@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using NightmareEchoes.TurnOrder;
+using NightmareEchoes.UI;
 
 //created by Jian Hua, editted by Vinn and Terrence and Alex
 namespace NightmareEchoes.Grid
@@ -141,13 +141,14 @@ namespace NightmareEchoes.Grid
                 }
                 prevTilePos = TilePos;
 
-            Debug.Log("Tile at" + MousePos);
+                //Debug.Log("Tile at" + MousePos);
             }
             else
             {
-                Debug.Log("No tile at " + MousePos);
+                //Debug.Log("No tile at " + MousePos);
             }
         }
+
         //this section by Terrence, spawning on tiles proof of concept
         public void GetMouseTilePos2()
         {

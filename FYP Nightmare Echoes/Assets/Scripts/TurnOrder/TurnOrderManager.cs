@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace NightmareEchoes.TurnOrder
 {
-    public class TurnOrder : MonoBehaviour
+    public class TurnOrderManager : MonoBehaviour
     {
-        public static TurnOrder Instance;
+        public static TurnOrderManager Instance;
         public GameState gameState;
 
         [SerializeField] float delay;
 
         private void Awake()
         {
-            if(Instance != null && Instance != this)
+            if (Instance != null && Instance != this)
             {
                 Destroy(this);
             }
@@ -62,8 +62,9 @@ namespace NightmareEchoes.TurnOrder
         {
             yield break;
         }
-    }
 
+        
+    }
     public enum GameState
     {
         Start = 1,
@@ -73,5 +74,6 @@ namespace NightmareEchoes.TurnOrder
         WinState = 5,
         LoseState = 6,
     }
+
 }
 
