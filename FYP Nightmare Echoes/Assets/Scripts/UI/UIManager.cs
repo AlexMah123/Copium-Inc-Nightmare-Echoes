@@ -22,10 +22,16 @@ namespace NightmareEchoes.UI
         [SerializeField] Color enemyTurn;
 
         [Header("Hotbar Info")]
-        [SerializeField] List<Button> turnOrderButtons;
+        BaseUnit currentUnit;
+        [SerializeField] List<Button> currentUnitButton;
+        [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
-        public BaseUnit currentUnit;
-        
+
+        BaseUnit inspectedUnit;
+        bool inspectedUnitExist;
+        [SerializeField] List<Button> inspectedUnitButton;
+        [SerializeField] Button inspectedUnitProfile;
+        [SerializeField] TextMeshProUGUI inspectedUnitNameText;
 
         [Header("Settings")]
         [SerializeField] Button settingButton;
@@ -51,11 +57,17 @@ namespace NightmareEchoes.UI
 
         private void Update()
         {
-            #region TurnOrderBar
+            #region TurnOrderPanel
             switch (TurnOrderManager.Instance.gameState)
             {
                 case GameState.PlayerTurn:
                     EnablePlayerUI(true);
+                    currentUnit = TurnOrderManager.Instance.GetCurrentUnit();
+
+                    if(currentUnit != null)
+                    {
+                        //Debug.Log(currentUnit.Name);
+                    }
 
                     turnOrderText.text = $"Player's Turn";
                     turnOrderText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
@@ -65,31 +77,46 @@ namespace NightmareEchoes.UI
                 case GameState.EnemyTurn:
                     EnablePlayerUI(false);
 
+
                     turnOrderText.text = $"Enemy's Turn";
                     turnOrderText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
 
                     break;
             }
-            #endregion
 
-            #region UnitInfo
             currentUnitNameText.text = $"{currentUnit.Name}";
-            //unitHealthText.text = $"Health: {currentUnit.Health}";
-            //unitSpeedText.text = $"Speed: {currentUnit.Speed}";
-
             #endregion
 
-            if(Input.GetMouseButtonDown(0)) // rightclick on an inspectable unit
+            #region InspectedUnit
+            if (Input.GetMouseButtonDown(0)) // rightclick on an inspectable unit
             {
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+                RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+
+                if (hit.collider != null && hit.collider.gameObject.CompareTag("Inspectable"))
+                {
+                    inspectedUnit = hit.collider.gameObject.GetComponent<BaseUnit>();
+                    EnableInspectedUI(true);
+                }
+                else
+                {
+                    EnableInspectedUI(false);
+                }
+
 
             }
+            #endregion
+
+
         }
 
 
         #region Button Functions
         public void PlayerAttackButton()
         {
-            //TurnOrder.Instance.gameState = GameState.EnemyTurn;
+            TurnOrderManager.Instance.gameState = GameState.EnemyTurn;
             currentUnit.BasicAttack();
         }
 
@@ -112,13 +139,35 @@ namespace NightmareEchoes.UI
         #endregion
 
 
+
         void EnablePlayerUI(bool enable)
         {
-            foreach (Button button in turnOrderButtons)
+            foreach (Button button in currentUnitButton)
             {
                 button.interactable = enable;
             }
         }
-        
+
+
+        void EnableInspectedUI(bool enable)
+        {
+            foreach (Button button in inspectedUnitButton)
+            {
+                button.interactable = enable;
+            }
+
+            inspectedUnitProfile.gameObject.SetActive(enable);
+
+            if (enable)
+            {
+                inspectedUnitNameText.text = $"{inspectedUnit.Name}";
+            }
+            else
+            {
+                inspectedUnitNameText.text = $"";
+            }
+
+        }
+
     }
 }

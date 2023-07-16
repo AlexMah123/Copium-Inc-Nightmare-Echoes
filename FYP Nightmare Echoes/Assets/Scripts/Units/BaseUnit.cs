@@ -91,6 +91,14 @@ namespace NightmareEchoes.Unit
 
         public abstract void Skill3();
 
+        #region collision
+        protected virtual void OnMouseDown()
+        {
+            
+        }
+        #endregion
+
+
         public enum Direction
         {
             North = 0,

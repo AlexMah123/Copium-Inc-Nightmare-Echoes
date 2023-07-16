@@ -51,12 +51,5 @@ namespace NightmareEchoes.Unit
 
         #endregion
 
-
-        #region collision
-        private void OnMouseDown()
-        {
-            
-        }
-        #endregion
     }
 }
