@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 6249669551677435555}
   - component: {fileID: 4225299220908657129}
   m_Layer: 0
-  m_Name: CharacterTest
-  m_TagString: GameController
+  m_Name: Ranger
+  m_TagString: Inspectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 601295390074279018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.188, y: -1.937, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -100,16 +100,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3b9f39b9fb31d41ac2e498d8e534c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Warrior
+  _name: Ranger
   _health: 20
   _speed: 10
   _energy: 100
+  _isHostile: 0
   direction: 1
   sprites:
   - {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: 542052453, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  - {fileID: -6517823, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: -771589304, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
 --- !u!95 &601295390074279017
 Animator:
   serializedVersion: 4
@@ -150,7 +151,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &4225299220908657129
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -161,7 +162,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.265625}

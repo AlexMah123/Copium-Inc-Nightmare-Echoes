@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(Animator))]
     public abstract class BaseUnit : MonoBehaviour
     {
         [Header("Unit Info")]
