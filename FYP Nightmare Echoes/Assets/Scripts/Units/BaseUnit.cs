@@ -34,7 +34,6 @@ namespace NightmareEchoes.Unit
 
         protected virtual void Update()
         {
-            Debug.Log(direction);
             switch(direction)
             {
                 case Direction.North:

@@ -31,7 +31,6 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator PlayerTurn()
         {
-            Debug.Log(gameState);
             //yield return new WaitForSeconds(2f);
             gameState = GameState.PlayerTurn;
 
