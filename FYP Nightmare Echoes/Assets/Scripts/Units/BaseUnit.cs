@@ -13,6 +13,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected int _health;
         [SerializeField] protected int _speed;
         [SerializeField] protected int _energy;
+        [SerializeField] protected bool _isHostile;
         [SerializeField] protected Direction direction = Direction.North;
 
         [Tooltip("Sprites are ordered in north, south, east, west")]
@@ -78,6 +79,12 @@ namespace NightmareEchoes.Unit
         {
             get => _energy;
             set => _energy = value;
+        }
+
+        public bool IsHostile
+        {
+            get => _isHostile;
+            private set => IsHostile = value;
         }
         #endregion
 
