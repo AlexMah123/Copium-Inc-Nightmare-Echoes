@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NightmareEchoes.Unit;
+using System.Linq;
 
 namespace NightmareEchoes.TurnOrder
 {
@@ -10,7 +11,8 @@ namespace NightmareEchoes.TurnOrder
         public static TurnOrderManager Instance;
 
         [Header("Turn Order")]
-        public BaseUnit[] turnOrderList;
+        private BaseUnit[] unitArray;
+        public List<BaseUnit> turnOrderList;
         public GameState gameState;
         [SerializeField] float delay;
 
@@ -31,21 +33,16 @@ namespace NightmareEchoes.TurnOrder
 
         private void Start()
         {
-            gameState = GameState.Start;
-            currentUnitIterator = -1;
-            turnOrderList = FindObjectsOfType<BaseUnit>();
-            
-
-            StartCoroutine(PlayerTurn());
+            InitializeTurn();
         }
 
         IEnumerator PlayerTurn()
         {
             //yield return new WaitForSeconds(2f);
             currentUnitIterator++;
-            if(currentUnitIterator < turnOrderList.Length)
+            if(currentUnitIterator < unitArray.Length)
             {
-                currentUnit = turnOrderList[currentUnitIterator];
+                currentUnit = unitArray[currentUnitIterator];
             }
 
             gameState = GameState.PlayerTurn;
@@ -80,11 +77,41 @@ namespace NightmareEchoes.TurnOrder
         }
 
 
+        void InitializeTurn()
+        {
+            gameState = GameState.Start;
+            currentUnitIterator = -1;
+            CalculatedTurnOrder();
+
+            StartCoroutine(PlayerTurn());
+        }
+
+        void CalculatedTurnOrder()
+        {
+            unitArray = FindObjectsOfType<BaseUnit>();
+            turnOrderList = unitArray.ToList();
+            turnOrderList.Sort(CompareSpeed); //sorts in ascending order
+            turnOrderList.Reverse();
+
+            //Debug.Log("Calculate turn order");
+            //Debug.Log(turnOrderList[0]);
+        }
+
+        //delegate for sort()
+        int CompareSpeed(BaseUnit _a, BaseUnit _b)
+        {
+            return _a.Speed.CompareTo(_b.Speed);
+        }
+
+
+        #region getters setters
+
         public BaseUnit GetCurrentUnit()
         {
             return currentUnit;
         }
-        
+        #endregion
+
     }
     public enum GameState
     {

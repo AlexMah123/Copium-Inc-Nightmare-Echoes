@@ -27,8 +27,8 @@ namespace NightmareEchoes.UI
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
 
+        [Header("Inspectable Info")]
         BaseUnit inspectedUnit;
-        bool inspectedUnitExist;
         [SerializeField] List<Button> inspectedUnitButton;
         [SerializeField] Button inspectedUnitProfile;
         [SerializeField] TextMeshProUGUI inspectedUnitNameText;
@@ -87,6 +87,7 @@ namespace NightmareEchoes.UI
             currentUnitNameText.text = $"{currentUnit.Name}";
             #endregion
 
+
             #region InspectedUnit
             if (Input.GetMouseButtonDown(0)) // rightclick on an inspectable unit
             {
@@ -113,7 +114,7 @@ namespace NightmareEchoes.UI
         }
 
 
-        #region Button Functions
+        #region Hotbar Functions
         public void PlayerAttackButton()
         {
             TurnOrderManager.Instance.gameState = GameState.EnemyTurn;
