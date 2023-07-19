@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//created by Alex
 namespace NightmareEchoes.Unit
 {
     public class BountyHunter : BaseUnit
@@ -25,7 +26,7 @@ namespace NightmareEchoes.Unit
         #region Abilities()
         public override void BasicAttack()
         {
-            direction = Direction.West;
+            _direction = Direction.West;
         }
 
         public override void Passive()

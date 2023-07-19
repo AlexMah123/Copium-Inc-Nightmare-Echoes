@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using NightmareEchoes.Unit;
 using NightmareEchoes.TurnOrder;
 
+//created by Alex
 namespace NightmareEchoes.UI
 {
-
     public class UIManager : MonoBehaviour
     {
         public static UIManager Instance;
@@ -16,7 +16,8 @@ namespace NightmareEchoes.UI
         [SerializeField] Button testButton;
 
         [Header("Turn Order Bar")]
-        [SerializeField] GameObject turnOrderPanel;
+        [SerializeField] GameObject currentTurnIndicator;
+        [SerializeField] List<Image> turnOrderImageList;
         [SerializeField] TextMeshProUGUI turnOrderText;
         [SerializeField] Color playerTurn;
         [SerializeField] Color enemyTurn;
@@ -58,11 +59,17 @@ namespace NightmareEchoes.UI
         private void Update()
         {
             #region TurnOrderPanel
-            switch (TurnOrderManager.Instance.gameState)
+
+            if(Input.GetKeyDown(KeyCode.Space)) 
+            {
+                UpdateTurnOrderUI();
+            }
+
+            switch (TurnOrderManager.Instance.GameState)
             {
                 case GameState.PlayerTurn:
                     EnablePlayerUI(true);
-                    currentUnit = TurnOrderManager.Instance.GetCurrentUnit();
+                    currentUnit = TurnOrderManager.Instance.CurrentUnit;
 
                     if(currentUnit != null)
                     {
@@ -81,6 +88,10 @@ namespace NightmareEchoes.UI
                     turnOrderText.text = $"Enemy's Turn";
                     turnOrderText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
 
+                    break;
+
+                case GameState.CheckEffects:
+                    UpdateTurnOrderUI();
                     break;
             }
 
@@ -113,33 +124,42 @@ namespace NightmareEchoes.UI
 
         }
 
+        void UpdateTurnOrderUI()
+        {
+            int i = 0;
+            TurnOrderManager.Instance.CalculatedTurnOrder();
+
+            foreach(BaseUnit unit in TurnOrderManager.Instance.TurnOrderList)
+            {
+                //turnOrderImageList[i] = unit.UnitScriptable.Image;
+            }
+
+
+            //sets indicator to the first image on the list
+            currentTurnIndicator.transform.position = turnOrderImageList[0].transform.position;
+
+            //stores the image to add and removes it from the first index of list
+            Image imageToAdd = turnOrderImageList[0];
+            turnOrderImageList.RemoveAt(0);
+
+            //add the stored image to the end of the list and sets that image as the last in the rect transform list
+            turnOrderImageList.Add(imageToAdd);
+            imageToAdd.rectTransform.SetAsLastSibling();
+        }
 
         #region Hotbar Functions
         public void PlayerAttackButton()
         {
-            TurnOrderManager.Instance.gameState = GameState.EnemyTurn;
+            TurnOrderManager.Instance.GameState = GameState.EnemyTurn;
             currentUnit.BasicAttack();
         }
 
-        public void SettingsButton()
-        {
-            if(Time.timeScale > 0)
-            {
-                gameIsPaused = true;
-                Time.timeScale = 0;
-                settingsPanel.SetActive(true);
-            }
-            else
-            {
-                gameIsPaused = false;
-                Time.timeScale = 1;
-                settingsPanel.SetActive(false);
-            }
-        }
+        
 
         #endregion
 
 
+        #region UI Function
 
         void EnablePlayerUI(bool enable)
         {
@@ -170,5 +190,21 @@ namespace NightmareEchoes.UI
 
         }
 
+        public void SettingsButton()
+        {
+            if (Time.timeScale > 0)
+            {
+                gameIsPaused = true;
+                Time.timeScale = 0;
+                settingsPanel.SetActive(true);
+            }
+            else
+            {
+                gameIsPaused = false;
+                Time.timeScale = 1;
+                settingsPanel.SetActive(false);
+            }
+        }
+        #endregion
     }
 }

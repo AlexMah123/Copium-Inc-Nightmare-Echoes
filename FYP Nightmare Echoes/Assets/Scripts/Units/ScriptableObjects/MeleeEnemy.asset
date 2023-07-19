@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1d999d07cd7674da0c8be0d9df5366, type: 3}
   m_Name: MeleeEnemy
   m_EditorClassIdentifier: 
-  _object: {fileID: 0}
+  _image: {fileID: 0}
   _name: MeleeEnemy
   _health: 20
   _speed: 15
   _energy: 10
   _type: 1
+  defautHealth: 20
+  defaultSpeed: 15
+  defautEnergy: 10

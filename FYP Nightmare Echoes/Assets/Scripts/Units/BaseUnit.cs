@@ -9,12 +9,13 @@ namespace NightmareEchoes.Unit
     public abstract class BaseUnit : MonoBehaviour
     {
         [Header("Unit Info")]
+        [SerializeField] protected BaseUnitScriptable _unitScriptable;
         [SerializeField] protected string _name;
         [SerializeField] protected int _health;
         [SerializeField] protected int _speed;
-        [SerializeField] protected int _energy;
         [SerializeField] protected bool _isHostile;
-        [SerializeField] protected Direction direction = Direction.North;
+        [SerializeField] protected Direction _direction;
+        [SerializeField] protected StatusEffect _statusEffect;
 
         [Tooltip("Sprites are ordered in north, south, east, west")]
         [SerializeField] List<Sprite> sprites = new List<Sprite>(); //ordered in NSEW
@@ -22,20 +23,66 @@ namespace NightmareEchoes.Unit
         Animator animator;
         SpriteRenderer spriteRenderer;
 
+        #region Class Properties
+        public BaseUnitScriptable UnitScriptable
+        {
+            get => _unitScriptable;
+            private set => _unitScriptable = value;
+        }
+
+        public string Name
+        {
+            get => _name;
+            private set => _name = value;
+        }
+
+        public int Health
+        {
+            get => _health;
+            set => _health = value;
+        }
+
+        public int Speed
+        {
+            get => _speed;
+            set => _speed = value;
+        }
+
+        public bool IsHostile
+        {
+            get => _isHostile;
+            private set => IsHostile = value;
+        }
+
+        public Direction Direction
+        {
+            get => _direction;
+            set => _direction = value;
+        }
+
+        public StatusEffect StatusEffect
+        {
+            get => _statusEffect;
+            set => _statusEffect = value;
+        }
+
+        #endregion
+
         protected virtual void Awake()
         {
-            animator = GetComponent<Animator>();    
-            spriteRenderer = GetComponent<SpriteRenderer>();    
+            _direction = Direction.North;
+            animator = GetComponent<Animator>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         protected virtual void Start()
         {
-            
+
         }
 
         protected virtual void Update()
         {
-            switch(direction)
+            switch (_direction)
             {
                 case Direction.North:
                     spriteRenderer.sprite = sprites[(int)Direction.North];
@@ -56,38 +103,6 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        #region Class Properties
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
-
-        public int Health
-        {
-            get => _health;
-            set => _health = value;
-        }
-
-        public int Speed
-        {
-            get => _speed;
-            set => _speed = value;
-        }
-
-        public int Energy
-        {
-            get => _energy;
-            set => _energy = value;
-        }
-
-        public bool IsHostile
-        {
-            get => _isHostile;
-            private set => IsHostile = value;
-        }
-        #endregion
-
         public abstract void BasicAttack();
 
         public abstract void Passive();
@@ -103,15 +118,18 @@ namespace NightmareEchoes.Unit
         {
             
         }
-        #endregion
+        #endregion        
+    }
+    public enum Direction
+    {
+        North = 0,
+        South = 1,
+        East = 2,
+        West = 3,
+    }
 
-
-        public enum Direction
-        {
-            North = 0,
-            South = 1,
-            East = 2,
-            West = 3,
-        }
+    public enum StatusEffect
+    {
+        None = 0,
     }
 }

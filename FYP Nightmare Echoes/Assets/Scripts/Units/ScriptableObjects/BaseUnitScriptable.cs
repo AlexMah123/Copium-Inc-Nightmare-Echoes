@@ -1,31 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //created by Alex
-namespace NightmareEchoes.Unit.Enemy
+namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "Insert Enemy Name", menuName = "Enemy/Enemy SO")]
-    public class EnemyScriptable : ScriptableObject
+    [CreateAssetMenu(fileName = "Insert Unit Name", menuName = "Unit/Unit SO")]
+    public class BaseUnitScriptable : ScriptableObject
     {
         [Header("Current Stats")]
-        [SerializeField] GameObject _object;
+        [SerializeField] Image _image;
         [SerializeField] string _name;
         [SerializeField] int _health;
         [SerializeField] int _speed;
         [SerializeField] int _energy;
         [SerializeField] EnemyType _type;
 
-        [Header("Defaut Stats")]
-        [SerializeField] int defautHealth;
+        [Header("Default Stats")]
+        [SerializeField] int defaultHealth;
         [SerializeField] int defaultSpeed;
         [SerializeField] int defautEnergy;
 
         #region Class Properties
-        public GameObject Object
+        public Image Image
         {
-            get => _object;
-            private set => _object = value;
+            get => _image;
+            private set => _image = value;
         }
 
         public string Name
@@ -59,19 +60,20 @@ namespace NightmareEchoes.Unit.Enemy
         }
         #endregion
 
+        [ContextMenu("Reset Data")]
         public void ResetData()
         {
-            Object = null;
-            Health = defautHealth;
+            Health = defaultHealth;
             Speed = defaultSpeed;
             Energy = defautEnergy;
         }
 
         public enum EnemyType
         {
-            Melee = 0,
-            Range = 1,
-            Support = 2
+            None = 0,
+            Melee = 1,
+            Range = 2,
+            Support = 3
         }
     }
 

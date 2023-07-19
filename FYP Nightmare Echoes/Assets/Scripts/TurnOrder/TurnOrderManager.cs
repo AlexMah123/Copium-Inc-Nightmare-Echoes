@@ -4,6 +4,7 @@ using UnityEngine;
 using NightmareEchoes.Unit;
 using System.Linq;
 
+//created by Alex
 namespace NightmareEchoes.TurnOrder
 {
     public class TurnOrderManager : MonoBehaviour
@@ -12,12 +13,32 @@ namespace NightmareEchoes.TurnOrder
 
         [Header("Turn Order")]
         private BaseUnit[] unitArray;
-        public List<BaseUnit> turnOrderList;
-        public GameState gameState;
+        [SerializeField] List<BaseUnit> turnOrderList;
+        [SerializeField] GameState gameState;
         [SerializeField] float delay;
 
         BaseUnit currentUnit;
         private int currentUnitIterator = -1;
+
+        #region Class Properties
+        public BaseUnit CurrentUnit
+        {
+            get { return currentUnit; }
+            private set { currentUnit = value; }
+        }
+
+        public List<BaseUnit> TurnOrderList
+        {
+            get { return turnOrderList; }
+            private set { turnOrderList = value; }
+        }
+
+        public GameState GameState
+        {
+            get { return gameState; }
+            set { gameState = value; }
+        }
+        #endregion
 
         private void Awake()
         {
@@ -86,7 +107,7 @@ namespace NightmareEchoes.TurnOrder
             StartCoroutine(PlayerTurn());
         }
 
-        void CalculatedTurnOrder()
+        public void CalculatedTurnOrder()
         {
             unitArray = FindObjectsOfType<BaseUnit>();
             turnOrderList = unitArray.ToList();
@@ -102,15 +123,6 @@ namespace NightmareEchoes.TurnOrder
         {
             return _a.Speed.CompareTo(_b.Speed);
         }
-
-
-        #region getters setters
-
-        public BaseUnit GetCurrentUnit()
-        {
-            return currentUnit;
-        }
-        #endregion
 
     }
     public enum GameState

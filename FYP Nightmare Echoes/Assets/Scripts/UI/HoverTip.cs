@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+//created by Alex
 namespace NightmareEchoes.UI
 {
     public class HoverTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField] string toolTip;
+        [field : TextArea] [SerializeField] string toolTip;
         [SerializeField] float timeToWait = 0.5f; 
 
         public void OnPointerEnter(PointerEventData eventData)
