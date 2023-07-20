@@ -57,6 +57,7 @@ namespace NightmareEchoes.TurnOrder
             InitializeTurn();
         }
 
+
         IEnumerator PlayerTurn()
         {
             //yield return new WaitForSeconds(2f);
@@ -65,6 +66,8 @@ namespace NightmareEchoes.TurnOrder
             {
                 currentUnit = unitArray[currentUnitIterator];
             }
+
+
 
             gameState = GameState.PlayerTurn;
 
@@ -77,14 +80,18 @@ namespace NightmareEchoes.TurnOrder
             Debug.Log(gameState);
             yield return new WaitForSeconds(delay);
 
+
+
+
             gameState = GameState.PlayerTurn;
+
             yield return new WaitUntil(()=> gameState == GameState.PlayerTurn);
             StartCoroutine(PlayerTurn());
         }
 
-        void CheckEffects()
+        IEnumerator CheckEffects()
         {
-            
+            yield break;
         }
 
         IEnumerator WinState()

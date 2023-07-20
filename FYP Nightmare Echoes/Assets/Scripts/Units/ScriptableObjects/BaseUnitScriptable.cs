@@ -10,7 +10,7 @@ namespace NightmareEchoes.Unit
     public class BaseUnitScriptable : ScriptableObject
     {
         [Header("Current Stats")]
-        [SerializeField] Image _image;
+        [SerializeField] Sprite _sprite;
         [SerializeField] string _name;
         [SerializeField] int _health;
         [SerializeField] int _speed;
@@ -23,10 +23,10 @@ namespace NightmareEchoes.Unit
         [SerializeField] int defautEnergy;
 
         #region Class Properties
-        public Image Image
+        public Sprite Sprite
         {
-            get => _image;
-            private set => _image = value;
+            get => _sprite;
+            private set => _sprite = value;
         }
 
         public string Name

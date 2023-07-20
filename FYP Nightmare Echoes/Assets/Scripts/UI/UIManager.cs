@@ -16,24 +16,32 @@ namespace NightmareEchoes.UI
         [SerializeField] Button testButton;
 
         [Header("Turn Order Bar")]
-        [SerializeField] GameObject currentTurnIndicator;
-        [SerializeField] List<Image> turnOrderImageList;
-        [SerializeField] TextMeshProUGUI turnOrderText;
+        int capIndex = 0;
+        [SerializeField] int imagePoolCap = 6;
+        [SerializeField] GameObject turnOrderPanel;
+        [SerializeField] GameObject ImagePrefab;
+        [Space(15)]
+        [SerializeField] List<GameObject> imageObjectPool;
+        [SerializeField] GameObject turnIndicator;
+        [SerializeField] TextMeshProUGUI turnIndicatorText;
         [SerializeField] Color playerTurn;
         [SerializeField] Color enemyTurn;
 
         [Header("Hotbar Info")]
         BaseUnit currentUnit;
+        [Space(15)]
         [SerializeField] List<Button> currentUnitButton;
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
 
         [Header("Inspectable Info")]
         BaseUnit inspectedUnit;
+        [Space(15)]
         [SerializeField] List<Button> inspectedUnitButton;
         [SerializeField] Button inspectedUnitProfile;
         [SerializeField] TextMeshProUGUI inspectedUnitNameText;
 
+        [Space(15)]
         [Header("Settings")]
         [SerializeField] Button settingButton;
         [SerializeField] GameObject settingsPanel;
@@ -53,21 +61,42 @@ namespace NightmareEchoes.UI
 
         private void Start()
         {
-            
+            GameObject obj = Instantiate(ImagePrefab, turnOrderPanel.transform);
+            obj.SetActive(false);
+            obj.name = $"{obj.name} {capIndex}";
+            imageObjectPool.Add(obj);
         }
 
         private void Update()
         {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                ShuffleTurnOrder();
+            }
+
             #region TurnOrderPanel
 
-            if(Input.GetKeyDown(KeyCode.Space)) 
+            //sets indicator to the first image on the list
+            if (imageObjectPool[0].activeSelf)
             {
-                UpdateTurnOrderUI();
+                if(!turnIndicator.activeSelf)
+                {
+                    turnIndicator.SetActive(true);
+                }
+
+                turnIndicator.transform.position = imageObjectPool[0].transform.position;
             }
+            else
+            {
+                turnIndicator.SetActive(false);
+            }
+
+            
 
             switch (TurnOrderManager.Instance.GameState)
             {
                 case GameState.PlayerTurn:
+                    UpdateTurnOrderUI();
                     EnablePlayerUI(true);
                     currentUnit = TurnOrderManager.Instance.CurrentUnit;
 
@@ -76,26 +105,29 @@ namespace NightmareEchoes.UI
                         //Debug.Log(currentUnit.Name);
                     }
 
-                    turnOrderText.text = $"Player's Turn";
-                    turnOrderText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
+                    turnIndicatorText.text = $"Player's Turn";
+                    turnIndicatorText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
 
                     break;
 
                 case GameState.EnemyTurn:
+                    UpdateTurnOrderUI();
                     EnablePlayerUI(false);
 
 
-                    turnOrderText.text = $"Enemy's Turn";
-                    turnOrderText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
+                    turnIndicatorText.text = $"Enemy's Turn";
+                    turnIndicatorText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
 
                     break;
 
                 case GameState.CheckEffects:
-                    UpdateTurnOrderUI();
                     break;
             }
 
-            currentUnitNameText.text = $"{currentUnit.Name}";
+            if(currentUnit != null)
+            {
+                currentUnitNameText.text = $"{currentUnit.Name}";
+            }
             #endregion
 
 
@@ -124,28 +156,7 @@ namespace NightmareEchoes.UI
 
         }
 
-        void UpdateTurnOrderUI()
-        {
-            int i = 0;
-            TurnOrderManager.Instance.CalculatedTurnOrder();
 
-            foreach(BaseUnit unit in TurnOrderManager.Instance.TurnOrderList)
-            {
-                //turnOrderImageList[i] = unit.UnitScriptable.Image;
-            }
-
-
-            //sets indicator to the first image on the list
-            currentTurnIndicator.transform.position = turnOrderImageList[0].transform.position;
-
-            //stores the image to add and removes it from the first index of list
-            Image imageToAdd = turnOrderImageList[0];
-            turnOrderImageList.RemoveAt(0);
-
-            //add the stored image to the end of the list and sets that image as the last in the rect transform list
-            turnOrderImageList.Add(imageToAdd);
-            imageToAdd.rectTransform.SetAsLastSibling();
-        }
 
         #region Hotbar Functions
         public void PlayerAttackButton()
@@ -153,13 +164,86 @@ namespace NightmareEchoes.UI
             TurnOrderManager.Instance.GameState = GameState.EnemyTurn;
             currentUnit.BasicAttack();
         }
-
-        
-
         #endregion
 
 
+
         #region UI Function
+
+        void UpdateTurnOrderUI()
+        {
+            //resets values, clears list, calculate turn order
+            TurnOrderManager.Instance.CalculatedTurnOrder();
+
+            for (int i = 0; i < imageObjectPool.Count; i++)
+            {
+                imageObjectPool[i].SetActive(false);
+            }
+
+
+            //sets all the images in the panel
+            for (int i = 0; i < TurnOrderManager.Instance.TurnOrderList.Count; i++)
+            {
+                GameObject image = GetImageObject();
+
+                if(image != null)
+                {
+                    image.SetActive(true);
+
+                    if (TurnOrderManager.Instance.TurnOrderList[i].IsHostile)
+                    {
+                        image.GetComponent<Image>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
+
+                    }
+                    else
+                    {
+                        image.GetComponent<Image>().color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
+                    }
+                }
+            }
+
+            
+        }
+
+        void ShuffleTurnOrder()
+        {
+            //stores the image to add and removes it from the first index of list
+            GameObject firstImage = imageObjectPool[0];
+            imageObjectPool.RemoveAt(0);
+
+
+            //add the stored image to the end of the list and sets that image as the last in the rect transform list
+            firstImage.GetComponent<RectTransform>().SetAsLastSibling();
+            imageObjectPool.Add(firstImage);
+        }
+
+        GameObject GetImageObject()
+        {
+            if(imageObjectPool.Count < imagePoolCap)
+            {
+                bool found = false;
+                for (int i = 0; i < imageObjectPool.Count; i++)
+                {
+                    if (!imageObjectPool[i].activeInHierarchy)
+                    {
+                        found = true;
+                        return imageObjectPool[i];
+                    }
+                }
+
+                if(!found)
+                {
+                    GameObject obj = Instantiate(ImagePrefab, turnOrderPanel.transform);
+                    obj.SetActive(false);
+                    capIndex++;
+                    obj.name = $"{obj.name} {capIndex}";
+                    imageObjectPool.Add(obj);
+                }
+            }
+            
+
+            return null;
+        }
 
         void EnablePlayerUI(bool enable)
         {
