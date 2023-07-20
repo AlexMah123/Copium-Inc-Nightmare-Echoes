@@ -10,7 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c6154a646b64a3478d2d7035d4ec995, type: 3}
-  m_Name: TestTile
+  m_Name: Road_Side_S
   m_EditorClassIdentifier: 
-  tileSprite: {fileID: 0}
-  tileName: 
+  _tileSprite: {fileID: 11400000, guid: 7b77533b9b87a7140b9c1777f937df53, type: 2}
+  _tileName: Grass_Corner_SE
+  _tileGroup: WFC Test
+  _northID: 0
+  _southID: 0
+  _eastID: 0
+  _westID: 0
+  _isPassable: 1
+  _isDestructable: 0
+  _cost: 0
+  _tileType: 1

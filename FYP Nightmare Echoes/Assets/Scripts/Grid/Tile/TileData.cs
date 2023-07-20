@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 //created by JH, editted by Alex
 namespace NightmareEchoes.Grid
 {
-    [CreateAssetMenu(menuName = "Tile")] //I am not really sure about this
+    [CreateAssetMenu(menuName = "Tile")]
     public class TileData : ScriptableObject
     {
         //Definitions
@@ -104,6 +104,7 @@ namespace NightmareEchoes.Grid
     public enum TileType
     {
         //Merely examples as they aren't fully set
+        Void = 0,       //Null tile 
         Normal = 1,     //Default with no effect
         Road = 2,       //Infrastructure for connecting one side to another (maybe movement speed buff?)
         Wall = 3,       //Self explanatory
