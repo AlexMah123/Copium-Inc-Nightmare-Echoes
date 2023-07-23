@@ -207,7 +207,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 85066881}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1419004732}
+        m_TargetAssemblyTypeName: NightmareEchoes.UI.UIManager, NightmareEchoes.UI
+        m_MethodName: Skill3Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &85066881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,10 +267,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 85066878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: aae1b35251174b540b40cfadf61880a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates: []
+  button: 3
+  timeToWait: 0.5
 --- !u!1001 &128770038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -327,9 +340,29 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
+      propertyPath: skill1Desc
+      value: Bounty Hunter Skill 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
+      propertyPath: skill2Desc
+      value: Bounty Hunter Skill 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
+      propertyPath: skill3Desc
+      value: Bounty Hunter Skill 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
+      propertyPath: passiveDesc
+      value: Bounty Hunter Passive
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: _unitScriptable
       value: 
       objectReference: {fileID: 11400000, guid: 3b58b24257d5c214d8d8640aa1862bf9, type: 2}
+    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
+      propertyPath: basicAttackDesc
+      value: Bounty Hunter Basic Attack
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db783668a420270479acb37d5a8b55f2, type: 3}
 --- !u!1 &136229562 stripped
@@ -544,7 +577,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 484320850}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1419004732}
+        m_TargetAssemblyTypeName: NightmareEchoes.UI.UIManager, NightmareEchoes.UI
+        m_MethodName: Skill2Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &484320850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,10 +637,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 484320847}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: aae1b35251174b540b40cfadf61880a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates: []
+  button: 2
+  timeToWait: 0.5
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2658,9 +2704,10 @@ MonoBehaviour:
   testTile: {fileID: 11400000, guid: 3a8882c0e5328f04fb3d85f710b4b041, type: 2}
   tilemap: {fileID: 1093333553}
   TilePos: {x: 0, y: 0, z: 0}
-  PlayerTest: {fileID: 136229562}
-  PlayerTest2: {fileID: 1084070975}
+  StartPos: {fileID: 136229562}
+  EndPos: {fileID: 1084070975}
   spawnTest: {fileID: 5373333754093515207, guid: 8daa09bbf8803924c82692d898a92c26, type: 3}
+  tileData: {fileID: 0}
   TransformPosZOffset: 0
 --- !u!1 &1132889300
 GameObject:
@@ -3006,7 +3053,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1211171092}
-  - component: {fileID: 1211171093}
+  - component: {fileID: 1211171094}
   m_Layer: 0
   m_Name: TurnOrder
   m_TagString: Untagged
@@ -3029,7 +3076,7 @@ Transform:
   m_Father: {fileID: 1422074784}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1211171093
+--- !u!114 &1211171094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3038,12 +3085,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1211171091}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 930e0d8090105cc4e89a271b54375d42, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c6fcbca48717d9428bc7243976b472c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   turnOrderList: []
-  gameState: 1
   delay: 2
+  currentUnit: {fileID: 0}
+  currentUnitIterator: 0
 --- !u!1 &1270077650
 GameObject:
   m_ObjectHideFlags: 0
@@ -3169,8 +3217,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1419004732}
-        m_TargetAssemblyTypeName: NightmareEchoes.TurnOrder.UIManager, NightmareEchoes.TurnOrder
-        m_MethodName: PlayerAttackButton
+        m_TargetAssemblyTypeName: NightmareEchoes.UI.UIManager, NightmareEchoes.UI
+        m_MethodName: AttackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3230,7 +3278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae1b35251174b540b40cfadf61880a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: Performs Basic Attack
+  button: 0
   timeToWait: 0.5
 --- !u!1 &1335788093
 GameObject:
@@ -3345,7 +3393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testButton: {fileID: 1277963032}
-  imageToPool: 6
+  imagePoolCap: 6
   turnOrderPanel: {fileID: 1815275200}
   ImagePrefab: {fileID: 9153719686155347849, guid: bfc389d22a9beac479be285f022cc02b, type: 3}
   imageObjectPool: []
@@ -3361,6 +3409,7 @@ MonoBehaviour:
   - {fileID: 1597697571}
   currentUnitProfile: {fileID: 1547541198}
   currentUnitNameText: {fileID: 1210487280}
+  inspectedUnit: {fileID: 0}
   inspectedUnitButton: []
   inspectedUnitProfile: {fileID: 1177980511}
   inspectedUnitNameText: {fileID: 1603839272}
@@ -3834,10 +3883,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1597697569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: aae1b35251174b540b40cfadf61880a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates: []
+  button: 4
+  timeToWait: 0.5
 --- !u!1 &1603839270
 GameObject:
   m_ObjectHideFlags: 0
@@ -4584,7 +4634,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1969376222}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1419004732}
+        m_TargetAssemblyTypeName: NightmareEchoes.UI.UIManager, NightmareEchoes.UI
+        m_MethodName: Skill1Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1969376222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4632,10 +4694,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1969376219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: aae1b35251174b540b40cfadf61880a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates: []
+  button: 1
+  timeToWait: 0.5
 --- !u!1 &2070248648
 GameObject:
   m_ObjectHideFlags: 0
@@ -4917,7 +4980,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: skill1Desc
+      value: Ranger Skill 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: skill2Desc
+      value: Ranger Skill 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: skill3Desc
+      value: Ranger Skill 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: passiveDesc
+      value: Ranger Passive
+      objectReference: {fileID: 0}
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: basicAttackDesc
+      value: Ranger Basic Attack
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: sprites.Array.data[3]

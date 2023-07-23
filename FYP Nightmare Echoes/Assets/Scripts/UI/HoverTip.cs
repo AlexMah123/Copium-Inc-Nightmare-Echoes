@@ -1,3 +1,4 @@
+using NightmareEchoes.TurnOrder;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,9 @@ namespace NightmareEchoes.UI
 {
     public class HoverTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [field : TextArea] [SerializeField] string toolTip;
-        [SerializeField] float timeToWait = 0.5f; 
+        string toolTip;
+        [SerializeField] Button button;
+        [SerializeField] float timeToWait = 0.5f;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -25,6 +27,29 @@ namespace NightmareEchoes.UI
 
         private void ShowTip()
         {
+            switch(button)
+            {
+                case Button.Basic:
+                    toolTip = TurnOrderController.Instance.CurrentUnit.BasicAttackDesc;
+                    break;
+
+                case Button.Skill1:
+                    toolTip = TurnOrderController.Instance.CurrentUnit.Skill1Desc;
+                    break;
+
+                case Button.Skill2:
+                    toolTip = TurnOrderController.Instance.CurrentUnit.Skill2Desc;
+                    break;
+
+                case Button.Skill3:
+                    toolTip = TurnOrderController.Instance.CurrentUnit.Skill3Desc;
+                    break;
+
+                case Button.Passive:
+                    toolTip = TurnOrderController.Instance.CurrentUnit.PassiveDesc;
+                    break;
+            }
+
             ToolTipManager.OnMouseHover(toolTip, Input.mousePosition);
         }
 
@@ -32,6 +57,15 @@ namespace NightmareEchoes.UI
         {
             yield return new WaitForSeconds(timeToWait);
             ShowTip();
+        }
+
+        private enum Button
+        {
+            Basic = 0,
+            Skill1 = 1,
+            Skill2 = 2,
+            Skill3 = 3,
+            Passive = 4,
         }
     }
 }

@@ -1,0 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace NightmareEchoes.TurnOrder
+{
+    public class PlayerPhase : Phase
+    {
+        protected override void OnEnter()
+        {
+            UIManager.Instance.EnablePlayerUI(true);
+
+        }
+
+        protected override void OnUpdate()
+        {
+            
+        }
+
+        protected override void OnExit()
+        {
+            if (controller.currentUnitIterator < controller.unitArray.Length)
+            {
+                controller.CurrentUnit = controller.unitArray[controller.currentUnitIterator++];
+            }
+        }
+    }
+}

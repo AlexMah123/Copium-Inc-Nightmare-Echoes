@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using NightmareEchoes.TurnOrder;
 
 //created by Alex
 namespace NightmareEchoes.UI
@@ -11,7 +12,6 @@ namespace NightmareEchoes.UI
     {
         [SerializeField] RectTransform tooltipWindow;
         [SerializeField] TextMeshProUGUI tooltipText;
-
 
         public static Action<string, Vector2> OnMouseHover;
         public static Action OnMouseLoseFocus;

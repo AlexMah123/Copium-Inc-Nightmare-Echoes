@@ -16,6 +16,12 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected bool _isHostile;
         [SerializeField] protected Direction _direction;
         [SerializeField] protected StatusEffect _statusEffect;
+        [field: TextArea][SerializeField] protected string basicAttackDesc;
+        [field: TextArea][SerializeField] protected string skill1Desc;
+        [field: TextArea][SerializeField] protected string skill2Desc;
+        [field: TextArea][SerializeField] protected string skill3Desc;
+        [field: TextArea][SerializeField] protected string passiveDesc;
+
 
         [Tooltip("Sprites are ordered in north, south, east, west")]
         [SerializeField] List<Sprite> sprites = new List<Sprite>(); //ordered in NSEW
@@ -64,6 +70,35 @@ namespace NightmareEchoes.Unit
         {
             get => _statusEffect;
             set => _statusEffect = value;
+        }
+
+        public string BasicAttackDesc
+        {
+            get => basicAttackDesc;
+            private set => basicAttackDesc = value;
+        }
+
+        public string Skill1Desc
+        {
+            get => skill1Desc;
+            private set => skill1Desc = value;
+        }
+        public string Skill2Desc
+        {
+            get => skill2Desc; 
+            private set => skill2Desc = value;
+        }
+
+        public string Skill3Desc
+        {
+            get => skill3Desc; 
+            private set => skill3Desc = value;
+        }
+
+        public string PassiveDesc
+        {
+            get => passiveDesc;
+            private set => passiveDesc = value;
         }
 
         #endregion

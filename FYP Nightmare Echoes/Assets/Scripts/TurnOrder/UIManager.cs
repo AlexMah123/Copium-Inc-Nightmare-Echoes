@@ -6,7 +6,7 @@ using NightmareEchoes.Unit;
 using NightmareEchoes.TurnOrder;
 
 //created by Alex
-namespace NightmareEchoes.UI
+namespace NightmareEchoes.TurnOrder
 {
     public class UIManager : MonoBehaviour
     {
@@ -28,14 +28,14 @@ namespace NightmareEchoes.UI
         [SerializeField] Color enemyTurn;
 
         [Header("Hotbar Info")]
-        BaseUnit currentUnit;
         [Space(15)]
         [SerializeField] List<Button> currentUnitButton;
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
+        BaseUnit currentUnit { get => TurnOrderController.Instance.CurrentUnit; set { }}
 
         [Header("Inspectable Info")]
-        BaseUnit inspectedUnit;
+        [SerializeField] BaseUnit inspectedUnit;
         [Space(15)]
         [SerializeField] List<Button> inspectedUnitButton;
         [SerializeField] Button inspectedUnitProfile;
@@ -46,6 +46,7 @@ namespace NightmareEchoes.UI
         [SerializeField] Button settingButton;
         [SerializeField] GameObject settingsPanel;
         public bool gameIsPaused = false;
+
 
         private void Awake()
         {
@@ -90,41 +91,38 @@ namespace NightmareEchoes.UI
             {
                 turnIndicator.SetActive(false);
             }
+            #endregion
 
-            
 
-            switch (TurnOrderManager.Instance.GameState)
+
+            #region Phase UI
+
+            if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.startPhase)
             {
-                case GameState.PlayerTurn:
-                    UpdateTurnOrderUI();
-                    EnablePlayerUI(true);
-                    currentUnit = TurnOrderManager.Instance.CurrentUnit;
+                turnIndicatorText.text = $"Start Phase";
 
-                    if(currentUnit != null)
-                    {
-                        //Debug.Log(currentUnit.Name);
-                    }
+            }
+            else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.planPhase)
+            {
+                turnIndicatorText.text = $"Plan Phase";
 
-                    turnIndicatorText.text = $"Player's Turn";
-                    turnIndicatorText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
+            }
+            else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.playerPhase)
+            {
+                turnIndicatorText.text = $"Player's Phase";
+                turnIndicatorText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
+            }
+            else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.enemyPhase)
+            {
+                turnIndicatorText.text = $"Enemy's Phase";
+                turnIndicatorText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
+            }
+            else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.endPhase)
+            {
 
-                    break;
-
-                case GameState.EnemyTurn:
-                    UpdateTurnOrderUI();
-                    EnablePlayerUI(false);
-
-
-                    turnIndicatorText.text = $"Enemy's Turn";
-                    turnIndicatorText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
-
-                    break;
-
-                case GameState.CheckEffects:
-                    break;
             }
 
-            if(currentUnit != null)
+            if (currentUnit != null)
             {
                 currentUnitNameText.text = $"{currentUnit.Name}";
             }
@@ -159,10 +157,28 @@ namespace NightmareEchoes.UI
 
 
         #region Hotbar Functions
-        public void PlayerAttackButton()
+        public void AttackButton()
         {
-            TurnOrderManager.Instance.GameState = GameState.EnemyTurn;
+            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
             currentUnit.BasicAttack();
+        }
+
+        public void Skill1Button()
+        {
+            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
+            currentUnit.Skill1();
+        }
+
+        public void Skill2Button()
+        {
+            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
+            currentUnit.Skill2();
+        }
+
+        public void Skill3Button()
+        {
+            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
+            currentUnit.Skill3();
         }
         #endregion
 
@@ -170,11 +186,9 @@ namespace NightmareEchoes.UI
 
         #region UI Function
 
-        void UpdateTurnOrderUI()
+        public void UpdateTurnOrderUI()
         {
             //resets values, clears list, calculate turn order
-            TurnOrderManager.Instance.CalculatedTurnOrder();
-
             for (int i = 0; i < imageObjectPool.Count; i++)
             {
                 imageObjectPool[i].SetActive(false);
@@ -182,7 +196,7 @@ namespace NightmareEchoes.UI
 
 
             //sets all the images in the panel
-            for (int i = 0; i < TurnOrderManager.Instance.TurnOrderList.Count; i++)
+            for (int i = 0; i < TurnOrderController.Instance.TurnOrderList.Count; i++)
             {
                 GameObject image = GetImageObject();
 
@@ -190,7 +204,7 @@ namespace NightmareEchoes.UI
                 {
                     image.SetActive(true);
 
-                    if (TurnOrderManager.Instance.TurnOrderList[i].IsHostile)
+                    if (TurnOrderController.Instance.TurnOrderList[i].IsHostile)
                     {
                         image.GetComponent<Image>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
 
@@ -205,7 +219,7 @@ namespace NightmareEchoes.UI
             
         }
 
-        void ShuffleTurnOrder()
+        public void ShuffleTurnOrder()
         {
             //stores the image to add and removes it from the first index of list
             GameObject firstImage = imageObjectPool[0];
@@ -245,7 +259,7 @@ namespace NightmareEchoes.UI
             return null;
         }
 
-        void EnablePlayerUI(bool enable)
+        public void EnablePlayerUI(bool enable)
         {
             foreach (Button button in currentUnitButton)
             {
@@ -254,7 +268,7 @@ namespace NightmareEchoes.UI
         }
 
 
-        void EnableInspectedUI(bool enable)
+        public void EnableInspectedUI(bool enable)
         {
             foreach (Button button in inspectedUnitButton)
             {
