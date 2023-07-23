@@ -20,6 +20,7 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] int imagePoolCap = 6;
         [SerializeField] GameObject turnOrderPanel;
         [SerializeField] GameObject ImagePrefab;
+
         [Space(15)]
         [SerializeField] List<GameObject> imageObjectPool;
         [SerializeField] GameObject turnIndicator;
@@ -28,7 +29,6 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] Color enemyTurn;
 
         [Header("Hotbar Info")]
-        [Space(15)]
         [SerializeField] List<Button> currentUnitButton;
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
@@ -36,16 +36,20 @@ namespace NightmareEchoes.TurnOrder
 
         [Header("Inspectable Info")]
         [SerializeField] BaseUnit inspectedUnit;
-        [Space(15)]
         [SerializeField] List<Button> inspectedUnitButton;
         [SerializeField] Button inspectedUnitProfile;
         [SerializeField] TextMeshProUGUI inspectedUnitNameText;
 
-        [Space(15)]
         [Header("Settings")]
         [SerializeField] Button settingButton;
         [SerializeField] GameObject settingsPanel;
         public bool gameIsPaused = false;
+
+        [Header("Current Unit Indicator")]
+        [SerializeField] GameObject indicator;
+        [SerializeField] private float frequency = 2.0f;
+        [SerializeField] private float magnitude = 0.05f;
+        [SerializeField] private float offset = 0.75f;
 
 
         private void Awake()
@@ -58,14 +62,14 @@ namespace NightmareEchoes.TurnOrder
             {
                 Instance = this;
             }
+
+            InitImagePool();
+
         }
 
         private void Start()
         {
-            GameObject obj = Instantiate(ImagePrefab, turnOrderPanel.transform);
-            obj.SetActive(false);
-            obj.name = $"{obj.name} {capIndex}";
-            imageObjectPool.Add(obj);
+
         }
 
         private void Update()
@@ -74,6 +78,29 @@ namespace NightmareEchoes.TurnOrder
             {
                 ShuffleTurnOrder();
             }
+
+            if(currentUnit != null)
+            {
+                currentUnitNameText.text = $"{currentUnit.Name}";
+            }
+
+            #region current unit related
+            if (currentUnit != null)
+            {
+                if (!indicator.activeSelf)
+                {
+                    indicator.SetActive(true);
+                }
+
+                indicator.transform.position = new Vector3(currentUnit.transform.position.x, currentUnit.transform.position.y + offset, currentUnit.transform.position.z) 
+                    + transform.up * Mathf.Sin(Time.time * frequency) * magnitude;
+            }
+            else
+            {
+                indicator.SetActive(false);
+            }
+
+            #endregion
 
             #region TurnOrderPanel
 
@@ -92,7 +119,6 @@ namespace NightmareEchoes.TurnOrder
                 turnIndicator.SetActive(false);
             }
             #endregion
-
 
 
             #region Phase UI
@@ -122,10 +148,7 @@ namespace NightmareEchoes.TurnOrder
 
             }
 
-            if (currentUnit != null)
-            {
-                currentUnitNameText.text = $"{currentUnit.Name}";
-            }
+            
             #endregion
 
 
@@ -155,7 +178,6 @@ namespace NightmareEchoes.TurnOrder
         }
 
 
-
         #region Hotbar Functions
         public void AttackButton()
         {
@@ -183,12 +205,22 @@ namespace NightmareEchoes.TurnOrder
         #endregion
 
 
-
         #region UI Function
+
+        void InitImagePool()
+        {
+            for (int i = 0; i < imagePoolCap; i++)
+            {
+                GameObject obj = Instantiate(ImagePrefab, turnOrderPanel.transform);
+                obj.SetActive(false);
+                obj.name = $"{obj.name} {capIndex++}";
+                imageObjectPool.Add(obj);
+            }
+        }
 
         public void UpdateTurnOrderUI()
         {
-            //resets values, clears list, calculate turn order
+            //resets the turn order bar, calculate turn order
             for (int i = 0; i < imageObjectPool.Count; i++)
             {
                 imageObjectPool[i].SetActive(false);
@@ -233,28 +265,13 @@ namespace NightmareEchoes.TurnOrder
 
         GameObject GetImageObject()
         {
-            if(imageObjectPool.Count < imagePoolCap)
+            for (int i = 0; i < imageObjectPool.Count; i++)
             {
-                bool found = false;
-                for (int i = 0; i < imageObjectPool.Count; i++)
+                if (!imageObjectPool[i].activeInHierarchy)
                 {
-                    if (!imageObjectPool[i].activeInHierarchy)
-                    {
-                        found = true;
-                        return imageObjectPool[i];
-                    }
+                    return imageObjectPool[i];
                 }
-
-                if(!found)
-                {
-                    GameObject obj = Instantiate(ImagePrefab, turnOrderPanel.transform);
-                    obj.SetActive(false);
-                    capIndex++;
-                    obj.name = $"{obj.name} {capIndex}";
-                    imageObjectPool.Add(obj);
-                }
-            }
-            
+            }          
 
             return null;
         }

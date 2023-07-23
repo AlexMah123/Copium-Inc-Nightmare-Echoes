@@ -282,7 +282,6 @@ GameObject:
   m_Component:
   - component: {fileID: 128511834}
   - component: {fileID: 128511833}
-  - component: {fileID: 128511835}
   m_Layer: 0
   m_Name: CurrentUnitIndicator
   m_TagString: Untagged
@@ -357,21 +356,6 @@ Transform:
   m_Father: {fileID: 1270077651}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &128511835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 128511832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0f1bd248743c0440a212f77fd0d00e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frequency: 2
-  magnitude: 0.05
-  offset: 0.75
 --- !u!1001 &128770038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -437,7 +421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: _isHostile
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: skill1Desc
@@ -1906,11 +1890,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1002185921}
   m_CullTransparentMesh: 1
---- !u!1 &1084070975 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5583804447610931201, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
-  m_PrefabInstance: {fileID: 1429316038}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1093333550
 GameObject:
   m_ObjectHideFlags: 0
@@ -2888,7 +2867,7 @@ MonoBehaviour:
   tilemap: {fileID: 1093333553}
   TilePos: {x: 0, y: 0, z: 0}
   StartPos: {fileID: 136229562}
-  EndPos: {fileID: 1084070975}
+  EndPos: {fileID: 1782700433}
   spawnTest: {fileID: 5373333754093515207, guid: 8daa09bbf8803924c82692d898a92c26, type: 3}
 --- !u!1 &1132889300
 GameObject:
@@ -3598,6 +3577,10 @@ MonoBehaviour:
   settingButton: {fileID: 2070248650}
   settingsPanel: {fileID: 1711332423}
   gameIsPaused: 0
+  indicator: {fileID: 128511832}
+  frequency: 4
+  magnitude: 0.05
+  offset: 0.75
 --- !u!114 &1419004733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3655,7 +3638,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5583804447610931201, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: m_Name
-      value: PlayerTest2
+      value: MeleeEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 5583804447610931203, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: m_RootOrder
@@ -3663,11 +3646,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5583804447610931203, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7676355
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 5583804447610931203, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.022266448
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5583804447610931203, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3700,6 +3683,14 @@ PrefabInstance:
     - target: {fileID: 5583804447610931203, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: _speed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: _isHostile
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
@@ -4494,6 +4485,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1765086403}
   m_CullTransparentMesh: 1
+--- !u!1 &1782700433 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
+  m_PrefabInstance: {fileID: 128770038}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1815275200
 GameObject:
   m_ObjectHideFlags: 0
@@ -5163,7 +5159,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: _speed
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_Enabled

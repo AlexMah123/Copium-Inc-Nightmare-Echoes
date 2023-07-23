@@ -19,9 +19,9 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-            if (controller.currentUnitIterator < controller.unitArray.Length)
+            if (controller.currentUnitIterator < controller.TurnOrderList.Count)
             {
-                controller.CurrentUnit = controller.unitArray[controller.currentUnitIterator];
+                controller.CurrentUnit = controller.TurnOrderList[controller.currentUnitIterator];
             }
         }
 

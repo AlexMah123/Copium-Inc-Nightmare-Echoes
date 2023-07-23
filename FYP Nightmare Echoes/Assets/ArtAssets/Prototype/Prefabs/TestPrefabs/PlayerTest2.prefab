@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 797862902205244136}
   m_Layer: 0
   m_Name: PlayerTest2
-  m_TagString: Untagged
+  m_TagString: Inspectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,11 +107,11 @@ MonoBehaviour:
   _isHostile: 1
   _direction: 0
   _statusEffect: 0
-  basicAttackDesc: 
-  skill1Desc: 
-  skill2Desc: 
-  skill3Desc: 
-  passiveDesc: 
+  basicAttackDesc: Melee Basic
+  skill1Desc: Melee Skill 1
+  skill2Desc: Melee Skill 2
+  skill3Desc: Melee Skill 3
+  passiveDesc: Melee Passive
   sprites: []
 --- !u!50 &5583804447610931213
 Rigidbody2D:

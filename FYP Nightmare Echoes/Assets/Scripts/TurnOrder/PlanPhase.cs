@@ -23,7 +23,6 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator Planning()
         {
-            controller.CurrentUnit = controller.unitArray[controller.currentUnitIterator];
 
             yield return new WaitForSeconds(controller.delay);
             controller.ChangePhase(controller.startPhase);

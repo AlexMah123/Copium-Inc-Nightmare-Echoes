@@ -14,6 +14,8 @@ namespace NightmareEchoes.TurnOrder
             controller.CalculatedTurnOrder();
             UIManager.Instance.UpdateTurnOrderUI();
 
+            controller.CurrentUnit = controller.TurnOrderList[controller.currentUnitIterator];
+
             OnEnter();
         }
 

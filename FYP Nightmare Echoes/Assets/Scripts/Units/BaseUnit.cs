@@ -105,7 +105,7 @@ namespace NightmareEchoes.Unit
 
         protected virtual void Awake()
         {
-            _direction = Direction.North;
+            Direction = Direction.North;
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
@@ -117,25 +117,30 @@ namespace NightmareEchoes.Unit
 
         protected virtual void Update()
         {
-            switch (_direction)
+            if(sprites.Count > 0)
             {
-                case Direction.North:
-                    spriteRenderer.sprite = sprites[(int)Direction.North];
-                    break;
+                switch (_direction)
+                {
+                    case Direction.North:
+                        spriteRenderer.sprite = sprites[(int)Direction.North];
+                        break;
 
-                case Direction.South:
-                    spriteRenderer.sprite = sprites[(int)Direction.South];
-                    break;
+                    case Direction.South:
+                        spriteRenderer.sprite = sprites[(int)Direction.South];
+                        break;
 
-                case Direction.East:
-                    spriteRenderer.sprite = sprites[(int)Direction.East];
-                    break;
+                    case Direction.East:
+                        spriteRenderer.sprite = sprites[(int)Direction.East];
+                        break;
 
-                case Direction.West:
-                    spriteRenderer.sprite = sprites[(int)Direction.West];
-                    break;
+                    case Direction.West:
+                        spriteRenderer.sprite = sprites[(int)Direction.West];
+                        break;
 
+                }
             }
+
+            
         }
 
         public abstract void BasicAttack();

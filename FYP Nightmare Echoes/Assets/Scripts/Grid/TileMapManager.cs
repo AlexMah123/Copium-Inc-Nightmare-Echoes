@@ -58,7 +58,7 @@ namespace NightmareEchoes.Grid
 
         public void Update()
         {
-/*            if (UIManager.Instance.gameIsPaused)
+/*           if (UIManager.Instance.gameIsPaused)
             {
                 return;
             }*/

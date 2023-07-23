@@ -27,6 +27,11 @@ namespace NightmareEchoes.UI
 
         private void ShowTip()
         {
+            if(TurnOrderController.Instance.CurrentUnit == null)
+            {
+                return;
+            }
+
             switch(button)
             {
                 case Button.Basic:
