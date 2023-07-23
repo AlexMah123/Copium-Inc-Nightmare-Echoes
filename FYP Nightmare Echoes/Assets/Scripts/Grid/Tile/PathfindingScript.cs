@@ -9,7 +9,7 @@ namespace NightmareEchoes.Grid
 {
     public class PathfindingScript
     {
-
+/*
 
         public List<TileData> FindPath(TileData startNode, TileData endNode)
         { 
@@ -116,6 +116,6 @@ namespace NightmareEchoes.Grid
 
             return neighbours;
         }
-        
+        */
     }
 }

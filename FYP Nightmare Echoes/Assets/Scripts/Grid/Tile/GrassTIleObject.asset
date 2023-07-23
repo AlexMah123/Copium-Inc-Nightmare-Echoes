@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6154a646b64a3478d2d7035d4ec995, type: 3}
   m_Name: GrassTIleObject
   m_EditorClassIdentifier: 
-  _tileSprite: {fileID: 0}
-  _tileName: 
+  _tileSprite: {fileID: 11400000, guid: 3a8882c0e5328f04fb3d85f710b4b041, type: 2}
+  _tileName: GrassTile
   _tileGroup: 
   _northID: 0
   _southID: 0
@@ -25,5 +25,8 @@ MonoBehaviour:
   _Hcost: 0
   isBlocked: 0
   prevTile: {fileID: 0}
+  StartTile: {fileID: 0}
+  EndTile: {fileID: 0}
+  position: {x: 0, y: 0, z: 0}
   GridLocation: {x: 0, y: 0, z: 0}
   _tileType: 0

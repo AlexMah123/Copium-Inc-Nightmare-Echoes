@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using NightmareEchoes.TurnOrder;
+//using NightmareEchoes.UI;
 
 //created by Jian Hua, editted by Vinn and Terrence and Alex
 namespace NightmareEchoes.Grid
@@ -26,25 +26,20 @@ namespace NightmareEchoes.Grid
         private TilemapRenderer tilemapRenderer;
         private Vector3 spawnPos;
         private Vector3 endPos;
-
+        
         Vector3Int prevTilePos;
 
         [Header("Pathfinding")]
         [SerializeField] private GameObject StartPos;
         [SerializeField] private GameObject EndPos;
         [SerializeField] public GameObject spawnTest;
-        public TileData tileData;
-        public float TransformPosZOffset;
-        private PathfindingScript pathfinder;
 
-        public Dictionary<Vector3Int, TileData> MAP;
+      
 
         private void Awake()
         {
             tilemap = GetComponent<Tilemap>();
             tilemapRenderer = GetComponent<TilemapRenderer>();
-            StartPos.SetActive(false);
-            EndPos.SetActive(false);
 
             if (_instance != null && _instance != this)
             {
@@ -58,24 +53,26 @@ namespace NightmareEchoes.Grid
 
         private void Start()
         {
-              
+
         }
 
         public void Update()
         {
-            if (UIManager.Instance.gameIsPaused)
+/*            if (UIManager.Instance.gameIsPaused)
             {
                 return;
+            }*/
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                //GetMouseTilePos2();
             }
 
             if (Input.GetMouseButtonDown(0))
             {
                 GetMouseTilePos();
             }
-            if (Input.GetMouseButtonDown(1))
-            {
-                GetMouseTilePos2();
-            }
+
         }
 
         //Source: https://blog.unity.com/engine-platform/procedural-patterns-you-can-use-with-tilemaps-part-1
@@ -110,14 +107,11 @@ namespace NightmareEchoes.Grid
                 //Loop through the height of the map
                 for (int y = 0; y < map.GetUpperBound(1); y++)
                 {
-                    var tileKey = new Vector3Int(x,y,0);
                     var tilelocation = new Vector3Int(x,y,0);
                     // 1 = tile, 0 = no tile
-                    if (map[x, y] == 1 && !MAP.ContainsKey(tileKey))
+                    if (map[x, y] == 1)
                     {
                         tilemap.SetTile(tilelocation, tile);
-                        tileData.GridLocation = tilelocation;
-                        MAP.Add(tileKey,tileData);
                     }
                 }
             }
@@ -147,6 +141,7 @@ namespace NightmareEchoes.Grid
             Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             TilePos = tilemap.WorldToCell(MousePos);
 
+
             if (tilemap.GetTile(TilePos))
             {
                 if (prevTilePos != null)
@@ -160,19 +155,16 @@ namespace NightmareEchoes.Grid
 
                 prevTilePos = TilePos;
 
-                if (StartPos.activeSelf == false)
+                if (StartPos.activeSelf == true)
                 {
-                    StartPos.SetActive(true);
                     spawnPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-                    StartPos.transform.position = spawnPos;
+                    //StartPos.transform.position = spawnPos;
+                    Debug.Log(" Mouse Click is on" + spawnPos);
                 }
                 else
                 {
                     endPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-                    
-                    
-                    //StartPos.transform.position = spawnPos;
-/*                    var path = pathfinder.FindPath(StartPos,endPos);*/
+                    /*StartPos.transform.position = spawnPos;*/
                     Debug.Log("Second Mouse Click is on" + spawnPos);
                 }
             }
@@ -181,35 +173,10 @@ namespace NightmareEchoes.Grid
         //this section by Terrence, spawning on tiles proof of concept
         public void GetMouseTilePos2()
         {
-            Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            TilePos = tilemap.WorldToCell(MousePos);
-            spawnPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-            
-            if (tilemap.GetTile(TilePos))
-            {
-                if (prevTilePos != null)
-                {
-                    tilemap.SetTileFlags(prevTilePos, TileFlags.None);
-                    tilemap.SetColor(prevTilePos, Color.white);
-                }
-
-                tilemap.SetTileFlags(TilePos, TileFlags.None);
-                tilemap.SetColor(TilePos, Color.cyan);
-
-                prevTilePos = TilePos;
-
-                if (EndPos.activeSelf == false)
-                {
-                    EndPos.SetActive(true);
-                    spawnPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-                    EndPos.transform.position = spawnPos;
-                }
-                else if (EndPos.activeSelf == true)
-                {
-                    spawnPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-                    EndPos.transform.position = spawnPos;
-                }
-            }
         }
+
+        public Vector3 getSpawnPos() { return spawnPos; }
     }
+
+
 }

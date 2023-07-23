@@ -31,6 +31,7 @@ namespace NightmareEchoes.Grid
         public TileData prevTile;
         public TileData StartTile;
         public TileData EndTile;
+        public Vector3 position;
         public Vector3Int GridLocation;
         public TileType _tileType;
         
