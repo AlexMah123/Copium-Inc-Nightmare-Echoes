@@ -11,6 +11,10 @@ namespace NightmareEchoes.Grid
 {
     public class TileMapManager : MonoBehaviour
     {
+        [Header("Singleton stuff")]
+        private static TileMapManager _instance; 
+        public static TileMapManager Instance { get { return _instance; } }
+
         [Header("Grid")]
         [SerializeField] public int width;
         [SerializeField] public int length;
@@ -21,40 +25,42 @@ namespace NightmareEchoes.Grid
         public Vector3Int TilePos;
         private TilemapRenderer tilemapRenderer;
         private Vector3 spawnPos;
+        private Vector3 endPos;
 
         Vector3Int prevTilePos;
 
         [Header("Pathfinding")]
-        [SerializeField] private GameObject PlayerTest;
-        [SerializeField] private GameObject PlayerTest2;
+        [SerializeField] private GameObject StartPos;
+        [SerializeField] private GameObject EndPos;
         [SerializeField] public GameObject spawnTest;
+        public TileData tileData;
         public float TransformPosZOffset;
+        private PathfindingScript pathfinder;
 
+        public Dictionary<Vector3Int, TileData> MAP;
 
         private void Awake()
         {
             tilemap = GetComponent<Tilemap>();
             tilemapRenderer = GetComponent<TilemapRenderer>();
-            PlayerTest.SetActive(false);
-            PlayerTest2.SetActive(false);
+            StartPos.SetActive(false);
+            EndPos.SetActive(false);
 
-            if (PlayerTest.activeSelf == false)
+            if (_instance != null && _instance != this)
             {
-                Debug.Log("Player 1 is currently not on screen");
+                Destroy(this.gameObject);
             }
-            if (PlayerTest2.activeSelf == false)
-            {
-                Debug.Log("Player 2 is currently not on screen");
-            }
-            if (PlayerTest.activeSelf == false && PlayerTest2.activeSelf == false)
-            {
-                Debug.Log("Both players are currently not on screen");
+            else
+            { 
+                _instance = this;
             }
         }
-/*        private void Start()
+
+        public void Start()
         {
-              
-        }*/
+           MAP = new Dictionary<Vector3Int, TileData>();
+            pathfinder = new PathfindingScript();
+        }
 
         public void Update()
         {
@@ -85,7 +91,7 @@ namespace NightmareEchoes.Grid
                     {
                         map[x, y] = 0;
                     }
-                    else
+                    else if (!empty )
                     {
                         map[x, y] = 1;
                     }
@@ -98,20 +104,27 @@ namespace NightmareEchoes.Grid
         {
             //Clear the map (ensures we dont overlap)
             tilemap.ClearAllTiles();
+            
             //Loop through the width of the map
             for (int x = 0; x < map.GetUpperBound(0) ; x++)
             {
                 //Loop through the height of the map
                 for (int y = 0; y < map.GetUpperBound(1); y++)
                 {
+                    var tileKey = new Vector3Int(x,y,0);
+                    var tilelocation = new Vector3Int(x,y,0);
                     // 1 = tile, 0 = no tile
-                    if (map[x, y] == 1)
+                    if (map[x, y] == 1 && !MAP.ContainsKey(tileKey))
                     {
-                        tilemap.SetTile(new Vector3Int(x, y, 0), tile);
+                        tilemap.SetTile(tilelocation, tile);
+                        tileData.GridLocation = tilelocation;
+                        MAP.Add(tileKey,tileData);
                     }
                 }
             }
         }
+
+
 
         public void UpdateMap(int[,] map, Tilemap tilemap) //Takes in our map and tilemap, setting null tiles where needed
         {
@@ -129,7 +142,6 @@ namespace NightmareEchoes.Grid
                 }
             }
         }
-
 
         public void GetMouseTilePos()
         {
@@ -149,17 +161,20 @@ namespace NightmareEchoes.Grid
 
                 prevTilePos = TilePos;
 
-                if (PlayerTest.activeSelf == false)
+                if (StartPos.activeSelf == false)
                 {
-                    PlayerTest.SetActive(true);
+                    StartPos.SetActive(true);
                     spawnPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-                    Debug.Log("Spawned  Player on Screen and is currently at position " + spawnPos);
-                    PlayerTest.transform.position = spawnPos;
+                    StartPos.transform.position = spawnPos;
                 }
-                else if (PlayerTest.activeSelf == true)
+                else
                 {
-                    spawnPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-                    PlayerTest.transform.position = spawnPos;
+                    endPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
+                    
+                    
+                    //StartPos.transform.position = spawnPos;
+/*                    var path = pathfinder.FindPath(StartPos,endPos);*/
+                    Debug.Log("Second Mouse Click is on" + spawnPos);
                 }
             }
         }
@@ -184,17 +199,16 @@ namespace NightmareEchoes.Grid
 
                 prevTilePos = TilePos;
 
-                if (PlayerTest2.activeSelf == false)
+                if (EndPos.activeSelf == false)
                 {
-                    PlayerTest2.SetActive(true);
+                    EndPos.SetActive(true);
                     spawnPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-                    Debug.Log("Spawned  Player on Screen and is currently at position " + spawnPos);
-                    PlayerTest2.transform.position = spawnPos;
+                    EndPos.transform.position = spawnPos;
                 }
-                else if (PlayerTest2.activeSelf == true)
+                else if (EndPos.activeSelf == true)
                 {
                     spawnPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-                    PlayerTest2.transform.position = spawnPos;
+                    EndPos.transform.position = spawnPos;
                 }
             }
         }

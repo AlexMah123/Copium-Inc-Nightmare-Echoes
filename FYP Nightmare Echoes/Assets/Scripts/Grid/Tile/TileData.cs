@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-//created by JH, editted by Alex
+//created by JH, editted by Alex , used by Vinn
 namespace NightmareEchoes.Grid
 {
     [CreateAssetMenu(menuName = "Tile")]
@@ -24,10 +24,16 @@ namespace NightmareEchoes.Grid
         [SerializeField] bool _isPassable;
         [SerializeField] bool _isDestructable;
         
-        //Attributes
-        [SerializeField] int _cost;
-        [SerializeField] TileType _tileType;
-
+        //PathFinding Attributes
+        public int _Gcost;
+        public int _Hcost;
+        public bool isBlocked;
+        public TileData prevTile;
+        public TileData StartTile;
+        public TileData EndTile;
+        public Vector3Int GridLocation;
+        public TileType _tileType;
+        
 
     
         #region Class Properties
@@ -85,10 +91,9 @@ namespace NightmareEchoes.Grid
             private set => _isDestructable = value;
         }
 
-        public int Cost
+        public int Fcost
         {
-            get => _cost;
-            private set => _cost = value;
+            get { return _Gcost + _Hcost; }
         }
 
         public TileType TileType
