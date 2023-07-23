@@ -554,9 +554,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spr: {fileID: 347867273}
-  enemyManual: {fileID: 1837822610}
+  enemyManual: {fileID: 396573575}
   HP: 3
   Dist: 0
+--- !u!1 &396573575 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5583804447610931201, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+  m_PrefabInstance: {fileID: 1429316038}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &439802446
 GameObject:
   m_ObjectHideFlags: 0
@@ -4593,11 +4598,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &1837822610 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-  m_PrefabInstance: {fileID: 128770038}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1871147926
 GameObject:
   m_ObjectHideFlags: 0
