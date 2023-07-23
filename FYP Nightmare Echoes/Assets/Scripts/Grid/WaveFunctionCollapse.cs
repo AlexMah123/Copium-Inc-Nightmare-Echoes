@@ -14,32 +14,38 @@ namespace NightmareEchoes.Grid
 
         private List<TileData> tileList;
 
-        void Observe()
+        void ObserveAndCollapse()
         {
             //Find lowest nonzero entropy
             var lowestEntropyCells = FindLowestEntropy(entropy, tileList.Count);
             
             //Pick random cell
             var cell = lowestEntropyCells[Random.Range(0, lowestEntropyCells.Count)];
-
+            var cellX = cell[0];
+            var cellZ = cell[1];
+            
             //List valid patterns of cell
             List<int> validPatterns = new List<int>();
             for (var i = 0; i < wave.GetLength(2); i++)
             {
-                if (wave[cell[0], cell[1], i] == 1)
+                if (wave[cellX, cellZ, i] == 1)
                     validPatterns.Add(i);
             }
             
-            //Select random valid (True) pattern
+            //Pick random valid (True) pattern
             var result = Random.Range(0, validPatterns.Count);
             
-            //Set 
-        }
-
-        void Collapse()
-        {
-            //Assign selected pattern
             //Set all patterns to false
+            for (var j = 0; j < wave.GetLength(2); j++)
+            {
+                wave[cellX, cellZ, j] = 0;
+            }
+            
+            //Set selected pattern to true
+            wave[cellX, cellZ, result] = 1;
+
+            //Update entropy
+            entropy[cellX, cellZ] = 0;
         }
 
         void Propagate()
