@@ -9,11 +9,22 @@ namespace NightmareEchoes.Grid
 {
     public class WaveFunctionCollapse : MonoBehaviour
     {
+        private int xSize, zSize;
+        private bool[,] collapsed;
         private int[,,] wave;
         private int[,] entropy;
 
         private List<TileData> tileList;
 
+        //Stack to check for neighbouring cells
+        Stack<int[]> neighbours = new Stack<int[]>();
+        
+        private static readonly int[,] cardinals = 
+        {   { 1, 0 },       //N 
+            { 0, 1 },       //E
+            { -1, 0 },      //S
+            { 0, -1 } };    //W
+        
         void ObserveAndCollapse()
         {
             //Find lowest nonzero entropy
@@ -46,10 +57,26 @@ namespace NightmareEchoes.Grid
 
             //Update entropy
             entropy[cellX, cellZ] = 0;
+            collapsed[cellX, cellZ] = true;
+            
+            Propagate(cell);
         }
 
-        void Propagate()
+        void Propagate(int[] cell)
         {
+            //Add valid neighbours to stack
+            for (var i = 0; i < cardinals.GetLength(0); i++)
+            {
+                var neighbour = new[] {cell[0] + cardinals[i,0], cell[1] + cardinals[i, 1]};
+                //Check for out of bounds
+                if (neighbour[0] < 0 || neighbour[1] < 0 || neighbour[0] >= xSize || neighbour[1] >= zSize)
+                    continue;
+                
+                //Add to stack if not collapsed
+                if (!collapsed[neighbour[0],neighbour[1]])
+                    neighbours.Push(neighbour);
+            }
+
             //Check neighbouring cells
             //Set false to non-valid patterns
             //Repeat until all neighbouring cells accounted for
@@ -94,6 +121,8 @@ namespace NightmareEchoes.Grid
         
         void Main(int x, int z, int n)
         {
+            xSize = x;
+            zSize = z;
             //Output dimensions' valid patterns (1=T/0=F)
             //False = pattern is no longer valid
             //n = number of patterns (placeholder rn)
@@ -115,12 +144,17 @@ namespace NightmareEchoes.Grid
             //Higher entropy = more patterns
             entropy = new int[x, z];
             
+            //Output dimensions' collapsed state
+            //True => collapsed
+            collapsed = new bool[x, z];
+
             //Set all entropies to highest
             for (var a = 0; a < x; a++)
             {
                 for (var b = 0; b < z; b++)
                 {
                     entropy[a, b] = n;
+                    collapsed[a, b] = false;
                 }
             }
             //##Init##
