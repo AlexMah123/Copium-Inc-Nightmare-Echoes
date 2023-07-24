@@ -4,6 +4,7 @@ using UnityEngine;
 using NightmareEchoes.Unit;
 using System.Linq;
 using System;
+using UnityEditor.Search;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -20,12 +21,12 @@ namespace NightmareEchoes.TurnOrder
         public EndPhase endPhase = new EndPhase();
 
         [Header("Turn Order")]
-        [NonSerialized] public BaseUnit[] unitArray;
         [SerializeField] List<BaseUnit> turnOrderList;
+        Queue<BaseUnit> unitQueue = new Queue<BaseUnit>();
         public float delay;
 
         [SerializeField] BaseUnit currentUnit;
-        public int currentUnitIterator = 0;
+        public bool runOnce = false;
 
         #region Class Properties
         public BaseUnit CurrentUnit
@@ -34,10 +35,10 @@ namespace NightmareEchoes.TurnOrder
             set { currentUnit = value; }
         }
 
-        public List<BaseUnit> TurnOrderList
+        public Queue<BaseUnit> UnitQueue
         {
-            get { return turnOrderList; }
-            private set { turnOrderList = value; }
+            get { return unitQueue; }
+            private set { unitQueue = value; }
         }
         #endregion
 
@@ -60,10 +61,14 @@ namespace NightmareEchoes.TurnOrder
 
         void Update()
         {
+            
+
             if(currentPhase != null)
             {
                 currentPhase.OnUpdatePhase();
             }
+
+
         }
 
         public void ChangePhase(Phase newPhase)
@@ -81,10 +86,16 @@ namespace NightmareEchoes.TurnOrder
         #region Turn Order Calculations
         public void CalculatedTurnOrder()
         {
-            unitArray = FindObjectsOfType<BaseUnit>();
-            turnOrderList = unitArray.ToList();
+            turnOrderList = FindObjectsOfType<BaseUnit>().ToList();
             turnOrderList.Sort(CompareSpeed); //sorts in ascending order
             turnOrderList.Reverse();
+
+            UnitQueue.Clear();
+
+            for(int i = 0; i < turnOrderList.Count; i++)
+            {
+                UnitQueue.Enqueue(turnOrderList[i]);
+            }
 
             //Debug.Log("Calculate turn order");
             //Debug.Log(turnOrderList[0]);

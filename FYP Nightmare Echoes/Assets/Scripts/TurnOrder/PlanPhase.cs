@@ -8,6 +8,7 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
+            //calculate once
             controller.StartCoroutine(Planning());
         }
 

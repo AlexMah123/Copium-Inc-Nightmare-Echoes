@@ -8,20 +8,22 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
-            UIManager.Instance.EnablePlayerUI(true);
 
         }
 
         protected override void OnUpdate()
         {
-            
+            if (controller.UnitQueue.Count <= 0)
+            {
+                controller.ChangePhase(controller.endPhase);
+            }
         }
 
         protected override void OnExit()
         {
-            if (controller.currentUnitIterator < controller.TurnOrderList.Count)
+            if (controller.UnitQueue.Count > 0)
             {
-                controller.CurrentUnit = controller.TurnOrderList[controller.currentUnitIterator++];
+                controller.CurrentUnit = controller.UnitQueue.Dequeue();
             }
         }
     }

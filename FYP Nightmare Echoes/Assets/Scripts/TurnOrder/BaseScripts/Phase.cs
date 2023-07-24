@@ -10,17 +10,44 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnEnterPhase(TurnOrderController turnOrderController)
         {
+            //assigns the controller as reference
             controller = turnOrderController;
-            controller.CalculatedTurnOrder();
+
+            //only run once to calculate the turn order and enqueue
+            if(!controller.runOnce)
+            {
+                controller.CalculatedTurnOrder();
+                controller.runOnce = true;
+            }
+
+            //updates the UI for turn order
             UIManager.Instance.UpdateTurnOrderUI();
 
-            controller.CurrentUnit = controller.TurnOrderList[controller.currentUnitIterator];
+            //updates the current unit for turn order
+            if(controller.UnitQueue.Count > 0) 
+            {
+                controller.CurrentUnit = controller.UnitQueue.Peek();
+            }
+
+            #region UI
+            if (controller.currentPhase == controller.playerPhase)
+            {
+                UIManager.Instance.EnablePlayerUI(true);
+            }
+            else
+            {
+                UIManager.Instance.EnablePlayerUI(false);
+            }
+
+            #endregion
 
             OnEnter();
         }
 
         public void OnUpdatePhase()
         {
+            
+
             OnUpdate();
         }
 

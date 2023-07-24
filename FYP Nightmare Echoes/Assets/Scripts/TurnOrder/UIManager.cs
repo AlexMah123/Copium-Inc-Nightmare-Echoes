@@ -29,7 +29,7 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] Color enemyTurn;
 
         [Header("Hotbar Info")]
-        [SerializeField] List<Button> currentUnitButton;
+        [SerializeField] List<Button> currentUnitButtonList;
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
         BaseUnit currentUnit { get => TurnOrderController.Instance.CurrentUnit; set { }}
@@ -74,10 +74,6 @@ namespace NightmareEchoes.TurnOrder
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                ShuffleTurnOrder();
-            }
 
             if(currentUnit != null)
             {
@@ -145,10 +141,10 @@ namespace NightmareEchoes.TurnOrder
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.endPhase)
             {
-
+                turnIndicatorText.text = $"End's Phase";
             }
 
-            
+
             #endregion
 
 
@@ -228,7 +224,7 @@ namespace NightmareEchoes.TurnOrder
 
 
             //sets all the images in the panel
-            for (int i = 0; i < TurnOrderController.Instance.TurnOrderList.Count; i++)
+            for (int i = 0; i < TurnOrderController.Instance.UnitQueue.Count; i++)
             {
                 GameObject image = GetImageObject();
 
@@ -236,7 +232,7 @@ namespace NightmareEchoes.TurnOrder
                 {
                     image.SetActive(true);
 
-                    if (TurnOrderController.Instance.TurnOrderList[i].IsHostile)
+                    if (TurnOrderController.Instance.UnitQueue.ToArray()[i].IsHostile)
                     {
                         image.GetComponent<Image>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
 
@@ -249,18 +245,6 @@ namespace NightmareEchoes.TurnOrder
             }
 
             
-        }
-
-        public void ShuffleTurnOrder()
-        {
-            //stores the image to add and removes it from the first index of list
-            GameObject firstImage = imageObjectPool[0];
-            imageObjectPool.RemoveAt(0);
-
-
-            //add the stored image to the end of the list and sets that image as the last in the rect transform list
-            firstImage.GetComponent<RectTransform>().SetAsLastSibling();
-            imageObjectPool.Add(firstImage);
         }
 
         GameObject GetImageObject()
@@ -278,7 +262,7 @@ namespace NightmareEchoes.TurnOrder
 
         public void EnablePlayerUI(bool enable)
         {
-            foreach (Button button in currentUnitButton)
+            foreach (Button button in currentUnitButtonList)
             {
                 button.interactable = enable;
             }

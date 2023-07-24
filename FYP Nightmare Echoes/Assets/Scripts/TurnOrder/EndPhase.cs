@@ -8,7 +8,7 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
-
+            controller.StartCoroutine(newTurn());
         }
 
         protected override void OnUpdate()
@@ -18,7 +18,16 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
+            
+        }
 
+        IEnumerator newTurn()
+        {
+            yield return new WaitForSeconds(controller.delay);
+
+            //resets
+            controller.runOnce = false;
+            controller.ChangePhase(controller.startPhase);
         }
     }
 }

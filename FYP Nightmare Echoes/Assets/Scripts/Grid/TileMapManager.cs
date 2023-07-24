@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-//using NightmareEchoes.UI;
+using NightmareEchoes.TurnOrder;
 
 //created by Jian Hua, editted by Vinn and Terrence and Alex
 namespace NightmareEchoes.Grid
@@ -58,10 +58,10 @@ namespace NightmareEchoes.Grid
 
         public void Update()
         {
-/*           if (UIManager.Instance.gameIsPaused)
+            if (UIManager.Instance.gameIsPaused)
             {
                 return;
-            }*/
+            }
 
             if (Input.GetMouseButtonDown(1))
             {

@@ -1284,7 +1284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6443a6071326c08458a0b1b1aab95fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 0}
 --- !u!120 &728790618
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -2962,7 +2961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3291,7 +3290,7 @@ MonoBehaviour:
   turnOrderList: []
   delay: 2
   currentUnit: {fileID: 0}
-  currentUnitIterator: 0
+  runOnce: 0
 --- !u!1 &1270077650
 GameObject:
   m_ObjectHideFlags: 0
@@ -3602,7 +3601,7 @@ MonoBehaviour:
   turnIndicatorText: {fileID: 1002185923}
   playerTurn: {r: 0.35686275, g: 0.47058827, b: 0.9607844, a: 0}
   enemyTurn: {r: 0.9333334, g: 0.41960788, b: 0.41960788, a: 0}
-  currentUnitButton:
+  currentUnitButtonList:
   - {fileID: 1277963032}
   - {fileID: 1969376221}
   - {fileID: 484320849}
@@ -4688,7 +4687,7 @@ MonoBehaviour:
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
   m_HideEditorLogs: 0
-  m_NavMeshData: {fileID: 23800000, guid: 239b50f0c02a2fb4a8b0aa8983dd4641, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: e9926c9a084d683409909b17ce674bc4, type: 2}
 --- !u!4 &1845214533
 Transform:
   m_ObjectHideFlags: 0
