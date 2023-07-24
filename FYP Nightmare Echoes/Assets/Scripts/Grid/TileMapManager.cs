@@ -72,10 +72,10 @@ namespace NightmareEchoes.Grid
                 //GetMouseTilePos2();
             }
 
-            if (Input.GetMouseButtonDown(0))
+            /*if (Input.GetMouseButtonDown(0))
             {
                 GetMouseTilePos();
-            }
+            }*/
 
         }
 
@@ -140,7 +140,7 @@ namespace NightmareEchoes.Grid
             }
         }
 
-        public void GetMouseTilePos()
+        public Vector3 GetMouseTilePos()
         {
             Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             TilePos = tilemap.WorldToCell(MousePos);
@@ -172,6 +172,8 @@ namespace NightmareEchoes.Grid
                     Debug.Log("Second Mouse Click is on" + spawnPos);
                 }
             }
+
+            return spawnPos;
         }
 
         //this section by Terrence, spawning on tiles proof of concept

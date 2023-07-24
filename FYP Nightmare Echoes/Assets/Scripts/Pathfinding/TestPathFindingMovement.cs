@@ -26,19 +26,20 @@ namespace NightmareEchoes.Pathfinding
         void Update()
         {
             SetTargetPos();
-            SetAgentPos();
+            //SetAgentPos();
         }
 
         private void SetTargetPos()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                target = TileMapManager.Instance.SpawnPos;
+                target = TileMapManager.Instance.GetMouseTilePos();
+                SetAgentPos(target);
                 //target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
         }
 
-        private void SetAgentPos()
+        private void SetAgentPos(Vector3 target)
         {
             agent.SetDestination(new Vector3(target.x, target.y, transform.position.z));
         }
