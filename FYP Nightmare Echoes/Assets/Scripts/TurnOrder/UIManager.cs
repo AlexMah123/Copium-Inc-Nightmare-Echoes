@@ -177,26 +177,26 @@ namespace NightmareEchoes.TurnOrder
         #region Hotbar Functions
         public void AttackButton()
         {
-            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
             currentUnit.BasicAttack();
+            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
         }
 
         public void Skill1Button()
         {
-            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
             currentUnit.Skill1();
+            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
         }
 
         public void Skill2Button()
         {
-            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
             currentUnit.Skill2();
+            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
         }
 
         public void Skill3Button()
         {
-            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
             currentUnit.Skill3();
+            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
         }
         #endregion
 

@@ -27,7 +27,7 @@ namespace NightmareEchoes.Unit
         #region Abilities()
         public override void BasicAttack()
         {
-            _direction = Direction.West;
+            Direction = Direction.West;
         }
 
         public override void Passive()

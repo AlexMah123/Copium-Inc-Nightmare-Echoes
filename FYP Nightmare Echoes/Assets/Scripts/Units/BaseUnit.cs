@@ -140,7 +140,6 @@ namespace NightmareEchoes.Unit
                 }
             }
 
-            
         }
 
         public abstract void BasicAttack();
