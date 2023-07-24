@@ -12,8 +12,7 @@ namespace NightmareEchoes.Grid
     public class TileMapManager : MonoBehaviour
     {
         [Header("Singleton stuff")]
-        private static TileMapManager _instance; 
-        public static TileMapManager Instance { get { return _instance; } }
+        public static TileMapManager Instance;
 
         [Header("Grid")]
         [SerializeField] public int width;
@@ -34,6 +33,11 @@ namespace NightmareEchoes.Grid
         [SerializeField] private GameObject EndPos;
         [SerializeField] public GameObject spawnTest;
 
+        public Vector3 SpawnPos
+        {
+            get => spawnPos;
+            private set => spawnPos = value;
+        }
       
 
         private void Awake()
@@ -41,13 +45,13 @@ namespace NightmareEchoes.Grid
             tilemap = GetComponent<Tilemap>();
             tilemapRenderer = GetComponent<TilemapRenderer>();
 
-            if (_instance != null && _instance != this)
+            if (Instance != null && Instance != this)
             {
                 Destroy(this.gameObject);
             }
             else
-            { 
-                _instance = this;
+            {
+                Instance = this;
             }
         }
 
@@ -173,9 +177,9 @@ namespace NightmareEchoes.Grid
         //this section by Terrence, spawning on tiles proof of concept
         public void GetMouseTilePos2()
         {
+
         }
 
-        public Vector3 getSpawnPos() { return spawnPos; }
     }
 
 

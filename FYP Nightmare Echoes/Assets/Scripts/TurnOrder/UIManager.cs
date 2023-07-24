@@ -149,7 +149,7 @@ namespace NightmareEchoes.TurnOrder
 
 
             #region InspectedUnit
-            if (Input.GetMouseButtonDown(0)) // rightclick on an inspectable unit
+            if (Input.GetMouseButtonDown(1)) // rightclick on an inspectable unit
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);

@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5583804447610931203}
   - component: {fileID: 5583804447610931200}
   - component: {fileID: 8893637955381217503}
+  - component: {fileID: 396573582}
   - component: {fileID: 5583804447610931213}
   - component: {fileID: 5583804447610931202}
   - component: {fileID: 797862902205244136}
-  - component: {fileID: 396573582}
   - component: {fileID: 396573583}
   m_Layer: 0
   m_Name: PlayerTest2
@@ -115,6 +115,19 @@ MonoBehaviour:
   skill3Desc: Melee Skill 3
   passiveDesc: Melee Passive
   sprites: []
+--- !u!114 &396573582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583804447610931201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddfaa3d3d6cb6d2479fc343c53e9be48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {x: 0, y: 0, z: 0}
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4
@@ -182,18 +195,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &396573582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583804447610931201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddfaa3d3d6cb6d2479fc343c53e9be48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!195 &396573583
 NavMeshAgent:
   m_ObjectHideFlags: 0
