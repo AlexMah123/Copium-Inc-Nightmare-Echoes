@@ -11,11 +11,9 @@ GameObject:
   - component: {fileID: 5583804447610931203}
   - component: {fileID: 5583804447610931200}
   - component: {fileID: 8893637955381217503}
-  - component: {fileID: 396573582}
   - component: {fileID: 5583804447610931213}
   - component: {fileID: 5583804447610931202}
   - component: {fileID: 797862902205244136}
-  - component: {fileID: 396573583}
   m_Layer: 0
   m_Name: PlayerTest2
   m_TagString: Inspectable
@@ -115,18 +113,6 @@ MonoBehaviour:
   skill3Desc: Melee Skill 3
   passiveDesc: Melee Passive
   sprites: []
---- !u!114 &396573582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583804447610931201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddfaa3d3d6cb6d2479fc343c53e9be48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4
@@ -194,25 +180,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!195 &396573583
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583804447610931201}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 0.203125
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
