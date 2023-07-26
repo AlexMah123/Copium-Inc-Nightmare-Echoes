@@ -6,6 +6,15 @@ namespace NightmareEchoes.Grid
 {
    public class OverlayTile : MonoBehaviour
     {
+        public int G;
+        public int H;
+
+        public int F { get { return G + H; } }
+
+        public bool isBlocked;
+        public OverlayTile prevTile;
+
+        public Vector3Int gridLocation;
         // Update is called once per frame
         void Update()
         {

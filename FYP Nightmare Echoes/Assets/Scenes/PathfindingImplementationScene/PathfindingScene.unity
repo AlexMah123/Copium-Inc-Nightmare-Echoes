@@ -225,7 +225,6 @@ GameObject:
   m_Component:
   - component: {fileID: 948528301}
   - component: {fileID: 948528300}
-  - component: {fileID: 948528299}
   - component: {fileID: 948528302}
   m_Layer: 0
   m_Name: Cursor
@@ -234,18 +233,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &948528299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 948528298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e48d170b8f7cc54198dfc0544fde9aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &948528300
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -325,6 +312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09486d63b7e8614583b4af5f5d5d59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 5
+  characterPrefab: {fileID: 3376283141138650508, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
 --- !u!1 &1791348097
 GameObject:
   m_ObjectHideFlags: 0
