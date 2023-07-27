@@ -23,7 +23,7 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator Start()
         {
-            yield return new WaitForSeconds(controller.delay);
+            yield return new WaitForSeconds(controller.phaseDelay);
 
             if (!controller.CurrentUnit.IsHostile)
             {

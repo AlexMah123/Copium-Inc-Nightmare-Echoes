@@ -25,7 +25,7 @@ namespace NightmareEchoes.TurnOrder
         IEnumerator Planning()
         {
 
-            yield return new WaitForSeconds(controller.delay);
+            yield return new WaitForSeconds(controller.phaseDelay);
             controller.ChangePhase(controller.startPhase);
 
         }

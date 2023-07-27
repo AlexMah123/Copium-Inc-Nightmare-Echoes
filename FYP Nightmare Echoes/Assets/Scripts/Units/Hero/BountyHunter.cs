@@ -26,7 +26,7 @@ namespace NightmareEchoes.Unit
         #region Abilities()
         public override void BasicAttack()
         {
-            _direction = Direction.West;
+            Direction = Direction.West;
         }
 
         public override void Passive()
@@ -47,6 +47,17 @@ namespace NightmareEchoes.Unit
         public override void Skill3()
         {
 
+        }
+
+        public override void TakeDamage(int damage)
+        {
+            Health -= damage;
+        }
+
+        [ContextMenu("Take Damage (2)")]
+        public void TestDamage()
+        {
+            TakeDamage(2);
         }
 
         #endregion

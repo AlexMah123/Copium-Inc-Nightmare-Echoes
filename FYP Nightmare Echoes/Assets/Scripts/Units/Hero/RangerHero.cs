@@ -50,6 +50,17 @@ namespace NightmareEchoes.Unit
             
         }
 
+        public override void TakeDamage(int damage)
+        {
+            Health -= damage;
+        }
+
+        [ContextMenu("Take Damage (5)")]
+        public void TestDamage()
+        {
+            TakeDamage(2);
+        }
+
         #endregion
 
     }

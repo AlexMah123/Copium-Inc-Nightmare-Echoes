@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1379659812160853256}
   - component: {fileID: 6033231415255079352}
+  - component: {fileID: 347867275}
   m_Layer: 0
   m_Name: CircleTest
   m_TagString: Untagged
@@ -70,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 21681451
-  m_SortingLayer: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: d51ad598756daf04fb3ae20c91ff8e6b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -84,3 +85,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &347867275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5373333754093515207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4976a2521735804d998444c979ed868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spr: {fileID: 6033231415255079352}
+  enemyManual: {fileID: 0}
+  HP: 3
+  Dist: 0

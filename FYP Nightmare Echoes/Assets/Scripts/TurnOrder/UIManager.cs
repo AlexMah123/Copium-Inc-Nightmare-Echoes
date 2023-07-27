@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using NightmareEchoes.Unit;
 using NightmareEchoes.TurnOrder;
+using System.ComponentModel;
+using Unity.Collections;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -32,7 +34,7 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] List<Button> currentUnitButtonList;
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
-        BaseUnit currentUnit { get => TurnOrderController.Instance.CurrentUnit; set { }}
+        BaseUnit CurrentUnit { get => TurnOrderController.Instance.CurrentUnit;}
 
         [Header("Inspectable Info")]
         [SerializeField] BaseUnit inspectedUnit;
@@ -75,20 +77,29 @@ namespace NightmareEchoes.TurnOrder
         private void Update()
         {
 
-            if(currentUnit != null)
+            if(CurrentUnit != null)
             {
-                currentUnitNameText.text = $"{currentUnit.Name}";
+                currentUnitNameText.text = $"{CurrentUnit.Name}";
             }
 
-            #region current unit related
-            if (currentUnit != null)
+            #region current unit indicator
+            if (CurrentUnit != null)
             {
                 if (!indicator.activeSelf)
                 {
                     indicator.SetActive(true);
                 }
 
-                indicator.transform.position = new Vector3(currentUnit.transform.position.x, currentUnit.transform.position.y + offset, currentUnit.transform.position.z) 
+                if(CurrentUnit.IsHostile) 
+                {
+                    indicator.GetComponent<SpriteRenderer>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b, enemyTurn.a);
+                }
+                else
+                {
+                    indicator.GetComponent<SpriteRenderer>().color = new Color(playerTurn.r, playerTurn.g, playerTurn.b, playerTurn.a);
+                }
+
+                indicator.transform.position = new Vector3(CurrentUnit.transform.position.x, CurrentUnit.transform.position.y + offset, CurrentUnit.transform.position.z) 
                     + transform.up * Mathf.Sin(Time.time * frequency) * magnitude;
             }
             else
@@ -97,6 +108,7 @@ namespace NightmareEchoes.TurnOrder
             }
 
             #endregion
+
 
             #region TurnOrderPanel
 
@@ -177,27 +189,49 @@ namespace NightmareEchoes.TurnOrder
         #region Hotbar Functions
         public void AttackButton()
         {
-            currentUnit.BasicAttack();
-            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
+            CurrentUnit.BasicAttack();
+            PassTurn();
         }
 
         public void Skill1Button()
         {
-            currentUnit.Skill1();
-            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
+            CurrentUnit.Skill1();
+            PassTurn();
         }
 
         public void Skill2Button()
         {
-            currentUnit.Skill2();
-            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
+            CurrentUnit.Skill2();
+            PassTurn();
         }
 
         public void Skill3Button()
         {
-            currentUnit.Skill3();
-            TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
+            CurrentUnit.Skill3();
+            PassTurn();
         }
+
+        private void PassTurn()
+        {
+            //if there is at least 2 elements in queue
+            if (TurnOrderController.Instance.UnitQueue.Count > 1)
+            {
+                //if the second element exist, check hostile and change accordingly, else endPhase
+                if (TurnOrderController.Instance.UnitQueue.ToArray()[1].IsHostile)
+                {
+                    TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
+                }
+                else
+                {
+                    TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.playerPhase);
+                }
+            }
+            else
+            {
+                TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.endPhase);
+            }
+        }
+
         #endregion
 
 
@@ -234,12 +268,12 @@ namespace NightmareEchoes.TurnOrder
 
                     if (TurnOrderController.Instance.UnitQueue.ToArray()[i].IsHostile)
                     {
-                        image.GetComponent<Image>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
+                        image.GetComponent<Image>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b, enemyTurn.a);
 
                     }
                     else
                     {
-                        image.GetComponent<Image>().color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
+                        image.GetComponent<Image>().color = new Color(playerTurn.r, playerTurn.g, playerTurn.b, playerTurn.a);
                     }
                 }
             }

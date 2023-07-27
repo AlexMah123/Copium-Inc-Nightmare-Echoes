@@ -8,6 +8,8 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
+            //controller.CurrentUnit.TakeDamage(2);
+            //Debug.Log($"{controller.CurrentUnit.Name} - Taking Damage, Current Health: {controller.CurrentUnit.Health}");
             controller.StartCoroutine(EnemyTurn());
         }
 
@@ -21,14 +23,37 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-            
+            //when you change phases, change the current unit to the next unit
+            if (controller.UnitQueue.Count > 0)
+            {
+                controller.UnitQueue.Dequeue();
+            }
         }
 
         IEnumerator EnemyTurn()
         {
-            yield return new WaitForSeconds(controller.delay);
-            controller.ChangePhase(controller.playerPhase);
+            
+            yield return new WaitForSeconds(controller.enemyDelay);
 
+
+            //if there is at least 2 elements in queue
+            if (controller.UnitQueue.Count > 1)
+            {
+                //if the second element exist, check hostile and change accordingly, else endPhase
+                if (controller.UnitQueue.ToArray()[1].IsHostile)
+                {
+                    controller.ChangePhase(TurnOrderController.Instance.enemyPhase);
+                }
+                else
+                {
+                    controller.ChangePhase(TurnOrderController.Instance.playerPhase);
+
+                }                
+            }
+            else
+            {
+                controller.ChangePhase(TurnOrderController.Instance.endPhase);
+            }
         }
     }
 }

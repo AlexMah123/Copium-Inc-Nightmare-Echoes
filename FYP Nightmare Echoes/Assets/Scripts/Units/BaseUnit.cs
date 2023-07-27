@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 namespace NightmareEchoes.Unit
@@ -119,7 +120,7 @@ namespace NightmareEchoes.Unit
         {
             if(sprites.Count > 0)
             {
-                switch (_direction)
+                switch (Direction)
                 {
                     case Direction.North:
                         spriteRenderer.sprite = sprites[(int)Direction.North];
@@ -151,6 +152,9 @@ namespace NightmareEchoes.Unit
         public abstract void Skill2();
 
         public abstract void Skill3();
+
+        public abstract void TakeDamage(int damage);
+
 
         #region collision
         protected virtual void OnMouseDown()

@@ -104,19 +104,19 @@ MonoBehaviour:
   _name: Ranger
   _health: 20
   _speed: 10
-  _isHostile: 0
+  _isHostile: 1
   _direction: 0
   _statusEffect: 0
-  basicAttackDesc: 
-  skill1Desc: 
-  skill2Desc: 
-  skill3Desc: 
-  passiveDesc: 
+  basicAttackDesc: Ranger Basic Attack
+  skill1Desc: Ranger Skill 1
+  skill2Desc: Ranger Skill 2
+  skill3Desc: Ranger Skill 3
+  passiveDesc: Ranger Passive
   sprites:
   - {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: 542052453, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  - {fileID: -771589304, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: -6517823, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
 --- !u!95 &601295390074279017
 Animator:
   serializedVersion: 4

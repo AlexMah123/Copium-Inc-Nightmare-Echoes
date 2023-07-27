@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using NightmareEchoes.Unit;
 using System.Linq;
-using System;
-using UnityEditor.Search;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -23,7 +21,8 @@ namespace NightmareEchoes.TurnOrder
         [Header("Turn Order")]
         [SerializeField] List<BaseUnit> turnOrderList;
         Queue<BaseUnit> unitQueue = new Queue<BaseUnit>();
-        public float delay;
+        public float phaseDelay;
+        public float enemyDelay;
 
         [SerializeField] BaseUnit currentUnit;
         public bool runOnce = false;
@@ -67,7 +66,6 @@ namespace NightmareEchoes.TurnOrder
             {
                 currentPhase.OnUpdatePhase();
             }
-
 
         }
 

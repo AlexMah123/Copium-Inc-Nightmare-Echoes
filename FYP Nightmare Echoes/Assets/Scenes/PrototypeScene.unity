@@ -330,7 +330,7 @@ SpriteRenderer:
   m_SortingLayerID: -1735001907
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 9a1a4965cbbf48547a161cee73fd1ffb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e7a4400e64c3dc94088cbadbd5a71016, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -366,22 +366,6 @@ PrefabInstance:
     - target: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_Name
       value: BountyHunter
-      objectReference: {fileID: 0}
-    - target: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2048295167523587102, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: m_SortingLayer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2048295167523587102, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2048295167523587102, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1735001907
       objectReference: {fileID: 0}
     - target: {fileID: 2658365863807529696, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_RootOrder
@@ -428,36 +412,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: _speed
+      propertyPath: _health
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: _isHostile
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: skill1Desc
-      value: Bounty Hunter Skill 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: skill2Desc
-      value: Bounty Hunter Skill 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: skill3Desc
-      value: Bounty Hunter Skill 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: passiveDesc
-      value: Bounty Hunter Passive
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: _unitScriptable
-      value: 
-      objectReference: {fileID: 11400000, guid: 3b58b24257d5c214d8d8640aa1862bf9, type: 2}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: basicAttackDesc
-      value: Bounty Hunter Basic Attack
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db783668a420270479acb37d5a8b55f2, type: 3}
@@ -543,32 +503,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 246703317}
   m_CullTransparentMesh: 1
---- !u!1 &347867272 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5373333754093515207, guid: 8daa09bbf8803924c82692d898a92c26, type: 3}
-  m_PrefabInstance: {fileID: 629741084}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &347867273 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6033231415255079352, guid: 8daa09bbf8803924c82692d898a92c26, type: 3}
-  m_PrefabInstance: {fileID: 629741084}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &347867275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347867272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4976a2521735804d998444c979ed868, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spr: {fileID: 347867273}
-  enemyManual: {fileID: 396573575}
-  HP: 3
-  Dist: 0
 --- !u!1 &396573575 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5583804447610931201, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
@@ -1139,18 +1073,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 299272769170229280, guid: 463e633a246b2bd4cae9f8ba258c3b69, type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 299272769170229280, guid: 463e633a246b2bd4cae9f8ba258c3b69, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 299272769170229280, guid: 463e633a246b2bd4cae9f8ba258c3b69, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 21681451
-      objectReference: {fileID: 0}
     - target: {fileID: 299272769170229281, guid: 463e633a246b2bd4cae9f8ba258c3b69, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -1208,6 +1130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 347867275, guid: 8daa09bbf8803924c82692d898a92c26, type: 3}
+      propertyPath: enemyManual
+      value: 
+      objectReference: {fileID: 396573575}
     - target: {fileID: 1379659812160853256, guid: 8daa09bbf8803924c82692d898a92c26, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1255,14 +1181,6 @@ PrefabInstance:
     - target: {fileID: 5373333754093515207, guid: 8daa09bbf8803924c82692d898a92c26, type: 3}
       propertyPath: m_Name
       value: CircleTest
-      objectReference: {fileID: 0}
-    - target: {fileID: 6033231415255079352, guid: 8daa09bbf8803924c82692d898a92c26, type: 3}
-      propertyPath: m_SortingLayer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6033231415255079352, guid: 8daa09bbf8803924c82692d898a92c26, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1735001907
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8daa09bbf8803924c82692d898a92c26, type: 3}
@@ -3248,7 +3166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnOrderList: []
-  delay: 2
+  phaseDelay: 1
+  enemyDelay: 2
   currentUnit: {fileID: 0}
   runOnce: 0
 --- !u!1 &1270077650
@@ -3559,8 +3478,8 @@ MonoBehaviour:
   imageObjectPool: []
   turnIndicator: {fileID: 569178537}
   turnIndicatorText: {fileID: 1002185923}
-  playerTurn: {r: 0.35686275, g: 0.47058827, b: 0.9607844, a: 0}
-  enemyTurn: {r: 0.9333334, g: 0.41960788, b: 0.41960788, a: 0}
+  playerTurn: {r: 0.35686275, g: 0.47058827, b: 0.9607844, a: 1}
+  enemyTurn: {r: 0.9333334, g: 0.41960788, b: 0.41960788, a: 1}
   currentUnitButtonList:
   - {fileID: 1277963032}
   - {fileID: 1969376221}
@@ -3636,25 +3555,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5583804447610931200, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
-      propertyPath: m_SortingLayer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583804447610931200, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583804447610931200, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1735001907
-      objectReference: {fileID: 0}
     - target: {fileID: 5583804447610931201, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: m_Name
       value: MeleeEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583804447610931202, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5583804447610931203, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: m_RootOrder
@@ -3700,9 +3603,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5583804447610931213, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
-      propertyPath: m_Constraints
-      value: 4
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: _isHostile
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
@@ -5196,48 +5099,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: _speed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: skill1Desc
-      value: Ranger Skill 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: skill2Desc
-      value: Ranger Skill 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: skill3Desc
-      value: Ranger Skill 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: passiveDesc
-      value: Ranger Passive
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: basicAttackDesc
-      value: Ranger Basic Attack
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: sprites.Array.data[3]
-      value: 
-      objectReference: {fileID: -6517823, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-    - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: m_Icon
-      value: 
+      propertyPath: _isHostile
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_Name
       value: Ranger
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279022, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_RootOrder

@@ -8,22 +8,21 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
-
+            //controller.CurrentUnit.TakeDamage(2);
+            //Debug.Log($"{controller.CurrentUnit.Name} - Taking Damage, Current Health: {controller.CurrentUnit.Health}");
         }
 
         protected override void OnUpdate()
         {
-            if (controller.UnitQueue.Count <= 0)
-            {
-                controller.ChangePhase(controller.endPhase);
-            }
+
         }
 
         protected override void OnExit()
         {
+            //when you change phases, change the current unit to the next unit
             if (controller.UnitQueue.Count > 0)
             {
-                controller.CurrentUnit = controller.UnitQueue.Dequeue();
+                controller.UnitQueue.Dequeue();
             }
         }
     }
