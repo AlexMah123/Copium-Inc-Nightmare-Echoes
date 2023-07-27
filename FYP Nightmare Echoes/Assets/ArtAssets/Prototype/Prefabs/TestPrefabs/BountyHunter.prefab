@@ -74,9 +74,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 1830408377, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,12 +100,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2fb42468b76c204cb106a584aee4ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _unitScriptable: {fileID: 0}
   _name: Bounty Hunter
   _health: 20
   _speed: 10
-  _energy: 100
   _isHostile: 0
-  direction: 0
+  _direction: 0
+  _statusEffect: 0
+  basicAttackDesc: 
+  skill1Desc: 
+  skill2Desc: 
+  skill3Desc: 
+  passiveDesc: 
   sprites:
   - {fileID: -1405042302, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: 162367384, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}

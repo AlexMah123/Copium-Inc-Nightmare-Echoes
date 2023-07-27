@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &601295390074279022
 Transform:
   m_ObjectHideFlags: 0
@@ -100,12 +100,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3b9f39b9fb31d41ac2e498d8e534c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _unitScriptable: {fileID: 0}
   _name: Ranger
   _health: 20
   _speed: 10
-  _energy: 100
   _isHostile: 0
-  direction: 1
+  _direction: 0
+  _statusEffect: 0
+  basicAttackDesc: 
+  skill1Desc: 
+  skill2Desc: 
+  skill3Desc: 
+  passiveDesc: 
   sprites:
   - {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: 542052453, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
