@@ -28,6 +28,7 @@ namespace NightmareEchoes.Grid
             {
                 OverlayTile overlayTile = focusedTileHit.Value.collider.gameObject.GetComponent<OverlayTile>();
                 transform.position = overlayTile.transform.position;
+                
                 gameObject.GetComponent<SpriteRenderer>().sortingOrder = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
 
                 if (Input.GetMouseButtonDown(0))

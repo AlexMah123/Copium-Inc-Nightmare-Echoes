@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace NightmareEchoes.Unit
@@ -7,10 +8,11 @@ namespace NightmareEchoes.Unit
     public class Skill : MonoBehaviour
     {
         public string skillName;
-        public int coolDown;
+        public int cooldown;
         public int range;
         public TargetType targetType;
         public AOEType aoeType;
+        public SkillType skillType;
     }
 
     public enum TargetType
@@ -25,6 +27,13 @@ namespace NightmareEchoes.Unit
         NonAOE = 0,
         Square = 1,
         Cross = 2
+    }
+
+    public enum SkillType
+    {
+        Damage = 0,
+        Heal = 1,
+        Others = 2
     }
     
 }

@@ -6,8 +6,6 @@ namespace NightmareEchoes.Unit
 {
     public class MageHero : BaseUnit
     {
-        public Skill basicAttack;
-        
         
         public override void BasicAttack()
         {

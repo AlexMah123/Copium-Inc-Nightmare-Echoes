@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NightmareEchoes.Unit;
+using NightmareEchoes.Grid;
 
 namespace NightmareEchoes.Combat
 {
     public class CombatManager : MonoBehaviour
     {
-       
+        public CursorScript cursor;
         //Dictionary<string,>
 
         //Init
@@ -20,18 +22,15 @@ namespace NightmareEchoes.Combat
         //Player Calls
         public void SelectSkill(Skill skill)
         {
-            
+            //Render Onto Map
         }
-        
-        
+
+
         //Validate
         
         //Logic
         
         //Apply
     }
-
-    public class Skill
-    {
-    }
+    
 }

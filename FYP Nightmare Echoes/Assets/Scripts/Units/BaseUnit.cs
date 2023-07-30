@@ -24,11 +24,17 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected bool _isHostile;
         [SerializeField] protected Direction _direction;
         [SerializeField] protected StatusEffect _statusEffect;
-        [field: TextArea][SerializeField] protected string basicAttackDesc;
-        [field: TextArea][SerializeField] protected string skill1Desc;
-        [field: TextArea][SerializeField] protected string skill2Desc;
-        [field: TextArea][SerializeField] protected string skill3Desc;
-        [field: TextArea][SerializeField] protected string passiveDesc;
+        
+        [Header("Unit Skills")]
+        [SerializeField] protected Skill basicAttack;
+        [field: TextArea(1,1)][SerializeField] protected string basicAttackDesc;
+        [SerializeField] protected Skill skill1;
+        [field: TextArea(1,1)][SerializeField] protected string skill1Desc;
+        [SerializeField] protected Skill skill2;
+        [field: TextArea(1,1)][SerializeField] protected string skill2Desc;
+        [SerializeField] protected Skill skill3;
+        [field: TextArea(1,1)][SerializeField] protected string skill3Desc;
+        [field: TextArea(1,1)][SerializeField] protected string passiveDesc;
 
 
         [Tooltip("Sprites are ordered in north, south, east, west")]
