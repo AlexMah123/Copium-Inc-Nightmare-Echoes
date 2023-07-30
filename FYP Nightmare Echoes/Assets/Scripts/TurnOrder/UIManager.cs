@@ -33,13 +33,26 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] List<Button> currentUnitButtonList;
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
+        [SerializeField] TextMeshProUGUI currentUnitHealthText;
+        [SerializeField] TextMeshProUGUI currentUnitSpeedText;
+        [SerializeField] TextMeshProUGUI currentUnitMoveRangeText;
+        [SerializeField] TextMeshProUGUI currentUnitStunResistText;
+        [SerializeField] TextMeshProUGUI currentUnitResistText;
+        [SerializeField] Slider currentUnitHealth;
         BaseUnit CurrentUnit { get => TurnOrderController.Instance.CurrentUnit;}
 
         [Space(15), Header("Inspectable Info")]
         [SerializeField] BaseUnit inspectedUnit;
-        [SerializeField] List<Button> inspectedUnitButton;
+        [SerializeField] List<Button> inspectedUnitButtonList;
+        [SerializeField] GameObject inspectedUnitPanel;
         [SerializeField] Button inspectedUnitProfile;
         [SerializeField] TextMeshProUGUI inspectedUnitNameText;
+        [SerializeField] TextMeshProUGUI inspectedUnitHealthText;
+        [SerializeField] TextMeshProUGUI inspectedUnitSpeedText;
+        [SerializeField] TextMeshProUGUI inspectedUnitMoveRangeText;
+        [SerializeField] TextMeshProUGUI inspectedUnitStunResistText;
+        [SerializeField] TextMeshProUGUI inspectedUnitResistText;
+        [SerializeField] Slider inspectedUnitHealth;
 
         [Space(15), Header("Settings")]
         [SerializeField] Button settingButton;
@@ -65,22 +78,35 @@ namespace NightmareEchoes.TurnOrder
                 Instance = this;
             }
 
+            //initialize objectpool
             InitImagePool(currentTurnOrderPanel);
 
         }
 
         private void Start()
         {
-
+            inspectedUnitPanel.SetActive(false);
         }
 
         private void Update()
         {
 
-            if(CurrentUnit != null)
+            #region CurrentUnit
+            if (CurrentUnit != null)
             {
+                currentUnitProfile.image.sprite = CurrentUnit.Sprite;
                 currentUnitNameText.text = $"{CurrentUnit.Name}";
+                currentUnitHealthText.text = $"{CurrentUnit.Health}/{CurrentUnit.MaxHealth}";
+                currentUnitSpeedText.text = $"Speed: {CurrentUnit.Speed}";
+                currentUnitMoveRangeText.text = $"Move Range: {CurrentUnit.MoveRange}";
+                currentUnitStunResistText.text = $"Stun Resist: {CurrentUnit.StunResist}%";
+                currentUnitResistText.text = $"Resist: {CurrentUnit.Resist}%";
+
+                currentUnitHealth.maxValue = CurrentUnit.MaxHealth;
+                currentUnitHealth.value = CurrentUnit.Health;
+
             }
+            #endregion
 
             #region current unit indicator
             if (CurrentUnit != null)
@@ -90,7 +116,7 @@ namespace NightmareEchoes.TurnOrder
                     indicator.SetActive(true);
                 }
 
-                if(CurrentUnit.IsHostile) 
+                if (CurrentUnit.IsHostile)
                 {
                     indicator.GetComponent<SpriteRenderer>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b, enemyTurn.a);
                 }
@@ -99,7 +125,7 @@ namespace NightmareEchoes.TurnOrder
                     indicator.GetComponent<SpriteRenderer>().color = new Color(playerTurn.r, playerTurn.g, playerTurn.b, playerTurn.a);
                 }
 
-                indicator.transform.position = new Vector3(CurrentUnit.transform.position.x, CurrentUnit.transform.position.y + offset, CurrentUnit.transform.position.z) 
+                indicator.transform.position = new Vector3(CurrentUnit.transform.position.x, CurrentUnit.transform.position.y + offset, CurrentUnit.transform.position.z)
                     + transform.up * Mathf.Sin(Time.time * frequency) * magnitude;
             }
             else
@@ -109,6 +135,26 @@ namespace NightmareEchoes.TurnOrder
 
             #endregion
 
+            #region InspectedUnit
+            if (Input.GetMouseButtonDown(1)) // rightclick on an inspectable unit
+            {
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+                RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+
+                if (hit.collider != null && hit.collider.gameObject.CompareTag("Inspectable"))
+                {
+                    inspectedUnit = hit.collider.gameObject.GetComponent<BaseUnit>();
+                    EnableInspectedUI(true);
+                }
+                else
+                {
+                    EnableInspectedUI(false);
+                }
+
+            }
+            #endregion
 
             #region TurnOrderPanel
 
@@ -130,7 +176,6 @@ namespace NightmareEchoes.TurnOrder
                 turnIndicator.SetActive(false);
             }
             #endregion
-
 
             #region Phase UI
 
@@ -161,31 +206,7 @@ namespace NightmareEchoes.TurnOrder
 
 
             #endregion
-
-
-            #region InspectedUnit
-            if (Input.GetMouseButtonDown(1)) // rightclick on an inspectable unit
-            {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-
-                RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-
-                if (hit.collider != null && hit.collider.gameObject.CompareTag("Inspectable"))
-                {
-                    inspectedUnit = hit.collider.gameObject.GetComponent<BaseUnit>();
-                    EnableInspectedUI(true);
-                }
-                else
-                {
-                    EnableInspectedUI(false);
-                }
-
-
-            }
-            #endregion
-
-
+            
         }
 
 
@@ -309,21 +330,27 @@ namespace NightmareEchoes.TurnOrder
 
         public void EnableInspectedUI(bool enable)
         {
-            foreach (Button button in inspectedUnitButton)
+            foreach (Button button in inspectedUnitButtonList)
             {
                 button.interactable = enable;
             }
 
-            inspectedUnitProfile.gameObject.SetActive(enable);
+            inspectedUnitPanel.SetActive(enable);
 
             if (enable)
             {
+                inspectedUnitProfile.image.sprite = inspectedUnit.Sprite;
                 inspectedUnitNameText.text = $"{inspectedUnit.Name}";
+                inspectedUnitHealthText.text = $"{inspectedUnit.Health}/{inspectedUnit.MaxHealth}";
+                inspectedUnitSpeedText.text = $"Speed: {inspectedUnit.Speed}";
+                inspectedUnitMoveRangeText.text = $"Move Range: {inspectedUnit.MoveRange}";
+                inspectedUnitStunResistText.text = $"Stun Resist: {inspectedUnit.StunResist}%";
+                inspectedUnitResistText.text = $"Resist: {inspectedUnit.Resist}%";
+
+                inspectedUnitHealth.maxValue = inspectedUnit.MaxHealth;
+                inspectedUnitHealth.value = inspectedUnit.Health;
             }
-            else
-            {
-                inspectedUnitNameText.text = $"";
-            }
+  
 
         }
 

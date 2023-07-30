@@ -11,10 +11,16 @@ namespace NightmareEchoes.Unit
     {
         [Header("Unit Info")]
         [SerializeField] protected BaseUnitScriptable _unitScriptable;
+        [SerializeField] protected Sprite _sprite;
         [SerializeField] protected GameObject damageTextPrefab;
         [SerializeField] protected string _name;
-        [SerializeField] protected int _health;
+        protected int _health;
+        [SerializeField] protected int _maxHealth;
         [SerializeField] protected int _speed;
+        [SerializeField] protected int _moveRange;
+        [SerializeField] protected int _stunResist;
+        [SerializeField] protected int _resist;
+
         [SerializeField] protected bool _isHostile;
         [SerializeField] protected Direction _direction;
         [SerializeField] protected StatusEffect _statusEffect;
@@ -37,6 +43,12 @@ namespace NightmareEchoes.Unit
             private set => _unitScriptable = value;
         }
 
+        public Sprite Sprite
+        {
+            get => _sprite;
+            set => _sprite = value;
+        }
+
         public string Name
         {
             get => _name;
@@ -49,10 +61,34 @@ namespace NightmareEchoes.Unit
             set => _health = value;
         }
 
+        public int MaxHealth
+        {
+            get => _maxHealth;
+            set => _maxHealth = value;
+        }
+
         public int Speed
         {
             get => _speed;
             set => _speed = value;
+        }
+
+        public int MoveRange
+        {
+            get => _moveRange;
+            set => _moveRange = value;
+        }
+
+        public int StunResist
+        {
+            get => _stunResist;
+            set => _stunResist = value;
+        }
+
+        public int Resist
+        {
+            get => _resist;
+            set => _resist = value;
         }
 
         public bool IsHostile
@@ -130,7 +166,7 @@ namespace NightmareEchoes.Unit
 
         protected virtual void Start()
         {
-            
+            _health = _maxHealth;
         }
 
         protected virtual void Update()
