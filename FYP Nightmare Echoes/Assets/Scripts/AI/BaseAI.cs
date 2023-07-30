@@ -8,7 +8,7 @@ namespace NightmareEchoes.AI
 {
     public class BaseAI : MonoBehaviour
     {
-        [SerializeField] List<BaseUnit> heroList;
+        [SerializeField] List<BaseUnit> heroList, unitList;
         BaseUnit closestHero;
         bool inAtkRange;
         bool inMoveAtkRange;
@@ -34,9 +34,15 @@ namespace NightmareEchoes.AI
         }
         void SortHeroes()
         {
-            heroList = FindObjectsOfType<BaseUnit>().ToList();
+            unitList = FindObjectsOfType<BaseUnit>().ToList();
             //filter by heroes
-
+            foreach (var Unit in unitList)
+            {
+                if (!Unit.IsHostile)
+                {
+                    heroList.Add(Unit);
+                }
+            }
 
         }
     }
