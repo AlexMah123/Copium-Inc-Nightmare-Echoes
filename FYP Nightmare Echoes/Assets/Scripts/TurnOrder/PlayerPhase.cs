@@ -20,9 +20,9 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnExit()
         {
             //when you change phases, change the current unit to the next unit
-            if (controller.UnitQueue.Count > 0)
+            if (controller.CurrentUnitQueue.Count > 0)
             {
-                controller.UnitQueue.Dequeue();
+                controller.CurrentUnitQueue.Dequeue();
             }
         }
     }

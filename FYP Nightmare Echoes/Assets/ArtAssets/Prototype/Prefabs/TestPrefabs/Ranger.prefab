@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 601295390074279022}
   - component: {fileID: 601295390074279023}
   - component: {fileID: 601295390074279016}
-  - component: {fileID: 601295390074279017}
   - component: {fileID: 6249669551677435555}
-  - component: {fileID: 4225299220908657129}
+  - component: {fileID: 136229569}
   m_Layer: 0
   m_Name: Ranger
   m_TagString: Inspectable
@@ -104,7 +103,7 @@ MonoBehaviour:
   _name: Ranger
   _health: 20
   _speed: 10
-  _isHostile: 1
+  _isHostile: 0
   _direction: 0
   _statusEffect: 0
   basicAttackDesc: Ranger Basic Attack
@@ -117,26 +116,6 @@ MonoBehaviour:
   - {fileID: 542052453, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: -6517823, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
---- !u!95 &601295390074279017
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 601295390074279018}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5ec2dfada76ce874c82d0f63125cdc0f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!50 &6249669551677435555
 Rigidbody2D:
   serializedVersion: 4
@@ -158,8 +137,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &4225299220908657129
-BoxCollider2D:
+--- !u!60 &136229569
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -168,10 +147,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.265625}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -181,6 +160,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.34375, y: 0.53125}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.45, y: 0}
+      - {x: 0, y: -0.225}
+      - {x: 0.45, y: 0}
+      - {x: 0, y: 0.225}

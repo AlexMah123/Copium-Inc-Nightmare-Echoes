@@ -6,6 +6,7 @@ using NightmareEchoes.Unit;
 using NightmareEchoes.TurnOrder;
 using System.ComponentModel;
 using Unity.Collections;
+using System;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -14,40 +15,39 @@ namespace NightmareEchoes.TurnOrder
     {
         public static UIManager Instance;
 
-        [Header("Test Buttons")] // basic attack
-        [SerializeField] Button testButton;
 
-        [Header("Turn Order Bar")]
+        [Space(15), Header("Turn Order Bar")]
         int capIndex = 0;
         [SerializeField] int imagePoolCap = 6;
-        [SerializeField] GameObject turnOrderPanel;
-        [SerializeField] GameObject ImagePrefab;
-
-        [Space(15)]
-        [SerializeField] List<GameObject> imageObjectPool;
+        [SerializeField] GameObject imagePrefab;
         [SerializeField] GameObject turnIndicator;
-        [SerializeField] TextMeshProUGUI turnIndicatorText;
+        [SerializeField] GameObject currentTurnOrderPanel;
+        [SerializeField] TextMeshProUGUI currentTurnNum;
+        [SerializeField] TextMeshProUGUI phaseText;
+
+        List<GameObject> imageObjectPool = new List<GameObject>();
         [SerializeField] Color playerTurn;
         [SerializeField] Color enemyTurn;
 
-        [Header("Hotbar Info")]
+        [Space(15), Header("Hotbar Info")]
         [SerializeField] List<Button> currentUnitButtonList;
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
         BaseUnit CurrentUnit { get => TurnOrderController.Instance.CurrentUnit;}
 
-        [Header("Inspectable Info")]
+        [Space(15), Header("Inspectable Info")]
         [SerializeField] BaseUnit inspectedUnit;
         [SerializeField] List<Button> inspectedUnitButton;
         [SerializeField] Button inspectedUnitProfile;
         [SerializeField] TextMeshProUGUI inspectedUnitNameText;
 
-        [Header("Settings")]
+        [Space(15), Header("Settings")]
         [SerializeField] Button settingButton;
         [SerializeField] GameObject settingsPanel;
-        public bool gameIsPaused = false;
+        [NonSerialized] public bool gameIsPaused = false;
 
-        [Header("Current Unit Indicator")]
+        [Space(15), Header("Current Unit")]
+        [SerializeField] TextMeshProUGUI unitAction;
         [SerializeField] GameObject indicator;
         [SerializeField] private float frequency = 2.0f;
         [SerializeField] private float magnitude = 0.05f;
@@ -65,7 +65,7 @@ namespace NightmareEchoes.TurnOrder
                 Instance = this;
             }
 
-            InitImagePool();
+            InitImagePool(currentTurnOrderPanel);
 
         }
 
@@ -112,6 +112,9 @@ namespace NightmareEchoes.TurnOrder
 
             #region TurnOrderPanel
 
+            currentTurnNum.text = $"{ TurnOrderController.Instance.turnCount}";
+
+
             //sets indicator to the first image on the list
             if (imageObjectPool[0].activeSelf)
             {
@@ -133,27 +136,27 @@ namespace NightmareEchoes.TurnOrder
 
             if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.startPhase)
             {
-                turnIndicatorText.text = $"Start Phase";
+                phaseText.text = $"Start Phase";
 
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.planPhase)
             {
-                turnIndicatorText.text = $"Plan Phase";
+                phaseText.text = $"Plan Phase";
 
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.playerPhase)
             {
-                turnIndicatorText.text = $"Player's Phase";
-                turnIndicatorText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
+                phaseText.text = $"Player's Phase";
+                phaseText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.enemyPhase)
             {
-                turnIndicatorText.text = $"Enemy's Phase";
-                turnIndicatorText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
+                phaseText.text = $"Enemy's Phase";
+                phaseText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.endPhase)
             {
-                turnIndicatorText.text = $"End's Phase";
+                phaseText.text = $"End's Phase";
             }
 
 
@@ -214,10 +217,10 @@ namespace NightmareEchoes.TurnOrder
         private void PassTurn()
         {
             //if there is at least 2 elements in queue
-            if (TurnOrderController.Instance.UnitQueue.Count > 1)
+            if (TurnOrderController.Instance.CurrentUnitQueue.Count > 1)
             {
                 //if the second element exist, check hostile and change accordingly, else endPhase
-                if (TurnOrderController.Instance.UnitQueue.ToArray()[1].IsHostile)
+                if (TurnOrderController.Instance.CurrentUnitQueue.ToArray()[1].IsHostile)
                 {
                     TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
                 }
@@ -237,15 +240,17 @@ namespace NightmareEchoes.TurnOrder
 
         #region UI Function
 
-        void InitImagePool()
+        void InitImagePool(GameObject panel)
         {
+
             for (int i = 0; i < imagePoolCap; i++)
             {
-                GameObject obj = Instantiate(ImagePrefab, turnOrderPanel.transform);
+                GameObject obj = Instantiate(imagePrefab, panel.transform);
                 obj.SetActive(false);
                 obj.name = $"{obj.name} {capIndex++}";
                 imageObjectPool.Add(obj);
             }
+
         }
 
         public void UpdateTurnOrderUI()
@@ -257,8 +262,8 @@ namespace NightmareEchoes.TurnOrder
             }
 
 
-            //sets all the images in the panel
-            for (int i = 0; i < TurnOrderController.Instance.UnitQueue.Count; i++)
+            //sets all the images in the panel for current turn
+            for (int i = 0; i < TurnOrderController.Instance.CurrentUnitQueue.Count; i++)
             {
                 GameObject image = GetImageObject();
 
@@ -266,7 +271,7 @@ namespace NightmareEchoes.TurnOrder
                 {
                     image.SetActive(true);
 
-                    if (TurnOrderController.Instance.UnitQueue.ToArray()[i].IsHostile)
+                    if (TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].IsHostile)
                     {
                         image.GetComponent<Image>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b, enemyTurn.a);
 
@@ -278,7 +283,6 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 
-            
         }
 
         GameObject GetImageObject()
