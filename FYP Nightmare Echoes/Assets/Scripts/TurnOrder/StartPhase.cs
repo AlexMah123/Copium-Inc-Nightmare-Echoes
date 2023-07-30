@@ -9,6 +9,7 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnEnter()
         {
             controller.StartCoroutine(Start());
+            //check for any effects
         }
 
         protected override void OnUpdate()

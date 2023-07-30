@@ -8,8 +8,8 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
-            //calculate once
             controller.StartCoroutine(Planning());
+            //insert planning faze, placing heros
         }
 
         protected override void OnUpdate()

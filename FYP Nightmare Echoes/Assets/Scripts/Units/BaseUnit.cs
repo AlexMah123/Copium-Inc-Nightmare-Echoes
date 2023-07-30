@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace NightmareEchoes.Unit
@@ -11,6 +11,7 @@ namespace NightmareEchoes.Unit
     {
         [Header("Unit Info")]
         [SerializeField] protected BaseUnitScriptable _unitScriptable;
+        [SerializeField] protected GameObject damageTextPrefab;
         [SerializeField] protected string _name;
         [SerializeField] protected int _health;
         [SerializeField] protected int _speed;
@@ -27,7 +28,6 @@ namespace NightmareEchoes.Unit
         [Tooltip("Sprites are ordered in north, south, east, west")]
         [SerializeField] List<Sprite> sprites = new List<Sprite>(); //ordered in NSEW
 
-        Animator animator;
         SpriteRenderer spriteRenderer;
 
         #region Class Properties
@@ -124,6 +124,8 @@ namespace NightmareEchoes.Unit
             Rigidbody2D rb2D = GetComponent<Rigidbody2D>();
             rb2D.freezeRotation = true;
             rb2D.gravityScale = 0f;
+
+
         }
 
         protected virtual void Start()
@@ -156,6 +158,8 @@ namespace NightmareEchoes.Unit
                 }
             }
 
+            
+
         }
 
         public abstract void BasicAttack();
@@ -170,6 +174,15 @@ namespace NightmareEchoes.Unit
 
         public abstract void TakeDamage(int damage);
 
+        protected void ShowDamage(string damage)
+        {
+            if(damageTextPrefab)
+            {
+                GameObject prefab = Instantiate(damageTextPrefab, transform.localPosition + new Vector3(0.1f, 0.4f, 0), Quaternion.identity);
+                TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
+                textMeshPro.text = damage;
+            }
+        }
 
         #region collision
         protected virtual void OnMouseDown()

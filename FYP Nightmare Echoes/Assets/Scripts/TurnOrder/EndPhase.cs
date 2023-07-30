@@ -9,6 +9,8 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnEnter()
         {
             controller.StartCoroutine(newTurn());
+            
+            //insert end of turn effects
         }
 
         protected override void OnUpdate()

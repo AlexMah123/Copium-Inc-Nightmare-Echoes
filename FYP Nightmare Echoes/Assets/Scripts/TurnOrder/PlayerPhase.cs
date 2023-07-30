@@ -8,8 +8,10 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
-            //controller.CurrentUnit.TakeDamage(2);
+            controller.CurrentUnit.TakeDamage(2);
             //Debug.Log($"{controller.CurrentUnit.Name} - Taking Damage, Current Health: {controller.CurrentUnit.Health}");
+
+            //insert start of turn effects
         }
 
         protected override void OnUpdate()
@@ -19,6 +21,7 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
+
             //when you change phases, change the current unit to the next unit
             if (controller.CurrentUnitQueue.Count > 0)
             {

@@ -52,10 +52,11 @@ namespace NightmareEchoes.Unit
 
         public override void TakeDamage(int damage)
         {
+            ShowDamage(damage.ToString());
             Health -= damage;
         }
 
-        [ContextMenu("Take Damage (5)")]
+        [ContextMenu("Take Damage (2)")]
         public void TestDamage()
         {
             TakeDamage(2);
