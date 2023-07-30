@@ -10,6 +10,14 @@ namespace NightmareEchoes.Unit
         [SerializeField] SpriteRenderer spr;
         [SerializeField] GameObject enemyManual;
         private double AUtil, HUtil, RUtil;
+        struct option
+        {
+            public string name;
+            public float utilityScore;
+        }
+
+        option attack, heal, retreat;
+
         public int HP;
         public float Dist;
         int gridX, gridY;
@@ -69,6 +77,13 @@ namespace NightmareEchoes.Unit
             AUtil = HP;
             HUtil = Dist - HP;
             RUtil = 3 - Dist - HP;
+
+            attack.utilityScore = HP;
+            heal.utilityScore = Dist - HP;
+            retreat.utilityScore = 4 - Dist - HP;
+
+            int i, j, temp;
+            bool swapped; 
 
             if (AUtil >= HUtil)
             {
