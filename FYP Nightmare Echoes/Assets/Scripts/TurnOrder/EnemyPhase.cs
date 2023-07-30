@@ -15,7 +15,7 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnUpdate()
         {
-            if (controller.UnitQueue.Count <= 0)
+            if (controller.CurrentUnitQueue.Count <= 0)
             {
                 controller.ChangePhase(controller.endPhase);
             }
@@ -24,9 +24,9 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnExit()
         {
             //when you change phases, change the current unit to the next unit
-            if (controller.UnitQueue.Count > 0)
+            if (controller.CurrentUnitQueue.Count > 0)
             {
-                controller.UnitQueue.Dequeue();
+                controller.CurrentUnitQueue.Dequeue();
             }
         }
 
@@ -37,10 +37,10 @@ namespace NightmareEchoes.TurnOrder
 
 
             //if there is at least 2 elements in queue
-            if (controller.UnitQueue.Count > 1)
+            if (controller.CurrentUnitQueue.Count > 1)
             {
                 //if the second element exist, check hostile and change accordingly, else endPhase
-                if (controller.UnitQueue.ToArray()[1].IsHostile)
+                if (controller.CurrentUnitQueue.ToArray()[1].IsHostile)
                 {
                     controller.ChangePhase(TurnOrderController.Instance.enemyPhase);
                 }

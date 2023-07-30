@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(Animator))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(PolygonCollider2D))]
     public abstract class BaseUnit : MonoBehaviour
     {
         [Header("Unit Info")]
@@ -107,13 +107,28 @@ namespace NightmareEchoes.Unit
         protected virtual void Awake()
         {
             Direction = Direction.North;
-            animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+
+            //collider presets
+            Vector2[] points = new Vector2[4];
+            points[0] = new Vector2(-0.45f, 0f);
+            points[1] = new Vector2(0f, -0.225f);
+            points[2] = new Vector2(0.45f, 0f);
+            points[3] = new Vector2(0, 0.225f);
+
+            PolygonCollider2D polyCollider = GetComponent<PolygonCollider2D>();
+            polyCollider.points = points;
+            polyCollider.isTrigger = true;
+
+            //rb2d presets
+            Rigidbody2D rb2D = GetComponent<Rigidbody2D>();
+            rb2D.freezeRotation = true;
+            rb2D.gravityScale = 0f;
         }
 
         protected virtual void Start()
         {
-
+            
         }
 
         protected virtual void Update()

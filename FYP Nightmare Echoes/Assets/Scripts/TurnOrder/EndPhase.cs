@@ -18,7 +18,7 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-            
+            controller.turnCount++;
         }
 
         IEnumerator newTurn()
