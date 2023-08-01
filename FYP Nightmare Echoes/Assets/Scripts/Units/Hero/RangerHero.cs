@@ -25,6 +25,12 @@ namespace NightmareEchoes.Unit
         }
 
         #region Abilities()
+        public override void Move()
+        {
+
+            throw new System.NotImplementedException();
+        }
+
         public override void BasicAttack()
         {
             Direction = Direction.West;
@@ -61,6 +67,8 @@ namespace NightmareEchoes.Unit
         {
             TakeDamage(2);
         }
+
+        
 
         #endregion
 

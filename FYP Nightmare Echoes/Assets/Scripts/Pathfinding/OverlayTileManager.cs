@@ -3,36 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace NightmareEchoes.Grid
+namespace NightmareEchoes.Pathfinding
 {
-    public class MapManager : MonoBehaviour
+    public class OverlayTileManager : MonoBehaviour
     {
-        private int cCOunt = 0;
-        private static MapManager _instance;
-        public static MapManager Instance { get { return _instance; } }
-        // Start is called before the first frame update
+        private int childCount = 0;
+        public static OverlayTileManager Instance;
 
         public OverlayTile overlaytilePrefab;
-
         public GameObject overlayContainer;
-
-        public int offsetOrderLayerValue = 1;
 
         //Dicitonary to store overlay tile position from grid pos
         public Dictionary<Vector2Int, OverlayTile> map;
 
         private void Awake()
         {
-            if (_instance != null && _instance != this)
+            if (Instance != null && Instance != this)
             {
                 Destroy(this.gameObject);
             }
             else
             {
-                _instance = this;
+                Instance = this;
             }
+
+            InitOverlayTiles();
         }
+
         void Start()    
+        {
+
+        }
+
+
+        void InitOverlayTiles()
         {
             //generating the grid
             var tileMap = gameObject.GetComponentInChildren<Tilemap>();
@@ -56,7 +60,7 @@ namespace NightmareEchoes.Grid
                         {
                             //Instantiating the tileprefab over the grid and storing the position in the girdContainer
                             var overlayTile = Instantiate(overlaytilePrefab, overlayContainer.transform);
-                            overlayTile.name = $"{cCOunt} {tileLocation}";
+                            overlayTile.name = $"{childCount} {tileLocation}";
                             //Getting WorldPos (Vector 3) to Tile Position (Vector3int)
                             var cellWorldPos = tileMap.GetCellCenterWorld(tileLocation);
 
@@ -65,18 +69,18 @@ namespace NightmareEchoes.Grid
                             overlayTile.transform.position = new Vector3(cellWorldPos.x, cellWorldPos.y, cellWorldPos.z);
                             overlayTile.GetComponent<SpriteRenderer>().sortingOrder = tileMap.GetComponent<TilemapRenderer>().sortingOrder;
                             overlayTile.gridLocation = tileLocation;
-                            cCOunt++;
+                            childCount++;
                             map.Add(TileKey, overlayTile);
                         }
                     }
                 }
             }
-
         }
+
 
         public List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile)
         {
-            var map = MapManager.Instance.map;
+            var map = OverlayTileManager.Instance.map;
 
             List<OverlayTile> neighbours = new List<OverlayTile>();
 

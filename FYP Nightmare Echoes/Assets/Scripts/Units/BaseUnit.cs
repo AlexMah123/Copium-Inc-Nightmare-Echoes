@@ -1,3 +1,4 @@
+using NightmareEchoes.Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,12 +7,13 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(PolygonCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(PolygonCollider2D), typeof(CharacterData))]
     public abstract class BaseUnit : MonoBehaviour
     {
         [Header("Unit Info")]
         [SerializeField] protected BaseUnitScriptable _unitScriptable;
         [SerializeField] protected Sprite _sprite;
+
         [SerializeField] protected GameObject damageTextPrefab;
         [SerializeField] protected string _name;
         protected int _health;
@@ -24,6 +26,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected bool _isHostile;
         [SerializeField] protected Direction _direction;
         [SerializeField] protected StatusEffect _statusEffect;
+
         
         [Header("Unit Skills")]
         [SerializeField] protected Skill basicAttack;
@@ -203,6 +206,8 @@ namespace NightmareEchoes.Unit
             
 
         }
+
+        public abstract void Move();
 
         public abstract void BasicAttack();
 

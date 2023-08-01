@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NightmareEchoes.Grid
+namespace NightmareEchoes.Pathfinding
 {
-    public static class Pathfinder
+    public static class PathFind
     {
         public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end)
         {
@@ -29,7 +29,7 @@ namespace NightmareEchoes.Grid
                 }
 
                 //function to get neighbourTiles
-                var neighbourTiles = MapManager.Instance.GetNeighbourTiles(currentOverlayTile);
+                var neighbourTiles = OverlayTileManager.Instance.GetNeighbourTiles(currentOverlayTile);
 
                 foreach (var neighbour in neighbourTiles) 
                 {

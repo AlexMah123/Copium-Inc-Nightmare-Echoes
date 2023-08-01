@@ -546,30 +546,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: _resist
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: _sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: f346238aaf08b0a46a0dbe65487c22a1, type: 3}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: _maxHealth
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: _moveRange
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: _stunResist
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: damageTextPrefab
-      value: 
-      objectReference: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db783668a420270479acb37d5a8b55f2, type: 3}
 --- !u!1 &136229562 stripped
@@ -719,7 +695,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overlaytilePrefab: {fileID: 9094230702253638198, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
   overlayContainer: {fileID: 1901869097}
-  offsetOrderLayerValue: 0
 --- !u!1 &484320847
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,11 +2281,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953239744}
   m_CullTransparentMesh: 1
---- !u!1 &964070415 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3376283141138650508, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
-  m_PrefabInstance: {fileID: 1961892244}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &966733262
 GameObject:
   m_ObjectHideFlags: 0
@@ -2730,7 +2700,7 @@ GameObject:
   - component: {fileID: 1093333553}
   - component: {fileID: 1093333552}
   - component: {fileID: 1093333554}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TileMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6102,10 +6072,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PathfindingCharacter
       objectReference: {fileID: 0}
-    - target: {fileID: 3376283141138650508, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7305331337648946353, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -7074,9 +7040,9 @@ GameObject:
   m_Component:
   - component: {fileID: 299272768645072324}
   - component: {fileID: 299272768645072325}
-  - component: {fileID: 299272768645072327}
+  - component: {fileID: 299272768645072326}
   m_Layer: 0
-  m_Name: Cursor
+  m_Name: Pathfinding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7149,7 +7115,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &299272768645072327
+--- !u!114 &299272768645072326
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7158,14 +7124,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 299272768645072323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a09486d63b7e8614583b4af5f5d5d59d, type: 3}
+  m_Script: {fileID: 11500000, guid: ad68e7627173bdd4599f07210be0b4a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
-  characterPrefab: {fileID: 964070415}
+  speed: 5
+  currentUnit: {fileID: 0}
   OTC: {fileID: 1901869097}
-  mapManager: {fileID: 439802449}
-  startPos: {x: 0, y: -2}
+  selectedUnit: 0
 --- !u!1001 &601295391118310419
 PrefabInstance:
   m_ObjectHideFlags: 0

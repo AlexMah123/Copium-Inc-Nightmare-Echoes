@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NightmareEchoes.Grid
+namespace NightmareEchoes.Pathfinding
 {
-    public class RangeMovementFinder
+    public class RangeMovementFind
     {
         public List<OverlayTile> TileMovementRange(OverlayTile startTile, int range)
         { 
@@ -23,7 +23,7 @@ namespace NightmareEchoes.Grid
 
                 foreach (var item in TileForPreviousStep)
                 {
-                    surroundingTiles.AddRange(MapManager.Instance.GetNeighbourTiles(item));
+                    surroundingTiles.AddRange(OverlayTileManager.Instance.GetNeighbourTiles(item));
                 }
 
                 inRangeTiles.AddRange(surroundingTiles);

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NightmareEchoes.Unit;
-using NightmareEchoes.Grid;
+using NightmareEchoes.Pathfinding;
 
 namespace NightmareEchoes.Combat
 {
     public class CombatManager : MonoBehaviour
     {
-        public CursorScript cursor;
+        public PathfindingManager cursor;
         //Dictionary<string,>
 
         //Init

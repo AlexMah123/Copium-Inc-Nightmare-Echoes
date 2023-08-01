@@ -138,17 +138,29 @@ namespace NightmareEchoes.TurnOrder
             #region InspectedUnit
             if (Input.GetMouseButtonDown(1)) // rightclick on an inspectable unit
             {
+                bool selected = false;
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
-                RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+                int unitMask = LayerMask.GetMask("Unit");
 
-                if (hit.collider != null && hit.collider.gameObject.CompareTag("Inspectable"))
+                RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero, Mathf.Infinity, unitMask);
+                
+                if(hit) 
                 {
-                    inspectedUnit = hit.collider.gameObject.GetComponent<BaseUnit>();
-                    EnableInspectedUI(true);
+                    if (hit.collider.gameObject.CompareTag("Inspectable"))
+                    {
+                        inspectedUnit = hit.collider.gameObject.GetComponent<BaseUnit>();
+                        selected = true;
+                        EnableInspectedUI(true);
+                    }
+                    else
+                    {
+                        selected = false;
+                    }
                 }
-                else
+
+                if(!selected)
                 {
                     EnableInspectedUI(false);
                 }

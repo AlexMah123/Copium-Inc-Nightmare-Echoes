@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 8747826421340837878}
   - component: {fileID: 128770042}
   - component: {fileID: 5105758200137203564}
-  m_Layer: 0
+  - component: {fileID: 6822996663402581744}
+  m_Layer: 6
   m_Name: BountyHunter
   m_TagString: Inspectable
   m_Icon: {fileID: 0}
@@ -100,15 +101,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitScriptable: {fileID: 11400000, guid: 3b58b24257d5c214d8d8640aa1862bf9, type: 2}
+  _sprite: {fileID: 21300000, guid: f346238aaf08b0a46a0dbe65487c22a1, type: 3}
+  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   _name: Bounty Hunter
-  _health: 20
+  _maxHealth: 20
   _speed: 20
+  _moveRange: 4
+  _stunResist: 20
+  _resist: 10
   _isHostile: 0
   _direction: 0
   _statusEffect: 0
+  basicAttack: {fileID: 0}
   basicAttackDesc: Bounty Hunter Basic Attack
+  skill1: {fileID: 0}
   skill1Desc: Bounty Hunter Skill 1
+  skill2: {fileID: 0}
   skill2Desc: Bounty Hunter Skill 2
+  skill3: {fileID: 0}
   skill3Desc: Bounty Hunter Skill 3
   passiveDesc: Bounty Hunter Passive
   sprites:
@@ -166,3 +176,16 @@ PolygonCollider2D:
       - {x: -0.1875, y: 0}
       - {x: 0.1875, y: 0}
       - {x: 0.1875, y: 0.53125}
+--- !u!114 &6822996663402581744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726962122940716085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d263015f808a924290a48cebe76883d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeTile: {fileID: 0}

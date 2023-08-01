@@ -7,6 +7,7 @@ namespace NightmareEchoes.Unit
 {
     public class BountyHunter : BaseUnit
     {
+
         protected override void Awake()
         {
             base.Awake();
@@ -24,6 +25,11 @@ namespace NightmareEchoes.Unit
         }
 
         #region Abilities()
+        public override void Move()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void BasicAttack()
         {
             Direction = Direction.West;

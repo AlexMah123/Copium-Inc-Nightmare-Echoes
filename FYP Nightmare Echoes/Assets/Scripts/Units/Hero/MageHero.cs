@@ -6,7 +6,11 @@ namespace NightmareEchoes.Unit
 {
     public class MageHero : BaseUnit
     {
-        
+        public override void Move()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void BasicAttack()
         {
             throw new System.NotImplementedException();
