@@ -6,6 +6,6 @@ namespace NightmareEchoes.Grid
 {
     public class CharacterData : MonoBehaviour
     {
-       public OverlayTile activeTile;
+        public OverlayTile activeTile;
     }
 }

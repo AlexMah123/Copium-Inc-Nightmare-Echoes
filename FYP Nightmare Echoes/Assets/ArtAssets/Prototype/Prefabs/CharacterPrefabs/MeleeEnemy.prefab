@@ -100,15 +100,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitScriptable: {fileID: 0}
+  _sprite: {fileID: 21300000, guid: 67c4eb86bc87b504cb4ee13031e0fdc1, type: 3}
+  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   _name: Melee Enemy
-  _health: 20
+  _maxHealth: 20
   _speed: 15
+  _moveRange: 3
+  _stunResist: 30
+  _resist: 20
   _isHostile: 1
   _direction: 0
   _statusEffect: 0
+  basicAttack: {fileID: 0}
   basicAttackDesc: Melee Basic
+  skill1: {fileID: 0}
   skill1Desc: Melee Skill 1
+  skill2: {fileID: 0}
   skill2Desc: Melee Skill 2
+  skill3: {fileID: 0}
   skill3Desc: Melee Skill 3
   passiveDesc: Melee Passive
   sprites: []

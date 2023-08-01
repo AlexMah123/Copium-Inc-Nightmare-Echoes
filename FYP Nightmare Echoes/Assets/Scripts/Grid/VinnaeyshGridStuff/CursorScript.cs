@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using UnityEngine;
 
 namespace NightmareEchoes.Grid
@@ -9,50 +8,71 @@ namespace NightmareEchoes.Grid
     public class CursorScript : MonoBehaviour
     {
         public float Speed;
-        public GameObject characterPrefab;
-        private CharacterData character;
-        private Pathfinder pathFinder;
+        public GameObject selectedUnit;
+        private CharacterData characterData;
         private List<OverlayTile> path = new List<OverlayTile>();
-        // Start is called before the first frame update
-        void Start()
+        private RaycastHit2D? focusedTileHit;
+        private OverlayTile overlayTile;
+        [SerializeField] private GameObject OTC; //
+
+        [SerializeField] private MapManager mapManager;
+        [SerializeField] Vector2Int startPos;
+
+        private void Start()
         {
-            pathFinder = new Pathfinder();
+            characterData = selectedUnit.GetComponent<CharacterData>();
         }
 
-        // Update is called once per frame
         void LateUpdate()
         {
-            var focusedTileHit = GetFocusedTile();
 
-            if (focusedTileHit.HasValue)
+            if (characterData.activeTile == null) //
             {
-                OverlayTile overlayTile = focusedTileHit.Value.collider.gameObject.GetComponent<OverlayTile>();
-                transform.position = overlayTile.transform.position;
-                
-                gameObject.GetComponent<SpriteRenderer>().sortingOrder = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
+                RaycastHit2D hit = Physics2D.Raycast(selectedUnit.transform.position, Vector2.zero);
 
-                if (Input.GetMouseButtonDown(0))
+                if(hit)
                 {
+                    characterData.activeTile = hit.collider.GetComponent<OverlayTile>();
+                }
+            }
+            
+            if(Input.GetMouseButtonDown(0))
+            {
+                focusedTileHit = GetFocusedTile();
+
+                if (focusedTileHit.HasValue)
+                {
+                    overlayTile = focusedTileHit.Value.collider.GetComponent<OverlayTile>();
+                    transform.position = overlayTile.transform.position;
+
+                    //gameObject.GetComponent<SpriteRenderer>().sortingOrder = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
+
                     overlayTile.ShowTile();
 
-                    if (character == null)
+                    if (selectedUnit == null)
                     {
-                        character = Instantiate(characterPrefab).GetComponent<CharacterData>();
-                        PositionCharacterOnTile(overlayTile);
+                        //PositionCharacterOnTile(overlayTile);
 
                     }
-                    else
+                    else if (selectedUnit != null)
                     {
-                        path = pathFinder.FindPath(character.activeTile,overlayTile);
-                    }
+                        //characterPrefab.GetComponent<CharacterData>().activeTile = overlayTile;
+                        path = Pathfinder.FindPath(selectedUnit.GetComponent<CharacterData>().activeTile, overlayTile);
 
+                    }   
                 }
+
+
+                
             }
 
             if (path.Count > 0)
             {
                 MoveAlongPath();
             }
+
+
+
         }
 
         //Movement for player
@@ -62,11 +82,11 @@ namespace NightmareEchoes.Grid
 
             var zIndex = path[0].transform.position.z;
 
-            character.transform.position = Vector2.MoveTowards(character.transform.position, path[0].transform.position, step);
+            selectedUnit.transform.position = Vector2.MoveTowards(selectedUnit.transform.position, path[0].transform.position, step);
 
-            character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y,zIndex);
+            selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y,zIndex);
 
-            if (Vector2.Distance(character.transform.position, path[0].transform.position) < 0.0001f)
+            if (Vector2.Distance(selectedUnit.transform.position, path[0].transform.position) < 0.0001f)
             {
                 PositionCharacterOnTile(path[0]);
                 path.RemoveAt(0);   
@@ -92,9 +112,9 @@ namespace NightmareEchoes.Grid
 
         private void PositionCharacterOnTile(OverlayTile tile)
         {
-            character.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
-            character.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
-            character.activeTile = tile;
+            selectedUnit.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
+            selectedUnit.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
+            selectedUnit.GetComponent<CharacterData>().activeTile = tile;
         }
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace NightmareEchoes.Grid
 {
-    public class Pathfinder
+    public static class Pathfinder
     {
-        public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end)
+        public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end)
         {
             List<OverlayTile> openList = new List<OverlayTile>();
             List<OverlayTile> endList = new List<OverlayTile>();
@@ -29,7 +29,7 @@ namespace NightmareEchoes.Grid
                 }
 
                 //function to get neighbourTiles
-                var neighbourTiles = GetNeighbourTiles(currentOverlayTile);
+                var neighbourTiles = MapManager.Instance.GetNeighbourTiles(currentOverlayTile);
 
                 foreach (var neighbour in neighbourTiles) 
                 {
@@ -54,12 +54,12 @@ namespace NightmareEchoes.Grid
             return new List<OverlayTile>();    
         }
 
-        private int GetManHattenDistance(OverlayTile start , OverlayTile neighbour)
+        private static int GetManHattenDistance(OverlayTile start , OverlayTile neighbour)
         {
             return Mathf.Abs(start.gridLocation.x - neighbour.gridLocation.x) + Mathf.Abs(start.gridLocation.y - neighbour.gridLocation.y);
         }
 
-        private List<OverlayTile> GetFinishedList(OverlayTile start, OverlayTile end)
+        private static List<OverlayTile> GetFinishedList(OverlayTile start, OverlayTile end)
         { 
             List<OverlayTile> finishedList = new List<OverlayTile>();
 
@@ -74,47 +74,6 @@ namespace NightmareEchoes.Grid
             finishedList.Reverse();
 
             return finishedList;
-        }
-
-        private List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile)
-        { 
-            var map = MapManager.Instance.map;
-
-            List<OverlayTile> neighbours = new List<OverlayTile>();
-
-            //Top
-            Vector2Int LocToCheck = new Vector2Int(currentOverlayTile.gridLocation.x,currentOverlayTile.gridLocation.y+1);
-
-            if (map.ContainsKey(LocToCheck))
-            {
-                neighbours.Add(map[LocToCheck]);
-            }
-
-            //Bottom
-            LocToCheck = new Vector2Int(currentOverlayTile.gridLocation.x, currentOverlayTile.gridLocation.y - 1);
-
-            if (map.ContainsKey(LocToCheck))
-            {
-                neighbours.Add(map[LocToCheck]);
-            }
-
-           //Right
-            LocToCheck = new Vector2Int(currentOverlayTile.gridLocation.x + 1, currentOverlayTile.gridLocation.y);
-
-            if (map.ContainsKey(LocToCheck))
-            {
-                neighbours.Add(map[LocToCheck]);
-            }
-
-            //Left
-            LocToCheck = new Vector2Int(currentOverlayTile.gridLocation.x - 1, currentOverlayTile.gridLocation.y);
-
-            if (map.ContainsKey(LocToCheck))
-            {
-                neighbours.Add(map[LocToCheck]);
-            }
-
-            return neighbours;
         }
     }
 }
