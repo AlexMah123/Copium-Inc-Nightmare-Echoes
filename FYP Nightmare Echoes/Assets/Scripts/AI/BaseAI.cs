@@ -36,12 +36,36 @@ namespace NightmareEchoes.AI
             currTile = (Tile)TileMapManager.Instance.tilemap.GetTile(V3Int);
             cellThis = new Vector2(TileMapManager.Instance.tilemap.WorldToCell(V3Int).x, TileMapManager.Instance.tilemap.WorldToCell(V3Int).y);
             SortHeroesByDistance();
+
+            healthPercent = 100 * thisUnit.Health / thisUnit.MaxHealth;
             
+            //weight calculations
+            utilityDictionary.Clear();
+            utilityDictionary.Add("Attack", healthPercent);
+            utilityDictionary.Add("Retreat", 0.4f);
+            
+            //sort by most utility score
+            utilityDictionary.OrderByDescending(utilityDictionary => utilityDictionary.Value);
+
+            switch (utilityDictionary.ToList()[0].Key)
+            {
+                //example list
+                case "Attack":
+                    AggressiveAction();
+                    break;
+                case "Retreat":
+                    Debug.Log("Retreat Triggered");
+                    break;
+            }
 
         }
 
         void AggressiveAction()
         {
+            Debug.Log("Aggressive Action Triggered");
+
+            //update the bools below
+
             if (inAtkRange)
             {
                 //retreat if ranged, attack target
@@ -60,10 +84,7 @@ namespace NightmareEchoes.AI
             UpdateLists();
 
             //sorting
-            int i, j;
-            BaseUnit temp;
-            int temp2;
-            bool swapped;
+            int i, distTemp;
 
             //creating/updating distancesDict
             distancesDict.Clear();
@@ -71,34 +92,14 @@ namespace NightmareEchoes.AI
             {
                 V3Int = new Vector3Int((int)heroList[i].transform.position.x, (int)heroList[i].transform.position.y, (int)heroList[i].transform.position.z);
                 cellTemp = new Vector2(TileMapManager.Instance.tilemap.WorldToCell(V3Int).x, TileMapManager.Instance.tilemap.WorldToCell(V3Int).y);
-                temp2 = ((int)cellThis.x - (int)cellTemp.x) + ((int)cellThis.y - (int)cellTemp.y); //rough distance
-                distancesDict.Add(heroList[i], temp2);
+                distTemp = ((int)cellThis.x - (int)cellTemp.x) + ((int)cellThis.y - (int)cellTemp.y); //rough distance
+                distancesDict.Add(heroList[i], distTemp);
             }
             distancesDict.OrderBy(distancesDict => distancesDict.Value);
 
             closestHero = distancesDict.ToList()[0].Key;
             closestRange = distancesDict.ToList()[0].Value;
-
-            //sorting heroList based on distancesDict
-            /*for (i = 0; i < heroList.Count - 1; i++)
-            {
-                swapped = false;
-                for (j = 0; j < heroList.Count - i - 1; j++)
-                {
-                    if (distancesDict[heroList[i]] > distancesDict[heroList[i + 1]]) 
-                    {
-                        temp = heroList[j];
-                        heroList[j] = heroList[j + 1];
-                        heroList[j + 1] = temp;
-
-                        swapped = true;
-                    }
-                }
-                if (swapped == false)
-                    break;
-            }*/
-
-
+            Debug.Log("Closest Hero: " + closestHero.Name + ", " + closestRange + " tiles away");
         }
 
         void UpdateLists()
