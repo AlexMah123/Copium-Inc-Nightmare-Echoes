@@ -14,9 +14,12 @@ namespace NightmareEchoes.Pathfinding
 
         private CharacterData characterData;
         private List<OverlayTile> path = new List<OverlayTile>();
+        private List<OverlayTile> inRangeTiles = new List<OverlayTile>(); 
+
         private RaycastHit2D? focusedTileHit;
         private OverlayTile overlayTile;
-        [SerializeField] bool selectedUnit = false;                                                             
+        [SerializeField] bool selectedUnit = false;
+        [SerializeField] int RangeLimit = 1;
 
 
         private void Awake()
@@ -26,7 +29,6 @@ namespace NightmareEchoes.Pathfinding
 
         private void Start()
         {
-            
         }
 
         void Update()
@@ -57,6 +59,7 @@ namespace NightmareEchoes.Pathfinding
                             if (hitOverlayTile.collider.gameObject.GetComponent<OverlayTile>())
                             {
                                 characterData.activeTile = hitOverlayTile.collider.GetComponent<OverlayTile>();
+                                GetInRangeTiles();
                             }
                         }
                     }
@@ -91,7 +94,7 @@ namespace NightmareEchoes.Pathfinding
                         else if (currentUnit != null)
                         {
                             //characterPrefab.GetComponent<CharacterData>().activeTile = overlayTile;
-                            path = PathFind.FindPath(currentUnit.GetComponent<CharacterData>().activeTile, overlayTile);
+                            path = PathFind.FindPath(currentUnit.GetComponent<CharacterData>().activeTile, overlayTile , inRangeTiles);
                         }
                     }
 
@@ -127,6 +130,8 @@ namespace NightmareEchoes.Pathfinding
             if(path.Count == 0)
             {
                 selectedUnit = false;
+                //if i dont place this function here it wont render the tile range after it moves (Only on  the initial click)
+                GetInRangeTiles();
 
             }
 
@@ -156,6 +161,24 @@ namespace NightmareEchoes.Pathfinding
             currentUnit.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
             currentUnit.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
             currentUnit.GetComponent<CharacterData>().activeTile = tile;
+        }
+
+        private void GetInRangeTiles()
+        {
+            //This displays all the tiles in range 
+            foreach (var item in inRangeTiles)
+            {
+                item.HideTile();
+            }
+
+            //Gets the value of the start pos and the maximum range is the amount you can set
+            inRangeTiles = RangeMovementFind.TileMovementRange(characterData.activeTile, RangeLimit);
+
+            //This displays all the tiles in range 
+            foreach (var item in inRangeTiles)
+            {
+                item.ShowTile();
+            }
         }
     }
 }

@@ -78,42 +78,59 @@ namespace NightmareEchoes.Pathfinding
         }
 
 
-        public List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile)
+        public List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile , List<OverlayTile> LimitTiles )
         {
             var map = OverlayTileManager.Instance.map;
+
+            //Dictionary for the tileRange
+            Dictionary<Vector2Int, OverlayTile> tileToSearch = new Dictionary<Vector2Int, OverlayTile> ();
+
+            //if statement to limit the tiles
+            if (LimitTiles.Count > 0)
+            {
+                foreach (var item in LimitTiles)
+                {
+                    tileToSearch.Add(new Vector2Int(item.gridLocation.x, item.gridLocation.y), item);
+                }
+            }
+            else
+            {
+                tileToSearch = map;
+            }
+
 
             List<OverlayTile> neighbours = new List<OverlayTile>();
 
             //Top
             Vector2Int LocToCheck = new Vector2Int(currentOverlayTile.gridLocation.x, currentOverlayTile.gridLocation.y + 1);
 
-            if (map.ContainsKey(LocToCheck))
+            if (tileToSearch.ContainsKey(LocToCheck))
             {
-                neighbours.Add(map[LocToCheck]);
+                neighbours.Add(tileToSearch[LocToCheck]);
             }
 
             //Bottom
             LocToCheck = new Vector2Int(currentOverlayTile.gridLocation.x, currentOverlayTile.gridLocation.y - 1);
 
-            if (map.ContainsKey(LocToCheck))
+            if (tileToSearch.ContainsKey(LocToCheck))
             {
-                neighbours.Add(map[LocToCheck]);
+                neighbours.Add(tileToSearch[LocToCheck]);
             }
 
             //Right
             LocToCheck = new Vector2Int(currentOverlayTile.gridLocation.x + 1, currentOverlayTile.gridLocation.y);
 
-            if (map.ContainsKey(LocToCheck))
+            if (tileToSearch.ContainsKey(LocToCheck))
             {
-                neighbours.Add(map[LocToCheck]);
+                neighbours.Add(tileToSearch[LocToCheck]);
             }
 
             //Left
             LocToCheck = new Vector2Int(currentOverlayTile.gridLocation.x - 1, currentOverlayTile.gridLocation.y);
 
-            if (map.ContainsKey(LocToCheck))
+            if (tileToSearch.ContainsKey(LocToCheck))
             {
-                neighbours.Add(map[LocToCheck]);
+                neighbours.Add(tileToSearch[LocToCheck]);
             }
 
             return neighbours;

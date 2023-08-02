@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace NightmareEchoes.Pathfinding
 {
-    public class RangeMovementFind
+    public static  class RangeMovementFind
     {
-        public List<OverlayTile> TileMovementRange(OverlayTile startTile, int range)
+        public static List<OverlayTile> TileMovementRange(OverlayTile startTile, int range)
         { 
             var inRangeTiles = new List<OverlayTile>();
             int stepCount = 0;
@@ -23,7 +23,7 @@ namespace NightmareEchoes.Pathfinding
 
                 foreach (var item in TileForPreviousStep)
                 {
-                    surroundingTiles.AddRange(OverlayTileManager.Instance.GetNeighbourTiles(item));
+                    surroundingTiles.AddRange(OverlayTileManager.Instance.GetNeighbourTiles(item, new List<OverlayTile>()));
                 }
 
                 inRangeTiles.AddRange(surroundingTiles);
@@ -31,7 +31,7 @@ namespace NightmareEchoes.Pathfinding
                 stepCount++;
             }
 
-            return inRangeTiles;
+            return inRangeTiles.Distinct().ToList();
         }
     }
 }

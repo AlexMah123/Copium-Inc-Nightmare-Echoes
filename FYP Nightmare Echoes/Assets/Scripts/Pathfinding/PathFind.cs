@@ -7,7 +7,8 @@ namespace NightmareEchoes.Pathfinding
 {
     public static class PathFind
     {
-        public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end)
+                                                                                   //The list at the end creates a limitor to how far the player can move which works for our player boundary range
+        public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> LimitTiles )
         {
             List<OverlayTile> openList = new List<OverlayTile>();
             List<OverlayTile> endList = new List<OverlayTile>();
@@ -29,7 +30,7 @@ namespace NightmareEchoes.Pathfinding
                 }
 
                 //function to get neighbourTiles
-                var neighbourTiles = OverlayTileManager.Instance.GetNeighbourTiles(currentOverlayTile);
+                var neighbourTiles = OverlayTileManager.Instance.GetNeighbourTiles(currentOverlayTile, LimitTiles);
 
                 foreach (var neighbour in neighbourTiles) 
                 {
