@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NightmareEchoes.Pathfinding
+//created by Vinn
+namespace NightmareEchoes.Unit.Pathfinding
 {
    public class OverlayTile : MonoBehaviour
     {
@@ -15,14 +16,15 @@ namespace NightmareEchoes.Pathfinding
         public OverlayTile prevTile;
 
         public Vector3Int gridLocation;
+
         // Update is called once per frame
-/*        void Update()
+        void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            /*if (Input.GetMouseButtonDown(0))
             {
                 HideTile();
-            }
-        }*/
+            }*/
+        }
 
         public void ShowTile()
         {

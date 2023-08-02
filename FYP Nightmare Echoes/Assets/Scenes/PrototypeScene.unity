@@ -6078,11 +6078,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3376283141138650508, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
       propertyPath: m_Name
-      value: PathfindingCharacter
-      objectReference: {fileID: 0}
-    - target: {fileID: 3376283141138650508, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
-      propertyPath: m_Layer
-      value: 6
+      value: RangeEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 7305331337648946353, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
       propertyPath: m_RootOrder
@@ -7139,10 +7135,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad68e7627173bdd4599f07210be0b4a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  currentUnit: {fileID: 0}
   OTC: {fileID: 1901869097}
-  selectedUnit: 0
+  currentUnit: {fileID: 0}
+  movingSpeed: 4
 --- !u!1001 &601295391118310419
 PrefabInstance:
   m_ObjectHideFlags: 0

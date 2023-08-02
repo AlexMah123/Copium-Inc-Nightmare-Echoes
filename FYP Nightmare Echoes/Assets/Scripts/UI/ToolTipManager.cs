@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
-using NightmareEchoes.TurnOrder;
 
 //created by Alex
 namespace NightmareEchoes.UI

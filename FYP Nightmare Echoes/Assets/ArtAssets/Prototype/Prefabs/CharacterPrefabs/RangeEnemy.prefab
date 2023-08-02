@@ -10,11 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 7305331337648946353}
   - component: {fileID: 722443483668500412}
+  - component: {fileID: 8143709165264484512}
   - component: {fileID: 2395425335275014076}
   - component: {fileID: 964070419}
+  - component: {fileID: 503955040074887315}
   m_Layer: 6
-  m_Name: PathfindingCharacter
-  m_TagString: Untagged
+  m_Name: RangeEnemy
+  m_TagString: Inspectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,6 +88,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8143709165264484512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3376283141138650508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c814d76c80e3cf45ae37b6cc5f8008a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitScriptable: {fileID: 0}
+  _sprite: {fileID: 21300000, guid: a14f13778b8e1644298a70e6ab4b2057, type: 3}
+  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  _name: Range Enemy
+  _maxHealth: 25
+  _speed: 25
+  _moveRange: 3
+  _stunResist: 30
+  _resist: 40
+  _isHostile: 1
+  _direction: 0
+  _statusEffect: 0
+  basicAttack: {fileID: 0}
+  basicAttackDesc: Range Enemy Basic
+  skill1: {fileID: 0}
+  skill1Desc: Range Enemy Skill 1
+  skill2: {fileID: 0}
+  skill2Desc: Range Enemy Skill 2
+  skill3: {fileID: 0}
+  skill3Desc: Range Enemy Skill 3
+  passiveDesc: Range Enemy Passive
+  sprites: []
 --- !u!114 &2395425335275014076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,3 +164,24 @@ PolygonCollider2D:
       - {x: 0, y: -0.225}
       - {x: 0.45, y: 0}
       - {x: 0, y: 0.225}
+--- !u!50 &503955040074887315
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3376283141138650508}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace NightmareEchoes.Pathfinding
+//created by Vinn, editted by Alex
+namespace NightmareEchoes.Unit.Pathfinding
 {
     public class OverlayTileManager : MonoBehaviour
     {

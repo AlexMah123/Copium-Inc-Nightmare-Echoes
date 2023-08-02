@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using NightmareEchoes.TurnOrder;
 
 //created by Jian Hua, editted by Vinn and Terrence and Alex
 namespace NightmareEchoes.Grid
@@ -62,20 +60,6 @@ namespace NightmareEchoes.Grid
 
         public void Update()
         {
-            if (UIManager.Instance.gameIsPaused)
-            {
-                return;
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                //GetMouseTilePos2();
-            }
-
-            /*if (Input.GetMouseButtonDown(0))
-            {
-                GetMouseTilePos();
-            }*/
 
         }
 

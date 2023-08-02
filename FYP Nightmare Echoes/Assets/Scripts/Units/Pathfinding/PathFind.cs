@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NightmareEchoes.Pathfinding
+//created by Vinn
+namespace NightmareEchoes.Unit.Pathfinding
 {
     public static class PathFind
     {

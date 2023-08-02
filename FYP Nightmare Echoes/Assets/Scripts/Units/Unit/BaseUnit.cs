@@ -1,4 +1,4 @@
-using NightmareEchoes.Pathfinding;
+using NightmareEchoes.Unit.Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;

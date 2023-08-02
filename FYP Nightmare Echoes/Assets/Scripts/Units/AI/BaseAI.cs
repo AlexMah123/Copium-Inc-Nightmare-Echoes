@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NightmareEchoes.Unit;
 using NightmareEchoes.Grid;
 using UnityEngine.Tilemaps;
 using System.Linq;
 
 //by Terrence
-namespace NightmareEchoes.AI
+namespace NightmareEchoes.Unit.AI
 {
     public class BaseAI : MonoBehaviour
     {

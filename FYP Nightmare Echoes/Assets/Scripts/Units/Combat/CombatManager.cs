@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NightmareEchoes.Unit;
-using NightmareEchoes.Pathfinding;
+using NightmareEchoes.Unit.Pathfinding;
 
-namespace NightmareEchoes.Combat
+namespace NightmareEchoes.Unit.Combat
 {
     public class CombatManager : MonoBehaviour
     {

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NightmareEchoes.Pathfinding
+//created by Vinn
+namespace NightmareEchoes.Unit.Pathfinding
 {
     public class CharacterData : MonoBehaviour
     {
