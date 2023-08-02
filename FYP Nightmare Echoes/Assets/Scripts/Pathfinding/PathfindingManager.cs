@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.XR;
 using UnityEngine;
 
 namespace NightmareEchoes.Pathfinding
@@ -20,7 +22,6 @@ namespace NightmareEchoes.Pathfinding
         private OverlayTile overlayTile;
         [SerializeField] bool selectedUnit = false;
         [SerializeField] int RangeLimit = 1;
-
 
         private void Awake()
         {
@@ -95,6 +96,7 @@ namespace NightmareEchoes.Pathfinding
                         {
                             //characterPrefab.GetComponent<CharacterData>().activeTile = overlayTile;
                             path = PathFind.FindPath(currentUnit.GetComponent<CharacterData>().activeTile, overlayTile , inRangeTiles);
+
                         }
                     }
 
@@ -131,7 +133,9 @@ namespace NightmareEchoes.Pathfinding
             {
                 selectedUnit = false;
                 //if i dont place this function here it wont render the tile range after it moves (Only on  the initial click)
-                GetInRangeTiles();
+                //GetInRangeTiles();
+                RangeTilesOff();
+                //RangeIsActive = false;  
 
             }
 
@@ -165,19 +169,27 @@ namespace NightmareEchoes.Pathfinding
 
         private void GetInRangeTiles()
         {
-            //This displays all the tiles in range 
+                //This hites the previous patterns once it starts moving again
+                foreach (var item in inRangeTiles)
+                {
+                    item.HideTile();
+                }
+
+                //Gets the value of the start pos and the maximum range is the amount you can set
+                inRangeTiles = RangeMovementFind.TileMovementRange(characterData.activeTile, RangeLimit);
+
+                //This displays all the tiles in range 
+                foreach (var item in inRangeTiles)
+                {
+                    item.ShowTile();
+                }
+        }
+
+        private void RangeTilesOff()
+        {
             foreach (var item in inRangeTiles)
             {
                 item.HideTile();
-            }
-
-            //Gets the value of the start pos and the maximum range is the amount you can set
-            inRangeTiles = RangeMovementFind.TileMovementRange(characterData.activeTile, RangeLimit);
-
-            //This displays all the tiles in range 
-            foreach (var item in inRangeTiles)
-            {
-                item.ShowTile();
             }
         }
     }
