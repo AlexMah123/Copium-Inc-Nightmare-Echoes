@@ -13,9 +13,11 @@ namespace NightmareEchoes.Unit.AI
         [SerializeField] List<BaseUnit> heroList, unitList;
         [SerializeField] BaseUnit thisUnit, target;
         BaseUnit closestHero;
-        float closestRange;
+        float closestRange, targetRange;
         bool inAtkRange;
         bool inMoveAtkRange;
+        int rangePlaceholder;
+        
         Tile currTile, targetTile;
         Vector3Int V3Int;
         Vector2 cellThis, cellTarget, cellTemp;
@@ -63,7 +65,21 @@ namespace NightmareEchoes.Unit.AI
         {
             Debug.Log("Aggressive Action Triggered");
 
+            //placeholder targeting, range placeholder
+            rangePlaceholder = 1;
+            target = closestHero;
+            targetRange = closestRange;
+
             //update the bools below
+            
+            if (targetRange <= rangePlaceholder + thisUnit.MoveRange)
+            {
+                inMoveAtkRange = true;
+                if (targetRange <= rangePlaceholder)
+                {
+                    inAtkRange = true;
+                }
+            }
 
             if (inAtkRange)
             {
