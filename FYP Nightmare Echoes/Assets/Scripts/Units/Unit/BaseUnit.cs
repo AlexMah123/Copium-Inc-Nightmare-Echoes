@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using NightmareEchoes.Grid;
-using PlasticPipe.PlasticProtocol.Messages;
-using Codice.CM.Common;
 using UnityEngine.TestTools;
 
 namespace NightmareEchoes.Unit
@@ -26,15 +24,6 @@ namespace NightmareEchoes.Unit
 
         [SerializeField] protected bool _isHostile;
         [SerializeField] protected Direction _direction;
-        /*
-        protected int _health;
-        [SerializeField] protected int _maxHealth;
-        [SerializeField] protected int _speed;
-        [SerializeField] protected int _moveRange;
-        [SerializeField] protected int _stunResist;
-        [SerializeField] protected int _resist;
-        */
-
 
         [Header("Tile Related")]
         protected OverlayTile activeTile;
@@ -43,10 +32,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected List<BaseModifier> buffList = new List<BaseModifier>();
         [SerializeField] protected List<BaseModifier> debuffList = new List<BaseModifier>();
         [SerializeField] protected List<BaseModifier> tokenList = new List<BaseModifier>();
-        
 
-
-        
         [Header("Unit Skills")]
         [SerializeField] protected Skill basicAttack;
         [field: TextArea(1,1)][SerializeField] protected string basicAttackDesc;
@@ -216,9 +202,6 @@ namespace NightmareEchoes.Unit
 
                 }
             }
-
-            
-
         }
 
 
@@ -270,7 +253,7 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        protected void UpdateEffects()
+        public void UpdateEffects()
         {
             modifiedStats = UpdateModifers(modifiedStats);
 
