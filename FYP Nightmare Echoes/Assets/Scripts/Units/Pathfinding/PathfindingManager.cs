@@ -23,31 +23,16 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         RaycastHit2D? focusedTileHit;
         OverlayTile overlayTile;
-
-        private void Awake()
-        {
-
-        }
-
-        private void Start()
-        {
-
-        }
-
+        
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 ifSelectedUnit = false;
+                RangeTilesOff();
             }
-
-            if (!ifSelectedUnit)
-            {
-                //RangeTilesOff();
-            }
-
+            
             PlayerInputPathfinding();
-
         }
 
         public void PlayerInputPathfinding()
