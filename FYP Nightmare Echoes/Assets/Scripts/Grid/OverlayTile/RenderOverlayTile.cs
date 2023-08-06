@@ -9,28 +9,37 @@ namespace NightmareEchoes.Grid
     {
         public static void RenderTiles(OverlayTile startTile, string type, int range)
         {
-            var tileRange = new List<OverlayTile>();
-
+            var tileRange = new List<OverlayTile> { startTile };
+            var possibleTileCoords = new List<Vector2Int>();
+            
+            //Select Shape
             switch (type)
             {
                 case "Line":
-                    RenderLine(startTile, range);
+                    possibleTileCoords = RenderLine(startTile, range);
                     break;
                 default:
                     Debug.LogWarning("ERROR");
                     break;
             }
             
+            //Trim Out of Bounds
+            var map = OverlayTileManager.Instance.map;
+            foreach (var coord in possibleTileCoords.Where(coord => map.ContainsKey(coord)))
+            {
+                if (map.TryGetValue(coord, out var tile))
+                    tileRange.Add(tile);
+            }
+            
+            //Show valid
             foreach (var tile in tileRange)
             {
                 tile.ShowTile();
             }
         }
 
-        public static List<OverlayTile> RenderLine(OverlayTile startTile, int range)
+        private static List<Vector2Int> RenderLine(OverlayTile startTile, int range)
         {
-            var tileRange = new List<OverlayTile> { startTile };
-
             var possibleTileCoords = new List<Vector2Int>();
             for (var i = 1; i <= range; i++)
             {
@@ -40,14 +49,16 @@ namespace NightmareEchoes.Grid
                 possibleTileCoords.Add(new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y - i)); 
             }
             
-            var map = OverlayTileManager.Instance.map;
-            foreach (var coord in possibleTileCoords.Where(coord => map.ContainsKey(coord)))
-            {
-                if (map.TryGetValue(coord, out var tile))
-                    tileRange.Add(tile);
-            }
+            return possibleTileCoords;
+        }
+        
+        private static List<Vector2Int> RenderSquare(OverlayTile startTile, int range)
+        {
+            var possibleTileCoords = new List<Vector2Int>();
+            
 
-            return tileRange;
+            
+            return possibleTileCoords;
         }
         
     }
