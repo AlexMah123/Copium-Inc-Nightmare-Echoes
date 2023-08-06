@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using NightmareEchoes.Grid;
+
 
 //created by Vinn
 namespace NightmareEchoes.Unit.Pathfinding
 {
     public static class PathFind
     {
-                                                                                   //The list at the end creates a limitor to how far the player can move which works for our player boundary range
+        //The list at the end creates a limitor to how far the player can move which works for our player boundary range
         public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> LimitTiles )
         {
             List<OverlayTile> openList = new List<OverlayTile>();

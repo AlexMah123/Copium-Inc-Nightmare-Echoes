@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //created by Vinn
-namespace NightmareEchoes.Unit.Pathfinding
+namespace NightmareEchoes.Grid
 {
    public class OverlayTile : MonoBehaviour
     {

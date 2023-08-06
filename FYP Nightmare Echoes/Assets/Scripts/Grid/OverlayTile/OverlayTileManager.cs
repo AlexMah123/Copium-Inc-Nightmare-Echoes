@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 //created by Vinn, editted by Alex
-namespace NightmareEchoes.Unit.Pathfinding
+namespace NightmareEchoes.Grid
 {
     public class OverlayTileManager : MonoBehaviour
     {

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using NightmareEchoes.Grid;
+
 
 //created by Vinn
 namespace NightmareEchoes.Unit.Pathfinding
