@@ -42,13 +42,7 @@ namespace NightmareEchoes.Unit.Combat
             
             activeSkill = skill;
 
-            string targetRange = null;
-
-            if (skill.targetType == TargetType.Single)
-            {
-                targetRange = "Line";
-            }
-            RenderOverlayTile.Instance.RenderTiles(unit.ActiveTile, targetRange, skill.range);
+            RenderOverlayTile.Instance.RenderTiles(unit.ActiveTile, skill.targetArea.ToString(), skill.range);
         }
 
 

@@ -30,6 +30,9 @@ namespace NightmareEchoes.Grid
                 case "Line":
                     possibleTileCoords = RenderLine(startTile, range);
                     break;
+                case "Square":
+                    possibleTileCoords = RenderSquare(startTile, range);
+                    break;
                 default:
                     Debug.LogWarning("ERROR");
                     break;
@@ -78,8 +81,14 @@ namespace NightmareEchoes.Grid
         private List<Vector2Int> RenderSquare(OverlayTile startTile, int range)
         {
             var possibleTileCoords = new List<Vector2Int>();
-            
 
+            for (var i = -range; i <= range; i++)
+            {
+                for (var j = -range; j <= range; j++)
+                {
+                    possibleTileCoords.Add(new Vector2Int(startTile.gridLocation.x + i, startTile.gridLocation.y + j));
+                }
+            }
             
             return possibleTileCoords;
         }

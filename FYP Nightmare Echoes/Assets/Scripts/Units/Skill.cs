@@ -11,6 +11,7 @@ namespace NightmareEchoes.Unit
         public int cooldown;
         public int range;
         public TargetType targetType;
+        public TargetArea targetArea;
         public AOEType aoeType;
         public SkillType skillType;
 
@@ -39,6 +40,12 @@ namespace NightmareEchoes.Unit
             get => targetType;
             set => targetType = value;
         }
+        
+        public TargetArea TargetArea
+        {
+            get => targetArea;
+            set => targetArea = value;
+        }
 
         public AOEType AoeType
         {
@@ -63,6 +70,12 @@ namespace NightmareEchoes.Unit
         Single = 0,
         Multi = 1,
         AOE = 2
+    }
+
+    public enum TargetArea
+    {
+        Line = 0,
+        Square = 1
     }
 
     public enum AOEType
