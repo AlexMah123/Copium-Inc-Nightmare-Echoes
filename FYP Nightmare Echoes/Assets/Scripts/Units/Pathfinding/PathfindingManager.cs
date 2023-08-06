@@ -17,7 +17,6 @@ namespace NightmareEchoes.Unit.Pathfinding
         BaseUnit currentSelectedUnit;
         bool ifSelectedUnit = false;
 
-        CharacterData characterData;
         List<OverlayTile> path = new List<OverlayTile>();
         List<OverlayTile> inRangeTiles = new List<OverlayTile>();
 
@@ -66,11 +65,10 @@ namespace NightmareEchoes.Unit.Pathfinding
                 //if you hit a unit then get component
                 if (hitUnit)
                 {
-                    if (hitUnit.collider.gameObject.GetComponent<CharacterData>())
+                    if (hitUnit.collider.gameObject.GetComponent<BaseUnit>())
                     {
                         currentSelectedUnitGO = hitUnit.collider.gameObject;
                         currentSelectedUnit = hitUnit.collider.gameObject.GetComponent<BaseUnit>();
-                        characterData = currentSelectedUnitGO.GetComponent<CharacterData>();
                         ifSelectedUnit = true;
 
 
@@ -78,7 +76,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                         if (hitOverlayTile.collider.gameObject.GetComponent<OverlayTile>())
                         {
-                            characterData.activeTile = hitOverlayTile.collider.GetComponent<OverlayTile>();
+                            currentSelectedUnit.ActiveTile = hitOverlayTile.collider.GetComponent<OverlayTile>();
                             GetInRangeTiles();
                         }
 
@@ -119,7 +117,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                         else if (currentSelectedUnitGO != null)
                         {
                             //characterPrefab.GetComponent<CharacterData>().activeTile = overlayTile;
-                            path = PathFind.FindPath(currentSelectedUnitGO.GetComponent<CharacterData>().activeTile, overlayTile, inRangeTiles);
+                            path = PathFind.FindPath(currentSelectedUnitGO.GetComponent<BaseUnit>().ActiveTile, overlayTile, inRangeTiles);
 
                         }
                     }
@@ -192,7 +190,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             currentSelectedUnitGO.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
             currentSelectedUnitGO.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
-            currentSelectedUnitGO.GetComponent<CharacterData>().activeTile = tile;
+            currentSelectedUnitGO.GetComponent<BaseUnit>().ActiveTile = tile;
         }
 
         private void GetInRangeTiles()
@@ -204,7 +202,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             //Gets the value of the start pos and the maximum range is the amount you can set
-            inRangeTiles = RangeMovementFind.TileMovementRange(characterData.activeTile, currentSelectedUnit.MoveRange);
+            inRangeTiles = RangeMovementFind.TileMovementRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.MoveRange);
 
             //This displays all the tiles in range 
             foreach (var item in inRangeTiles)

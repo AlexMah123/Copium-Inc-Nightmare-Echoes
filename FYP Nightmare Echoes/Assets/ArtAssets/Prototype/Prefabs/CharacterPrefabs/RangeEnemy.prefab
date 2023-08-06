@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7305331337648946353}
   - component: {fileID: 722443483668500412}
   - component: {fileID: 8143709165264484512}
-  - component: {fileID: 2395425335275014076}
   - component: {fileID: 964070419}
   - component: {fileID: 503955040074887315}
   m_Layer: 6
@@ -122,19 +121,6 @@ MonoBehaviour:
   skill3Desc: Range Enemy Skill 3
   passiveDesc: Range Enemy Passive
   sprites: []
---- !u!114 &2395425335275014076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3376283141138650508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d263015f808a924290a48cebe76883d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeTile: {fileID: 0}
 --- !u!60 &964070419
 PolygonCollider2D:
   m_ObjectHideFlags: 0

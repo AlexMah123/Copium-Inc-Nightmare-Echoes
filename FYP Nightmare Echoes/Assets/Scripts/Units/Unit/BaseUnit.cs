@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(PolygonCollider2D), typeof(CharacterData))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(PolygonCollider2D))]
     public abstract class BaseUnit : MonoBehaviour
     {
         [Header("Unit Info")]
@@ -26,6 +26,14 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected bool _isHostile;
         [SerializeField] protected Direction _direction;
         [SerializeField] protected StatusEffect _statusEffect;
+
+        [Header("Tile Related")]
+        protected OverlayTile activeTile;
+
+        [Header("Buff Debuff Token")]
+        //[SerializeField] protected List<Buff> buffList = new List<Buff>();
+        //[SerializeField] protected List<Debuff> debuffList = new List<Debuff>();
+
 
         
         [Header("Unit Skills")]
@@ -46,6 +54,8 @@ namespace NightmareEchoes.Unit
         SpriteRenderer spriteRenderer;
 
         #region Class Properties
+
+        #region Unit Info Properties
         public BaseUnitScriptable UnitScriptable
         {
             get => _unitScriptable;
@@ -117,7 +127,21 @@ namespace NightmareEchoes.Unit
             get => _statusEffect;
             set => _statusEffect = value;
         }
+        #endregion
 
+        #region Tile Related
+        public OverlayTile ActiveTile
+        {
+            get => activeTile;
+            set => activeTile = value;
+        }
+        #endregion
+
+        #region Buff Debuff Token
+
+        #endregion
+
+        #region Unit Skill Properties
         public string BasicAttackDesc
         {
             get => basicAttackDesc;
@@ -146,6 +170,7 @@ namespace NightmareEchoes.Unit
             get => passiveDesc;
             private set => passiveDesc = value;
         }
+        #endregion
 
         #endregion
 
@@ -229,6 +254,21 @@ namespace NightmareEchoes.Unit
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = damage;
             }
+        }
+
+        protected void UpdateBuffDebuff()
+        {
+
+        }
+
+        protected void AddBuff()
+        {
+
+        }
+
+        protected void AddDebuff()
+        {
+
         }
 
         #region collision
