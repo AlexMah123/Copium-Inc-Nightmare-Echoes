@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    public class Skill : MonoBehaviour
+    public abstract class Skill : MonoBehaviour
     {
         public string skillName;
         public int cooldown;
@@ -13,6 +13,49 @@ namespace NightmareEchoes.Unit
         public TargetType targetType;
         public AOEType aoeType;
         public SkillType skillType;
+
+        #region properties
+
+        public string SkillName
+        {
+            get => skillName;
+            set => skillName = value;
+        }
+
+        public int Cooldown
+        {
+            get => cooldown;
+            set => cooldown = value;
+        }
+
+        public int Range
+        {
+            get => range;
+            set => range = value;
+        }
+
+        public TargetType TargetType
+        {
+            get => targetType;
+            set => targetType = value;
+        }
+
+        public AOEType AoeType
+        {
+            get => aoeType;
+            set => aoeType = value;
+        }
+
+        public SkillType SkillType
+        {
+            get => skillType;
+            set => skillType = value;
+        }
+
+
+        #endregion
+
+        public abstract void Cast(); //for VFX?
     }
 
     public enum TargetType

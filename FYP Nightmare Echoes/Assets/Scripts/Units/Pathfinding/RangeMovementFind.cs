@@ -6,7 +6,7 @@ using UnityEngine;
 //created by Vinn
 namespace NightmareEchoes.Unit.Pathfinding
 {
-    public static  class RangeMovementFind
+    public static class RangeMovementFind
     {
         public static List<OverlayTile> TileMovementRange(OverlayTile startTile, int range)
         { 

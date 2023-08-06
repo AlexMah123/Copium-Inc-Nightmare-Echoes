@@ -8,7 +8,8 @@ namespace NightmareEchoes.Unit.Combat
     public class CombatManager : MonoBehaviour
     {
         public PathfindingManager cursor;
-        //Dictionary<string,>
+
+        private Skill activeSkill;
 
         //Init
         void OnBattleStart()
@@ -21,7 +22,7 @@ namespace NightmareEchoes.Unit.Combat
         //Player Calls
         public void SelectSkill(Skill skill)
         {
-            //Render Onto Map
+            activeSkill = skill;
         }
 
 
