@@ -226,7 +226,7 @@ namespace NightmareEchoes.TurnOrder
         public void AttackButton()
         {
             CurrentUnit.BasicAttack();
-            PassTurn();
+            //PassTurn();
         }
 
         public void Skill1Button()

@@ -1,15 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NightmareEchoes.Unit.Pathfinding;
+using NightmareEchoes.Grid;
 
 namespace NightmareEchoes.Unit.Combat
 {
     public class CombatManager : MonoBehaviour
     {
-        public PathfindingManager cursor;
-
+        public static CombatManager Instance;
+        
         private Skill activeSkill;
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+                Destroy(this);
+            else
+                Instance = this;
+        }
 
         //Init
         void OnBattleStart()
@@ -20,9 +29,24 @@ namespace NightmareEchoes.Unit.Combat
         }
         
         //Player Calls
-        public void SelectSkill(Skill skill)
+        public void SelectSkill(BaseUnit unit, Skill skill)
         {
+            if (activeSkill != null && activeSkill == skill)
+            {
+                //RenderOverlayTile.ClearRenders();
+                activeSkill = null;
+                return;
+            }
+            
             activeSkill = skill;
+
+            string targetRange = null;
+
+            if (skill.targetType == TargetType.Single)
+            {
+                targetRange = "Line";
+            }
+            RenderOverlayTile.Instance.RenderTiles(unit.ActiveTile, targetRange, skill.range);
         }
 
 

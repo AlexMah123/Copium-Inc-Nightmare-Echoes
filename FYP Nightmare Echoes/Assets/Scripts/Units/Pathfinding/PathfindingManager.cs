@@ -43,7 +43,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             if (!ifSelectedUnit)
             {
-                RangeTilesOff();
+                //RangeTilesOff();
             }
 
             PlayerInputPathfinding();
@@ -196,7 +196,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         private void GetInRangeTiles()
         {
-            //This hites the previous patterns once it starts moving again
+            //This hides the previous patterns once it starts moving again
             foreach (var item in inRangeTiles)
             {
                 item.HideTile();

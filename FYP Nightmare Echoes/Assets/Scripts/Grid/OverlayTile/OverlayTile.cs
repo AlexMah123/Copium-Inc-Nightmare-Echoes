@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,27 +15,27 @@ namespace NightmareEchoes.Grid
 
         public bool isBlocked;
         public OverlayTile prevTile;
-
         public Vector3Int gridLocation;
 
-        // Update is called once per frame
-        void Update()
+        private SpriteRenderer sr;
+        private Color activeColor = new Color(1, 1, 1.5f, 0.5f);
+        private Color inactiveColor = new Color(1, 1, 1.5f, 0f);
+
+        private void Awake()
         {
-            /*if (Input.GetMouseButtonDown(0))
-            {
-                HideTile();
-            }*/
+            sr = GetComponent<SpriteRenderer>();
         }
 
         public void ShowTile()
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1.5f, 0.5f);
+            sr.color = activeColor;
+            Debug.Log(sr.color);
         }
 
         public void HideTile()
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1.5f, 0f);
-
+            sr.color = inactiveColor;
+            Debug.Log(sr.color);
         }
     }
 }
