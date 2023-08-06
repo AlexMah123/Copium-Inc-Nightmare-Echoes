@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 128770042}
   - component: {fileID: 5105758200137203564}
   - component: {fileID: 1622779789872064204}
-  - component: {fileID: 6822996663402581744}
   m_Layer: 6
   m_Name: Mage
   m_TagString: Inspectable
@@ -77,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: -1735001907
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -129222952, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -126,7 +125,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.375, y: 0.5}
+    oldSize: {x: 0.34375, y: 0.53125}
     newSize: {x: 0.13, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -151,17 +150,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitScriptable: {fileID: 11400000, guid: 3b58b24257d5c214d8d8640aa1862bf9, type: 2}
-  _sprite: {fileID: -129222952, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   _name: Mage
-  _maxHealth: 25
-  _speed: 4
-  _moveRange: 3
-  _stunResist: 0
-  _resist: 0
+  _sprite: {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  baseStats:
+    _maxHealth: 0
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  stats:
+    _maxHealth: 0
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  modifiedStats:
+    healthModifier: 0
+    speedModifier: 0
+    moveRangeModifier: 0
+    stunResistModifier: 0
+    resistModifier: 0
   _isHostile: 0
   _direction: 0
-  _statusEffect: 0
+  buffList: []
+  debuffList: []
+  tokenList: []
   basicAttack: {fileID: 0}
   basicAttackDesc: 
   skill1: {fileID: 0}
@@ -171,17 +185,8 @@ MonoBehaviour:
   skill3: {fileID: 0}
   skill3Desc: 
   passiveDesc: 
-  sprites: []
---- !u!114 &6822996663402581744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726962122940716085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d263015f808a924290a48cebe76883d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeTile: {fileID: 0}
+  sprites:
+  - {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: 542052453, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: -6517823, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
