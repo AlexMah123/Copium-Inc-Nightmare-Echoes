@@ -203,7 +203,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             //Gets the value of the start pos and the maximum range is the amount you can set
-            inRangeTiles = RangeMovementFind.TileMovementRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.MoveRange);
+            inRangeTiles = RangeMovementFind.TileMovementRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
 
             //This displays all the tiles in range 
             foreach (var item in inRangeTiles)

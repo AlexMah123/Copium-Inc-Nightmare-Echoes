@@ -4,9 +4,11 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "Speed Buff", menuName = "Unit Modifiers/Buff/Speed Buff")]
+    [CreateAssetMenu(fileName = "SpeedBuff", menuName = "Unit Modifiers/Buff/Speed Buff")]
     public class SpeedBuff : BaseModifier
     {
+        [SerializeField] int speedBuff;
+
         public override void Awake()
         {
 
@@ -14,6 +16,7 @@ namespace NightmareEchoes.Unit
 
         public override Modifiers ApplyEffect(Modifiers mod)
         {
+            mod.speedModifier += speedBuff;
             return mod;
         }
 

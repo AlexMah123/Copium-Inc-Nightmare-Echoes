@@ -111,7 +111,7 @@ namespace NightmareEchoes.TurnOrder
         //delegate for sort()
         int CompareSpeed(BaseUnit _a, BaseUnit _b)
         {
-            return _a.Speed.CompareTo(_b.Speed);
+            return _a.stats.Speed.CompareTo(_b.stats.Speed);
         }
         #endregion
     }

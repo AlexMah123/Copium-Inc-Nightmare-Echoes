@@ -38,7 +38,7 @@ namespace NightmareEchoes.Unit.AI
             cellThis = new Vector2(TileMapManager.Instance.tilemap.WorldToCell(V3Int).x, TileMapManager.Instance.tilemap.WorldToCell(V3Int).y);
             SortHeroesByDistance();
 
-            healthPercent = 100 * thisUnit.Health / thisUnit.MaxHealth;
+            healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
             
             //weight calculations
             utilityDictionary.Clear();
@@ -72,7 +72,7 @@ namespace NightmareEchoes.Unit.AI
 
             //update the bools below
             
-            if (targetRange <= rangePlaceholder + thisUnit.MoveRange)
+            if (targetRange <= rangePlaceholder + thisUnit.stats.MoveRange)
             {
                 inMoveAtkRange = true;
                 if (targetRange <= rangePlaceholder)

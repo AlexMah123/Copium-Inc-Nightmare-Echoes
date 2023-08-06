@@ -59,7 +59,7 @@ namespace NightmareEchoes.Unit
         public override void TakeDamage(int damage)
         {
             ShowDamage(damage.ToString());
-            Health -= damage;
+            stats.Health -= damage;
         }
 
         [ContextMenu("Take Damage (2)")]

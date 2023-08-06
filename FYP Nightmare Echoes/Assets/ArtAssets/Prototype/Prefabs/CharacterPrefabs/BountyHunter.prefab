@@ -103,14 +103,17 @@ MonoBehaviour:
   _sprite: {fileID: 21300000, guid: f346238aaf08b0a46a0dbe65487c22a1, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   _name: Bounty Hunter
-  _maxHealth: 20
-  _speed: 20
+  _maxHealth: 30
+  _speed: 6
   _moveRange: 4
-  _stunResist: 20
-  _resist: 10
+  _stunResist: 30
+  _resist: 30
   _isHostile: 0
   _direction: 0
   _statusEffect: 0
+  buffList: []
+  debuffList: []
+  tokenList: []
   basicAttack: {fileID: 0}
   basicAttackDesc: Bounty Hunter Basic Attack
   skill1: {fileID: 0}

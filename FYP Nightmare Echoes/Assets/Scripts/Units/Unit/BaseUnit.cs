@@ -5,35 +5,45 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using NightmareEchoes.Grid;
+using PlasticPipe.PlasticProtocol.Messages;
+using Codice.CM.Common;
+using UnityEngine.TestTools;
 
 namespace NightmareEchoes.Unit
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(PolygonCollider2D))]
-    public abstract class BaseUnit : MonoBehaviour
+    [RequireComponent(typeof(Rigidbody2D), typeof(PolygonCollider2D)), Serializable]
+    public class BaseUnit : MonoBehaviour
     {
         [Header("Unit Info")]
         [SerializeField] protected BaseUnitScriptable _unitScriptable;
-        [SerializeField] protected Sprite _sprite;
-
-        [SerializeField] protected GameObject damageTextPrefab;
         [SerializeField] protected string _name;
+        [SerializeField] protected Sprite _sprite;
+        [SerializeField] protected GameObject damageTextPrefab;
+
+        public BaseStats baseStats = new BaseStats();
+        public BaseStats stats = new BaseStats();
+        public Modifiers modifiedStats = new();
+
+        [SerializeField] protected bool _isHostile;
+        [SerializeField] protected Direction _direction;
+        /*
         protected int _health;
         [SerializeField] protected int _maxHealth;
         [SerializeField] protected int _speed;
         [SerializeField] protected int _moveRange;
         [SerializeField] protected int _stunResist;
         [SerializeField] protected int _resist;
+        */
 
-        [SerializeField] protected bool _isHostile;
-        [SerializeField] protected Direction _direction;
-        [SerializeField] protected StatusEffect _statusEffect;
 
         [Header("Tile Related")]
         protected OverlayTile activeTile;
 
         [Header("Buff Debuff Token")]
-        //[SerializeField] protected List<Buff> buffList = new List<Buff>();
-        //[SerializeField] protected List<Debuff> debuffList = new List<Debuff>();
+        [SerializeField] protected List<BaseModifier> buffList = new List<BaseModifier>();
+        [SerializeField] protected List<BaseModifier> debuffList = new List<BaseModifier>();
+        [SerializeField] protected List<BaseModifier> tokenList = new List<BaseModifier>();
+        
 
 
         
@@ -75,42 +85,6 @@ namespace NightmareEchoes.Unit
             private set => _name = value;
         }
 
-        public int Health
-        {
-            get => _health;
-            set => _health = value;
-        }
-
-        public int MaxHealth
-        {
-            get => _maxHealth;
-            set => _maxHealth = value;
-        }
-
-        public int Speed
-        {
-            get => _speed;
-            set => _speed = value;
-        }
-
-        public int MoveRange
-        {
-            get => _moveRange;
-            set => _moveRange = value;
-        }
-
-        public int StunResist
-        {
-            get => _stunResist;
-            set => _stunResist = value;
-        }
-
-        public int Resist
-        {
-            get => _resist;
-            set => _resist = value;
-        }
-
         public bool IsHostile
         {
             get => _isHostile;
@@ -122,12 +96,7 @@ namespace NightmareEchoes.Unit
             get => _direction;
             set => _direction = value;
         }
-
-        public StatusEffect StatusEffect
-        {
-            get => _statusEffect;
-            set => _statusEffect = value;
-        }
+        
         #endregion
 
         #region Tile Related
@@ -139,7 +108,23 @@ namespace NightmareEchoes.Unit
         #endregion
 
         #region Buff Debuff Token
+        public List<BaseModifier> BuffList
+        {
+            get => buffList; 
+            set => buffList = value;
+        }
 
+        public List<BaseModifier> DebuffList
+        {
+            get => debuffList;
+            set => debuffList = value;
+        }
+
+        public List<BaseModifier> TokenList
+        {
+            get => tokenList;
+            set => tokenList = value;
+        }
         #endregion
 
         #region Unit Skill Properties
@@ -196,12 +181,15 @@ namespace NightmareEchoes.Unit
             rb2D.freezeRotation = true;
             rb2D.gravityScale = 0f;
 
-
+            baseStats.Reset();
+            UpdateEffects();
         }
+
+
 
         protected virtual void Start()
         {
-            _health = _maxHealth;
+            stats.Health = stats.MaxHealth;
         }
 
         protected virtual void Update()
@@ -233,19 +221,44 @@ namespace NightmareEchoes.Unit
 
         }
 
-        public abstract void Move();
 
-        public abstract void BasicAttack();
+        #region Override Functions
+        public virtual void Move()
+        { 
+        
+        }
 
-        public abstract void Passive();
+        public virtual void BasicAttack()
+        {
 
-        public abstract void Skill1();
+        }
 
-        public abstract void Skill2();
+        public virtual void Passive()
+        {
 
-        public abstract void Skill3();
+        }
 
-        public abstract void TakeDamage(int damage);
+        public virtual void Skill1()
+        {
+
+        }
+
+        public virtual void Skill2()
+        {
+
+        }
+
+        public virtual void Skill3()
+        {
+
+        }
+
+        public virtual void TakeDamage(int damage)
+        {
+
+        }
+
+        #endregion
 
         protected void ShowDamage(string damage)
         {
@@ -257,19 +270,49 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        protected void UpdateBuffDebuff()
+        protected void UpdateEffects()
         {
+            modifiedStats = UpdateModifers(modifiedStats);
 
+            stats.MaxHealth = baseStats.MaxHealth + modifiedStats.healthModifier;
+            stats.Health = stats.Health;
+            stats.Speed = baseStats.Speed + modifiedStats.speedModifier;
+            stats.MoveRange = baseStats.MoveRange + modifiedStats.moveRangeModifier;
+            stats.StunResist = baseStats.StunResist + modifiedStats.stunResistModifier;
+            stats.Resist = baseStats.Resist + modifiedStats.healthModifier;
         }
 
-        protected void AddBuff()
+        protected Modifiers UpdateModifers(Modifiers modifiers)
         {
+            Modifiers temp = new();
 
+            for(int i = 0; i < buffList.Count; i++) 
+            {
+                temp = buffList[i].ApplyEffect(temp);
+            }
+
+            //add debuffs
+            //add tokens
+
+            modifiers = temp;
+
+            return modifiers;
         }
 
-        protected void AddDebuff()
+        protected void AddBuff(BaseModifier buff)
         {
-
+            if(buff.modifierType == ModifierType.BUFF)
+            {
+                BuffList.Add(buff);
+            }
+            else if(buff.modifierType == ModifierType.DEBUFF)
+            {
+                DebuffList.Add(buff);
+            }
+            else if (buff.modifierType == ModifierType.TOKEN)
+            {
+                TokenList.Add(buff);
+            }
         }
 
         #region collision
@@ -279,6 +322,7 @@ namespace NightmareEchoes.Unit
         }
         #endregion        
     }
+
     public enum Direction
     {
         North = 0,
@@ -287,8 +331,64 @@ namespace NightmareEchoes.Unit
         West = 3,
     }
 
-    public enum StatusEffect
+    [Serializable]
+    public class BaseStats
     {
-        None = 0,
+        [Header("Unit Info")]
+        protected int _health;
+        [SerializeField] protected int _maxHealth;
+        [SerializeField] protected int _speed;
+        [SerializeField] protected int _moveRange;
+        [SerializeField] protected float _stunResist;
+        [SerializeField] protected float _resist;
+        #region Unit Info Properties
+        public int Health
+        {
+            get => _health;
+            set => _health = value;
+        }
+
+        public int MaxHealth
+        {
+            get => _maxHealth;
+            set => _maxHealth = value;
+        }
+
+        public int Speed
+        {
+            get => _speed;
+            set => _speed = value;
+        }
+
+        public int MoveRange
+        {
+            get => _moveRange;
+            set => _moveRange = value;
+        }
+
+        public float StunResist
+        {
+            get => _stunResist;
+            set => _stunResist = value;
+        }
+
+        public float Resist
+        {
+            get => _resist;
+            set => _resist = value;
+        }
+        #endregion
+
+
+        public void Reset()
+        {
+            MaxHealth = _maxHealth;
+            Health = _health;
+            Speed = _speed;
+            MoveRange = _moveRange;
+            StunResist = _stunResist;
+            Resist = _resist;
+        }
+
     }
 }

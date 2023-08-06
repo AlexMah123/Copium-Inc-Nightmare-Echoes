@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
+    [CreateAssetMenu(fileName = "StunResistBuff", menuName = "Unit Modifiers/Buff/StunResist Buff")]
     public class StunResistBuff : BaseModifier
     {
+        [SerializeField] float stunResistBuff;
+
         public override void Awake()
         {
 
@@ -13,6 +16,7 @@ namespace NightmareEchoes.Unit
 
         public override Modifiers ApplyEffect(Modifiers mod)
         {
+            mod.stunResistModifier += stunResistBuff;
             return mod;
         }
 

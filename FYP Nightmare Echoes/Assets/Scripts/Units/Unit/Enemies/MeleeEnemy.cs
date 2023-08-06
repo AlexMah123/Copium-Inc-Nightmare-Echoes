@@ -8,7 +8,6 @@ namespace NightmareEchoes.Unit.Enemy
     public class MeleeEnemy : BaseUnit
     {
         
-
         protected override void Awake()
         {
             base.Awake();
@@ -61,7 +60,7 @@ namespace NightmareEchoes.Unit.Enemy
         public override void TakeDamage(int damage)
         {
             ShowDamage(damage.ToString());
-            Health -= damage;
+            stats.Health -= damage;
         }
 
         [ContextMenu("Take Damage (2)")]

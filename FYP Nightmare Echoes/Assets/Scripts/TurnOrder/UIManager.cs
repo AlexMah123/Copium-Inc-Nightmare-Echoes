@@ -96,14 +96,14 @@ namespace NightmareEchoes.TurnOrder
             {
                 currentUnitProfile.image.sprite = CurrentUnit.Sprite;
                 currentUnitNameText.text = $"{CurrentUnit.Name}";
-                currentUnitHealthText.text = $"{CurrentUnit.Health}/{CurrentUnit.MaxHealth}";
-                currentUnitSpeedText.text = $"Speed: {CurrentUnit.Speed}";
-                currentUnitMoveRangeText.text = $"Move Range: {CurrentUnit.MoveRange}";
-                currentUnitStunResistText.text = $"Stun Resist: {CurrentUnit.StunResist}%";
-                currentUnitResistText.text = $"Resist: {CurrentUnit.Resist}%";
+                currentUnitHealthText.text = $"{CurrentUnit.stats.Health}/{CurrentUnit.stats.MaxHealth}";
+                currentUnitSpeedText.text = $"Speed: {CurrentUnit.stats.Speed}";
+                currentUnitMoveRangeText.text = $"Move Range: {CurrentUnit.stats.MoveRange}";
+                currentUnitStunResistText.text = $"Stun Resist: {CurrentUnit.stats.StunResist}%";
+                currentUnitResistText.text = $"Resist: {CurrentUnit.stats.Resist}%";
 
-                currentUnitHealth.maxValue = CurrentUnit.MaxHealth;
-                currentUnitHealth.value = CurrentUnit.Health;
+                currentUnitHealth.maxValue = CurrentUnit.stats.MaxHealth;
+                currentUnitHealth.value = CurrentUnit.stats.Health;
 
             }
             #endregion
@@ -353,14 +353,14 @@ namespace NightmareEchoes.TurnOrder
             {
                 inspectedUnitProfile.image.sprite = inspectedUnit.Sprite;
                 inspectedUnitNameText.text = $"{inspectedUnit.Name}";
-                inspectedUnitHealthText.text = $"{inspectedUnit.Health}/{inspectedUnit.MaxHealth}";
-                inspectedUnitSpeedText.text = $"Speed: {inspectedUnit.Speed}";
-                inspectedUnitMoveRangeText.text = $"Move Range: {inspectedUnit.MoveRange}";
-                inspectedUnitStunResistText.text = $"Stun Resist: {inspectedUnit.StunResist}%";
-                inspectedUnitResistText.text = $"Resist: {inspectedUnit.Resist}%";
+                inspectedUnitHealthText.text = $"{inspectedUnit.stats.Health}/{inspectedUnit.stats.MaxHealth}";
+                inspectedUnitSpeedText.text = $"Speed: {inspectedUnit.stats.Speed}";
+                inspectedUnitMoveRangeText.text = $"Move Range: {inspectedUnit.stats.MoveRange}";
+                inspectedUnitStunResistText.text = $"Stun Resist: {inspectedUnit.stats.StunResist}%";
+                inspectedUnitResistText.text = $"Resist: {inspectedUnit.stats.Resist}%";
 
-                inspectedUnitHealth.maxValue = inspectedUnit.MaxHealth;
-                inspectedUnitHealth.value = inspectedUnit.Health;
+                inspectedUnitHealth.maxValue = inspectedUnit.stats.MaxHealth;
+                inspectedUnitHealth.value = inspectedUnit.stats.Health;
             }
   
 
