@@ -31,6 +31,8 @@ namespace NightmareEchoes.Unit.Combat
         //Player Calls
         public void SelectSkill(BaseUnit unit, Skill skill)
         {
+            RenderOverlayTile.Instance.ClearRenders();
+            
             if (activeSkill != null && activeSkill == skill)
             {
                 //RenderOverlayTile.ClearRenders();

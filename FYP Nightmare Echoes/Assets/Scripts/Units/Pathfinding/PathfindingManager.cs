@@ -193,7 +193,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             //This displays all the tiles in range 
             foreach (var item in inRangeTiles)
             {
-                item.ShowTile();
+                item.ShowMoveTile();
             }
         }
 

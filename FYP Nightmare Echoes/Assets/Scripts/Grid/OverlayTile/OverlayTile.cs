@@ -18,24 +18,29 @@ namespace NightmareEchoes.Grid
         public Vector3Int gridLocation;
 
         private SpriteRenderer sr;
-        private Color activeColor = new Color(1, 1, 1.5f, 0.5f);
-        private Color inactiveColor = new Color(1, 1, 1.5f, 0f);
+        [SerializeField] Color inactiveColor;
+
+        [SerializeField] Color moveColor;
+        [SerializeField] Color attackRangeColor;
 
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
         }
 
-        public void ShowTile()
+        public void ShowAttackTile()
         {
-            sr.color = activeColor;
-            Debug.Log(sr.color);
+            sr.color = new Color(attackRangeColor.r,attackRangeColor.g,attackRangeColor.b,attackRangeColor.a);
+        }
+        
+        public void ShowMoveTile()
+        {
+            sr.color = new Color(moveColor.r,moveColor.g,moveColor.b,moveColor.a);;
         }
 
         public void HideTile()
         {
-            sr.color = inactiveColor;
-            Debug.Log(sr.color);
+            sr.color = new Color(inactiveColor.r,inactiveColor.g,inactiveColor.b,inactiveColor.a);;
         }
     }
 }

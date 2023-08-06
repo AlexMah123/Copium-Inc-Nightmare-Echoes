@@ -46,7 +46,7 @@ namespace NightmareEchoes.Grid
             //Show valid
             foreach (var tile in tileRange)
             {
-                tile.ShowTile();
+                tile.ShowAttackTile();
             }
 
             activeRenders = tileRange;
