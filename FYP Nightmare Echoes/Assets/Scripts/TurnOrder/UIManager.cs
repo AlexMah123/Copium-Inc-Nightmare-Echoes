@@ -95,6 +95,8 @@ namespace NightmareEchoes.TurnOrder
             if (CurrentUnit != null)
             {
                 currentUnitProfile.image.sprite = CurrentUnit.Sprite;
+                currentUnitProfile.image.color =
+                    new Color(CurrentUnit.SpriteRenderer.color.r, CurrentUnit.SpriteRenderer.color.g, CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
                 currentUnitNameText.text = $"{CurrentUnit.Name}";
                 currentUnitHealthText.text = $"{CurrentUnit.stats.Health}/{CurrentUnit.stats.MaxHealth}";
                 currentUnitSpeedText.text = $"Speed: {CurrentUnit.stats.Speed}";
@@ -304,7 +306,14 @@ namespace NightmareEchoes.TurnOrder
                 {
                     image.SetActive(true);
 
-                    if (TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].IsHostile)
+                    image.GetComponent<Image>().sprite = TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].Sprite;
+                    image.GetComponent<Image>().color =
+                        new Color(TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.r,
+                        TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.g,
+                        TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.b,
+                        TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.a);
+
+                    /*if (TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].IsHostile)
                     {
                         image.GetComponent<Image>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b, enemyTurn.a);
 
@@ -312,7 +321,7 @@ namespace NightmareEchoes.TurnOrder
                     else
                     {
                         image.GetComponent<Image>().color = new Color(playerTurn.r, playerTurn.g, playerTurn.b, playerTurn.a);
-                    }
+                    }*/
                 }
             }
 
@@ -352,6 +361,8 @@ namespace NightmareEchoes.TurnOrder
             if (enable)
             {
                 inspectedUnitProfile.image.sprite = inspectedUnit.Sprite;
+                inspectedUnitProfile.image.color =
+                    new Color(inspectedUnit.SpriteRenderer.color.r, inspectedUnit.SpriteRenderer.color.g, inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
                 inspectedUnitNameText.text = $"{inspectedUnit.Name}";
                 inspectedUnitHealthText.text = $"{inspectedUnit.stats.Health}/{inspectedUnit.stats.MaxHealth}";
                 inspectedUnitSpeedText.text = $"Speed: {inspectedUnit.stats.Speed}";

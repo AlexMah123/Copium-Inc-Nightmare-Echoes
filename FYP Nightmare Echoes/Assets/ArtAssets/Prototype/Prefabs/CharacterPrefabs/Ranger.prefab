@@ -100,17 +100,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitScriptable: {fileID: 0}
-  _sprite: {fileID: 21300000, guid: 0bfa81c686a30ce4c8a93b9c5ffa77ff, type: 3}
-  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   _name: Ranger
-  _maxHealth: 25
-  _speed: 5
-  _moveRange: 3
-  _stunResist: 70
-  _resist: 30
+  _sprite: {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  baseStats:
+    _maxHealth: 0
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  stats:
+    _maxHealth: 0
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  modifiedStats:
+    healthModifier: 0
+    speedModifier: 0
+    moveRangeModifier: 0
+    stunResistModifier: 0
+    resistModifier: 0
   _isHostile: 0
   _direction: 0
-  _statusEffect: 0
   buffList: []
   debuffList: []
   tokenList: []

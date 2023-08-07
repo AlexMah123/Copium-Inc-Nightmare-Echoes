@@ -100,17 +100,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitScriptable: {fileID: 11400000, guid: 3b58b24257d5c214d8d8640aa1862bf9, type: 2}
-  _sprite: {fileID: 21300000, guid: f346238aaf08b0a46a0dbe65487c22a1, type: 3}
-  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   _name: Bounty Hunter
-  _maxHealth: 30
-  _speed: 6
-  _moveRange: 4
-  _stunResist: 30
-  _resist: 30
+  _sprite: {fileID: 1830408377, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  baseStats:
+    _maxHealth: 0
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  stats:
+    _maxHealth: 0
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  modifiedStats:
+    healthModifier: 0
+    speedModifier: 0
+    moveRangeModifier: 0
+    stunResistModifier: 0
+    resistModifier: 0
   _isHostile: 0
   _direction: 0
-  _statusEffect: 0
   buffList: []
   debuffList: []
   tokenList: []

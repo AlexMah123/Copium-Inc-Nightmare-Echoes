@@ -16,6 +16,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected BaseUnitScriptable _unitScriptable;
         [SerializeField] protected string _name;
         [SerializeField] protected Sprite _sprite;
+        [SerializeField] SpriteRenderer spriteRenderer;
         [SerializeField] protected GameObject damageTextPrefab;
 
         public BaseStats baseStats = new BaseStats();
@@ -48,7 +49,6 @@ namespace NightmareEchoes.Unit
         [Tooltip("Sprites are ordered in north, south, east, west")]
         [SerializeField] List<Sprite> sprites = new List<Sprite>(); //ordered in NSEW
 
-        SpriteRenderer spriteRenderer;
 
         #region Class Properties
 
@@ -63,6 +63,12 @@ namespace NightmareEchoes.Unit
         {
             get => _sprite;
             set => _sprite = value;
+        }
+
+        public SpriteRenderer SpriteRenderer
+        {
+            get => spriteRenderer;
+            set => spriteRenderer = value;
         }
 
         public string Name
@@ -185,19 +191,19 @@ namespace NightmareEchoes.Unit
                 switch (Direction)
                 {
                     case Direction.North:
-                        spriteRenderer.sprite = sprites[(int)Direction.North];
+                        SpriteRenderer.sprite = sprites[(int)Direction.North];
                         break;
 
                     case Direction.South:
-                        spriteRenderer.sprite = sprites[(int)Direction.South];
+                        SpriteRenderer.sprite = sprites[(int)Direction.South];
                         break;
 
                     case Direction.East:
-                        spriteRenderer.sprite = sprites[(int)Direction.East];
+                        SpriteRenderer.sprite = sprites[(int)Direction.East];
                         break;
 
                     case Direction.West:
-                        spriteRenderer.sprite = sprites[(int)Direction.West];
+                        SpriteRenderer.sprite = sprites[(int)Direction.West];
                         break;
 
                 }
