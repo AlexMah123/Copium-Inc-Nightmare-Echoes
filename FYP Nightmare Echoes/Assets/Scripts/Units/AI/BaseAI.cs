@@ -23,6 +23,7 @@ namespace NightmareEchoes.Unit.AI
         Vector2 cellThis, cellTarget, cellTemp;
         Dictionary<BaseUnit, int> distancesDict = new Dictionary<BaseUnit, int>();
         Dictionary<string, float> utilityDictionary = new Dictionary<string, float>();
+        
         Dictionary<BaseUnit, float> aggroDictionary = new Dictionary<BaseUnit, float>();
         float healthPercent;
 
@@ -30,7 +31,14 @@ namespace NightmareEchoes.Unit.AI
         {
             
         }
-
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("============= New Action! =============");
+                MakeDecision();
+            }
+        }
         public void MakeDecision()
         {
             V3Int = new Vector3Int((int)thisUnit.transform.position.x, (int)thisUnit.transform.position.y, (int)thisUnit.transform.position.z);
@@ -39,16 +47,17 @@ namespace NightmareEchoes.Unit.AI
             SortHeroesByDistance();
 
             healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
-            
+            Debug.Log(healthPercent);
+
             //weight calculations
             utilityDictionary.Clear();
             utilityDictionary.Add("Attack", healthPercent);
-            utilityDictionary.Add("Retreat", 0.4f);
+            utilityDictionary.Add("Retreat", 40);
             
             //sort by most utility score
-            utilityDictionary.OrderByDescending(utilityDictionary => utilityDictionary.Value);
+            var SortedOptions = utilityDictionary.OrderByDescending(utilityDictionary => utilityDictionary.Value);
 
-            switch (utilityDictionary.ToList()[0].Key)
+            switch (SortedOptions.ToList()[0].Key)
             {
                 //example list
                 case "Attack":
@@ -107,13 +116,14 @@ namespace NightmareEchoes.Unit.AI
             {
                 V3Int = new Vector3Int((int)heroList[i].transform.position.x, (int)heroList[i].transform.position.y, (int)heroList[i].transform.position.z);
                 cellTemp = new Vector2(TileMapManager.Instance.tilemap.WorldToCell(V3Int).x, TileMapManager.Instance.tilemap.WorldToCell(V3Int).y);
-                distTemp = ((int)cellThis.x - (int)cellTemp.x) + ((int)cellThis.y - (int)cellTemp.y); //rough distance
+                Debug.Log(cellTemp.x + ", " + cellTemp.y);
+                distTemp = (Mathf.Abs((int)cellThis.x - (int)cellTemp.x)) + Mathf.Abs(((int)cellThis.y - (int)cellTemp.y)); //rough distance
                 distancesDict.Add(heroList[i], distTemp);
             }
-            distancesDict.OrderBy(distancesDict => distancesDict.Value);
+            var sortedHeroes = distancesDict.OrderBy(distancesDict => distancesDict.Value);
 
-            closestHero = distancesDict.ToList()[0].Key;
-            closestRange = distancesDict.ToList()[0].Value;
+            closestHero = sortedHeroes.ToList()[0].Key;
+            closestRange = sortedHeroes.ToList()[0].Value;
             Debug.Log("Closest Hero: " + closestHero.Name + ", " + closestRange + " tiles away");
         }
 

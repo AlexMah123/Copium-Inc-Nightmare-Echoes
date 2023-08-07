@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5583804447610931203}
   - component: {fileID: 5583804447610931200}
+  - component: {fileID: 5286765588085795049}
   - component: {fileID: 8893637955381217503}
   - component: {fileID: 5583804447610931213}
   - component: {fileID: 2309720267678754650}
@@ -87,6 +88,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5286765588085795049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583804447610931201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be6f037fb0b5df942b4d24a692fd5e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroList: []
+  unitList: []
+  thisUnit: {fileID: 8893637955381217503}
+  target: {fileID: 0}
 --- !u!114 &8893637955381217503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,17 +117,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitScriptable: {fileID: 0}
+  _name: Melee Enemy
   _sprite: {fileID: 21300000, guid: 67c4eb86bc87b504cb4ee13031e0fdc1, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
-  _name: Melee Enemy
-  _maxHealth: 20
-  _speed: 15
-  _moveRange: 3
-  _stunResist: 30
-  _resist: 20
+  baseStats:
+    _maxHealth: 0
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  stats:
+    _maxHealth: 0
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  modifiedStats:
+    healthModifier: 0
+    speedModifier: 0
+    moveRangeModifier: 0
+    stunResistModifier: 0
+    resistModifier: 0
   _isHostile: 1
   _direction: 0
-  _statusEffect: 0
+  buffList: []
+  debuffList: []
+  tokenList: []
   basicAttack: {fileID: 0}
   basicAttackDesc: Melee Basic
   skill1: {fileID: 0}
