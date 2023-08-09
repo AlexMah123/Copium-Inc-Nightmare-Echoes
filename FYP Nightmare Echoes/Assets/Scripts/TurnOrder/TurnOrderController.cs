@@ -72,13 +72,10 @@ namespace NightmareEchoes.TurnOrder
 
         void Update()
         {
-            
-
             if(currentPhase != null)
             {
                 currentPhase.OnUpdatePhase();
             }
-
         }
 
         public void ChangePhase(Phase newPhase)
@@ -92,6 +89,26 @@ namespace NightmareEchoes.TurnOrder
             currentPhase.OnEnterPhase(this);
         }
 
+        public void PassTurn()
+        {
+            //if there is at least 2 elements in queue
+            if (CurrentUnitQueue.Count > 1)
+            {
+                //if the second element exist, check hostile and change accordingly, else endPhase
+                if (CurrentUnitQueue.ToArray()[1].IsHostile)
+                {
+                   ChangePhase(enemyPhase);
+                }
+                else
+                {
+                    ChangePhase(playerPhase);
+                }
+            }
+            else
+            {
+                ChangePhase(endPhase);
+            }
+        }
 
         #region Turn Order Calculations
         public void CalculateTurnOrder()

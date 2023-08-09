@@ -234,40 +234,19 @@ namespace NightmareEchoes.TurnOrder
         public void Skill1Button()
         {
             CurrentUnit.Skill1();
-            PassTurn();
+            TurnOrderController.Instance.PassTurn();
         }
 
         public void Skill2Button()
         {
             CurrentUnit.Skill2();
-            PassTurn();
+            TurnOrderController.Instance.PassTurn();
         }
 
         public void Skill3Button()
         {
             CurrentUnit.Skill3();
-            PassTurn();
-        }
-
-        private void PassTurn()
-        {
-            //if there is at least 2 elements in queue
-            if (TurnOrderController.Instance.CurrentUnitQueue.Count > 1)
-            {
-                //if the second element exist, check hostile and change accordingly, else endPhase
-                if (TurnOrderController.Instance.CurrentUnitQueue.ToArray()[1].IsHostile)
-                {
-                    TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.enemyPhase);
-                }
-                else
-                {
-                    TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.playerPhase);
-                }
-            }
-            else
-            {
-                TurnOrderController.Instance.ChangePhase(TurnOrderController.Instance.endPhase);
-            }
+            TurnOrderController.Instance.PassTurn();
         }
 
         #endregion
