@@ -1,15 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using NightmareEchoes.Grid;
 
+//created by JH
 namespace NightmareEchoes.Unit.Combat
 {
     public class CombatManager : MonoBehaviour
     {
         public static CombatManager Instance;
-        
+
+        public List<BaseUnit> unitsInvolved;
+        public List<BaseUnit> aliveUnits;
+        public List<BaseUnit> deadUnits;
+        public List<BaseUnit> friendlyUnits;
+        public List<BaseUnit> hostileUnits;
+
         private Skill activeSkill;
 
         private void Awake()
@@ -20,12 +28,24 @@ namespace NightmareEchoes.Unit.Combat
                 Instance = this;
         }
 
+        private void Start()
+        {
+            OnBattleStart();
+        }
+
         //Init
         void OnBattleStart()
         {
-            //Get all units on field
-            //Categorize into friendly / hostile
-            //Log locations
+            unitsInvolved =  FindObjectsOfType<BaseUnit>().ToList();
+            aliveUnits = unitsInvolved;
+            
+            foreach (var unit in unitsInvolved)
+            {
+                if (unit.IsHostile)
+                    hostileUnits.Add(unit);
+                else
+                    friendlyUnits.Add(unit);
+            }
         }
         
         //Player Calls

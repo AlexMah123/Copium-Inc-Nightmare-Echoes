@@ -31,12 +31,6 @@ namespace NightmareEchoes.Grid
             InitOverlayTiles();
         }
 
-        void Start()    
-        {
-
-        }
-
-
         void InitOverlayTiles()
         {
             //generating the grid

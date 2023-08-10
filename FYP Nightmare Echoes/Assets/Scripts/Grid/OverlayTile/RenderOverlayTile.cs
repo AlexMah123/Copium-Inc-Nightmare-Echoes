@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+//created by JH
 namespace NightmareEchoes.Grid
 {
     public class RenderOverlayTile : MonoBehaviour
@@ -54,7 +55,12 @@ namespace NightmareEchoes.Grid
 
             activeRenders = tileRange;
         }
-        
+
+        public void RenderEnemyTiles()
+        {
+            
+        }
+
         public void ClearRenders()
         {
             foreach (var tile in activeRenders)
