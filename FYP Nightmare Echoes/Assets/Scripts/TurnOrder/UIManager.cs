@@ -1,12 +1,10 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using NightmareEchoes.Unit;
 using NightmareEchoes.TurnOrder;
-using System.ComponentModel;
-using Unity.Collections;
-using System;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -324,13 +322,28 @@ namespace NightmareEchoes.TurnOrder
 
         GameObject GetImageObject()
         {
+            bool notEnough = false;
             for (int i = 0; i < imageObjectPool.Count; i++)
             {
                 if (!imageObjectPool[i].activeInHierarchy)
                 {
+                    notEnough = false;
                     return imageObjectPool[i];
                 }
-            }          
+                else
+                {
+                    notEnough = true;
+                }
+            }
+
+            if(notEnough)
+            {
+                GameObject obj = Instantiate(imagePrefab, currentTurnOrderPanel.transform);
+                obj.SetActive(false);
+                obj.name = $"{obj.name} {capIndex++}";
+                imageObjectPool.Add(obj);
+                return obj;
+            }
 
             return null;
         }

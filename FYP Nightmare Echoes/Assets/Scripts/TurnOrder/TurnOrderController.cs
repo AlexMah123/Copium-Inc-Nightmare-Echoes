@@ -20,9 +20,9 @@ namespace NightmareEchoes.TurnOrder
 
         [Header("Turn Order")]
         [SerializeField] List<Units> turnOrderList = new List<Units>();
-        [SerializeField] List<Units> nextTurnOrderList = new List<Units>();
+        //[SerializeField] List<Units> nextTurnOrderList = new List<Units>();
         Queue<Units> currentUnitQueue = new Queue<Units>();
-        Queue<Units> nextUnitQueue = new Queue<Units>();
+        //Queue<Units> nextUnitQueue = new Queue<Units>();
         public int turnCount;
         public float phaseDelay;
         public float enemyDelay;
@@ -43,11 +43,11 @@ namespace NightmareEchoes.TurnOrder
             private set { currentUnitQueue = value; }
         }
 
-        public Queue<Units> NextUnitQueue
+        /*public Queue<Units> NextUnitQueue
         {
             get { return nextUnitQueue; }
             private set { nextUnitQueue = value; }
-        }
+        }*/
 
         #endregion
 
@@ -128,6 +128,19 @@ namespace NightmareEchoes.TurnOrder
         //delegate for sort()
         int CompareSpeed(Units _a, Units _b)
         {
+            if (_a.stats.Speed == _b.stats.Speed)
+            {
+                int rand = Random.Range(0, 2);
+
+                switch (rand)
+                {
+                    case 0:
+                        return -1;
+                    case 1:
+                        return 1;
+                }
+            }
+
             return _a.stats.Speed.CompareTo(_b.stats.Speed);
         }
         #endregion

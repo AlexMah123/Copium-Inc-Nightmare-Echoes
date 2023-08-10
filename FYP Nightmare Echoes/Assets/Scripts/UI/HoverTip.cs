@@ -1,8 +1,8 @@
-using NightmareEchoes.TurnOrder;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using NightmareEchoes.TurnOrder;
 
 //created by Alex
 namespace NightmareEchoes.UI
@@ -22,10 +22,10 @@ namespace NightmareEchoes.UI
         public void OnPointerExit(PointerEventData eventData)
         {
             StopAllCoroutines();
-            ToolTipManager.OnMouseLoseFocus();
+            ToolTipManager.OnMouseLoseFocusSkill();
         }
 
-        private void ShowTip()
+        private void ShowSkillToolTip()
         {
             if(TurnOrderController.Instance.CurrentUnit == null)
             {
@@ -55,13 +55,13 @@ namespace NightmareEchoes.UI
                     break;
             }
 
-            ToolTipManager.OnMouseHover(toolTip, Input.mousePosition);
+            ToolTipManager.OnMouseHoverSkill(toolTip, Input.mousePosition);
         }
 
         private IEnumerator StartTimer()
         {
             yield return new WaitForSeconds(timeToWait);
-            ShowTip();
+            ShowSkillToolTip();
         }
 
         private enum Button

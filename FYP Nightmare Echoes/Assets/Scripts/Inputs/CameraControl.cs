@@ -9,20 +9,27 @@ namespace NightmareEchoes.Inputs
     {
         public static CameraControl Instance;
 
+        [Header("Cameras")]
+        public Camera gameCamera;
+
         [Header("Camera Zoom")]
         [SerializeField] float defaultZoom;
         [SerializeField] float minZoom;
         [SerializeField] float maxZoom;
         [SerializeField] float zoomMulitplier = 1;
 
-        [Header("Camera Boundaries")]
+        [Header("Camera Panning")]
         public Vector3 offset = new Vector3(0, 0, -10f);
         public float smoothTime = 0.25f;
         public Vector3 velocity = Vector3.zero;
+        Vector3 targetPosition;
+        GameObject targetUnit;
+        public bool isPanning;
+
+        [Header("Camera Boundaries")]
         [SerializeField] float boundaryX;
         [SerializeField] float boundaryY;
 
-        public Vector3 targetPosition;
         private Vector3 dragOrigin;
         private Vector3 dragDelta;
         private bool isDragging;
@@ -39,33 +46,42 @@ namespace NightmareEchoes.Inputs
             }
         }
 
+        private void Start()
+        {
+            gameCamera = Camera.main;
+        }
+
         private void Update()
         {
             IfCameraDrag();
             IfCameraZoom();
             IfCameraZoomReset();
-        }
 
-        public bool UpdateCameraPan(GameObject currentUnit)
-        {
-            if(currentUnit != null)
+            if (isPanning && targetUnit != null)
             {
-                targetPosition = currentUnit.transform.position + Instance.offset;
-                transform.position = Vector3.SmoothDamp(
-                    transform.position, targetPosition, ref Instance.velocity, Instance.smoothTime);
+                targetPosition = targetUnit.transform.position + offset;
+                gameCamera.transform.position = Vector3.SmoothDamp(
+                    gameCamera.transform.position, targetPosition, ref velocity, smoothTime);
 
-                if (Vector3.Distance(Instance.gameObject.transform.position, Instance.targetPosition) < 0.05f)
+                if (Vector3.Distance(gameCamera.transform.position, targetPosition) < 0.05f)
                 {
-                    return false;
+                    isPanning = false;
                 }
             }
+        }
 
-            return true;
+        public void UpdateCameraPan(GameObject currentUnit)
+        {
+            if (currentUnit != null)
+            {
+                targetUnit = currentUnit;
+                isPanning = true;
+            }
         }
 
         void IfCameraDrag()
         {
-            if (Input.GetMouseButton(1)) //if holding down left click
+            if (Input.GetMouseButton(1) && !isPanning) //if holding down left click
             {
 
                 dragDelta = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Camera.main.transform.position;
@@ -93,7 +109,7 @@ namespace NightmareEchoes.Inputs
 
         void IfCameraZoom()
         {
-            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f && !isPanning)
             {
                 Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + Input.GetAxis("Mouse ScrollWheel") * zoomMulitplier, minZoom, maxZoom);
             }
@@ -101,7 +117,7 @@ namespace NightmareEchoes.Inputs
 
         void IfCameraZoomReset()
         {
-            if (Input.GetMouseButtonDown(2))
+            if (Input.GetMouseButtonDown(2) && !isPanning)
             {
                 Camera.main.orthographicSize = defaultZoom;
             }

@@ -106,48 +106,40 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
 
+            focusedTileHit = GetFocusedTile();
+
+            if (focusedTileHit.HasValue)
             {
-                focusedTileHit = GetFocusedTile();
+                overlayTile = focusedTileHit.Value.collider.GetComponent<OverlayTile>();
+                transform.position = overlayTile.transform.position;
 
-                if (focusedTileHit.HasValue)
+                //gameObject.GetComponent<SpriteRenderer>().sortingOrder = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
+
+                if (Input.GetMouseButtonDown(0) && ifSelectedUnit)
                 {
-                    overlayTile = focusedTileHit.Value.collider.GetComponent<OverlayTile>();
-                    transform.position = overlayTile.transform.position;
+                    //commented out so it does not show tile randomly
+                    //overlayTile.ShowTile();
 
-                    //gameObject.GetComponent<SpriteRenderer>().sortingOrder = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
-
-                    if (Input.GetMouseButtonDown(0) && ifSelectedUnit)
+                    if (currentSelectedUnitGO == null)
                     {
-                        //commented out so it does not show tile randomly
-                        //overlayTile.ShowTile();
+                        //PositionCharacterOnTile(overlayTile);
 
-                        if (currentSelectedUnitGO == null)
-                        {
-                            //PositionCharacterOnTile(overlayTile);
-
-                        }
-                        else if (currentSelectedUnitGO != null)
-                        {
-
-                            path = PathFind.FindPath(currentSelectedUnitGO.GetComponent<Units>().ActiveTile, overlayTile, inRangeTiles);
-                            //overlayTile.isCurenttlyStandingOn = false;
-
-                        }
                     }
+                    else if (currentSelectedUnitGO != null)
+                    {
+                        path = PathFind.FindPath(currentSelectedUnitGO.GetComponent<Units>().ActiveTile, overlayTile, inRangeTiles);
+                        //overlayTile.isCurenttlyStandingOn = false;
 
-
+                    }
                 }
+
+
             }
 
             if (path.Count > 0)
             {
-                cameraPanning = true;
+                CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
                 MoveAlongPath();
-            }
-
-            if(cameraPanning)
-            {
-                cameraPanning = CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
             }
         }
 

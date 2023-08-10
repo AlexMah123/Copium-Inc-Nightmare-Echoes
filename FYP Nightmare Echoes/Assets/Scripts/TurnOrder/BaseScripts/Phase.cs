@@ -46,20 +46,16 @@ namespace NightmareEchoes.TurnOrder
 
             #endregion
 
-            newTurn = true;
+            if(controller.currentPhase == controller.playerPhase || controller.currentPhase == controller.enemyPhase)
+            {
+                CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
+            }
 
             OnEnter();
         }
 
         public void OnUpdatePhase()
         {
-            //if its a new turn and during player/enemy phase, pan camera
-
-            if (newTurn && (controller.currentPhase == controller.playerPhase || controller.currentPhase == controller.enemyPhase))
-            {
-                newTurn = CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
-            }
-
 
             OnUpdate();
         }
