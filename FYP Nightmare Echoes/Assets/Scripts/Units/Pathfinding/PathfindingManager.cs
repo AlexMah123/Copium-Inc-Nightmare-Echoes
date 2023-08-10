@@ -16,14 +16,29 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] GameObject currentSelectedUnitGO;
         [SerializeField] float movingSpeed;
         BaseUnit currentSelectedUnit;
-        bool ifSelectedUnit = false;
+
+        //Changes Im Making
+        BaseUnit baseUnits;
+
+
+        [SerializeField] bool ifSelectedUnit = false;
 
         List<OverlayTile> path = new List<OverlayTile>();
         List<OverlayTile> inRangeTiles = new List<OverlayTile>();
 
         RaycastHit2D? focusedTileHit;
         OverlayTile overlayTile;
-        
+
+
+
+        //Changes by Vinn
+        [SerializeField] private LayerMask UnitLayer;
+
+        private void Start()
+        {
+            baseUnits = gameObject.GetComponent<BaseUnit>();
+        }
+
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -31,14 +46,16 @@ namespace NightmareEchoes.Unit.Pathfinding
                 ifSelectedUnit = false;
                 RangeTilesOff();
             }
-            
+
             PlayerInputPathfinding();
+
+            DebuggerForPos();
         }
 
         public void PlayerInputPathfinding()
         {
             //if player clicked and has not previously selected a unit, raycast and check
-            if (Input.GetMouseButtonDown(0) && !ifSelectedUnit)
+            if (Input.GetMouseButtonDown(0) && !ifSelectedUnit && !overlayTile.PlayerOnTile)
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
@@ -46,6 +63,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                 int overlayTileMask = LayerMask.GetMask("Overlay Tile");
                 int unitMask = LayerMask.GetMask("Unit");
 
+
+                //Mouse Position to select unit
                 RaycastHit2D hitUnit = Physics2D.Raycast(mousePos2D, Vector2.zero, Mathf.Infinity, unitMask);
 
                 //if you hit a unit then get component
@@ -56,13 +75,15 @@ namespace NightmareEchoes.Unit.Pathfinding
                         currentSelectedUnitGO = hitUnit.collider.gameObject;
                         currentSelectedUnit = hitUnit.collider.gameObject.GetComponent<BaseUnit>();
                         ifSelectedUnit = true;
-
+                        overlayTile.PlayerOnTile = true;
 
                         RaycastHit2D hitOverlayTile = Physics2D.Raycast(currentSelectedUnitGO.transform.position, Vector2.zero, Mathf.Infinity, overlayTileMask);
 
                         if (hitOverlayTile.collider.gameObject.GetComponent<OverlayTile>())
                         {
+
                             currentSelectedUnit.ActiveTile = hitOverlayTile.collider.GetComponent<OverlayTile>();
+
                             GetInRangeTiles();
                         }
 
@@ -70,16 +91,18 @@ namespace NightmareEchoes.Unit.Pathfinding
                     else
                     {
                         ifSelectedUnit = false;
+                        overlayTile.PlayerOnTile = false;
                     }
                 }
                 else
                 {
                     ifSelectedUnit = false;
+                    overlayTile.PlayerOnTile = false;
                 }
+
             }
 
 
-            //if (Input.GetMouseButtonDown(0) && selectedUnit)
             {
                 focusedTileHit = GetFocusedTile();
 
@@ -102,8 +125,9 @@ namespace NightmareEchoes.Unit.Pathfinding
                         }
                         else if (currentSelectedUnitGO != null)
                         {
-                            //characterPrefab.GetComponent<CharacterData>().activeTile = overlayTile;
+
                             path = PathFind.FindPath(currentSelectedUnitGO.GetComponent<BaseUnit>().ActiveTile, overlayTile, inRangeTiles);
+                            //overlayTile.isCurenttlyStandingOn = false;
 
                         }
                     }
@@ -133,10 +157,10 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (Vector2.Distance(currentSelectedUnitGO.transform.position, path[0].transform.position) < 0.0001f)
             {
                 PositionCharacterOnTile(path[0]);
-                path.RemoveAt(0);   
+                path.RemoveAt(0);
             }
 
-            if(path.Count == 0)
+            if (path.Count == 0)
             {
                 //if i dont place this function here it wont render the tile range after it moves (Only on  the initial click)
                 //GetInRangeTiles();
@@ -188,7 +212,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             //Gets the value of the start pos and the maximum range is the amount you can set
-            inRangeTiles = RangeMovementFind.TileMovementRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
+            inRangeTiles = RangeMovementFind.TileMovementRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange, overlayTile.PlayerOnTile == false);
 
             //This displays all the tiles in range 
             foreach (var item in inRangeTiles)
@@ -204,6 +228,22 @@ namespace NightmareEchoes.Unit.Pathfinding
                 item.HideTile();
             }
         }
+
+        public void DebuggerForPos()
+        {
+            if (ifSelectedUnit == true)
+            {
+                if (overlayTile.PlayerOnTile == false && Input.GetMouseButtonDown(0))
+                {
+                    Debug.Log("You can move here");
+                }
+                else if (overlayTile.PlayerOnTile == true && Input.GetMouseButtonDown(0))
+                {
+                    Debug.Log("Tile currently occupied");
+                }
+            }
+        }
+
 
         #endregion
     }

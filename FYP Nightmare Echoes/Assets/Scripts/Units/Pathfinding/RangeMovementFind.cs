@@ -10,7 +10,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 {
     public static class RangeMovementFind
     {
-        public static List<OverlayTile> TileMovementRange(OverlayTile startTile, int range)
+        public static List<OverlayTile> TileMovementRange(OverlayTile startTile, int range , bool isTileOccupied )
         { 
             var inRangeTiles = new List<OverlayTile>();
             int stepCount = 0;
@@ -20,7 +20,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             var TileForPreviousStep = new List<OverlayTile>();
             TileForPreviousStep.Add(startTile);
 
-            while (stepCount < range)
+            while (stepCount < range && isTileOccupied == false)
             { 
                 var surroundingTiles = new List<OverlayTile>();
 

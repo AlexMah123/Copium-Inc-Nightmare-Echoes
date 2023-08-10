@@ -11,11 +11,14 @@ namespace NightmareEchoes.Grid
         public int G;
         public int H;
 
+        public bool isCurenttlyStandingOn = false;
+
         public int F { get { return G + H; } }
 
         public bool isBlocked;
         public OverlayTile prevTile;
         public Vector3Int gridLocation;
+        public bool PlayerOnTile = false;
 
         private SpriteRenderer sr;
         [SerializeField] Color inactiveColor;
@@ -41,6 +44,18 @@ namespace NightmareEchoes.Grid
         public void HideTile()
         {
             sr.color = new Color(inactiveColor.r,inactiveColor.g,inactiveColor.b,inactiveColor.a);;
+        }
+
+        public void isPlayerOnTile()
+        {
+            if (PlayerOnTile == true)
+            {
+                HideTile();
+            }
+            else if (PlayerOnTile == false)
+            { 
+                ShowMoveTile();
+            }
         }
     }
 }
