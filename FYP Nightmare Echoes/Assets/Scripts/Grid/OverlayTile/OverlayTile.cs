@@ -38,6 +38,16 @@ namespace NightmareEchoes.Grid
             sr.color = new Color(moveColor.r,moveColor.g,moveColor.b,moveColor.a);;
         }
 
+        public void ShowEnemyTile()
+        {
+            sr.color = Color.red;
+        }
+
+        public void ShowAllyTile()
+        {
+            sr.color = Color.green;
+        }
+        
         public void HideTile()
         {
             sr.color = new Color(inactiveColor.r,inactiveColor.g,inactiveColor.b,inactiveColor.a);;
