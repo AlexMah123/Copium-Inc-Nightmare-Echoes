@@ -46,6 +46,8 @@ namespace NightmareEchoes.Unit.Combat
                 else
                     friendlyUnits.Add(unit);
             }
+
+            StartCoroutine(UpdateUnitPositionsAtStart());
         }
         
         //Player Calls
@@ -71,6 +73,16 @@ namespace NightmareEchoes.Unit.Combat
         //Logic
         
         //Apply
+        
+        //==Coroutines==
+        IEnumerator UpdateUnitPositionsAtStart()
+        {
+            yield return new WaitForSeconds(1f);
+            foreach (var unit in unitsInvolved)
+            {
+                unit.UpdateLocation();
+            }
+        }
     }
     
 }

@@ -27,7 +27,7 @@ namespace NightmareEchoes.Grid
             {
                 Instance = this;
             }
-
+            
             InitOverlayTiles();
         }
 

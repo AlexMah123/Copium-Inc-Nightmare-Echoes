@@ -178,13 +178,11 @@ namespace NightmareEchoes.Unit
             UpdateEffects();
         }
 
-
-
         protected virtual void Start()
         {
             stats.Health = stats.MaxHealth;
         }
-
+        
         protected virtual void Update()
         {
             if(sprites.Count > 0)
@@ -258,6 +256,14 @@ namespace NightmareEchoes.Unit
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = damage;
             }
+        }
+
+        public void UpdateLocation()
+        {
+            var hitTile = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            if (hitTile)
+                activeTile = hitTile.collider.gameObject.GetComponent<OverlayTile>();
+            Debug.Log(activeTile);
         }
 
         public void UpdateEffects()
