@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
 
 //created by Vinn, editted by Alex
@@ -10,16 +11,17 @@ namespace NightmareEchoes.Unit.Pathfinding
 {
     public class PathfindingManager : MonoBehaviour
     {
-        [SerializeField] GameObject OTC; //
+        [SerializeField] GameObject OTC; 
 
         [Header("Current Unit")]
         [SerializeField] GameObject currentSelectedUnitGO;
         [SerializeField] float movingSpeed;
         BaseUnit currentSelectedUnit;
 
-        //Changes Im Making
-        BaseUnit baseUnits;
 
+        //Vinn test changes
+        public string UnitTag;
+        Tilemap tilemap;
 
         [SerializeField] bool ifSelectedUnit = false;
 
@@ -33,10 +35,10 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         //Changes by Vinn
         [SerializeField] private LayerMask UnitLayer;
-
+        
         private void Start()
         {
-            baseUnits = gameObject.GetComponent<BaseUnit>();
+
         }
 
         void Update()
@@ -49,13 +51,14 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             PlayerInputPathfinding();
 
-            DebuggerForPos();
+            //DebuggerForPos();
+            GetUnitPos();
         }
 
         public void PlayerInputPathfinding()
         {
             //if player clicked and has not previously selected a unit, raycast and check
-            if (Input.GetMouseButtonDown(0) && !ifSelectedUnit && !overlayTile.PlayerOnTile)
+            if (Input.GetMouseButtonDown(0) && !ifSelectedUnit)
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
@@ -91,13 +94,11 @@ namespace NightmareEchoes.Unit.Pathfinding
                     else
                     {
                         ifSelectedUnit = false;
-                        overlayTile.PlayerOnTile = false;
                     }
                 }
                 else
                 {
                     ifSelectedUnit = false;
-                    overlayTile.PlayerOnTile = false;
                 }
 
             }
@@ -212,7 +213,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             //Gets the value of the start pos and the maximum range is the amount you can set
-            inRangeTiles = RangeMovementFind.TileMovementRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange, overlayTile.PlayerOnTile == false);
+            inRangeTiles = RangeMovementFind.TileMovementRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
 
             //This displays all the tiles in range 
             foreach (var item in inRangeTiles)
@@ -244,7 +245,13 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
         }
 
-
+        public void GetUnitPos()
+        {
+            if (ifSelectedUnit == true)
+            {
+                
+            }
+        }
         #endregion
     }
 }
