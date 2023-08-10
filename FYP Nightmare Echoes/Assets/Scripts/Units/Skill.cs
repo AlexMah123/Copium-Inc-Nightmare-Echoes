@@ -7,13 +7,14 @@ namespace NightmareEchoes.Unit
 {
     public abstract class Skill : MonoBehaviour
     {
-        public string skillName;
-        public int cooldown;
-        public int range;
-        public TargetType targetType;
-        public TargetArea targetArea;
-        public AOEType aoeType;
-        public SkillType skillType;
+        [SerializeField] protected string skillName;
+        [SerializeField] protected int damage;
+        [SerializeField] protected int cooldown;
+        [SerializeField] protected int range;
+        [SerializeField] protected TargetType targetType;
+        [SerializeField] protected TargetArea targetArea;
+        [SerializeField] protected AOEType aoeType;
+        [SerializeField] protected SkillType skillType;
 
         #region properties
 
@@ -21,6 +22,12 @@ namespace NightmareEchoes.Unit
         {
             get => skillName;
             set => skillName = value;
+        }
+
+        public int Damage
+        {
+            get => damage;
+            set => damage = value;
         }
 
         public int Cooldown

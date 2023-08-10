@@ -54,6 +54,8 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         public void PlayerInputPathfinding()
         {
+            return;
+            
             //if player clicked and has not previously selected a unit, raycast and check
             if (Input.GetMouseButtonDown(0) && !ifSelectedUnit && !overlayTile.PlayerOnTile)
             {

@@ -71,8 +71,7 @@ namespace NightmareEchoes.Grid
                 }
             }
         }
-
-
+        
         public List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile , List<OverlayTile> LimitTiles )
         {
             var map = OverlayTileManager.Instance.map;
