@@ -10,9 +10,9 @@ namespace NightmareEchoes.Unit.AI
 {
     public class BaseAI : MonoBehaviour
     {
-        [SerializeField] List<BaseUnit> heroList, unitList;
-        [SerializeField] BaseUnit thisUnit, target;
-        BaseUnit closestHero;
+        [SerializeField] List<Units> heroList, unitList;
+        [SerializeField] Units thisUnit, target;
+        Units closestHero;
         float closestRange, targetRange;
         bool inAtkRange;
         bool inMoveAtkRange;
@@ -21,10 +21,10 @@ namespace NightmareEchoes.Unit.AI
         Tile currTile, targetTile;
         Vector3Int V3Int;
         Vector2 cellThis, cellTarget, cellTemp;
-        Dictionary<BaseUnit, int> distancesDict = new Dictionary<BaseUnit, int>();
+        Dictionary<Units, int> distancesDict = new Dictionary<Units, int>();
         Dictionary<string, float> utilityDictionary = new Dictionary<string, float>();
         
-        Dictionary<BaseUnit, float> aggroDictionary = new Dictionary<BaseUnit, float>();
+        Dictionary<Units, float> aggroDictionary = new Dictionary<Units, float>();
         float healthPercent;
 
         private void Start()
@@ -131,7 +131,7 @@ namespace NightmareEchoes.Unit.AI
         {
             //populating unitList
             heroList.Clear();
-            unitList = FindObjectsOfType<BaseUnit>().ToList();
+            unitList = FindObjectsOfType<Units>().ToList();
 
             //filter by heroes
             foreach (var Unit in unitList)

@@ -119,13 +119,14 @@ MonoBehaviour:
   _unitScriptable: {fileID: 0}
   _name: Melee Enemy
   _sprite: {fileID: -331225865, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  spriteRenderer: {fileID: 0}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
-    _maxHealth: 0
-    _speed: 0
-    _moveRange: 0
-    _stunResist: 0
-    _resist: 0
+    _maxHealth: 20
+    _speed: 4
+    _moveRange: 2
+    _stunResist: 20
+    _resist: 20
   stats:
     _maxHealth: 0
     _speed: 0

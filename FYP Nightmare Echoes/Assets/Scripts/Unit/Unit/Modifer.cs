@@ -7,7 +7,7 @@ using UnityEngine;
 namespace NightmareEchoes.Unit
 {
     [Serializable]
-    public abstract class BaseModifier : ScriptableObject
+    public abstract class Modifer : ScriptableObject
     {
         [Header("Modifier Details")]
         public Sprite icon;

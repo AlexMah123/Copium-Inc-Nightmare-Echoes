@@ -2,34 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 //created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "StunResistBuff", menuName = "Unit Modifiers/Buff/StunResist Buff")]
-    public class StunResistBuff : BaseModifier
+    [CreateAssetMenu(fileName = "ResistBuff", menuName = "Unit Modifiers/Buff/Resist Buff")]
+    public class ResistBuff : Modifer
     {
-        [SerializeField] float stunResistBuff;
+        [SerializeField] float resistBuff;
 
         public override void Awake()
         {
-
+            
         }
 
         public override Modifiers ApplyEffect(Modifiers mod)
         {
-            mod.stunResistModifier += stunResistBuff;
+            mod.resistModifier += resistBuff;
             return mod;
         }
 
         public override void UpdateLifeTime()
         {
-
+            
         }
 
         public override void Remove()
         {
-
+            
         }
+
     }
 }

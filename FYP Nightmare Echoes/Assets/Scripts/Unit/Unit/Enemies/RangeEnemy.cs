@@ -5,9 +5,8 @@ using UnityEngine;
 //created by Alex
 namespace NightmareEchoes.Unit.Enemy
 {
-    public class MeleeEnemy : BaseUnit
+    public class RangeEnemy : Units
     {
-        
         protected override void Awake()
         {
             base.Awake();

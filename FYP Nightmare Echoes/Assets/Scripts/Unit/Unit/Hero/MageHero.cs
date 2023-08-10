@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    public class MageHero : BaseUnit
+    public class MageHero : Units
     {
         public override void BasicAttack()
         {

@@ -5,19 +5,18 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using NightmareEchoes.Grid;
-using UnityEngine.TestTools;
 
 //created by Alex
 namespace NightmareEchoes.Unit
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(PolygonCollider2D)), Serializable]
-    public class BaseUnit : MonoBehaviour
+    public class Units : MonoBehaviour
     {
         [Header("Unit Info")]
         [SerializeField] protected BaseUnitScriptable _unitScriptable;
         [SerializeField] protected string _name;
         [SerializeField] protected Sprite _sprite;
-        [SerializeField] SpriteRenderer spriteRenderer;
+        protected SpriteRenderer spriteRenderer;
         [SerializeField] protected GameObject damageTextPrefab;
 
         public BaseStats baseStats = new BaseStats();
@@ -31,9 +30,9 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected OverlayTile activeTile;
 
         [Header("Buff Debuff Token")]
-        [SerializeField] protected List<BaseModifier> buffList = new List<BaseModifier>();
-        [SerializeField] protected List<BaseModifier> debuffList = new List<BaseModifier>();
-        [SerializeField] protected List<BaseModifier> tokenList = new List<BaseModifier>();
+        [SerializeField] protected List<Modifer> buffList = new List<Modifer>();
+        [SerializeField] protected List<Modifer> debuffList = new List<Modifer>();
+        [SerializeField] protected List<Modifer> tokenList = new List<Modifer>();
 
         [Header("Unit Skills")]
         [SerializeField] protected Skill basicAttack;
@@ -101,19 +100,19 @@ namespace NightmareEchoes.Unit
         #endregion
 
         #region Buff Debuff Token
-        public List<BaseModifier> BuffList
+        public List<Modifer> BuffList
         {
             get => buffList; 
             set => buffList = value;
         }
 
-        public List<BaseModifier> DebuffList
+        public List<Modifer> DebuffList
         {
             get => debuffList;
             set => debuffList = value;
         }
 
-        public List<BaseModifier> TokenList
+        public List<Modifer> TokenList
         {
             get => tokenList;
             set => tokenList = value;
@@ -294,7 +293,7 @@ namespace NightmareEchoes.Unit
             return modifiers;
         }
 
-        protected void AddBuff(BaseModifier buff)
+        protected void AddBuff(Modifer buff)
         {
             if(buff.modifierType == ModifierType.BUFF)
             {

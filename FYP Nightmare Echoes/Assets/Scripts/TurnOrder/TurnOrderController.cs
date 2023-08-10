@@ -19,31 +19,31 @@ namespace NightmareEchoes.TurnOrder
         public EndPhase endPhase = new EndPhase();
 
         [Header("Turn Order")]
-        [SerializeField] List<BaseUnit> turnOrderList = new List<BaseUnit>();
-        [SerializeField] List<BaseUnit> nextTurnOrderList = new List<BaseUnit>();
-        Queue<BaseUnit> currentUnitQueue = new Queue<BaseUnit>();
-        Queue<BaseUnit> nextUnitQueue = new Queue<BaseUnit>();
+        [SerializeField] List<Units> turnOrderList = new List<Units>();
+        [SerializeField] List<Units> nextTurnOrderList = new List<Units>();
+        Queue<Units> currentUnitQueue = new Queue<Units>();
+        Queue<Units> nextUnitQueue = new Queue<Units>();
         public int turnCount;
         public float phaseDelay;
         public float enemyDelay;
 
-        [SerializeField] BaseUnit currentUnit;
+        [SerializeField] Units currentUnit;
         public bool runOnce = false;
 
         #region Class Properties
-        public BaseUnit CurrentUnit
+        public Units CurrentUnit
         {
             get { return currentUnit; }
             set { currentUnit = value; }
         }
 
-        public Queue<BaseUnit> CurrentUnitQueue
+        public Queue<Units> CurrentUnitQueue
         {
             get { return currentUnitQueue; }
             private set { currentUnitQueue = value; }
         }
 
-        public Queue<BaseUnit> NextUnitQueue
+        public Queue<Units> NextUnitQueue
         {
             get { return nextUnitQueue; }
             private set { nextUnitQueue = value; }
@@ -113,7 +113,7 @@ namespace NightmareEchoes.TurnOrder
         #region Turn Order Calculations
         public void CalculateTurnOrder()
         {
-            turnOrderList = FindObjectsOfType<BaseUnit>().ToList();
+            turnOrderList = FindObjectsOfType<Units>().ToList();
             turnOrderList.Sort(CompareSpeed); //sorts in ascending order
             turnOrderList.Reverse();
 
@@ -126,7 +126,7 @@ namespace NightmareEchoes.TurnOrder
         }
 
         //delegate for sort()
-        int CompareSpeed(BaseUnit _a, BaseUnit _b)
+        int CompareSpeed(Units _a, Units _b)
         {
             return _a.stats.Speed.CompareTo(_b.stats.Speed);
         }

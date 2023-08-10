@@ -12,17 +12,17 @@ namespace NightmareEchoes.Unit.Combat
     {
         public static CombatManager Instance;
 
-        public List<BaseUnit> unitsInvolved;
-        public List<BaseUnit> aliveUnits;
-        public List<BaseUnit> deadUnits;
+        public List<Units> unitsInvolved;
+        public List<Units> aliveUnits;
+        public List<Units> deadUnits;
         
-        public List<BaseUnit> friendlyUnits;
-        public List<BaseUnit> aliveFriendlyUnits;
-        public List<BaseUnit> deadFriendlyUnits;
+        public List<Units> friendlyUnits;
+        public List<Units> aliveFriendlyUnits;
+        public List<Units> deadFriendlyUnits;
         
-        public List<BaseUnit> hostileUnits;
-        public List<BaseUnit> aliveHostileUnits;
-        public List<BaseUnit> deadHostileUnits;
+        public List<Units> hostileUnits;
+        public List<Units> aliveHostileUnits;
+        public List<Units> deadHostileUnits;
 
         private Skill activeSkill;
         private List<OverlayTile> skillRangeTiles;
@@ -48,7 +48,7 @@ namespace NightmareEchoes.Unit.Combat
             {
                 var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
                 if (!hit) return;
-                var target = hit.collider.gameObject.GetComponent<BaseUnit>();
+                var target = hit.collider.gameObject.GetComponent<Units>();
                 if (!target) return;
                 Debug.Log(target);
                 foreach (var tile in skillRangeTiles.Where(tile => tile == target.ActiveTile))
@@ -63,7 +63,7 @@ namespace NightmareEchoes.Unit.Combat
         //Init
         void OnBattleStart()
         {
-            unitsInvolved = FindObjectsOfType<BaseUnit>().ToList();
+            unitsInvolved = FindObjectsOfType<Units>().ToList();
             aliveUnits = unitsInvolved;
             
             foreach (var unit in unitsInvolved)
@@ -81,7 +81,7 @@ namespace NightmareEchoes.Unit.Combat
         }
         
         //Player Calls
-        public void SelectSkill(BaseUnit unit, Skill skill)
+        public void SelectSkill(Units unit, Skill skill)
         {
             RenderOverlayTile.Instance.ClearRenders();
             

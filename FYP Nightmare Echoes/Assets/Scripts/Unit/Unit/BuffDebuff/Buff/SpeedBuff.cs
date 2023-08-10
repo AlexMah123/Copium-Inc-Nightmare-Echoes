@@ -7,7 +7,7 @@ using UnityEngine;
 namespace NightmareEchoes.Unit
 {
     [CreateAssetMenu(fileName = "SpeedBuff", menuName = "Unit Modifiers/Buff/Speed Buff")]
-    public class SpeedBuff : BaseModifier
+    public class SpeedBuff : Modifer
     {
         [SerializeField] int speedBuff;
 

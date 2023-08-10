@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NightmareEchoes.Inputs;
+
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
 {
     public abstract class Phase
     {
+        bool newTurn = false;
         protected TurnOrderController controller;
 
         public void OnEnterPhase(TurnOrderController turnOrderController)
@@ -43,12 +46,20 @@ namespace NightmareEchoes.TurnOrder
 
             #endregion
 
+            newTurn = true;
+
             OnEnter();
         }
 
         public void OnUpdatePhase()
         {
-            
+            //if its a new turn and during player/enemy phase, pan camera
+
+            if (newTurn && (controller.currentPhase == controller.playerPhase || controller.currentPhase == controller.enemyPhase))
+            {
+                newTurn = CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
+            }
+
 
             OnUpdate();
         }
@@ -73,5 +84,7 @@ namespace NightmareEchoes.TurnOrder
         { 
             
         }
+
+        
     }
 }

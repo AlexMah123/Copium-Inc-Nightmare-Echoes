@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
+using NightmareEchoes.Inputs;
 
 //created by Vinn, editted by Alex
 namespace NightmareEchoes.Unit.Pathfinding
@@ -16,7 +17,8 @@ namespace NightmareEchoes.Unit.Pathfinding
         [Header("Current Unit")]
         [SerializeField] GameObject currentSelectedUnitGO;
         [SerializeField] float movingSpeed;
-        BaseUnit currentSelectedUnit;
+        Units currentSelectedUnit;
+        bool cameraPanning = false;
 
 
         //Vinn test changes
@@ -73,10 +75,10 @@ namespace NightmareEchoes.Unit.Pathfinding
                 //if you hit a unit then get component
                 if (hitUnit)
                 {
-                    if (hitUnit.collider.gameObject.GetComponent<BaseUnit>())
+                    if (hitUnit.collider.gameObject.GetComponent<Units>())
                     {
                         currentSelectedUnitGO = hitUnit.collider.gameObject;
-                        currentSelectedUnit = hitUnit.collider.gameObject.GetComponent<BaseUnit>();
+                        currentSelectedUnit = hitUnit.collider.gameObject.GetComponent<Units>();
                         ifSelectedUnit = true;
                         overlayTile.PlayerOnTile = true;
 
@@ -127,7 +129,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                         else if (currentSelectedUnitGO != null)
                         {
 
-                            path = PathFind.FindPath(currentSelectedUnitGO.GetComponent<BaseUnit>().ActiveTile, overlayTile, inRangeTiles);
+                            path = PathFind.FindPath(currentSelectedUnitGO.GetComponent<Units>().ActiveTile, overlayTile, inRangeTiles);
                             //overlayTile.isCurenttlyStandingOn = false;
 
                         }
@@ -139,7 +141,13 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             if (path.Count > 0)
             {
+                cameraPanning = true;
                 MoveAlongPath();
+            }
+
+            if(cameraPanning)
+            {
+                cameraPanning = CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
             }
         }
 
@@ -201,7 +209,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             currentSelectedUnitGO.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
             currentSelectedUnitGO.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
-            currentSelectedUnitGO.GetComponent<BaseUnit>().ActiveTile = tile;
+            currentSelectedUnitGO.GetComponent<Units>().ActiveTile = tile;
         }
 
         private void GetInRangeTiles()

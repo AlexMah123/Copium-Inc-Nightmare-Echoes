@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 128770042}
   - component: {fileID: 5105758200137203564}
   - component: {fileID: 1622779789872064204}
+  - component: {fileID: 2001383901}
   m_Layer: 6
   m_Name: Mage
   m_TagString: Inspectable
@@ -152,6 +153,7 @@ MonoBehaviour:
   _unitScriptable: {fileID: 11400000, guid: 3b58b24257d5c214d8d8640aa1862bf9, type: 2}
   _name: Mage
   _sprite: {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  spriteRenderer: {fileID: 0}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _maxHealth: 25
@@ -176,7 +178,7 @@ MonoBehaviour:
   buffList: []
   debuffList: []
   tokenList: []
-  basicAttack: {fileID: 0}
+  basicAttack: {fileID: 2001383901}
   basicAttackDesc: 
   skill1: {fileID: 0}
   skill1Desc: 
@@ -190,3 +192,22 @@ MonoBehaviour:
   - {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: 542052453, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: -6517823, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+--- !u!114 &2001383901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726962122940716085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16c2caf08c37c1f4cb2a3312f4e7dc03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Arcane Missiles
+  cooldown: 0
+  range: 3
+  targetType: 0
+  targetArea: 0
+  aoeType: 0
+  skillType: 0

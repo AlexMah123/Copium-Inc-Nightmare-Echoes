@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //created by Alex
-namespace NightmareEchoes.Unit.Enemy
+namespace NightmareEchoes.Unit
 {
-    public class RangeEnemy : BaseUnit
+    public class RangerHero : Units
     {
+
         protected override void Awake()
         {
             base.Awake();
@@ -20,40 +21,39 @@ namespace NightmareEchoes.Unit.Enemy
         protected override void Update()
         {
             base.Update();
+
         }
 
-
-
         #region Abilities()
-
         public override void Move()
         {
+
             throw new System.NotImplementedException();
         }
 
         public override void BasicAttack()
         {
-            Direction = Direction.South;
+            Direction = Direction.West;
         }
 
         public override void Passive()
         {
-
+            
         }
 
         public override void Skill1()
         {
-
+            
         }
 
         public override void Skill2()
         {
-
+            
         }
 
         public override void Skill3()
         {
-
+            
         }
 
         public override void TakeDamage(int damage)
@@ -68,6 +68,9 @@ namespace NightmareEchoes.Unit.Enemy
             TakeDamage(2);
         }
 
+        
+
         #endregion
+
     }
 }

@@ -5,31 +5,30 @@ using UnityEngine;
 //created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "ResistBuff", menuName = "Unit Modifiers/Buff/Resist Buff")]
-    public class ResistBuff : BaseModifier
+    [CreateAssetMenu(fileName = "MoveRangeBuff", menuName = "Unit Modifiers/Buff/MoveRange Buff")]
+    public class MoveRangeBuff : Modifer
     {
-        [SerializeField] float resistBuff;
+        [SerializeField] int moveRangeBuff;
 
         public override void Awake()
         {
-            
+
         }
 
         public override Modifiers ApplyEffect(Modifiers mod)
         {
-            mod.resistModifier += resistBuff;
+            mod.moveRangeModifier += moveRangeBuff;
             return mod;
         }
 
         public override void UpdateLifeTime()
         {
-            
+
         }
 
         public override void Remove()
         {
-            
-        }
 
+        }
     }
 }
