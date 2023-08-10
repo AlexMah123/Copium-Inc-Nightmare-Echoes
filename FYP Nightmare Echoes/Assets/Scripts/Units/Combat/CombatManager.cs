@@ -15,8 +15,14 @@ namespace NightmareEchoes.Unit.Combat
         public List<BaseUnit> unitsInvolved;
         public List<BaseUnit> aliveUnits;
         public List<BaseUnit> deadUnits;
+        
         public List<BaseUnit> friendlyUnits;
+        public List<BaseUnit> aliveFriendlyUnits;
+        public List<BaseUnit> deadFriendlyUnits;
+        
         public List<BaseUnit> hostileUnits;
+        public List<BaseUnit> aliveHostileUnits;
+        public List<BaseUnit> deadHostileUnits;
 
         private Skill activeSkill;
 
@@ -36,7 +42,7 @@ namespace NightmareEchoes.Unit.Combat
         //Init
         void OnBattleStart()
         {
-            unitsInvolved =  FindObjectsOfType<BaseUnit>().ToList();
+            unitsInvolved = FindObjectsOfType<BaseUnit>().ToList();
             aliveUnits = unitsInvolved;
             
             foreach (var unit in unitsInvolved)
@@ -47,6 +53,9 @@ namespace NightmareEchoes.Unit.Combat
                     friendlyUnits.Add(unit);
             }
 
+            aliveHostileUnits = hostileUnits;
+            aliveFriendlyUnits = friendlyUnits;
+            
             StartCoroutine(UpdateUnitPositionsAtStart());
         }
         
@@ -57,7 +66,6 @@ namespace NightmareEchoes.Unit.Combat
             
             if (activeSkill != null && activeSkill == skill)
             {
-                //RenderOverlayTile.ClearRenders();
                 activeSkill = null;
                 return;
             }
@@ -65,6 +73,9 @@ namespace NightmareEchoes.Unit.Combat
             activeSkill = skill;
 
             RenderOverlayTile.Instance.RenderTiles(unit.ActiveTile, skill.targetArea.ToString(), skill.range);
+
+            var list = aliveHostileUnits.Select(enemy => enemy.ActiveTile).ToList();
+            RenderOverlayTile.Instance.RenderEnemyTiles(list);
         }
 
 

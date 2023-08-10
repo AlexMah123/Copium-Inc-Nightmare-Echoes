@@ -56,9 +56,16 @@ namespace NightmareEchoes.Grid
             activeRenders = tileRange;
         }
 
-        public void RenderEnemyTiles()
+        public void RenderEnemyTiles(List<OverlayTile> list)
         {
-            
+            foreach (var tile in list)
+            {
+                foreach (var activeTile in activeRenders.Where(activeTile => activeTile.name == tile.name))
+                {
+                    activeTile.ShowEnemyTile();
+                    break;
+                }
+            }
         }
 
         public void ClearRenders()

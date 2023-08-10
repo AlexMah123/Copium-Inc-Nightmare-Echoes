@@ -28,7 +28,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected Direction _direction;
 
         [Header("Tile Related")]
-        protected OverlayTile activeTile;
+        [SerializeField] protected OverlayTile activeTile;
 
         [Header("Buff Debuff Token")]
         [SerializeField] protected List<BaseModifier> buffList = new List<BaseModifier>();
@@ -263,7 +263,6 @@ namespace NightmareEchoes.Unit
             var hitTile = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
             if (hitTile)
                 activeTile = hitTile.collider.gameObject.GetComponent<OverlayTile>();
-            Debug.Log(activeTile);
         }
 
         public void UpdateEffects()
