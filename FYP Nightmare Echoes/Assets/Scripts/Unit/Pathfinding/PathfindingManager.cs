@@ -23,7 +23,11 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         //Vinn test changes
         public string UnitTag;
-        Tilemap tilemap;
+        [SerializeField] List <GameObject> UnitsOnScreen = new List<GameObject>();
+        [SerializeField] GameObject testUnitPos;
+        [SerializeField] GameObject OverLayTileManagerObj;
+        //OverlayTileManager tilemapManager;
+        [SerializeField] bool testBool;
 
         [SerializeField] bool ifSelectedUnit = false;
 
@@ -32,7 +36,6 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         RaycastHit2D? focusedTileHit;
         OverlayTile overlayTile;
-
 
 
         //Changes by Vinn
@@ -52,9 +55,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             PlayerInputPathfinding();
-
-            //DebuggerForPos();
-            GetUnitPos();
         }
 
         public void PlayerInputPathfinding()
@@ -227,29 +227,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             foreach (var item in inRangeTiles)
             {
                 item.HideTile();
-            }
-        }
-
-        public void DebuggerForPos()
-        {
-            if (ifSelectedUnit == true)
-            {
-                if (overlayTile.PlayerOnTile == false && Input.GetMouseButtonDown(0))
-                {
-                    Debug.Log("You can move here");
-                }
-                else if (overlayTile.PlayerOnTile == true && Input.GetMouseButtonDown(0))
-                {
-                    Debug.Log("Tile currently occupied");
-                }
-            }
-        }
-
-        public void GetUnitPos()
-        {
-            if (ifSelectedUnit == true)
-            {
-                
             }
         }
         #endregion

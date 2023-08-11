@@ -1,3 +1,4 @@
+using Codice.Client.BaseCommands.BranchExplorer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,9 @@ namespace NightmareEchoes.Grid
 
         public OverlayTile overlaytilePrefab;
         public GameObject overlayContainer;
+
+        [SerializeField] GameObject testUnitPos;
+
 
         //Dicitonary to store overlay tile position from grid pos
         public Dictionary<Vector2Int, OverlayTile> map;
@@ -30,6 +34,14 @@ namespace NightmareEchoes.Grid
             
             InitOverlayTiles();
         }
+
+        private void Update()
+        {
+
+                DetectPlayerPos();
+            
+        }
+
 
         void InitOverlayTiles()
         {
@@ -56,6 +68,7 @@ namespace NightmareEchoes.Grid
                             //Instantiating the tileprefab over the grid and storing the position in the girdContainer
                             var overlayTile = Instantiate(overlaytilePrefab, overlayContainer.transform);
                             overlayTile.name = $"{childCount} {tileLocation}";
+
                             //Getting WorldPos (Vector 3) to Tile Position (Vector3int)
                             var cellWorldPos = tileMap.GetCellCenterWorld(tileLocation);
 
@@ -129,6 +142,27 @@ namespace NightmareEchoes.Grid
 
             return neighbours;
         }
+
+        public void DetectPlayerPos()
+        {
+            var tileMap = gameObject.GetComponentInChildren<Tilemap>();
+
+            Vector3Int unitPos = new Vector3Int(Mathf.RoundToInt(testUnitPos.transform.position.x), Mathf.RoundToInt(testUnitPos.transform.position.y),0);
+
+            Vector3Int UnitGridPos = tileMap.WorldToCell(unitPos);
+
+            TileBase tile = tileMap.GetTile(UnitGridPos);
+
+            if (tileMap.GetTile(UnitGridPos))
+            {
+                Debug.Log("This tile is occupied by player at" + UnitGridPos);
+            }
+            else 
+            {
+                Debug.Log("tileNotOccupied");
+            }
+        }
+
     }
 }
 
