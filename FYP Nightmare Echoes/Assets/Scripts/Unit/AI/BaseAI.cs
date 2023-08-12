@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NightmareEchoes.Grid;
+using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine.Tilemaps;
 using System.Linq;
 
@@ -17,6 +18,10 @@ namespace NightmareEchoes.Unit.AI
         bool inAtkRange;
         bool inMoveAtkRange;
         int rangePlaceholder;
+        OverlayTile thisOverlay;
+        OverlayTile targetOverlay;
+        OverlayTile overlayTile;
+        List<OverlayTile> moveableTiles;
         
         Tile currTile, targetTile;
         Vector3Int V3Int;
@@ -45,6 +50,11 @@ namespace NightmareEchoes.Unit.AI
             currTile = (Tile)TileMapManager.Instance.tilemap.GetTile(V3Int);
             cellThis = new Vector2(TileMapManager.Instance.tilemap.WorldToCell(V3Int).x, TileMapManager.Instance.tilemap.WorldToCell(V3Int).y);
             SortHeroesByDistance();
+
+            thisOverlay = thisUnit.ActiveTile;
+            //moveableTiles = RangeMovementFind.TileMovementRange(thisOverlay, thisUnit.stats.MoveRange, !overlayTile.PlayerOnTile);
+            //PathFind.FindPath(three overloads);
+            //PathfindingManager.moveAlongPath();
 
             healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
             Debug.Log(healthPercent);
@@ -114,10 +124,7 @@ namespace NightmareEchoes.Unit.AI
             distancesDict.Clear();
             for (i = 0; i < heroList.Count; i++)
             {
-                V3Int = new Vector3Int((int)heroList[i].transform.position.x, (int)heroList[i].transform.position.y, (int)heroList[i].transform.position.z);
-                cellTemp = new Vector2(TileMapManager.Instance.tilemap.WorldToCell(V3Int).x, TileMapManager.Instance.tilemap.WorldToCell(V3Int).y);
-                Debug.Log(cellTemp.x + ", " + cellTemp.y);
-                distTemp = (Mathf.Abs((int)cellThis.x - (int)cellTemp.x)) + Mathf.Abs(((int)cellThis.y - (int)cellTemp.y)); //rough distance
+                distTemp = (int)findDist(thisUnit, heroList[i]);
                 distancesDict.Add(heroList[i], distTemp);
             }
             var sortedHeroes = distancesDict.OrderBy(distancesDict => distancesDict.Value);
@@ -141,6 +148,19 @@ namespace NightmareEchoes.Unit.AI
                     heroList.Add(Unit);
                 }
             }
+        }
+
+        float findDist(Units target1, Units target2)
+        {
+            float dist;
+            Vector3Int t1v, t2v;
+
+            t1v = target1.ActiveTile.gridLocation;
+            t2v = target2.ActiveTile.gridLocation;
+
+            dist = (Mathf.Abs((t1v.x)-(t2v.x)) + Mathf.Abs((t1v.y) - (t2v.y)));
+
+            return dist;
         }
     }
 
