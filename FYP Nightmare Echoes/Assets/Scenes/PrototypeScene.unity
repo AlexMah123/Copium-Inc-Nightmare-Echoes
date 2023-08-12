@@ -502,6 +502,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BountyHunter
       objectReference: {fileID: 0}
+    - target: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2658365863807529696, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -637,10 +641,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2001383901, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: damage
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 726962122940716085, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: m_Name
       value: Mage
       objectReference: {fileID: 0}
+    - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: skill1
+      value: 
+      objectReference: {fileID: 1763137565}
+    - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: skill2
+      value: 
+      objectReference: {fileID: 1763137564}
+    - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: skill3
+      value: 
+      objectReference: {fileID: 1763137563}
+    - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: passive
+      value: 
+      objectReference: {fileID: 1763137562}
     - target: {fileID: 2658365863807529696, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -8691,6 +8715,95 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1711332423}
   m_CullTransparentMesh: 1
+--- !u!1 &1763137555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 726962122940716085, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+  m_PrefabInstance: {fileID: 272944229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1763137562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763137555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea9fdb1423da3e4f93ac4d150a168a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: 
+  damage: 0
+  cooldown: 0
+  range: 0
+  targetType: 0
+  targetArea: 0
+  aoeType: 0
+  skillType: 0
+  skillDescription: 
+--- !u!114 &1763137563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763137555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76d7d296e3b1c8438a3665969707d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: 
+  damage: 0
+  cooldown: 0
+  range: 0
+  targetType: 0
+  targetArea: 0
+  aoeType: 0
+  skillType: 0
+  skillDescription: 
+--- !u!114 &1763137564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763137555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4827e0a29ce776a409a1f0ec3614b89a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: 
+  damage: 0
+  cooldown: 0
+  range: 0
+  targetType: 0
+  targetArea: 0
+  aoeType: 0
+  skillType: 0
+  skillDescription: 
+--- !u!114 &1763137565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763137555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51951608a39719848a00ca5503575cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: 
+  damage: 0
+  cooldown: 0
+  range: 0
+  targetType: 0
+  targetArea: 0
+  aoeType: 0
+  skillType: 0
+  skillDescription: 
 --- !u!1 &1765086403
 GameObject:
   m_ObjectHideFlags: 0
@@ -10537,6 +10650,10 @@ PrefabInstance:
     - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_Name
       value: Ranger
+      objectReference: {fileID: 0}
+    - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279022, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_RootOrder

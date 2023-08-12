@@ -67,18 +67,18 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 int overlayTileMask = LayerMask.GetMask("Overlay Tile");
                 int unitMask = LayerMask.GetMask("Unit");
-
-
+                
                 //Mouse Position to select unit
                 RaycastHit2D hitUnit = Physics2D.Raycast(mousePos2D, Vector2.zero, Mathf.Infinity, unitMask);
 
                 //if you hit a unit then get component
                 if (hitUnit)
                 {
-                    if (hitUnit.collider.gameObject.GetComponent<Units>())
+                    var unit = hitUnit.collider.gameObject.GetComponent<Units>();
+                    if (unit && !unit.IsHostile)
                     {
-                        currentSelectedUnitGO = hitUnit.collider.gameObject;
-                        currentSelectedUnit = hitUnit.collider.gameObject.GetComponent<Units>();
+                        currentSelectedUnitGO = unit.gameObject;
+                        currentSelectedUnit = unit;
                         ifSelectedUnit = true;
                         overlayTile.PlayerOnTile = true;
 
@@ -86,12 +86,10 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                         if (hitOverlayTile.collider.gameObject.GetComponent<OverlayTile>())
                         {
-
                             currentSelectedUnit.ActiveTile = hitOverlayTile.collider.GetComponent<OverlayTile>();
 
                             GetInRangeTiles();
                         }
-
                     }
                     else
                     {

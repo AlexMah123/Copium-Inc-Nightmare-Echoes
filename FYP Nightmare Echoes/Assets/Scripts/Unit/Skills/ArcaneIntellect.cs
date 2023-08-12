@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    public class ArcaneMissile : Skill
+    public class ArcaneIntellect : Skill
     {
         public override void Cast(Units target)
         {
-            target.TakeDamage(damage);
+            throw new System.NotImplementedException();
         }
     }
 }

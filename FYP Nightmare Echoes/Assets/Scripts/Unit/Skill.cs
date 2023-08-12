@@ -15,6 +15,8 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected TargetArea targetArea;
         [SerializeField] protected AOEType aoeType;
         [SerializeField] protected SkillType skillType;
+        
+        [field: TextArea(1,1)][SerializeField] protected string skillDescription;
 
         #region properties
 
@@ -66,10 +68,15 @@ namespace NightmareEchoes.Unit
             set => skillType = value;
         }
 
+        public string SkillDescription
+        {
+            get => skillDescription;
+            set => skillDescription = value;
+        }
 
         #endregion
 
-        public abstract void Cast(); //for VFX?
+        public abstract void Cast(Units target);
     }
 
     public enum TargetType

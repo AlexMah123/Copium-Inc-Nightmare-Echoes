@@ -25,11 +25,7 @@ namespace NightmareEchoes.Grid
 
         [SerializeField] Color moveColor;
         [SerializeField] Color attackRangeColor;
-
-
         
-
-
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();

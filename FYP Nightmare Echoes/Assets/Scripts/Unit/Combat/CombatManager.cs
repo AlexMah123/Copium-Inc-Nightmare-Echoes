@@ -42,22 +42,7 @@ namespace NightmareEchoes.Unit.Combat
 
         private void Update()
         {
-            if (!activeSkill) return;
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
-                if (!hit) return;
-                var target = hit.collider.gameObject.GetComponent<Units>();
-                if (!target) return;
-                Debug.Log(target);
-                foreach (var tile in skillRangeTiles.Where(tile => tile == target.ActiveTile))
-                {
-                    //For now we directly call damage from here to test
-                    //However in the future skill.Cast() has to be implemented for more complex behaviours
-                    target.TakeDamage(activeSkill.Damage);
-                }
-            }
+            TargetUnit();
         }
 
         //Init
@@ -83,6 +68,7 @@ namespace NightmareEchoes.Unit.Combat
         //Player Calls
         public void SelectSkill(Units unit, Skill skill)
         {
+            //Clear Active Renders
             RenderOverlayTile.Instance.ClearRenders();
             
             if (activeSkill != null && activeSkill == skill)
@@ -121,9 +107,29 @@ namespace NightmareEchoes.Unit.Combat
             
             skillRangeTiles = tileRange;
             
+            //Render Range and Units in Range
             RenderOverlayTile.Instance.RenderTiles(tileRange);
             var list = aliveHostileUnits.Select(enemy => enemy.ActiveTile).ToList();
             RenderOverlayTile.Instance.RenderEnemyTiles(list);
+        }
+
+        private void TargetUnit()
+        {
+            if (!activeSkill) return;
+            if (!Input.GetMouseButtonDown(0)) return;
+            
+            var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
+            if (!hit) return;
+            var target = hit.collider.gameObject.GetComponent<Units>();
+            if (!target) return;
+            
+            //Check if the enemy selected is in range
+            //Originally it was a ForEach loop but Rider recommended this LINQ expression instead lmao
+            if (skillRangeTiles.All(tile => tile != target.ActiveTile)) return;
+            activeSkill.Cast(target);
+            activeSkill = null;
+            
+            RenderOverlayTile.Instance.ClearRenders();
         }
         
         //==Cast Ranges==

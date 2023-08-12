@@ -43,6 +43,7 @@ namespace NightmareEchoes.Unit
         [field: TextArea(1,1)][SerializeField] protected string skill2Desc;
         [SerializeField] protected Skill skill3;
         [field: TextArea(1,1)][SerializeField] protected string skill3Desc;
+        [SerializeField] protected Skill passive;
         [field: TextArea(1,1)][SerializeField] protected string passiveDesc;
 
 
