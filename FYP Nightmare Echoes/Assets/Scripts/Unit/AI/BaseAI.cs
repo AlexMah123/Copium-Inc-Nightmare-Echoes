@@ -18,12 +18,10 @@ namespace NightmareEchoes.Unit.AI
         bool inAtkRange;
         bool inMoveAtkRange;
         int rangePlaceholder;
-        OverlayTile thisOverlay;
-        OverlayTile targetOverlay;
         OverlayTile overlayTile;
         List<OverlayTile> moveableTiles;
         
-        Tile currTile, targetTile;
+        OverlayTile currTile, targetTile;
         Vector3Int V3Int;
         Vector2 cellThis, cellTarget, cellTemp;
         Dictionary<Units, int> distancesDict = new Dictionary<Units, int>();
@@ -48,7 +46,7 @@ namespace NightmareEchoes.Unit.AI
         {
             SortHeroesByDistance();
 
-            thisOverlay = thisUnit.ActiveTile;
+            currTile = thisUnit.ActiveTile;
             //moveableTiles = RangeMovementFind.TileMovementRange(thisOverlay, thisUnit.stats.MoveRange, !overlayTile.PlayerOnTile);
             //PathFind.FindPath(three overloads);
             //PathfindingManager.moveAlongPath();
@@ -85,16 +83,17 @@ namespace NightmareEchoes.Unit.AI
             rangePlaceholder = 1;
             target = closestHero;
             targetRange = closestRange;
+            targetTile = target.ActiveTile;
 
-            //update the bools below
+            //range check FIXED
+            if (((targetTile.gridLocation.x + rangePlaceholder >= currTile.gridLocation.x || targetTile.gridLocation.x - rangePlaceholder <= currTile.gridLocation.x) && targetTile.gridLocation.y == currTile.gridLocation.y) || ((targetTile.gridLocation.y + rangePlaceholder >= currTile.gridLocation.y || targetTile.gridLocation.y - rangePlaceholder <= currTile.gridLocation.y) && targetTile.gridLocation.x == currTile.gridLocation.x))
+            {
+                inAtkRange = true;
+            }
             
             if (targetRange <= rangePlaceholder + thisUnit.stats.MoveRange)
             {
                 inMoveAtkRange = true;
-                if (targetRange <= rangePlaceholder)
-                {
-                    inAtkRange = true;
-                }
             }
 
             if (inAtkRange)
