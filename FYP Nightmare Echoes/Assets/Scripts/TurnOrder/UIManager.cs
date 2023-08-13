@@ -67,8 +67,9 @@ namespace NightmareEchoes.TurnOrder
 
         [Space(20), Header("Character Glossary")]
         [SerializeField] GameObject glossaryPanel;
-        [SerializeField] Sprite glossarySprite;
+        [SerializeField] Image glossaryImage;
         [SerializeField] TextMeshProUGUI glossaryName;
+        [SerializeField] TextMeshProUGUI glossaryHealthText;
         [SerializeField] Slider glossaryHealth;
 
 
@@ -287,6 +288,7 @@ namespace NightmareEchoes.TurnOrder
         }
 
         #endregion
+
 
         #region UI Pool
         void InitTurnOrderSpritePool(GameObject panel)
@@ -541,9 +543,33 @@ namespace NightmareEchoes.TurnOrder
             inspectedUnitPanel.SetActive(enable);
         }
 
-        public void CharacterGlossary()
+        public void CharacterGlossary(string text)
         {
             SettingsButton();
+
+            if(text == "Current")
+            {
+                glossaryImage.sprite = CurrentUnit.Sprite;
+                glossaryImage.color = new Color(
+                    CurrentUnit.SpriteRenderer.color.r, CurrentUnit.SpriteRenderer.color.g, 
+                    CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
+                glossaryName.text = CurrentUnit.Name;
+                glossaryHealthText.text = $"{CurrentUnit.stats.Health}/{CurrentUnit.stats.MaxHealth}";
+                glossaryHealth.maxValue = CurrentUnit.stats.MaxHealth;
+                glossaryHealth.value = CurrentUnit.stats.Health;
+            }
+            else if(text == "Inspected")
+            {
+                glossaryImage.sprite = inspectedUnit.Sprite;
+                glossaryImage.color = new Color(
+                    inspectedUnit.SpriteRenderer.color.r, inspectedUnit.SpriteRenderer.color.g,
+                    inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
+                glossaryName.text = inspectedUnit.Name;
+                glossaryHealthText.text = $"{inspectedUnit.stats.Health}/{inspectedUnit.stats.MaxHealth}";
+                glossaryHealth.maxValue = inspectedUnit.stats.MaxHealth;
+                glossaryHealth.value = inspectedUnit.stats.Health;
+            }
+
             if (!glossaryPanel.activeSelf)
             {
                 settingButton.gameObject.SetActive(false);
