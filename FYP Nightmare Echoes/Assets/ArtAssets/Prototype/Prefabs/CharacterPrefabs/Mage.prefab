@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 128770042}
   - component: {fileID: 5105758200137203564}
   - component: {fileID: 2001383901}
-  - component: {fileID: 1763137562}
-  - component: {fileID: 1763137563}
-  - component: {fileID: 1763137564}
-  - component: {fileID: 1763137565}
+  - component: {fileID: 6673351901997673441}
+  - component: {fileID: 6673351901997673440}
+  - component: {fileID: 6673351901997673447}
+  - component: {fileID: 6673351901997673446}
   m_Layer: 6
   m_Name: Mage
   m_TagString: Inspectable
@@ -33,7 +33,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726962122940716085}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -137,14 +137,14 @@ MonoBehaviour:
   tokenList:
   - {fileID: 11400000, guid: 601d001264cdab5438fa84240f088d52, type: 2}
   basicAttack: {fileID: 2001383901}
-  basicAttackDesc: 
-  skill1: {fileID: 1763137565}
-  skill1Desc: 
-  skill2: {fileID: 1763137564}
-  skill2Desc: 
-  skill3: {fileID: 1763137563}
-  skill3Desc: 
-  passive: {fileID: 1763137562}
+  basicAttackDesc:
+  skill1: {fileID: 6673351901997673441}
+  skill1Desc:
+  skill2: {fileID: 6673351901997673440}
+  skill2Desc:
+  skill3: {fileID: 6673351901997673447}
+  skill3Desc:
+  passive: {fileID: 6673351901997673446}
   passiveDesc: 
   sprites:
   - {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
@@ -216,13 +216,14 @@ MonoBehaviour:
   skillName: Arcane Missiles
   damage: 6
   cooldown: 0
-  range: 3
+  range: 4
   targetType: 0
   targetArea: 0
+  targetUnitAlignment: 0
   aoeType: 0
   skillType: 0
-  skillDescription: 
---- !u!114 &1763137562
+  skillDescription:
+--- !u!114 &6673351901997673441
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,40 +232,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 726962122940716085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ea9fdb1423da3e4f93ac4d150a168a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: 
-  damage: 0
+  m_Script: {fileID: 11500000, guid: 51951608a39719848a00ca5503575cd7, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  skillName:
+  damage: 8
   cooldown: 0
-  range: 0
-  targetType: 0
-  targetArea: 0
-  aoeType: 0
+  range: 4
+  targetType: 1
+  targetArea: 2
+  targetUnitAlignment: 2
+  aoeType: 2
   skillType: 0
-  skillDescription: 
---- !u!114 &1763137563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726962122940716085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76d7d296e3b1c8438a3665969707d13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: 
-  damage: 0
-  cooldown: 0
-  range: 0
-  targetType: 0
-  targetArea: 0
-  aoeType: 0
-  skillType: 0
-  skillDescription: 
---- !u!114 &1763137564
+  skillDescription:
+--- !u!114 &6673351901997673440
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,10 +263,11 @@ MonoBehaviour:
   range: 0
   targetType: 0
   targetArea: 0
+  targetUnitAlignment: 0
   aoeType: 0
   skillType: 0
-  skillDescription: 
---- !u!114 &1763137565
+  skillDescription:
+--- !u!114 &6673351901997673447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -294,7 +276,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 726962122940716085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51951608a39719848a00ca5503575cd7, type: 3}
+  m_Script: {fileID: 11500000, guid: a76d7d296e3b1c8438a3665969707d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillName: 
@@ -303,6 +285,29 @@ MonoBehaviour:
   range: 0
   targetType: 0
   targetArea: 0
+  targetUnitAlignment: 0
   aoeType: 0
   skillType: 0
-  skillDescription: 
+  skillDescription:
+--- !u!114 &6673351901997673446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726962122940716085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea9fdb1423da3e4f93ac4d150a168a9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  skillName:
+  damage: 0
+  cooldown: 0
+  range: 0
+  targetType: 1
+  targetArea: 2
+  targetUnitAlignment: 2
+  aoeType: 2
+  skillType: 0
+  skillDescription:

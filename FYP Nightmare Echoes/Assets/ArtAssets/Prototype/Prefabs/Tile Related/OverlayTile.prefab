@@ -100,12 +100,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   G: 0
   H: 0
+  isCurenttlyStandingOn: 0
   isBlocked: 0
   prevTile: {fileID: 0}
   gridLocation: {x: 0, y: 0, z: 0}
+  PlayerOnTile: 0
   inactiveColor: {r: 0, g: 0, b: 0, a: 0}
   moveColor: {r: 1, g: 1, b: 1, a: 0.49019608}
   attackRangeColor: {r: 0.92687, g: 1, b: 0, a: 0.39215687}
+  aoeRangeColor: {r: 1, g: 0, b: 0.61788464, a: 0.39215687}
+  enemyColor: {r: 1, g: 0, b: 0, a: 0.39215687}
+  friendlyColor: {r: 0.031886935, g: 1, b: 0, a: 0.39215687}
 --- !u!60 &-9038056466487864997
 PolygonCollider2D:
   m_ObjectHideFlags: 0

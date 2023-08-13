@@ -68,8 +68,10 @@ namespace NightmareEchoes.Unit.Combat
         //Player Calls
         public void SelectSkill(Units unit, Skill skill)
         {
-            //Clear Active Renders
+            //Clear Active Renders 
             RenderOverlayTile.Instance.ClearRenders();
+            
+            ResetFlags();
             
             if (activeSkill != null && activeSkill == skill)
             {
@@ -79,18 +81,21 @@ namespace NightmareEchoes.Unit.Combat
             
             activeSkill = skill;
             
-            //Getting Attack Ranges
-            var tileRange = new List<OverlayTile> { unit.ActiveTile };
+            //====================Getting Attack Ranges====================
+            var tileRange = new List<OverlayTile>();
             var possibleTileCoords = new List<Vector2Int>();
             
             //Select Shape
             switch (skill.TargetArea.ToString())
             {
                 case "Line":
-                    possibleTileCoords = LineRange(unit.ActiveTile, skill.Range);
+                    possibleTileCoords = LineRange(unit.ActiveTile, skill.Range, false);
                     break;
                 case "Square":
                     possibleTileCoords = SquareRange(unit.ActiveTile, skill.Range);
+                    break;
+                case "Crosshair":
+                    possibleTileCoords = LineRange(unit.ActiveTile, skill.Range, true);
                     break;
                 default:
                     Debug.LogWarning("ERROR");
@@ -106,11 +111,10 @@ namespace NightmareEchoes.Unit.Combat
             }
             
             skillRangeTiles = tileRange;
+            //============================================================
             
-            //Render Range and Units in Range
-            RenderOverlayTile.Instance.RenderTiles(tileRange);
-            var list = aliveHostileUnits.Select(enemy => enemy.ActiveTile).ToList();
-            RenderOverlayTile.Instance.RenderEnemyTiles(list);
+            RenderRangeAndUnits();
+            
         }
 
         private void TargetUnit()
@@ -132,11 +136,38 @@ namespace NightmareEchoes.Unit.Combat
             RenderOverlayTile.Instance.ClearRenders();
         }
         
-        //==Cast Ranges==
-        private List<Vector2Int> LineRange(OverlayTile startTile, int range)
+        private void RenderRangeAndUnits()
+        {
+            //Render Range and Units in Range
+            RenderOverlayTile.Instance.RenderAttackRangeTiles(skillRangeTiles);
+
+            switch (activeSkill.TargetUnitAlignment)
+            {
+                case TargetUnitAlignment.Hostile:
+                    RenderOverlayTile.Instance.RenderEnemyTiles(aliveHostileUnits.Select(enemy => enemy.ActiveTile).ToList());
+                    break;
+                case TargetUnitAlignment.Friendly:
+                    RenderOverlayTile.Instance.RenderFriendlyTiles(aliveFriendlyUnits.Select(friendly => friendly.ActiveTile).ToList());
+                    break;
+                case TargetUnitAlignment.Both:
+                    RenderOverlayTile.Instance.RenderEnemyTiles(aliveHostileUnits.Select(enemy => enemy.ActiveTile).ToList());
+                    RenderOverlayTile.Instance.RenderFriendlyTiles(aliveFriendlyUnits.Select(friendly => friendly.ActiveTile).ToList());
+                    break;
+            }
+        }
+        
+        private void ResetFlags()
+        {
+            
+        }
+
+        #region Casting Range Calculation
+        private List<Vector2Int> LineRange(OverlayTile startTile, int range, bool isCrosshair)
         {
             var possibleTileCoords = new List<Vector2Int>();
-            for (var i = 1; i <= range; i++)
+            var i = 1;
+            if (isCrosshair) i = 2;
+            for (; i <= range; i++)
             {
                 possibleTileCoords.Add(new Vector2Int(startTile.gridLocation.x + i, startTile.gridLocation.y));
                 possibleTileCoords.Add(new Vector2Int(startTile.gridLocation.x - i, startTile.gridLocation.y)); 
@@ -161,6 +192,8 @@ namespace NightmareEchoes.Unit.Combat
             return possibleTileCoords;
         }
         
+        #endregion
+        
         //==Coroutines==
         IEnumerator UpdateUnitPositionsAtStart()
         {
@@ -169,6 +202,39 @@ namespace NightmareEchoes.Unit.Combat
             {
                 unit.UpdateLocation();
             }
+        }
+
+        IEnumerator TargetGround()
+        {
+            RenderRangeAndUnits();
+            while (!Input.GetMouseButtonDown(0))
+            {
+                var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+                if (!hit) continue;
+                var target = hit.collider.gameObject.GetComponent<OverlayTile>();
+                if (!target) continue;
+                if (skillRangeTiles.All(tile => tile != target)) continue;
+
+                var aoeArea = activeSkill.AoeType switch
+                {
+                    AOEType.Square => SquareRange(target, 1),
+                    AOEType.Cross => LineRange(target, 1, false)
+                };
+                
+                var map = OverlayTileManager.Instance.map;
+                var aoeAreaTiles = new List<OverlayTile>();
+                foreach (var coord in aoeArea.Where(coord => map.ContainsKey(coord)))
+                {
+                    if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
+                        aoeAreaTiles.Add(tile);
+                }
+                
+                RenderOverlayTile.Instance.RenderAoeTiles(aoeAreaTiles);
+
+                yield return null;
+            }
+            
+            RenderOverlayTile.Instance.ClearRenders();
         }
     }
 }

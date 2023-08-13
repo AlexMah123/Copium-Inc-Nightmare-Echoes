@@ -25,37 +25,51 @@ namespace NightmareEchoes.Grid
 
         [SerializeField] Color moveColor;
         [SerializeField] Color attackRangeColor;
+        [SerializeField] Color aoeRangeColor;
+        
+        [SerializeField] Color enemyColor;
+        [SerializeField] Color friendlyColor;
         
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
         }
-
-        public void ShowAttackTile()
-        {
-            sr.color = new Color(attackRangeColor.r,attackRangeColor.g,attackRangeColor.b,attackRangeColor.a);
-        }
         
         public void ShowMoveTile()
         {
-            sr.color = new Color(moveColor.r,moveColor.g,moveColor.b,moveColor.a);;
+            sr.color = ConvertColor(moveColor);
+        }
+        
+        public void ShowAttackTile()
+        {
+            sr.color = ConvertColor(attackRangeColor);
+        }
+
+        public void ShowAoeTiles()
+        {
+            sr.color = ConvertColor(aoeRangeColor);
         }
 
         public void ShowEnemyTile()
         {
-            sr.color = Color.red;
+            sr.color = ConvertColor(enemyColor);
         }
 
-        public void ShowAllyTile()
+        public void ShowFriendlyTile()
         {
-            sr.color = Color.green;
+            sr.color = ConvertColor(friendlyColor);
         }
         
         public void HideTile()
         {
-            sr.color = new Color(inactiveColor.r,inactiveColor.g,inactiveColor.b,inactiveColor.a);;
+            sr.color = ConvertColor(inactiveColor);
         }
 
+        private Color ConvertColor(Color c)
+        {
+            return new Color(c.r, c.g, c.b, c.a);
+        }
+        
         public void isPlayerOnTile()
         {
             if (PlayerOnTile == true)

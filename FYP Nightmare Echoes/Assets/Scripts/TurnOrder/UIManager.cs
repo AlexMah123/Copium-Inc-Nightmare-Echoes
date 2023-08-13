@@ -271,7 +271,7 @@ namespace NightmareEchoes.TurnOrder
         public void Skill1Button()
         {
             CurrentUnit.Skill1();
-            TurnOrderController.Instance.PassTurn();
+            //TurnOrderController.Instance.PassTurn();
         }
 
         public void Skill2Button()

@@ -13,6 +13,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected int range;
         [SerializeField] protected TargetType targetType;
         [SerializeField] protected TargetArea targetArea;
+        [SerializeField] protected TargetUnitAlignment targetUnitAlignment;
         [SerializeField] protected AOEType aoeType;
         [SerializeField] protected SkillType skillType;
         
@@ -56,6 +57,12 @@ namespace NightmareEchoes.Unit
             set => targetArea = value;
         }
 
+        public TargetUnitAlignment TargetUnitAlignment
+        {
+            get => targetUnitAlignment;
+            set => targetUnitAlignment = value;
+        }
+
         public AOEType AoeType
         {
             get => aoeType;
@@ -82,14 +89,21 @@ namespace NightmareEchoes.Unit
     public enum TargetType
     {
         Single = 0,
-        Multi = 1,
-        AOE = 2
+        AOE = 1
     }
 
     public enum TargetArea
     {
         Line = 0,
-        Square = 1
+        Square = 1,
+        Crosshair = 2
+    }
+
+    public enum TargetUnitAlignment
+    {
+        Hostile = 0,
+        Friendly = 1,
+        Both = 2
     }
 
     public enum AOEType

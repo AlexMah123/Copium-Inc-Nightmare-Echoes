@@ -20,7 +20,7 @@ namespace NightmareEchoes.Grid
                 Instance = this;
         }
 
-        public void RenderTiles(List<OverlayTile> tiles)
+        public void RenderAttackRangeTiles(List<OverlayTile> tiles)
         {
             foreach (var tile in tiles)
             {
@@ -30,6 +30,15 @@ namespace NightmareEchoes.Grid
             activeRenders = tiles;
         }
 
+        public void RenderAoeTiles(List<OverlayTile> tiles)
+        {
+            foreach (var tile in tiles)
+            {
+                tile.ShowAoeTiles();
+                activeRenders.Add(tile);
+            }
+        }
+
         public void RenderEnemyTiles(List<OverlayTile> list)
         {
             foreach (var tile in list)
@@ -37,6 +46,18 @@ namespace NightmareEchoes.Grid
                 foreach (var activeTile in activeRenders.Where(activeTile => activeTile == tile))
                 {
                     activeTile.ShowEnemyTile();
+                    break;
+                }
+            }
+        }
+        
+        public void RenderFriendlyTiles(List<OverlayTile> list)
+        {
+            foreach (var tile in list)
+            {
+                foreach (var activeTile in activeRenders.Where(activeTile => activeTile == tile))
+                {
+                    activeTile.ShowFriendlyTile();
                     break;
                 }
             }
