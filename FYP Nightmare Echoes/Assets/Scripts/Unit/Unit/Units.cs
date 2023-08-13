@@ -249,7 +249,7 @@ namespace NightmareEchoes.Unit
 
         #endregion
 
-        protected void ShowPopUpText(string damage)
+        public void ShowPopUpText(string damage)
         {
             if(damageTextPrefab)
             {
