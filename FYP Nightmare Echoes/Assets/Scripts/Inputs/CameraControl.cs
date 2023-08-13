@@ -57,6 +57,7 @@ namespace NightmareEchoes.Inputs
             IfCameraZoom();
             IfCameraZoomReset();
 
+            //pans to the targetUnit till it reaches it and stops
             if (isPanning && targetUnit != null)
             {
                 targetPosition = targetUnit.transform.position + offset;
@@ -81,15 +82,14 @@ namespace NightmareEchoes.Inputs
 
         void IfCameraDrag()
         {
-            if (Input.GetMouseButton(1) && !isPanning) //if holding down left click
+            if (Input.GetMouseButton(1) && !isPanning)
             {
-
-                dragDelta = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Camera.main.transform.position;
+                dragDelta = gameCamera.ScreenToWorldPoint(Input.mousePosition) - gameCamera.transform.position;
 
                 if (!isDragging)
                 {
                     isDragging = true;
-                    dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    dragOrigin = gameCamera.ScreenToWorldPoint(Input.mousePosition);
                 }
             }
             else
@@ -99,11 +99,11 @@ namespace NightmareEchoes.Inputs
 
             if (isDragging)
             {
-                Camera.main.transform.position = dragOrigin - dragDelta;
-                Camera.main.transform.position = new Vector3(
-                    Mathf.Clamp(Camera.main.transform.position.x, -boundaryX, boundaryX),
-                    Mathf.Clamp(Camera.main.transform.position.y, -boundaryY, boundaryY),
-                    Camera.main.transform.position.z);
+                gameCamera.transform.position = dragOrigin - dragDelta;
+                gameCamera.transform.position = new Vector3(
+                    Mathf.Clamp(gameCamera.transform.position.x, -boundaryX, boundaryX),
+                    Mathf.Clamp(gameCamera.transform.position.y, -boundaryY, boundaryY),
+                    gameCamera.transform.position.z);
             }
         }
 
@@ -111,7 +111,7 @@ namespace NightmareEchoes.Inputs
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0f && !isPanning)
             {
-                Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + Input.GetAxis("Mouse ScrollWheel") * zoomMulitplier, minZoom, maxZoom);
+                gameCamera.orthographicSize = Mathf.Clamp(gameCamera.orthographicSize + Input.GetAxis("Mouse ScrollWheel") * zoomMulitplier, minZoom, maxZoom);
             }
         }
 
@@ -119,7 +119,8 @@ namespace NightmareEchoes.Inputs
         {
             if (Input.GetMouseButtonDown(2) && !isPanning)
             {
-                Camera.main.orthographicSize = defaultZoom;
+                gameCamera.orthographicSize = defaultZoom;
+                gameCamera.transform.position = Vector3.zero + offset;
             }
         }
     }

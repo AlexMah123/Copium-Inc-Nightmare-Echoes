@@ -7,7 +7,7 @@ using UnityEngine;
 namespace NightmareEchoes.Unit
 {
     [CreateAssetMenu(fileName = "SpeedBuff", menuName = "Unit Modifiers/Buff/Speed Buff")]
-    public class SpeedBuff : Modifer
+    public class SpeedBuff : Modifier
     {
         [SerializeField] int speedBuff;
 
@@ -16,7 +16,12 @@ namespace NightmareEchoes.Unit
 
         }
 
-        public override Modifiers ApplyEffect(Modifiers mod)
+        public override void ApplyEffect(GameObject unit)
+        {
+
+        }
+
+        public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
             mod.speedModifier += speedBuff;
             return mod;

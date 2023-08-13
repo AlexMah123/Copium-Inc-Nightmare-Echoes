@@ -31,6 +31,12 @@ namespace NightmareEchoes.TurnOrder
             //resets
             controller.runOnce = false;
             controller.ChangePhase(controller.startPhase);
+
+            //update effects
+            for(int i = 0; i < controller.turnOrderList.Count; i++) 
+            {
+                controller.turnOrderList[i].ApplyStatusEffects();
+            }
         }
     }
 }

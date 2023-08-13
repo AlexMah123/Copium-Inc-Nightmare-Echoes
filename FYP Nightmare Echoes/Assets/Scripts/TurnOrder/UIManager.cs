@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using NightmareEchoes.Unit;
 using NightmareEchoes.TurnOrder;
+using System.Linq;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -14,20 +15,20 @@ namespace NightmareEchoes.TurnOrder
         public static UIManager Instance;
 
 
-        [Space(15), Header("Turn Order Bar")]
-        int capIndex = 0;
+        [Header("Turn Order Bar")]
         [SerializeField] int imagePoolCap = 6;
-        [SerializeField] GameObject imagePrefab;
+        int capIndex = 0;
+        [SerializeField] GameObject turnOrderSpritePrefab;
         [SerializeField] GameObject turnIndicator;
         [SerializeField] GameObject currentTurnOrderPanel;
         [SerializeField] TextMeshProUGUI currentTurnNum;
         [SerializeField] TextMeshProUGUI phaseText;
 
-        List<GameObject> imageObjectPool = new List<GameObject>();
+        List<GameObject> turnOrderSpritePool = new List<GameObject>();
         [SerializeField] Color playerTurn;
         [SerializeField] Color enemyTurn;
 
-        [Space(15), Header("Hotbar Info")]
+        [Space(20), Header("Current Unit Info")]
         [SerializeField] List<Button> currentUnitButtonList;
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
@@ -37,10 +38,13 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI currentUnitStunResistText;
         [SerializeField] TextMeshProUGUI currentUnitResistText;
         [SerializeField] Slider currentUnitHealth;
+        [SerializeField] GameObject currentUnitStatusEffectsPanel;
+        public List<Modifier> currentUnitTotalStatusEffectList = new List<Modifier>();
+
         Units CurrentUnit { get => TurnOrderController.Instance.CurrentUnit;}
 
-        [Space(15), Header("Inspectable Info")]
-        [SerializeField] Units inspectedUnit;
+        [Space(20), Header("Inspectable Info")]
+        public Units inspectedUnit;
         [SerializeField] List<Button> inspectedUnitButtonList;
         [SerializeField] GameObject inspectedUnitPanel;
         [SerializeField] Button inspectedUnitProfile;
@@ -51,22 +55,32 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI inspectedUnitStunResistText;
         [SerializeField] TextMeshProUGUI inspectedUnitResistText;
         [SerializeField] Slider inspectedUnitHealth;
+        [SerializeField] GameObject inspectedUnitStatusEffectsPanel;
+        public List<Modifier> inspectedUnitTotalStatusEffectList = new List<Modifier>();
 
-        [Space(15), Header("Character Glossary")]
+        [Space(20), Header("Current/Inspected Status Effects")]
+        [SerializeField] int statusEffectCap = 24;
+        [SerializeField] GameObject statusEffectPrefab;
+        List<GameObject> inspectedUnitStatusEffectPool = new List<GameObject>();
+        List<GameObject> currentUnitStatusEffectPool = new List<GameObject>();
+
+
+        [Space(20), Header("Character Glossary")]
         [SerializeField] GameObject glossaryPanel;
         [SerializeField] Sprite glossarySprite;
-        [SerializeField] TextMeshProUGUI glossaryProfile;
+        [SerializeField] TextMeshProUGUI glossaryName;
         [SerializeField] Slider glossaryHealth;
 
 
-        [Space(15), Header("Settings")]
+        [Space(20), Header("Settings")]
         [SerializeField] Button settingButton;
         [SerializeField] GameObject settingsPanel;
         [NonSerialized] public bool gameIsPaused = false;
 
-        [Space(15), Header("Current Unit")]
-        [SerializeField] TextMeshProUGUI unitAction;
-        [SerializeField] GameObject indicator;
+
+        [Space(20), Header("Current Unit Indicator")]
+        //[SerializeField] TextMeshProUGUI unitAction;
+        [SerializeField] GameObject unitIndicator;
         [SerializeField] private float frequency = 2.0f;
         [SerializeField] private float magnitude = 0.05f;
         [SerializeField] private float offset = 0.75f;
@@ -84,8 +98,9 @@ namespace NightmareEchoes.TurnOrder
             }
 
             //initialize objectpool
-            InitImagePool(currentTurnOrderPanel);
-
+            InitTurnOrderSpritePool(currentTurnOrderPanel);
+            InitStatusEffectPool(currentUnitStatusEffectsPanel);
+            InitStatusEffectPool(inspectedUnitStatusEffectsPanel);
         }
 
         private void Start()
@@ -150,16 +165,13 @@ namespace NightmareEchoes.TurnOrder
                         selected = true;
                         EnableInspectedUI(true);
                     }
-                    else
-                    {
-                        selected = false;
-                    }
                 }
 
-                if (!selected)
+                //UNCOMMENT IF WE WANT TO HIDE WHEN PLAYERS DRAG
+                /*if (!selected)
                 {
                     EnableInspectedUI(false);
-                }
+                }*/
 
             }
             #endregion
@@ -171,26 +183,26 @@ namespace NightmareEchoes.TurnOrder
             #region current unit indicator
             if (CurrentUnit != null)
             {
-                if (!indicator.activeSelf)
+                if (!unitIndicator.activeSelf)
                 {
-                    indicator.SetActive(true);
+                    unitIndicator.SetActive(true);
                 }
 
                 if (CurrentUnit.IsHostile)
                 {
-                    indicator.GetComponent<SpriteRenderer>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b, enemyTurn.a);
+                    unitIndicator.GetComponent<SpriteRenderer>().color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b, enemyTurn.a);
                 }
                 else
                 {
-                    indicator.GetComponent<SpriteRenderer>().color = new Color(playerTurn.r, playerTurn.g, playerTurn.b, playerTurn.a);
+                    unitIndicator.GetComponent<SpriteRenderer>().color = new Color(playerTurn.r, playerTurn.g, playerTurn.b, playerTurn.a);
                 }
 
-                indicator.transform.position = new Vector3(CurrentUnit.transform.position.x, CurrentUnit.transform.position.y + offset, CurrentUnit.transform.position.z)
+                unitIndicator.transform.position = new Vector3(CurrentUnit.transform.position.x, CurrentUnit.transform.position.y + offset, CurrentUnit.transform.position.z)
                     + transform.up * Mathf.Sin(Time.time * frequency) * magnitude;
             }
             else
             {
-                indicator.SetActive(false);
+                unitIndicator.SetActive(false);
             }
 
             #endregion
@@ -201,14 +213,14 @@ namespace NightmareEchoes.TurnOrder
 
 
             //sets indicator to the first image on the list
-            if (imageObjectPool[0].activeSelf)
+            if (turnOrderSpritePool[0].activeSelf)
             {
                 if(!turnIndicator.activeSelf)
                 {
                     turnIndicator.SetActive(true);
                 }
 
-                turnIndicator.transform.position = imageObjectPool[0].transform.position;
+                turnIndicator.transform.position = turnOrderSpritePool[0].transform.position;
             }
             else
             {
@@ -276,27 +288,102 @@ namespace NightmareEchoes.TurnOrder
 
         #endregion
 
-        #region UI Function
-
-        void InitImagePool(GameObject panel)
+        #region UI Pool
+        void InitTurnOrderSpritePool(GameObject panel)
         {
-
+            capIndex = 0;
             for (int i = 0; i < imagePoolCap; i++)
             {
-                GameObject obj = Instantiate(imagePrefab, panel.transform);
+                GameObject obj = Instantiate(turnOrderSpritePrefab, panel.transform);
                 obj.SetActive(false);
                 obj.name = $"{obj.name} {capIndex++}";
-                imageObjectPool.Add(obj);
+                turnOrderSpritePool.Add(obj);
             }
-
         }
 
+        void InitStatusEffectPool(GameObject panel)
+        {
+            capIndex = 0;
+            for (int i = 0; i < statusEffectCap; i++)
+            {
+                GameObject obj = Instantiate(statusEffectPrefab, panel.transform);
+                obj.SetActive(false);
+                obj.name = $"{obj.name} {capIndex++}";
+
+                if(panel == currentUnitStatusEffectsPanel)
+                {
+                    currentUnitStatusEffectPool.Add(obj);
+                }
+                else if(panel == inspectedUnitStatusEffectsPanel)
+                {
+                    inspectedUnitStatusEffectPool.Add(obj);
+                }
+            }
+        }
+
+        GameObject GetImageObject()
+        {
+            bool notEnough = false;
+            for (int i = 0; i < turnOrderSpritePool.Count; i++)
+            {
+                if (!turnOrderSpritePool[i].activeInHierarchy)
+                {
+                    notEnough = false;
+                    return turnOrderSpritePool[i];
+                }
+                else
+                {
+                    notEnough = true;
+                }
+            }
+
+            if (notEnough)
+            {
+                GameObject obj = Instantiate(turnOrderSpritePrefab, currentTurnOrderPanel.transform);
+                obj.SetActive(false);
+                obj.name = $"{obj.name} {capIndex++}";
+                turnOrderSpritePool.Add(obj);
+                return obj;
+            }
+
+            return null;
+        }
+
+        GameObject GetStatusEffectObject(GameObject panel)
+        {
+            if(panel == currentUnitStatusEffectsPanel)
+            {
+                for (int i = 0; i < currentUnitStatusEffectPool.Count; i++)
+                {
+                    if (!currentUnitStatusEffectPool[i].activeInHierarchy)
+                    {
+                        return currentUnitStatusEffectPool[i];
+                    }
+                 }
+            }
+            else if(panel == inspectedUnitStatusEffectsPanel)
+            {
+                for (int i = 0; i < inspectedUnitStatusEffectPool.Count; i++)
+                {
+                    if (!inspectedUnitStatusEffectPool[i].activeInHierarchy)
+                    {
+                        return inspectedUnitStatusEffectPool[i];
+                    }
+                }
+            }
+
+            return null;
+        }
+        #endregion
+
+
+        #region Update UI Functions
         public void UpdateTurnOrderUI()
         {
             //resets the turn order bar, calculate turn order
-            for (int i = 0; i < imageObjectPool.Count; i++)
+            for (int i = 0; i < turnOrderSpritePool.Count; i++)
             {
-                imageObjectPool[i].SetActive(false);
+                turnOrderSpritePool[i].SetActive(false);
             }
 
 
@@ -307,55 +394,141 @@ namespace NightmareEchoes.TurnOrder
 
                 if(image != null)
                 {
-                    image.SetActive(true);
-
                     image.GetComponent<Image>().sprite = TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].Sprite;
                     image.GetComponent<Image>().color =
                         new Color(TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.r,
                         TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.g,
                         TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.b,
                         TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.a);
+
+                    image.SetActive(true);
                 }
             }
-
         }
 
-        GameObject GetImageObject()
+        public void UpdateStatusEffectUI()
         {
-            bool notEnough = false;
-            for (int i = 0; i < imageObjectPool.Count; i++)
+            if(CurrentUnit != null)
             {
-                if (!imageObjectPool[i].activeInHierarchy)
+                //total list of current unit status effect
+                currentUnitTotalStatusEffectList = CurrentUnit.BuffList.Concat(CurrentUnit.DebuffList).Concat(CurrentUnit.TokenList).ToList();
+
+                //reset pool
+                for (int i = 0; i < currentUnitStatusEffectPool.Count; i++)
                 {
-                    notEnough = false;
-                    return imageObjectPool[i];
+                    currentUnitStatusEffectPool[i].SetActive(false);
                 }
-                else
+
+                //foreach in total list
+                for (int i = 0; i < currentUnitTotalStatusEffectList.Count; i++)
                 {
-                    notEnough = true;
+                    //get obj from pool
+                    GameObject statusEffectObj = GetStatusEffectObject(currentUnitStatusEffectsPanel);
+
+                    if (statusEffectObj != null)
+                    {
+                        //sets image component and scriptable object component
+                        Image statusEffectImage = statusEffectObj.GetComponent<Image>();
+                        Modifier modifier = currentUnitTotalStatusEffectList[i];
+
+                        //sets image to icon
+                        //statusEffectImage.sprite = modifier.icon;
+
+                        //sets image color to respective color
+                        switch (modifier.modifierType)
+                        {
+                            case ModifierType.BUFF:
+                                statusEffectImage.color = Color.green;
+                                break;
+
+                            case ModifierType.DEBUFF:
+                                statusEffectImage.color = Color.red;
+
+                                break;
+
+                            case ModifierType.POSITIVETOKEN:
+                                statusEffectImage.color = Color.yellow;
+                                break;
+
+                            case ModifierType.NEGATIVETOKEN:
+                                //enter different color
+                                break;
+                        }
+
+
+                        statusEffectObj.SetActive(true);
+                    }
                 }
             }
-
-            if(notEnough)
+           
+            //inspected unit
+            if (inspectedUnit != null)
             {
-                GameObject obj = Instantiate(imagePrefab, currentTurnOrderPanel.transform);
-                obj.SetActive(false);
-                obj.name = $"{obj.name} {capIndex++}";
-                imageObjectPool.Add(obj);
-                return obj;
+                //total list of status effect
+                //inspectedUnitStatusEffectList.Clear();
+                inspectedUnitTotalStatusEffectList = inspectedUnit.BuffList.Concat(inspectedUnit.DebuffList).Concat(inspectedUnit.TokenList).ToList();
+
+                //reset pool
+                for (int i = 0; i < inspectedUnitStatusEffectPool.Count; i++)
+                {
+                    inspectedUnitStatusEffectPool[i].SetActive(false);
+                }
+
+                //foreach in total list
+                for (int i = 0; i < inspectedUnitTotalStatusEffectList.Count; i++)
+                {
+                    //get obj from pool
+                    GameObject statusEffectObj = GetStatusEffectObject(inspectedUnitStatusEffectsPanel);
+
+                    if (statusEffectObj != null)
+                    {
+                        //sets image component and scriptable object component
+                        Image statusEffectImage = statusEffectObj.GetComponent<Image>();
+                        Modifier modifier = inspectedUnitTotalStatusEffectList[i];
+
+                        //sets image to icon
+                        //statusEffectImage.sprite = modifier.icon;
+
+                        //sets image color to respective color
+                        switch (modifier.modifierType)
+                        {
+                            case ModifierType.BUFF:
+                                statusEffectImage.color = Color.green;
+                                break;
+
+                            case ModifierType.DEBUFF:
+                                statusEffectImage.color = Color.red;
+
+                                break;
+
+                            case ModifierType.POSITIVETOKEN:
+                                statusEffectImage.color = Color.yellow;
+                                break;
+
+                            case ModifierType.NEGATIVETOKEN:
+                                //enter different color
+                                break;
+                        }
+
+
+                        statusEffectObj.SetActive(true);
+                    }
+                }
             }
+}
+        #endregion
 
-            return null;
-        }
 
+        #region Hotbar UI
         public void EnablePlayerUI(bool enable)
         {
             foreach (Button button in currentUnitButtonList)
             {
                 button.interactable = enable;
             }
-        }
 
+            UpdateStatusEffectUI();
+        }
 
         public void EnableInspectedUI(bool enable)
         {
@@ -364,7 +537,8 @@ namespace NightmareEchoes.TurnOrder
                 button.interactable = enable;
             }
 
-            inspectedUnitPanel.SetActive(enable);  
+            UpdateStatusEffectUI();
+            inspectedUnitPanel.SetActive(enable);
         }
 
         public void CharacterGlossary()

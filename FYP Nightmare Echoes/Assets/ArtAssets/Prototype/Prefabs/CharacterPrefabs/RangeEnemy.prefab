@@ -102,11 +102,10 @@ MonoBehaviour:
   _unitScriptable: {fileID: 0}
   _name: Range Enemy
   _sprite: {fileID: 489163364, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  spriteRenderer: {fileID: 0}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _maxHealth: 15
-    _speed: 10
+    _speed: 4
     _moveRange: 2
     _stunResist: 35
     _resist: 35
@@ -124,6 +123,7 @@ MonoBehaviour:
     resistModifier: 0
   _isHostile: 1
   _direction: 0
+  activeTile: {fileID: 0}
   buffList: []
   debuffList: []
   tokenList: []
@@ -135,6 +135,7 @@ MonoBehaviour:
   skill2Desc: Range Enemy Skill 2
   skill3: {fileID: 0}
   skill3Desc: Range Enemy Skill 3
+  passive: {fileID: 0}
   passiveDesc: Range Enemy Passive
   sprites: []
 --- !u!60 &964070419

@@ -18,10 +18,11 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected Sprite _sprite;
         protected SpriteRenderer spriteRenderer;
         [SerializeField] protected GameObject damageTextPrefab;
+        //[SerializeField] protected GameObject popUpTextPrefab;
 
         public BaseStats baseStats = new BaseStats();
         public BaseStats stats = new BaseStats();
-        public Modifiers modifiedStats = new();
+        public ModifiersStruct modifiedStats = new();
 
         [SerializeField] protected bool _isHostile;
         [SerializeField] protected Direction _direction;
@@ -30,9 +31,9 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected OverlayTile activeTile;
 
         [Header("Buff Debuff Token")]
-        [SerializeField] protected List<Modifer> buffList = new List<Modifer>();
-        [SerializeField] protected List<Modifer> debuffList = new List<Modifer>();
-        [SerializeField] protected List<Modifer> tokenList = new List<Modifer>();
+        [SerializeField] protected List<Modifier> buffList = new List<Modifier>();
+        [SerializeField] protected List<Modifier> debuffList = new List<Modifier>();
+        [SerializeField] protected List<Modifier> tokenList = new List<Modifier>();
 
         [Header("Unit Skills")]
         [SerializeField] protected Skill basicAttack;
@@ -101,19 +102,19 @@ namespace NightmareEchoes.Unit
         #endregion
 
         #region Buff Debuff Token
-        public List<Modifer> BuffList
+        public List<Modifier> BuffList
         {
             get => buffList; 
             set => buffList = value;
         }
 
-        public List<Modifer> DebuffList
+        public List<Modifier> DebuffList
         {
             get => debuffList;
             set => debuffList = value;
         }
 
-        public List<Modifer> TokenList
+        public List<Modifier> TokenList
         {
             get => tokenList;
             set => tokenList = value;
@@ -175,7 +176,7 @@ namespace NightmareEchoes.Unit
             rb2D.gravityScale = 0f;
 
             baseStats.Reset();
-            UpdateEffects();
+            UpdateStats();
         }
 
         protected virtual void Start()
@@ -248,7 +249,7 @@ namespace NightmareEchoes.Unit
 
         #endregion
 
-        protected void ShowDamage(string damage)
+        protected void ShowPopUpText(string damage)
         {
             if(damageTextPrefab)
             {
@@ -265,9 +266,11 @@ namespace NightmareEchoes.Unit
                 activeTile = hitTile.collider.gameObject.GetComponent<OverlayTile>();
         }
 
-        public void UpdateEffects()
+
+        #region Status Effects
+        public void UpdateStats()
         {
-            modifiedStats = UpdateModifers(modifiedStats);
+            modifiedStats = ApplyModifiers(modifiedStats);
 
             stats.MaxHealth = baseStats.MaxHealth + modifiedStats.healthModifier;
             stats.Health = stats.Health;
@@ -277,45 +280,68 @@ namespace NightmareEchoes.Unit
             stats.Resist = baseStats.Resist + modifiedStats.healthModifier;
         }
 
-        protected Modifiers UpdateModifers(Modifiers modifiers)
+        public void ApplyStatusEffects()
         {
-            Modifiers temp = new();
+            for (int i = 0; i < buffList.Count; i++)
+            {
+                buffList[i].ApplyEffect(gameObject);
+            }
+
+            for (int i = 0; i < debuffList.Count; i++)
+            {
+                debuffList[i].ApplyEffect(gameObject);
+            }
+
+            for (int i = 0; i < tokenList.Count; i++)
+            {
+                tokenList[i].ApplyEffect(gameObject);
+            }
+        }
+
+
+        protected ModifiersStruct ApplyModifiers(ModifiersStruct modifiers)
+        {
+            ModifiersStruct temp = new();
 
             for(int i = 0; i < buffList.Count; i++) 
             {
-                temp = buffList[i].ApplyEffect(temp);
+                temp = buffList[i].ApplyModifier(temp);
             }
 
-            //add debuffs
-            //add tokens
+            for(int i = 0; i < debuffList.Count; i++)
+            {
+                temp = debuffList[i].ApplyModifier(temp);
+            }
+
+            for(int i = 0; i < tokenList.Count; i++)
+            {
+                temp = tokenList[i].ApplyModifier(temp);
+            }
 
             modifiers = temp;
 
             return modifiers;
         }
 
-        protected void AddBuff(Modifer buff)
+        protected void AddBuff(Modifier buff)
         {
-            if(buff.modifierType == ModifierType.BUFF)
+            switch(buff.modifierType)
             {
-                BuffList.Add(buff);
-            }
-            else if(buff.modifierType == ModifierType.DEBUFF)
-            {
-                DebuffList.Add(buff);
-            }
-            else if (buff.modifierType == ModifierType.TOKEN)
-            {
-                TokenList.Add(buff);
+                case ModifierType.BUFF:
+                    BuffList.Add(buff);
+                    break;
+
+                case ModifierType.DEBUFF:
+                    DebuffList.Add(buff);
+                    break;
+
+                case ModifierType.POSITIVETOKEN:
+                    TokenList.Add(buff);
+                    break;
             }
         }
 
-        #region collision
-        protected virtual void OnMouseDown()
-        {
-            
-        }
-        #endregion        
+        #endregion
     }
 
     public enum Direction
@@ -336,6 +362,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected int _moveRange;
         [SerializeField] protected float _stunResist;
         [SerializeField] protected float _resist;
+
         #region Unit Info Properties
         public int Health
         {

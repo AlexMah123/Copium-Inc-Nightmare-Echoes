@@ -6,10 +6,10 @@ using UnityEngine;
 //created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "StunResistBuff", menuName = "Unit Modifiers/Buff/StunResist Buff")]
-    public class StunResistBuff : Modifier
+    [CreateAssetMenu(fileName = "StunResistDebuff", menuName = "Unit Modifiers/Debuff/StunResist Debuff")]
+    public class StunResistDebuff : Modifier
     {
-        [SerializeField] float stunResistBuff;
+        [SerializeField] float stunResistDebuff;
 
         public override void Awake()
         {
@@ -23,7 +23,7 @@ namespace NightmareEchoes.Unit
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            mod.stunResistModifier += stunResistBuff;
+            mod.stunResistModifier -= stunResistDebuff;
             return mod;
         }
 

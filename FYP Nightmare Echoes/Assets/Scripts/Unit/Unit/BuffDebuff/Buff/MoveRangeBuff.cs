@@ -6,7 +6,7 @@ using UnityEngine;
 namespace NightmareEchoes.Unit
 {
     [CreateAssetMenu(fileName = "MoveRangeBuff", menuName = "Unit Modifiers/Buff/MoveRange Buff")]
-    public class MoveRangeBuff : Modifer
+    public class MoveRangeBuff : Modifier
     {
         [SerializeField] int moveRangeBuff;
 
@@ -15,7 +15,12 @@ namespace NightmareEchoes.Unit
 
         }
 
-        public override Modifiers ApplyEffect(Modifiers mod)
+        public override void ApplyEffect(GameObject unit)
+        {
+
+        }
+
+        public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
             mod.moveRangeModifier += moveRangeBuff;
             return mod;

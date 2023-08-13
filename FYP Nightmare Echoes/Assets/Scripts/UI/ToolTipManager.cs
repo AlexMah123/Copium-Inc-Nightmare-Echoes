@@ -29,6 +29,15 @@ namespace NightmareEchoes.UI
         public bool isHoveringTurnOrderUnit;
         GameObject hoveredTurnOrderUnit;
 
+
+        [Header("Status Effect Tool Tip")]
+        [SerializeField] GameObject currentUnitPanel;
+        [SerializeField] GameObject inspectedUnitPanel;
+        public static Action<int, Vector2, Transform> OnMouseHoverStatusEffect;
+        public static Action OnMouseLoseFocusStatusEffect;
+        [SerializeField] Modifier hoveredStatusEffect;
+
+
         private void OnEnable()
         {
             OnMouseHoverSkill += DisplayToolTip;
@@ -36,6 +45,9 @@ namespace NightmareEchoes.UI
 
             OnMouseHoverTurnOrder += DisplayTurnOrderToolTip;
             OnMouseLoseFocusTurnOrder += HideTurnOrderToolTip;
+
+            OnMouseHoverStatusEffect += DisplayStatusEffectTooltip;
+            OnMouseLoseFocusStatusEffect += HideStatusEffectTooltip;
         }
 
         private void OnDisable()
@@ -45,6 +57,9 @@ namespace NightmareEchoes.UI
 
             OnMouseHoverTurnOrder -= DisplayTurnOrderToolTip;
             OnMouseLoseFocusTurnOrder -= HideTurnOrderToolTip;
+
+            OnMouseHoverStatusEffect -= DisplayStatusEffectTooltip;
+            OnMouseLoseFocusStatusEffect -= HideStatusEffectTooltip;
         }
 
         private void Update()
@@ -55,6 +70,7 @@ namespace NightmareEchoes.UI
                     hoveredTurnOrderUnit.transform.position.x, hoveredTurnOrderUnit.transform.position.y + offset, hoveredTurnOrderUnit.transform.position.z)
                     + transform.up * Mathf.Sin(Time.time * frequency) * magnitude;
             }
+
         }
 
         private void Start()
@@ -63,6 +79,7 @@ namespace NightmareEchoes.UI
             hoverIndicator.SetActive(false);
         }
 
+        #region Skill Tooltip
         private void DisplayToolTip(string tipText, Vector2 mousePos)
         {
             tooltipText.text = tipText;
@@ -79,10 +96,12 @@ namespace NightmareEchoes.UI
             tooltipText.text = default;
             tooltipWindow.gameObject.SetActive(false);
         }
+        #endregion
 
+
+        #region Turn Order Tooltip
         private void DisplayTurnOrderToolTip(int order, Vector2 mousePos)
         {
-
             hoveredTurnOrderUnit = TurnOrderController.Instance.CurrentUnitQueue.ToArray()[order].gameObject;
 
             if (hoveredTurnOrderUnit != null)
@@ -94,18 +113,61 @@ namespace NightmareEchoes.UI
                     hoverIndicator.SetActive(true);
                 }
 
+
+                //enable inspected unit UI
+                UIManager.Instance.inspectedUnit = TurnOrderController.Instance.CurrentUnitQueue.ToArray()[order];
+                UIManager.Instance.EnableInspectedUI(true);
+
                 CameraControl.Instance.UpdateCameraPan(hoveredTurnOrderUnit);
             }
-            else
-            {
-                isHoveringTurnOrderUnit = false;
-            }
-        }
+         }
 
         private void HideTurnOrderToolTip()
         {
             CameraControl.Instance.UpdateCameraPan(TurnOrderController.Instance.CurrentUnit.gameObject);
             hoverIndicator.SetActive(false);
+
+            //UNCOMMENT IF WE WANT TO HIDE WHEN HOVER OFF
+            /*//disable inspected unit UI
+            UIManager.Instance.inspectedUnit = null;
+            UIManager.Instance.EnableInspectedUI(false);*/
         }
+
+        #endregion
+
+
+        #region Status Effect Tooltip
+        private void DisplayStatusEffectTooltip(int order, Vector2 mousePos, Transform panel)
+        {
+            if (panel.gameObject == currentUnitPanel)
+            {
+                hoveredStatusEffect = UIManager.Instance.currentUnitTotalStatusEffectList[order];
+            }
+            else if(panel.gameObject == inspectedUnitPanel)
+            {
+                hoveredStatusEffect = UIManager.Instance.inspectedUnitTotalStatusEffectList[order];
+
+            }
+
+
+            if (hoveredStatusEffect != null)
+            {
+                tooltipText.text = hoveredStatusEffect.name;
+
+                tooltipText.ForceMeshUpdate();
+                tooltipWindow.sizeDelta = tooltipText.GetPreferredValues();
+
+                tooltipWindow.gameObject.SetActive(true);
+                tooltipWindow.transform.position = new Vector2(mousePos.x + tooltipWindow.sizeDelta.x / 4, mousePos.y + tooltipWindow.sizeDelta.y);
+            }
+        }
+
+        private void HideStatusEffectTooltip()
+        {
+            tooltipText.text = default;
+            tooltipWindow.gameObject.SetActive(false);
+        }
+
+        #endregion
     }
 }

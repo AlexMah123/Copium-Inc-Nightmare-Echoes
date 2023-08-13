@@ -7,7 +7,7 @@ using NightmareEchoes.TurnOrder;
 //created by Alex
 namespace NightmareEchoes.UI
 {
-    public class HoverTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class HoverSkill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         string toolTip;
         [SerializeField] Button button;

@@ -19,7 +19,7 @@ namespace NightmareEchoes.TurnOrder
         public EndPhase endPhase = new EndPhase();
 
         [Header("Turn Order")]
-        [SerializeField] List<Units> turnOrderList = new List<Units>();
+        public List<Units> turnOrderList = new List<Units>();
         //[SerializeField] List<Units> nextTurnOrderList = new List<Units>();
         Queue<Units> currentUnitQueue = new Queue<Units>();
         //Queue<Units> nextUnitQueue = new Queue<Units>();

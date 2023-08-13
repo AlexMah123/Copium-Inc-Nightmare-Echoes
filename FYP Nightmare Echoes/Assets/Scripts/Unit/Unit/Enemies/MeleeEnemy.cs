@@ -35,31 +35,35 @@ namespace NightmareEchoes.Unit.Enemy
         public override void BasicAttack()
         {
             Direction = Direction.South;
+            
         }
 
         public override void Passive()
         {
-
+            
         }
 
         public override void Skill1()
         {
+            
 
         }
 
         public override void Skill2()
         {
+            
 
         }
 
         public override void Skill3()
         {
+            
 
         }
 
         public override void TakeDamage(int damage)
         {
-            ShowDamage(damage.ToString());
+            ShowPopUpText(damage.ToString());
             stats.Health -= damage;
         }
 

@@ -24,12 +24,13 @@ namespace NightmareEchoes.TurnOrder
                 controller.runOnce = true;
             }
 
-            //updates the UI for turn order
+            //updates the UI during each phase & updates status effect 
             UIManager.Instance.UpdateTurnOrderUI();
+            UIManager.Instance.UpdateStatusEffectUI();
+
 
             //updates the current unit for turn order
-
-            if(controller.CurrentUnitQueue.Count > 0 ) 
+            if (controller.CurrentUnitQueue.Count > 0 ) 
             {
                 controller.CurrentUnit = controller.CurrentUnitQueue.Peek();
             }
@@ -56,12 +57,14 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnUpdatePhase()
         {
+            
 
             OnUpdate();
         }
 
         public void OnExitPhase()
         {
+
             OnExit();
         }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace NightmareEchoes.Unit
 {
     [CreateAssetMenu(fileName = "ResistBuff", menuName = "Unit Modifiers/Buff/Resist Buff")]
-    public class ResistBuff : Modifer
+    public class ResistBuff : Modifier
     {
         [SerializeField] float resistBuff;
 
@@ -15,7 +15,12 @@ namespace NightmareEchoes.Unit
             
         }
 
-        public override Modifiers ApplyEffect(Modifiers mod)
+        public override void ApplyEffect(GameObject unit)
+        {
+
+        }
+
+        public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
             mod.resistModifier += resistBuff;
             return mod;

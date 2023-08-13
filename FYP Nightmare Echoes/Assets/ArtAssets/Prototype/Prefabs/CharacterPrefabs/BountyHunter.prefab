@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2658365863807529696
 Transform:
   m_ObjectHideFlags: 0
@@ -102,7 +102,6 @@ MonoBehaviour:
   _unitScriptable: {fileID: 11400000, guid: 3b58b24257d5c214d8d8640aa1862bf9, type: 2}
   _name: Bounty Hunter
   _sprite: {fileID: 1830408377, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  spriteRenderer: {fileID: 0}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _maxHealth: 30
@@ -124,6 +123,7 @@ MonoBehaviour:
     resistModifier: 0
   _isHostile: 0
   _direction: 0
+  activeTile: {fileID: 0}
   buffList:
   - {fileID: 11400000, guid: 601d001264cdab5438fa84240f088d52, type: 2}
   - {fileID: 11400000, guid: 5fbd22f3e0cf3c34bb576a37d36d21e2, type: 2}
@@ -139,6 +139,7 @@ MonoBehaviour:
   skill2Desc: Bounty Hunter Skill 2
   skill3: {fileID: 0}
   skill3Desc: Bounty Hunter Skill 3
+  passive: {fileID: 0}
   passiveDesc: Bounty Hunter Passive
   sprites:
   - {fileID: -1405042302, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}

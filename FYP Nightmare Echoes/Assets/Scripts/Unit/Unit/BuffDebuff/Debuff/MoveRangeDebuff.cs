@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 //created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "StunResistBuff", menuName = "Unit Modifiers/Buff/StunResist Buff")]
-    public class StunResistBuff : Modifier
+    [CreateAssetMenu(fileName = "MoveRangeDebuff", menuName = "Unit Modifiers/Debuff/MoveRange Debuff")]
+    public class MoveRangeDebuff : Modifier
     {
-        [SerializeField] float stunResistBuff;
+        [SerializeField] int moveRangeDebuff;
 
         public override void Awake()
         {
@@ -23,7 +22,7 @@ namespace NightmareEchoes.Unit
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            mod.stunResistModifier += stunResistBuff;
+            mod.moveRangeModifier -= moveRangeDebuff;
             return mod;
         }
 

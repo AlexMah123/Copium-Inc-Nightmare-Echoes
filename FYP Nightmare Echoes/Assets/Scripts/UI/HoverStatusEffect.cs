@@ -5,10 +5,11 @@ using UnityEngine.EventSystems;
 
 namespace NightmareEchoes.UI
 {
-    public class HoverTurnOrder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class HoverStatusEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         int order;
         [SerializeField] float timeToWait = 0.2f;
+
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -19,21 +20,22 @@ namespace NightmareEchoes.UI
         public void OnPointerExit(PointerEventData eventData)
         {
             StopAllCoroutines();
-            ToolTipManager.OnMouseLoseFocusTurnOrder();
+            ToolTipManager.OnMouseLoseFocusStatusEffect();
         }
 
         IEnumerator StartTimer()
         {
             yield return new WaitForSeconds(timeToWait);
-            ShowTurnOrderTip();
+            ShowStatusEffectTip();
+
         }
 
-        private void ShowTurnOrderTip()
+        private void ShowStatusEffectTip()
         {
-            order = gameObject.transform.GetSiblingIndex() - 1;
-            ToolTipManager.OnMouseHoverTurnOrder(order, Input.mousePosition);
-        }
+            Transform panel = gameObject.transform.parent;
+            order = gameObject.transform.GetSiblingIndex();
+            ToolTipManager.OnMouseHoverStatusEffect(order, Input.mousePosition, panel);
 
-        
+        }
     }
 }

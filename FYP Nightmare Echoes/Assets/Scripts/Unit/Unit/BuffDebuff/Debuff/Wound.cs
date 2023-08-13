@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-//created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "StunResistBuff", menuName = "Unit Modifiers/Buff/StunResist Buff")]
-    public class StunResistBuff : Modifier
+    [CreateAssetMenu(fileName = "Wound", menuName = "Unit Modifiers/Debuff/Wound")]
+    public class Wound : Modifier
     {
-        [SerializeField] float stunResistBuff;
+        [SerializeField] int woundDmg;
+        [SerializeField] int woundStack = 1;
 
         public override void Awake()
         {
@@ -18,12 +17,11 @@ namespace NightmareEchoes.Unit
 
         public override void ApplyEffect(GameObject unit)
         {
-
+            unit.GetComponent<Units>().stats.Health -= woundDmg * woundStack;
         }
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            mod.stunResistModifier += stunResistBuff;
             return mod;
         }
 
@@ -36,5 +34,7 @@ namespace NightmareEchoes.Unit
         {
 
         }
+
+        
     }
 }
