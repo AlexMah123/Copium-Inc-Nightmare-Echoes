@@ -46,9 +46,6 @@ namespace NightmareEchoes.Unit.AI
         }
         public void MakeDecision()
         {
-            V3Int = new Vector3Int((int)thisUnit.transform.position.x, (int)thisUnit.transform.position.y, (int)thisUnit.transform.position.z);
-            currTile = (Tile)TileMapManager.Instance.tilemap.GetTile(V3Int);
-            cellThis = new Vector2(TileMapManager.Instance.tilemap.WorldToCell(V3Int).x, TileMapManager.Instance.tilemap.WorldToCell(V3Int).y);
             SortHeroesByDistance();
 
             thisOverlay = thisUnit.ActiveTile;
