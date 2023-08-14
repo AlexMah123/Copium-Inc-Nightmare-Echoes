@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NightmareEchoes.Unit;
+using NightmareEchoes.Unit.Combat;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -10,9 +12,10 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnEnter()
         {
             controller.CurrentUnit.TakeDamage(2);
-            //Debug.Log($"{controller.CurrentUnit.Name} - Taking Damage, Current Health: {controller.CurrentUnit.Health}");
 
-            //insert start of turn effects
+            //Insert start of turn effects
+
+            controller.StartCoroutine(WaitForTurnEnd());
         }
 
         protected override void OnUpdate()
@@ -22,12 +25,19 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-
             //when you change phases, change the current unit to the next unit
             if (controller.CurrentUnitQueue.Count > 0)
             {
                 controller.CurrentUnitQueue.Dequeue();
             }
         }
+        
+        IEnumerator WaitForTurnEnd()
+        {
+            yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
+            CombatManager.Instance.turnEnded = false;
+            controller.PassTurn();
+        }
+        
     }
 }

@@ -84,8 +84,8 @@ namespace NightmareEchoes.Unit
 
         #endregion
 
-        public abstract void Cast(Units target);
-        public abstract void Cast(OverlayTile target);
+        public abstract bool Cast(Units target);
+        public abstract bool Cast(OverlayTile target);
     }
 
     public enum TargetType

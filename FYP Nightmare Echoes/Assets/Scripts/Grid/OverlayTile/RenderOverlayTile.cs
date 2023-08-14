@@ -77,6 +77,12 @@ namespace NightmareEchoes.Grid
                 tile.HideTile();
             }
             targetingRenders.Clear();
+            
+            foreach (var tile in aoePreviewRenders)
+            {
+                tile.HideTile();
+            }
+            aoePreviewRenders.Clear();
         }
     }
 }

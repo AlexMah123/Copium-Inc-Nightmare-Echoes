@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +23,13 @@ namespace NightmareEchoes.Unit.Combat
         public List<Units> aliveHostileUnits;
         public List<Units> deadHostileUnits;
 
+        public bool turnEnded = false;
+        
         private Skill activeSkill;
         private List<OverlayTile> skillRangeTiles;
         private List<OverlayTile> aoePreviewTiles = new();
+
+        private Camera cam;
 
         private void Awake()
         {
@@ -34,6 +37,8 @@ namespace NightmareEchoes.Unit.Combat
                 Destroy(this);
             else
                 Instance = this;
+            
+            cam = Camera.main;
         }
 
         private void Start()
@@ -83,9 +88,7 @@ namespace NightmareEchoes.Unit.Combat
         {
             //Clear Active Renders 
             RenderOverlayTile.Instance.ClearTargetingRenders();
-            
-            ResetFlags();
-            
+
             if (activeSkill != null && activeSkill == skill)
             {
                 activeSkill = null;
@@ -126,12 +129,22 @@ namespace NightmareEchoes.Unit.Combat
             //============================================================
         }
 
+        private void EndTurn()
+        {
+            activeSkill.GetComponent<Units>().ShowPopUpText(activeSkill.SkillName);
+            activeSkill = null;
+            
+            RenderOverlayTile.Instance.ClearTargetingRenders();
+
+            turnEnded = true;
+        }
+        
         #region Targeting
         private void TargetUnit()
         {
             if (!Input.GetMouseButtonDown(0)) return;
             
-            var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
+            var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
             if (!hit) return;
             var target = hit.collider.gameObject.GetComponent<Units>();
             if (!target) return;
@@ -139,13 +152,13 @@ namespace NightmareEchoes.Unit.Combat
             //Check if the enemy selected is in range
             //Originally it was a ForEach loop but Rider recommended this LINQ expression instead lmao
             if (skillRangeTiles.All(tile => tile != target.ActiveTile)) return;
-            activeSkill.Cast(target);
-            activeSkill = null;
+
+            StartCoroutine(WaitForSkill(target));
         }
 
         private void TargetGround()
         {
-            var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
             if (!hit) return;
             var target = hit.collider.gameObject.GetComponent<OverlayTile>();
             if (!target) return;
@@ -166,22 +179,15 @@ namespace NightmareEchoes.Unit.Combat
             }
             
             if (!Input.GetMouseButtonDown(0)) return;
-            activeSkill.Cast(target);
+            StartCoroutine(WaitForSkill(target));
         }
         
         #endregion
-       
-        
-        private void ResetFlags()
-        {
-            
-        }
 
         #region Rendering Tile Colors
 
         private void Render()
         {
-            //RenderOverlayTile.Instance.ClearRenders();
             if (activeSkill)
             {
                 RenderRangeAndUnits();
@@ -267,6 +273,17 @@ namespace NightmareEchoes.Unit.Combat
                 unit.UpdateLocation();
             }
         }
+
+        IEnumerator WaitForSkill(Units target)
+        {
+            yield return new WaitUntil(() => activeSkill.Cast(target));
+            EndTurn();
+        }
         
+        IEnumerator WaitForSkill(OverlayTile target)
+        {
+            yield return new WaitUntil(() => activeSkill.Cast(target));
+            EndTurn();
+        }
     }
 }

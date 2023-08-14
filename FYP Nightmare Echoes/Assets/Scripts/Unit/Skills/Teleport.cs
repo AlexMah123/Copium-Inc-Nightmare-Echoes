@@ -7,12 +7,12 @@ namespace NightmareEchoes.Unit
 {
     public class Teleport : Skill
     {
-        public override void Cast(Units target)
+        public override bool Cast(Units target)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void Cast(OverlayTile target)
+        public override bool Cast(OverlayTile target)
         {
             throw new System.NotImplementedException();
         }
