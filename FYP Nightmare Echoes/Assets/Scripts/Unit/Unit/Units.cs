@@ -277,7 +277,7 @@ namespace NightmareEchoes.Unit
             stats.Speed = baseStats.Speed + modifiedStats.speedModifier;
             stats.MoveRange = baseStats.MoveRange + modifiedStats.moveRangeModifier;
             stats.StunResist = baseStats.StunResist + modifiedStats.stunResistModifier;
-            stats.Resist = baseStats.Resist + modifiedStats.healthModifier;
+            stats.Resist = baseStats.Resist + modifiedStats.resistModifier;
         }
 
         public void ApplyStatusEffects()

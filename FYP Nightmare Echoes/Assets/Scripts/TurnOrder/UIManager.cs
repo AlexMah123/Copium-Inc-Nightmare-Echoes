@@ -33,8 +33,8 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
         [SerializeField] TextMeshProUGUI currentUnitHealthText;
-        [SerializeField] TextMeshProUGUI currentUnitSpeedText;
         [SerializeField] TextMeshProUGUI currentUnitMoveRangeText;
+        [SerializeField] TextMeshProUGUI currentUnitSpeedText;
         [SerializeField] TextMeshProUGUI currentUnitStunResistText;
         [SerializeField] TextMeshProUGUI currentUnitResistText;
         [SerializeField] Slider currentUnitHealth;
@@ -50,8 +50,8 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] Button inspectedUnitProfile;
         [SerializeField] TextMeshProUGUI inspectedUnitNameText;
         [SerializeField] TextMeshProUGUI inspectedUnitHealthText;
-        [SerializeField] TextMeshProUGUI inspectedUnitSpeedText;
         [SerializeField] TextMeshProUGUI inspectedUnitMoveRangeText;
+        [SerializeField] TextMeshProUGUI inspectedUnitSpeedText;
         [SerializeField] TextMeshProUGUI inspectedUnitStunResistText;
         [SerializeField] TextMeshProUGUI inspectedUnitResistText;
         [SerializeField] Slider inspectedUnitHealth;
@@ -70,6 +70,10 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] Image glossaryImage;
         [SerializeField] TextMeshProUGUI glossaryName;
         [SerializeField] TextMeshProUGUI glossaryHealthText;
+        [SerializeField] TextMeshProUGUI glossaryMoveRangeText;
+        [SerializeField] TextMeshProUGUI glossarySpeedText;
+        [SerializeField] TextMeshProUGUI glossaryStunResistText;
+        [SerializeField] TextMeshProUGUI glossaryResistText;
         [SerializeField] Slider glossaryHealth;
 
 
@@ -116,8 +120,8 @@ namespace NightmareEchoes.TurnOrder
             if (CurrentUnit != null)
             {
                 currentUnitProfile.image.sprite = CurrentUnit.Sprite;
-                currentUnitProfile.image.color =
-                    new Color(CurrentUnit.SpriteRenderer.color.r, CurrentUnit.SpriteRenderer.color.g, CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
+                currentUnitProfile.image.color = new Color(CurrentUnit.SpriteRenderer.color.r,
+                    CurrentUnit.SpriteRenderer.color.g, CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
                 currentUnitNameText.text = $"{CurrentUnit.Name}";
                 currentUnitHealthText.text = $"{CurrentUnit.stats.Health}/{CurrentUnit.stats.MaxHealth}";
                 currentUnitSpeedText.text = $"Speed: {CurrentUnit.stats.Speed}";
@@ -135,8 +139,8 @@ namespace NightmareEchoes.TurnOrder
             if(inspectedUnit != null)
             {
                 inspectedUnitProfile.image.sprite = inspectedUnit.Sprite;
-                inspectedUnitProfile.image.color =
-                    new Color(inspectedUnit.SpriteRenderer.color.r, inspectedUnit.SpriteRenderer.color.g, inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
+                inspectedUnitProfile.image.color = new Color(inspectedUnit.SpriteRenderer.color.r,
+                     inspectedUnit.SpriteRenderer.color.g, inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
                 inspectedUnitNameText.text = $"{inspectedUnit.Name}";
                 inspectedUnitHealthText.text = $"{inspectedUnit.stats.Health}/{inspectedUnit.stats.MaxHealth}";
                 inspectedUnitSpeedText.text = $"Speed: {inspectedUnit.stats.Speed}";
@@ -554,6 +558,12 @@ namespace NightmareEchoes.TurnOrder
                     CurrentUnit.SpriteRenderer.color.r, CurrentUnit.SpriteRenderer.color.g, 
                     CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
                 glossaryName.text = CurrentUnit.Name;
+
+                glossaryMoveRangeText.text = $"Move Range: {CurrentUnit.baseStats.MoveRange} + (<color=yellow>{CurrentUnit.modifiedStats.moveRangeModifier}</color>)";
+                glossarySpeedText.text = $"Speed: {CurrentUnit.baseStats.Speed} + (<color=yellow>{CurrentUnit.modifiedStats.speedModifier}</color>)";
+                glossaryStunResistText.text = $"Stun Resist: {CurrentUnit.baseStats.StunResist}% + (<color=yellow>{CurrentUnit.modifiedStats.stunResistModifier}%</color>)";
+                glossaryResistText.text = $"Resist: {CurrentUnit.baseStats.Resist}% + (<color=yellow>{CurrentUnit.modifiedStats.resistModifier}%</color>)";
+
                 glossaryHealthText.text = $"{CurrentUnit.stats.Health}/{CurrentUnit.stats.MaxHealth}";
                 glossaryHealth.maxValue = CurrentUnit.stats.MaxHealth;
                 glossaryHealth.value = CurrentUnit.stats.Health;
@@ -565,6 +575,12 @@ namespace NightmareEchoes.TurnOrder
                     inspectedUnit.SpriteRenderer.color.r, inspectedUnit.SpriteRenderer.color.g,
                     inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
                 glossaryName.text = inspectedUnit.Name;
+
+                glossaryMoveRangeText.text = $"Move Range: {inspectedUnit.baseStats.MoveRange} + (<color=yellow>{inspectedUnit.modifiedStats.moveRangeModifier}</color>)";
+                glossarySpeedText.text = $"Speed: {inspectedUnit.baseStats.Speed} + (<color=yellow>{inspectedUnit.modifiedStats.speedModifier})";
+                glossaryStunResistText.text = $"Stun Resist: {inspectedUnit.baseStats.StunResist}% + (<color=yellow>{inspectedUnit.modifiedStats.stunResistModifier}%</color>)";
+                glossaryResistText.text = $"Resist: {inspectedUnit.baseStats.Resist}% + (<color=yellow>{inspectedUnit.modifiedStats.resistModifier}%</color>)";
+
                 glossaryHealthText.text = $"{inspectedUnit.stats.Health}/{inspectedUnit.stats.MaxHealth}";
                 glossaryHealth.maxValue = inspectedUnit.stats.MaxHealth;
                 glossaryHealth.value = inspectedUnit.stats.Health;
