@@ -17,13 +17,13 @@ namespace NightmareEchoes.Unit.AI
         float closestRange, targetRange;
         bool inAtkRange;
         bool inMoveAtkRange;
-        int rangePlaceholder;
-        OverlayTile overlayTile;
+        int rangePlaceholder = 1;
         List<OverlayTile> moveableTiles;
-        
+        List<OverlayTile> attackFromLocations = new List<OverlayTile>();
+
         OverlayTile currTile, targetTile;
-        Vector3Int V3Int;
-        Vector2 cellThis, cellTarget, cellTemp;
+        OverlayTile moveToTile, bestMoveTile;
+        List<OverlayTile> pathList = new List<OverlayTile>();
         Dictionary<Units, int> distancesDict = new Dictionary<Units, int>();
         Dictionary<string, float> utilityDictionary = new Dictionary<string, float>();
         
@@ -41,15 +41,14 @@ namespace NightmareEchoes.Unit.AI
                 Debug.Log("============= New Action! =============");
                 MakeDecision();
             }
+
+            StartCoroutine(MoveProcess());
         }
         public void MakeDecision()
         {
             SortHeroesByDistance();
-
             currTile = thisUnit.ActiveTile;
-            //moveableTiles = RangeMovementFind.TileMovementRange(thisOverlay, thisUnit.stats.MoveRange, !overlayTile.PlayerOnTile);
-            //PathFind.FindPath(three overloads);
-            //PathfindingManager.moveAlongPath();
+            moveableTiles = RangeMovementFind.TileMovementRange(currTile, thisUnit.stats.MoveRange);
 
             healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
             Debug.Log(healthPercent);
@@ -72,41 +71,97 @@ namespace NightmareEchoes.Unit.AI
                     Debug.Log("Retreat Triggered");
                     break;
             }
-
         }
 
         void AggressiveAction()
         {
-            Debug.Log("Aggressive Action Triggered");
+            //Range hardcoded as placeholder
+            if (thisUnit.TypeOfUnit == TypeOfUnit.RANGED_UNIT)
+            {
+                rangePlaceholder = 4;
+            }
+            else if (thisUnit.TypeOfUnit == TypeOfUnit.MELEE_UNIT)
+            {
+                rangePlaceholder = 1;
+            }
 
-            //placeholder targeting, range placeholder
-            rangePlaceholder = 1;
             target = closestHero;
             targetRange = closestRange;
             targetTile = target.ActiveTile;
 
-            //range check FIXED
-            if (((targetTile.gridLocation.x + rangePlaceholder >= currTile.gridLocation.x || targetTile.gridLocation.x - rangePlaceholder <= currTile.gridLocation.x) && targetTile.gridLocation.y == currTile.gridLocation.y) || ((targetTile.gridLocation.y + rangePlaceholder >= currTile.gridLocation.y || targetTile.gridLocation.y - rangePlaceholder <= currTile.gridLocation.y) && targetTile.gridLocation.x == currTile.gridLocation.x))
+            //range check FIXED, does not factor obstacles
+            attackFromLocations.Clear();
+            
+            inAtkRange = false;
+            inMoveAtkRange = false;
+            /*if (((currTile.gridLocation.x + rangePlaceholder >= targetTile.gridLocation.x || currTile.gridLocation.x - rangePlaceholder <= targetTile.gridLocation.x) && targetTile.gridLocation.y == currTile.gridLocation.y) || ((currTile.gridLocation.y + rangePlaceholder >= targetTile.gridLocation.y || currTile.gridLocation.y - rangePlaceholder <= targetTile.gridLocation.y) && targetTile.gridLocation.x == currTile.gridLocation.x))
+            {
+                inAtkRange = true;
+            }*/
+            if (rangeFinder(currTile, targetTile, rangePlaceholder))
             {
                 inAtkRange = true;
             }
-            
-            if (targetRange <= rangePlaceholder + thisUnit.stats.MoveRange)
+          
+            for (int i = 0; i < moveableTiles.Count; i++)
             {
-                inMoveAtkRange = true;
+                if (rangeFinder(moveableTiles[i], targetTile, rangePlaceholder))
+                {
+                    attackFromLocations.Add(moveableTiles[i]);
+                    inMoveAtkRange = true;
+                }
             }
+
 
             if (inAtkRange)
             {
-                //retreat if ranged, attack target
+                Debug.Log("Attackin");
+                bestMoveTile = attackFromLocations[0];
+                if (thisUnit.TypeOfUnit == TypeOfUnit.RANGED_UNIT)
+                {
+                    bestMoveTile = attackFromLocations[0];
+                    for (int i = 0; i < attackFromLocations.Count; i++)
+                    {
+                        if (findDist(targetTile, attackFromLocations[i]) > findDist(targetTile, bestMoveTile))
+                        {
+                            bestMoveTile = attackFromLocations[i];
+                        }
+                    }
+                    pathList = PathFind.FindPath(currTile, bestMoveTile, moveableTiles);
+                }
+                //wait until in position, then attack
             }
             else if (inMoveAtkRange)
             {
-                //move, attack target
+                Debug.Log("MoveAttackin");
+                bestMoveTile = attackFromLocations[0];
+                for (int i = 0; i < attackFromLocations.Count; i++)
+                {
+                    if (findDist(targetTile, attackFromLocations[i]) > findDist(targetTile, bestMoveTile))
+                    {
+                        bestMoveTile = attackFromLocations[i];
+                    }
+                }
+
+                pathList = PathFind.FindPath(currTile, bestMoveTile, moveableTiles);
+                //wait until in position, then attack
+
             }
             else
             {
+                Debug.Log("Movin");
                 //move towards target
+                bestMoveTile = moveableTiles[0];
+                for (int i = 0; i < moveableTiles.Count; i++)
+                {
+                    if (findDist(targetTile, moveableTiles[i]) < findDist(targetTile, bestMoveTile))
+                    {
+                        bestMoveTile = moveableTiles[i];
+                    }
+                }
+
+                pathList = PathFind.FindPath(currTile, bestMoveTile, moveableTiles);
+                //wait until in position, then pass turn
             }
         }
         void SortHeroesByDistance()
@@ -157,6 +212,54 @@ namespace NightmareEchoes.Unit.AI
             dist = (Mathf.Abs((t1v.x)-(t2v.x)) + Mathf.Abs((t1v.y) - (t2v.y)));
 
             return dist;
+        }
+
+        float findDist(OverlayTile target1, OverlayTile target2)
+        {
+            float dist;
+            Vector3Int t1v, t2v;
+
+            t1v = target1.gridLocation;
+            t2v = target2.gridLocation;
+
+            dist = (Mathf.Abs((t1v.x) - (t2v.x)) + Mathf.Abs((t1v.y) - (t2v.y)));
+
+            return dist;
+        }
+
+        bool rangeFinder(OverlayTile target1, OverlayTile target2, int range)
+        {
+            if (target1.gridLocation.x == target2.gridLocation.x)
+            {
+                //same row/x
+                if ((target1.gridLocation.y + rangePlaceholder >= target2.gridLocation.y) && (target1.gridLocation.y - rangePlaceholder <= target2.gridLocation.y))
+                {
+                    return true;
+                } 
+                else return false;
+            }
+            else if (target1.gridLocation.y == target2.gridLocation.y)
+            {
+                //same column/y
+                if ((target1.gridLocation.x + rangePlaceholder >= target2.gridLocation.x) && (target1.gridLocation.x - rangePlaceholder <= target2.gridLocation.x))
+                {
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
+        IEnumerator MoveProcess()
+        {
+            if (pathList.Count > 0) 
+            {
+                PathfindingManager.Instance.MoveAlongPath(thisUnit.gameObject, pathList);
+                yield return null;
+            }
+            else
+            {
+
+            }
         }
     }
 
