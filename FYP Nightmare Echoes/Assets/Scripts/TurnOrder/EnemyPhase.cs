@@ -9,8 +9,7 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
-            controller.CurrentUnit.TakeDamage(2);
-            //Debug.Log($"{controller.CurrentUnit.Name} - Taking Damage, Current Health: {controller.CurrentUnit.Health}");
+            //controller.CurrentUnit.TakeDamage(2);
             controller.StartCoroutine(EnemyTurn());
 
             //insert start of turn effects

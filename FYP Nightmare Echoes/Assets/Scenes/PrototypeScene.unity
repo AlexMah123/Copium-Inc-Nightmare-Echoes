@@ -958,11 +958,11 @@ RectTransform:
   m_Father: {fileID: 734128882}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123, y: -799}
-  m_SizeDelta: {x: 220.8509, y: 49.7794}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -824.57, y: -259.1103}
+  m_SizeDelta: {x: 220.85095, y: 49.77939}
+  m_Pivot: {x: 0.5, y: 0.50000036}
 --- !u!114 &246703319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1039,7 +1039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.size
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: tokenList.Array.size
@@ -1150,8 +1150,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6673351901997673441, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: skillDescription
-      value: "AOE Attack, 4 Direction, Deal 8 Damage in the middle and 4 Damage at
-        the side, Knockback enemy 1 tile\r\nCooldown: 2 Turns\r\nEmpower: Stun (80%)\r"
+      value: "AOE Attack, 4 Direction, \nDeal 8 Damage in the middle and 4 Damage
+        at the side, Knockback enemy 1 tile\r\nCooldown: 2 Turns\r\nEmpower: Stun
+        (80%)\r"
       objectReference: {fileID: 0}
     - target: {fileID: 6673351901997673446, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: skillDescription
@@ -1159,7 +1160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6673351901997673447, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: skillDescription
-      value: "AOE, Create Static Storm that last for 2 Turns, Enemies that pass through
+      value: "AOE, Create Static Storm that last for 2 Turns\nEnemies that pass through
         the storm take 4 Damage, Enemy that Stay in (Start Turn) take 4 damage and
         apply 1 Weaken\r\nCooldown: 3 Turns\r\nEmpower: Apply 2 Blind and Interrupt
         enemy actions (Special Attack)\r"
@@ -9029,10 +9030,10 @@ MonoBehaviour:
   glossaryImage: {fileID: 1070848851}
   glossaryName: {fileID: 1760601495}
   glossaryHealthText: {fileID: 2587283}
-  glossaryMoveRangeText: {fileID: 0}
-  glossarySpeedText: {fileID: 0}
-  glossaryStunResistText: {fileID: 0}
-  glossaryResistText: {fileID: 0}
+  glossaryMoveRangeText: {fileID: 1727414047}
+  glossarySpeedText: {fileID: 142860401}
+  glossaryStunResistText: {fileID: 763419696}
+  glossaryResistText: {fileID: 1378004327}
   glossaryHealth: {fileID: 1606517594}
   glossaryPrefab: {fileID: 1011404796734640881, guid: ad0b11d9be7f17d48baba7ea674c658e, type: 3}
   initGlossaryPool: 5
@@ -11983,8 +11984,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000022888184, y: -27.7773}
-  m_SizeDelta: {x: 0.000045776, y: 55.5545}
+  m_AnchoredPosition: {x: 0, y: -25}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2102430401
 MonoBehaviour:
@@ -12033,12 +12034,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 20
+  m_fontSizeBase: 15
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 20
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
@@ -12069,7 +12070,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5, y: 5, z: 5, w: 5}
+  m_margin: {x: 2, y: 5, z: 2, w: 5}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

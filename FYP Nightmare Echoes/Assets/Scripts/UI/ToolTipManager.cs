@@ -88,7 +88,17 @@ namespace NightmareEchoes.UI
             tooltipWindow.sizeDelta = tooltipText.GetPreferredValues();
 
             tooltipWindow.gameObject.SetActive(true);
-            tooltipWindow.transform.position = new Vector2(mousePos.x + tooltipWindow.sizeDelta.x / 4, mousePos.y + tooltipWindow.sizeDelta.y * 2);
+
+            if(mousePos.x + tooltipWindow.sizeDelta.x >= Screen.width)
+            {
+                tooltipWindow.transform.position = 
+                    new Vector2(mousePos.x - tooltipWindow.sizeDelta.x / 10, mousePos.y + (tooltipWindow.sizeDelta.y/2));
+            }
+            else
+            {
+                tooltipWindow.transform.position = new Vector2(mousePos.x, mousePos.y + tooltipWindow.sizeDelta.y);
+            }
+            
         }
 
         private void HideToolTip()

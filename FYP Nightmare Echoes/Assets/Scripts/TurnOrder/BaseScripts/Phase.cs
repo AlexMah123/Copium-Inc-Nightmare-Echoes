@@ -24,11 +24,6 @@ namespace NightmareEchoes.TurnOrder
                 controller.runOnce = true;
             }
 
-            //updates the UI during each phase & updates status effect 
-            UIManager.Instance.UpdateTurnOrderUI();
-            UIManager.Instance.UpdateStatusEffectUI();
-
-
             //updates the current unit for turn order
             if (controller.CurrentUnitQueue.Count > 0 ) 
             {
@@ -51,6 +46,10 @@ namespace NightmareEchoes.TurnOrder
             {
                 CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
             }
+
+            //updates the UI during each phase & updates status effect 
+            UIManager.Instance.UpdateTurnOrderUI();
+            UIManager.Instance.UpdateStatusEffectUI();
 
             OnEnter();
         }

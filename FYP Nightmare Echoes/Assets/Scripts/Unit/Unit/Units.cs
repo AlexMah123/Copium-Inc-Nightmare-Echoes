@@ -38,15 +38,10 @@ namespace NightmareEchoes.Unit
 
         [Header("Unit Skills")]
         [SerializeField] protected Skill basicAttack;
-        [field: TextArea(1,1)][SerializeField] protected string basicAttackDesc;
         [SerializeField] protected Skill skill1;
-        [field: TextArea(1,1)][SerializeField] protected string skill1Desc;
         [SerializeField] protected Skill skill2;
-        [field: TextArea(1,1)][SerializeField] protected string skill2Desc;
         [SerializeField] protected Skill skill3;
-        [field: TextArea(1,1)][SerializeField] protected string skill3Desc;
         [SerializeField] protected Skill passive;
-        [field: TextArea(1,1)][SerializeField] protected string passiveDesc;
 
 
         [Tooltip("Sprites are ordered in north, south, east, west")]
@@ -131,31 +126,31 @@ namespace NightmareEchoes.Unit
         #region Unit Skill Properties
         public string BasicAttackDesc
         {
-            get => basicAttackDesc;
-            private set => basicAttackDesc = value;
+            get => basicAttack.SkillDescription;
+            private set => basicAttack.SkillDescription = value;
         }
 
         public string Skill1Desc
         {
-            get => skill1Desc;
-            private set => skill1Desc = value;
+            get => skill1.SkillDescription;
+            private set => skill1.SkillDescription = value;
         }
         public string Skill2Desc
         {
-            get => skill2Desc; 
-            private set => skill2Desc = value;
+            get => skill2.SkillDescription; 
+            private set => skill2.SkillDescription = value;
         }
 
         public string Skill3Desc
         {
-            get => skill3Desc; 
-            private set => skill3Desc = value;
+            get => skill3.SkillDescription; 
+            private set => skill3.SkillDescription = value;
         }
 
         public string PassiveDesc
         {
-            get => passiveDesc;
-            private set => passiveDesc = value;
+            get => passive.SkillDescription;
+            private set => passive.SkillDescription = value;
         }
         #endregion
 

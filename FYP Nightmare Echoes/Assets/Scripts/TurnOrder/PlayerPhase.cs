@@ -11,8 +11,7 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
-            controller.CurrentUnit.TakeDamage(2);
-
+            //controller.CurrentUnit.TakeDamage(2);
             //Insert start of turn effects
 
             controller.StartCoroutine(WaitForTurnEnd());

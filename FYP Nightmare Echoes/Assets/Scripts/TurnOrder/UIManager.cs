@@ -298,7 +298,6 @@ namespace NightmareEchoes.TurnOrder
 
         #endregion
 
-
         #region UI Pool
         void InitTurnOrderSpritePool(GameObject panel)
         {
@@ -688,8 +687,8 @@ namespace NightmareEchoes.TurnOrder
                 button.interactable = enable;
             }
 
-            UpdateStatusEffectUI();
             inspectedUnitPanel.SetActive(enable);
+            UpdateStatusEffectUI();
         }
 
         public void CharacterGlossary(string text)
