@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NightmareEchoes.Grid;
 using UnityEngine;
 
 namespace NightmareEchoes.Unit
@@ -10,6 +11,11 @@ namespace NightmareEchoes.Unit
         {
             target.TakeDamage(damage);
             GetComponent<Units>().ShowPopUpText(skillName);
+        }
+
+        public override void Cast(OverlayTile target)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

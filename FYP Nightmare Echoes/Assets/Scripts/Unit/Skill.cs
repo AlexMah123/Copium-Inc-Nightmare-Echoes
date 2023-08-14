@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using NightmareEchoes.Grid;
 using UnityEngine;
 
 namespace NightmareEchoes.Unit
@@ -84,6 +85,7 @@ namespace NightmareEchoes.Unit
         #endregion
 
         public abstract void Cast(Units target);
+        public abstract void Cast(OverlayTile target);
     }
 
     public enum TargetType

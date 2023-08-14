@@ -10,7 +10,8 @@ namespace NightmareEchoes.Grid
     public class RenderOverlayTile : MonoBehaviour
     {
         public static RenderOverlayTile Instance;
-        [SerializeField] private List<OverlayTile> activeRenders;
+        [SerializeField] private List<OverlayTile> targetingRenders;
+        [SerializeField] private List<OverlayTile> aoePreviewRenders;
 
         private void Awake()
         {
@@ -27,15 +28,21 @@ namespace NightmareEchoes.Grid
                 tile.ShowAttackTile();
             }
 
-            activeRenders = tiles;
+            targetingRenders = tiles;
         }
 
         public void RenderAoeTiles(List<OverlayTile> tiles)
         {
+            foreach (var tile in aoePreviewRenders)
+            {
+                tile.HideTile();
+            }
+            aoePreviewRenders.Clear();
+            
             foreach (var tile in tiles)
             {
                 tile.ShowAoeTiles();
-                activeRenders.Add(tile);
+                aoePreviewRenders.Add(tile);
             }
         }
 
@@ -43,7 +50,7 @@ namespace NightmareEchoes.Grid
         {
             foreach (var tile in list)
             {
-                foreach (var activeTile in activeRenders.Where(activeTile => activeTile == tile))
+                foreach (var activeTile in targetingRenders.Where(activeTile => activeTile == tile))
                 {
                     activeTile.ShowEnemyTile();
                     break;
@@ -55,7 +62,7 @@ namespace NightmareEchoes.Grid
         {
             foreach (var tile in list)
             {
-                foreach (var activeTile in activeRenders.Where(activeTile => activeTile == tile))
+                foreach (var activeTile in targetingRenders.Where(activeTile => activeTile == tile))
                 {
                     activeTile.ShowFriendlyTile();
                     break;
@@ -63,13 +70,13 @@ namespace NightmareEchoes.Grid
             }
         }
 
-        public void ClearRenders()
+        public void ClearTargetingRenders()
         {
-            foreach (var tile in activeRenders)
+            foreach (var tile in targetingRenders)
             {
                 tile.HideTile();
             }
-            activeRenders.Clear();
+            targetingRenders.Clear();
         }
     }
 }

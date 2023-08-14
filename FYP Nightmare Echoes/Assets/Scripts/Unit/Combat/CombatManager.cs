@@ -26,6 +26,7 @@ namespace NightmareEchoes.Unit.Combat
 
         private Skill activeSkill;
         private List<OverlayTile> skillRangeTiles;
+        private List<OverlayTile> aoePreviewTiles = new();
 
         private void Awake()
         {
@@ -42,7 +43,19 @@ namespace NightmareEchoes.Unit.Combat
 
         private void Update()
         {
-            TargetUnit();
+            if (activeSkill)
+            {
+                switch (activeSkill.TargetType)
+                {
+                    case TargetType.Single:
+                        TargetUnit();
+                        break;
+                    case TargetType.AOE:
+                        TargetGround();
+                        break;
+                }
+            }
+            Render();
         }
 
         //Init
@@ -69,7 +82,7 @@ namespace NightmareEchoes.Unit.Combat
         public void SelectSkill(Units unit, Skill skill)
         {
             //Clear Active Renders 
-            RenderOverlayTile.Instance.ClearRenders();
+            RenderOverlayTile.Instance.ClearTargetingRenders();
             
             ResetFlags();
             
@@ -103,8 +116,7 @@ namespace NightmareEchoes.Unit.Combat
             }
             
             //Trim Out of Bounds
-            var map = OverlayTileManager.Instance.map;
-            foreach (var coord in possibleTileCoords.Where(coord => map.ContainsKey(coord)))
+            foreach (var coord in possibleTileCoords.Where(coord =>  OverlayTileManager.Instance.map.ContainsKey(coord)))
             {
                 if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
                     tileRange.Add(tile);
@@ -112,14 +124,11 @@ namespace NightmareEchoes.Unit.Combat
             
             skillRangeTiles = tileRange;
             //============================================================
-            
-            RenderRangeAndUnits();
-            
         }
 
+        #region Targeting
         private void TargetUnit()
         {
-            if (!activeSkill) return;
             if (!Input.GetMouseButtonDown(0)) return;
             
             var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
@@ -132,13 +141,59 @@ namespace NightmareEchoes.Unit.Combat
             if (skillRangeTiles.All(tile => tile != target.ActiveTile)) return;
             activeSkill.Cast(target);
             activeSkill = null;
+        }
+
+        private void TargetGround()
+        {
+            var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            if (!hit) return;
+            var target = hit.collider.gameObject.GetComponent<OverlayTile>();
+            if (!target) return;
+            if (skillRangeTiles.All(tile => tile != target)) return;
             
-            RenderOverlayTile.Instance.ClearRenders();
+            var aoeArea = activeSkill.AoeType switch
+            {
+                AOEType.Square => SquareRange(target, 1),
+                AOEType.Cross => LineRange(target, 1, false)
+            };
+            
+            aoePreviewTiles.Clear();
+            aoePreviewTiles.Add(target);
+            foreach (var coord in aoeArea.Where(coord => OverlayTileManager.Instance.map.ContainsKey(coord)))
+            {
+                if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
+                    aoePreviewTiles.Add(tile);
+            }
+            
+            if (!Input.GetMouseButtonDown(0)) return;
+            activeSkill.Cast(target);
         }
         
+        #endregion
+       
+        
+        private void ResetFlags()
+        {
+            
+        }
+
+        #region Rendering Tile Colors
+
+        private void Render()
+        {
+            //RenderOverlayTile.Instance.ClearRenders();
+            if (activeSkill)
+            {
+                RenderRangeAndUnits();
+                if (activeSkill.TargetType == TargetType.AOE)
+                    RenderAOETarget();
+            }
+            RenderActiveAoe();
+        }
+        
+        //Attack Range and Units in Range
         private void RenderRangeAndUnits()
         {
-            //Render Range and Units in Range
             RenderOverlayTile.Instance.RenderAttackRangeTiles(skillRangeTiles);
 
             switch (activeSkill.TargetUnitAlignment)
@@ -156,11 +211,20 @@ namespace NightmareEchoes.Unit.Combat
             }
         }
         
-        private void ResetFlags()
+        //AOE Previews
+        private void RenderAOETarget()
+        {
+            RenderOverlayTile.Instance.RenderAoeTiles(aoePreviewTiles);
+        }
+        
+        //Active AOEs
+        private void RenderActiveAoe()
         {
             
         }
 
+        #endregion
+        
         #region Casting Range Calculation
         private List<Vector2Int> LineRange(OverlayTile startTile, int range, bool isCrosshair)
         {
@@ -203,38 +267,6 @@ namespace NightmareEchoes.Unit.Combat
                 unit.UpdateLocation();
             }
         }
-
-        IEnumerator TargetGround()
-        {
-            RenderRangeAndUnits();
-            while (!Input.GetMouseButtonDown(0))
-            {
-                var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
-                if (!hit) continue;
-                var target = hit.collider.gameObject.GetComponent<OverlayTile>();
-                if (!target) continue;
-                if (skillRangeTiles.All(tile => tile != target)) continue;
-
-                var aoeArea = activeSkill.AoeType switch
-                {
-                    AOEType.Square => SquareRange(target, 1),
-                    AOEType.Cross => LineRange(target, 1, false)
-                };
-                
-                var map = OverlayTileManager.Instance.map;
-                var aoeAreaTiles = new List<OverlayTile>();
-                foreach (var coord in aoeArea.Where(coord => map.ContainsKey(coord)))
-                {
-                    if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
-                        aoeAreaTiles.Add(tile);
-                }
-                
-                RenderOverlayTile.Instance.RenderAoeTiles(aoeAreaTiles);
-
-                yield return null;
-            }
-            
-            RenderOverlayTile.Instance.ClearRenders();
-        }
+        
     }
 }
