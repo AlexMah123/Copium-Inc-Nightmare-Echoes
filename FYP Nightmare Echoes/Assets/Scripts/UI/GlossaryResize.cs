@@ -9,35 +9,46 @@ namespace NightmareEchoes.UI
     {
         [SerializeField] RectTransform rectTransform;
         List<GameObject> statusEffectContainer = new List<GameObject>();
-        float startHeight;
-        float updatedHeight;
+        Vector2 startSize;
+
+        #region Properties
+        public List<GameObject> StatusEffectContainer
+        {
+            get => statusEffectContainer;
+            set
+            {
+                statusEffectContainer = value;
+                UpdateGlossary();
+            }
+        }
+        #endregion
 
         private void Awake()
         {
-            startHeight = rectTransform.sizeDelta.y;
-            StartCoroutine(UpdateGlossary());
+            startSize = rectTransform.sizeDelta;
+            UpdateGlossary();
         }
 
-        private void Update()
-        {
-            
-        }
-
-
-        IEnumerator UpdateGlossary()
+        public void UpdateGlossary()
         {
             statusEffectContainer.Clear();
-            updatedHeight = 0;
+            float updatedHeight = 20;
 
             foreach (Transform t in gameObject.transform)
             {
-                updatedHeight += t.gameObject.GetComponent<RectTransform>().sizeDelta.y;
+                updatedHeight += t.gameObject.GetComponent<RectTransform>().sizeDelta.y + 20;
             }
 
-            Vector2 newSize = new Vector2(0, Mathf.Clamp(rectTransform.sizeDelta.y, startHeight, updatedHeight));
-            rectTransform.sizeDelta = newSize;
+            Vector2 newSize = new Vector2(startSize.x, updatedHeight);
 
-            yield return null;
+            if(startSize.y < newSize.y)
+            {
+                rectTransform.sizeDelta = newSize;
+            }
+            else
+            {
+                rectTransform.sizeDelta = startSize;
+            }
         }
     }
 }

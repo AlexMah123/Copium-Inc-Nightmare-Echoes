@@ -12,7 +12,7 @@ namespace NightmareEchoes.Unit
 
         public override void Awake()
         {
-            
+            genericValue = resistDebuff;
         }
 
         public override void ApplyEffect(GameObject unit)

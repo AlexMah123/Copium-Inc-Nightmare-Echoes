@@ -13,7 +13,7 @@ namespace NightmareEchoes.Unit
 
         public override void Awake()
         {
-
+            genericValue = speedDebuff;
         }
 
         public override void ApplyEffect(GameObject unit)

@@ -12,12 +12,12 @@ namespace NightmareEchoes.Unit
         [Header("Modifier Details")]
         public Sprite icon;
         public new string name;
-        public string description;
+        [TextArea (1,5)]public string description;
+        public float genericValue;
         public ModifierType modifierType;
 
 
         public abstract void Awake();
-
         public abstract void ApplyEffect(GameObject unit);
         public abstract ModifiersStruct ApplyModifier(ModifiersStruct mod);
         public abstract void UpdateLifeTime();

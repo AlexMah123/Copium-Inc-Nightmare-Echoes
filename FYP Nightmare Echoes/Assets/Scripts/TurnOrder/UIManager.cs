@@ -16,7 +16,7 @@ namespace NightmareEchoes.TurnOrder
 
 
         [Header("Turn Order Bar")]
-        [SerializeField] int imagePoolCap = 6;
+        [SerializeField] int initImagePool = 6;
         int capIndex = 0;
         [SerializeField] GameObject turnOrderSpritePrefab;
         [SerializeField] GameObject turnIndicator;
@@ -59,7 +59,7 @@ namespace NightmareEchoes.TurnOrder
         public List<Modifier> inspectedUnitTotalStatusEffectList = new List<Modifier>();
 
         [Space(20), Header("Current/Inspected Status Effects")]
-        [SerializeField] int statusEffectCap = 24;
+        [SerializeField] int statusEffectCap = 8;
         [SerializeField] GameObject statusEffectPrefab;
         List<GameObject> inspectedUnitStatusEffectPool = new List<GameObject>();
         List<GameObject> currentUnitStatusEffectPool = new List<GameObject>();
@@ -67,6 +67,7 @@ namespace NightmareEchoes.TurnOrder
 
         [Space(20), Header("Character Glossary")]
         [SerializeField] GameObject glossaryPanel;
+        [SerializeField] GameObject glossaryContainer;
         [SerializeField] Image glossaryImage;
         [SerializeField] TextMeshProUGUI glossaryName;
         [SerializeField] TextMeshProUGUI glossaryHealthText;
@@ -75,6 +76,10 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI glossaryStunResistText;
         [SerializeField] TextMeshProUGUI glossaryResistText;
         [SerializeField] Slider glossaryHealth;
+        [Space(10)]
+        [SerializeField] GameObject glossaryPrefab;
+        [SerializeField] int initGlossaryPool = 5;
+        List<GameObject> glossaryPrefabPool = new List<GameObject>();
 
 
         [Space(20), Header("Settings")]
@@ -106,11 +111,13 @@ namespace NightmareEchoes.TurnOrder
             InitTurnOrderSpritePool(currentTurnOrderPanel);
             InitStatusEffectPool(currentUnitStatusEffectsPanel);
             InitStatusEffectPool(inspectedUnitStatusEffectsPanel);
+            InitGlossaryPool(glossaryContainer);
         }
 
         private void Start()
         {
             inspectedUnitPanel.SetActive(false);
+            glossaryPanel.SetActive(false);
         }
 
         private void Update()
@@ -296,7 +303,7 @@ namespace NightmareEchoes.TurnOrder
         void InitTurnOrderSpritePool(GameObject panel)
         {
             capIndex = 0;
-            for (int i = 0; i < imagePoolCap; i++)
+            for (int i = 0; i < initImagePool; i++)
             {
                 GameObject obj = Instantiate(turnOrderSpritePrefab, panel.transform);
                 obj.SetActive(false);
@@ -325,32 +332,33 @@ namespace NightmareEchoes.TurnOrder
             }
         }
 
+        void InitGlossaryPool(GameObject panel)
+        {
+            capIndex = 0;
+            for (int i = 0; i < initGlossaryPool; i++)
+            {
+                GameObject obj = Instantiate(glossaryPrefab, panel.transform);
+                obj.SetActive(false);
+                obj.name = $"{obj.name} {capIndex++}";
+                glossaryPrefabPool.Add(obj);
+            }
+        }
+
         GameObject GetImageObject()
         {
-            bool notEnough = false;
             for (int i = 0; i < turnOrderSpritePool.Count; i++)
             {
                 if (!turnOrderSpritePool[i].activeInHierarchy)
                 {
-                    notEnough = false;
                     return turnOrderSpritePool[i];
                 }
-                else
-                {
-                    notEnough = true;
-                }
             }
 
-            if (notEnough)
-            {
-                GameObject obj = Instantiate(turnOrderSpritePrefab, currentTurnOrderPanel.transform);
-                obj.SetActive(false);
-                obj.name = $"{obj.name} {capIndex++}";
-                turnOrderSpritePool.Add(obj);
-                return obj;
-            }
-
-            return null;
+            GameObject obj = Instantiate(turnOrderSpritePrefab, currentTurnOrderPanel.transform);
+            obj.SetActive(false);
+            obj.name = $"{obj.name} {capIndex++}";
+            turnOrderSpritePool.Add(obj);
+            return obj;
         }
 
         GameObject GetStatusEffectObject(GameObject panel)
@@ -377,6 +385,23 @@ namespace NightmareEchoes.TurnOrder
             }
 
             return null;
+        }
+
+        GameObject GetGlossaryPrefab()
+        {
+            for (int i = 0; i < glossaryPrefabPool.Count; i++)
+            {
+                if (!glossaryPrefabPool[i].activeInHierarchy)
+                {
+                    return glossaryPrefabPool[i];
+                }
+            }
+
+            GameObject obj = Instantiate(glossaryPrefab, glossaryContainer.transform);
+            obj.SetActive(false);
+            obj.name = $"{obj.name} {capIndex++}";
+            glossaryPrefabPool.Add(obj);
+            return obj;
         }
         #endregion
 
@@ -520,6 +545,128 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 }
+
+        public void UpdateGlossaryUI(string text)
+        {
+            //resets glossary UI
+            for (int i = 0; i < glossaryPrefabPool.Count; i++)
+            {
+                glossaryPrefabPool[i].SetActive(false);
+            }
+
+            if (text == "Current")
+            {
+                glossaryImage.sprite = CurrentUnit.Sprite;
+                glossaryImage.color = new Color(
+                    CurrentUnit.SpriteRenderer.color.r, CurrentUnit.SpriteRenderer.color.g,
+                    CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
+                glossaryName.text = CurrentUnit.Name;
+
+                glossaryMoveRangeText.text = $"Move Range: {CurrentUnit.baseStats.MoveRange} + (<color=yellow>{CurrentUnit.modifiedStats.moveRangeModifier}</color>)";
+                glossarySpeedText.text = $"Speed: {CurrentUnit.baseStats.Speed} + (<color=yellow>{CurrentUnit.modifiedStats.speedModifier}</color>)";
+                glossaryStunResistText.text = $"Stun Resist: {CurrentUnit.baseStats.StunResist}% + (<color=yellow>{CurrentUnit.modifiedStats.stunResistModifier}%</color>)";
+                glossaryResistText.text = $"Resist: {CurrentUnit.baseStats.Resist}% + (<color=yellow>{CurrentUnit.modifiedStats.resistModifier}%</color>)";
+
+                glossaryHealthText.text = $"{CurrentUnit.stats.Health}/{CurrentUnit.stats.MaxHealth}";
+                glossaryHealth.maxValue = CurrentUnit.stats.MaxHealth;
+                glossaryHealth.value = CurrentUnit.stats.Health;
+
+                for (int i = 0; i < currentUnitTotalStatusEffectList.Count; i++)
+                {
+                    GameObject glossaryObj = GetGlossaryPrefab();
+
+                    if (glossaryObj != null)
+                    {
+                        glossaryObj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = 
+                            currentUnitTotalStatusEffectList[i].icon;
+
+                        if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.BUFF)
+                        {
+                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{currentUnitTotalStatusEffectList[i].description} " +
+                            $"(<color=green>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
+                        }
+                        else if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.DEBUFF)
+                        {
+                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{currentUnitTotalStatusEffectList[i].description} " +
+                            $"(<color=#FF6C6C>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
+                        }
+                        else if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.POSITIVETOKEN)
+                        {
+                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{currentUnitTotalStatusEffectList[i].description} " +
+                            $"(<color=blue>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
+                        }
+                        else if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.NEGATIVETOKEN)
+                        {
+                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{currentUnitTotalStatusEffectList[i].description} " +
+                            $"(<color=yellow>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
+                        }
+                        
+
+                        glossaryObj.SetActive(true);
+                    }
+                }
+            }
+            else if (text == "Inspected")
+            {
+                glossaryImage.sprite = inspectedUnit.Sprite;
+                glossaryImage.color = new Color(
+                    inspectedUnit.SpriteRenderer.color.r, inspectedUnit.SpriteRenderer.color.g,
+                    inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
+                glossaryName.text = inspectedUnit.Name;
+
+                glossaryMoveRangeText.text = $"Move Range: {inspectedUnit.baseStats.MoveRange} + (<color=yellow>{inspectedUnit.modifiedStats.moveRangeModifier}</color>)";
+                glossarySpeedText.text = $"Speed: {inspectedUnit.baseStats.Speed} + (<color=yellow>{inspectedUnit.modifiedStats.speedModifier})";
+                glossaryStunResistText.text = $"Stun Resist: {inspectedUnit.baseStats.StunResist}% + (<color=yellow>{inspectedUnit.modifiedStats.stunResistModifier}%</color>)";
+                glossaryResistText.text = $"Resist: {inspectedUnit.baseStats.Resist}% + (<color=yellow>{inspectedUnit.modifiedStats.resistModifier}%</color>)";
+
+                glossaryHealthText.text = $"{inspectedUnit.stats.Health}/{inspectedUnit.stats.MaxHealth}";
+                glossaryHealth.maxValue = inspectedUnit.stats.MaxHealth;
+                glossaryHealth.value = inspectedUnit.stats.Health;
+
+                for (int i = 0; i < inspectedUnitTotalStatusEffectList.Count; i++)
+                {
+                    GameObject glossaryObj = GetGlossaryPrefab();
+
+                    if (glossaryObj != null)
+                    {
+                        glossaryObj.transform.GetChild(0).GetComponentInChildren<Image>().sprite =
+                            inspectedUnitTotalStatusEffectList[i].icon;
+                        
+                        if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.BUFF)
+                        {
+                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{inspectedUnitTotalStatusEffectList[i].description} " +
+                            $"(<color=green>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
+                        }
+                        else if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.DEBUFF)
+                        {
+                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{inspectedUnitTotalStatusEffectList[i].description} " +
+                            $"(<color=#FF6C6C>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
+                        }
+                        else if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.POSITIVETOKEN)
+                        {
+                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{inspectedUnitTotalStatusEffectList[i].description} " +
+                            $"(<color=blue>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
+                        }
+                        else if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.NEGATIVETOKEN)
+                        {
+                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{inspectedUnitTotalStatusEffectList[i].description} " +
+                            $"(<color=yellow>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
+                        }
+
+                        glossaryObj.SetActive(true);
+                    }
+                }
+            }
+
+        }
         #endregion
 
 
@@ -549,45 +696,11 @@ namespace NightmareEchoes.TurnOrder
         {
             SettingsButton();
 
-            if(text == "Current")
-            {
-                glossaryImage.sprite = CurrentUnit.Sprite;
-                glossaryImage.color = new Color(
-                    CurrentUnit.SpriteRenderer.color.r, CurrentUnit.SpriteRenderer.color.g, 
-                    CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
-                glossaryName.text = CurrentUnit.Name;
-
-                glossaryMoveRangeText.text = $"Move Range: {CurrentUnit.baseStats.MoveRange} + (<color=yellow>{CurrentUnit.modifiedStats.moveRangeModifier}</color>)";
-                glossarySpeedText.text = $"Speed: {CurrentUnit.baseStats.Speed} + (<color=yellow>{CurrentUnit.modifiedStats.speedModifier}</color>)";
-                glossaryStunResistText.text = $"Stun Resist: {CurrentUnit.baseStats.StunResist}% + (<color=yellow>{CurrentUnit.modifiedStats.stunResistModifier}%</color>)";
-                glossaryResistText.text = $"Resist: {CurrentUnit.baseStats.Resist}% + (<color=yellow>{CurrentUnit.modifiedStats.resistModifier}%</color>)";
-
-                glossaryHealthText.text = $"{CurrentUnit.stats.Health}/{CurrentUnit.stats.MaxHealth}";
-                glossaryHealth.maxValue = CurrentUnit.stats.MaxHealth;
-                glossaryHealth.value = CurrentUnit.stats.Health;
-            }
-            else if(text == "Inspected")
-            {
-                glossaryImage.sprite = inspectedUnit.Sprite;
-                glossaryImage.color = new Color(
-                    inspectedUnit.SpriteRenderer.color.r, inspectedUnit.SpriteRenderer.color.g,
-                    inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
-                glossaryName.text = inspectedUnit.Name;
-
-                glossaryMoveRangeText.text = $"Move Range: {inspectedUnit.baseStats.MoveRange} + (<color=yellow>{inspectedUnit.modifiedStats.moveRangeModifier}</color>)";
-                glossarySpeedText.text = $"Speed: {inspectedUnit.baseStats.Speed} + (<color=yellow>{inspectedUnit.modifiedStats.speedModifier})";
-                glossaryStunResistText.text = $"Stun Resist: {inspectedUnit.baseStats.StunResist}% + (<color=yellow>{inspectedUnit.modifiedStats.stunResistModifier}%</color>)";
-                glossaryResistText.text = $"Resist: {inspectedUnit.baseStats.Resist}% + (<color=yellow>{inspectedUnit.modifiedStats.resistModifier}%</color>)";
-
-                glossaryHealthText.text = $"{inspectedUnit.stats.Health}/{inspectedUnit.stats.MaxHealth}";
-                glossaryHealth.maxValue = inspectedUnit.stats.MaxHealth;
-                glossaryHealth.value = inspectedUnit.stats.Health;
-            }
-
             if (!glossaryPanel.activeSelf)
             {
                 settingButton.gameObject.SetActive(false);
                 glossaryPanel.SetActive(true);
+                UpdateGlossaryUI(text);
             }
             else
             {

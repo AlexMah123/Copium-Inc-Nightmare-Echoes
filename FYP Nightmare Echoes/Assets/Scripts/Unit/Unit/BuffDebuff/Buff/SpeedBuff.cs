@@ -13,6 +13,7 @@ namespace NightmareEchoes.Unit
 
         public override void Awake()
         {
+            genericValue = speedBuff;
 
         }
 
