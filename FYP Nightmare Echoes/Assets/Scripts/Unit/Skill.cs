@@ -18,7 +18,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected AOEType aoeType;
         [SerializeField] protected SkillType skillType;
         
-        [field: TextArea(1,1)][SerializeField] protected string skillDescription;
+        [field: TextArea(1,10)][SerializeField] protected string skillDescription;
 
         #region properties
 
@@ -85,7 +85,7 @@ namespace NightmareEchoes.Unit
         #endregion
 
         public abstract bool Cast(Units target);
-        public abstract bool Cast(OverlayTile target);
+        public abstract bool Cast(OverlayTile target, List<OverlayTile> aoeTiles);
     }
 
     public enum TargetType

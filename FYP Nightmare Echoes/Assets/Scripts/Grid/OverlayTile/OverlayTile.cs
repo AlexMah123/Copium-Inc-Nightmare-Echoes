@@ -81,6 +81,14 @@ namespace NightmareEchoes.Grid
                 ShowMoveTile();
             }
         }
+
+        public GameObject CheckUnitOnTile()
+        {
+            var hit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
+            if (!hit) return null;
+            var target = hit.collider.gameObject;
+            return !target ? null : target;
+        }
     }
 }
 

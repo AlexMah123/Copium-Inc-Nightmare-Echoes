@@ -179,7 +179,7 @@ namespace NightmareEchoes.Unit.Combat
             }
             
             if (!Input.GetMouseButtonDown(0)) return;
-            StartCoroutine(WaitForSkill(target));
+            StartCoroutine(WaitForSkill(target, aoePreviewTiles));
         }
         
         #endregion
@@ -280,9 +280,9 @@ namespace NightmareEchoes.Unit.Combat
             EndTurn();
         }
         
-        IEnumerator WaitForSkill(OverlayTile target)
+        IEnumerator WaitForSkill(OverlayTile target, List<OverlayTile> aoeTiles)
         {
-            yield return new WaitUntil(() => activeSkill.Cast(target));
+            yield return new WaitUntil(() => activeSkill.Cast(target, aoeTiles));
             EndTurn();
         }
     }

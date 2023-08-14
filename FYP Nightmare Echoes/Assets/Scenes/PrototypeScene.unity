@@ -1008,6 +1008,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2001383901, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: skillDescription
+      value: "Single Target, 4 Direction, Deal 6 Damage\r\nEmpower: Deal 9 Damage
+        and Apply 1 Blind\r"
+      objectReference: {fileID: 0}
     - target: {fileID: 726962122940716085, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: m_Name
       value: Mage
@@ -1111,6 +1116,37 @@ PrefabInstance:
     - target: {fileID: 2658365863807529696, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673351901997673440, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: skillDescription
+      value: 'Target Hero or Enemy inside 2 Tiles Range, then Teleport him within
+        3 Tiles Range of Target.
+
+        Cooldown: 3 Turns
+
+        Empower:
+
+        Cast
+        on Ally: Apply 1 Protection and Heal for 5
+
+        Cast on Enemy: Apply
+        1 Vulnerable and 1 Weaken'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673351901997673441, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: skillDescription
+      value: "AOE Attack, 4 Direction, Deal 8 Damage in the middle and 4 Damage at
+        the side, Knockback enemy 1 tile\r\nCooldown: 2 Turns\r\nEmpower: Stun (80%)\r"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673351901997673446, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: skillDescription
+      value: Every 3 Turns, Empower Skills (Click to Enable)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673351901997673447, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: skillDescription
+      value: "AOE, Create Static Storm that last for 2 Turns, Enemies that pass through
+        the storm take 4 Damage, Enemy that Stay in (Start Turn) take 4 damage and
+        apply 1 Weaken\r\nCooldown: 3 Turns\r\nEmpower: Apply 2 Blind and Interrupt
+        enemy actions (Special Attack)\r"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
@@ -1544,6 +1580,7 @@ MonoBehaviour:
   hostileUnits: []
   aliveHostileUnits: []
   deadHostileUnits: []
+  turnEnded: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -9348,10 +9385,10 @@ MonoBehaviour:
   glossaryImage: {fileID: 1070848851}
   glossaryName: {fileID: 1760601495}
   glossaryHealthText: {fileID: 2587283}
-  glossaryMoveRangeText: {fileID: 1727414047}
-  glossarySpeedText: {fileID: 142860401}
-  glossaryStunResistText: {fileID: 763419696}
-  glossaryResistText: {fileID: 1378004327}
+  glossaryMoveRangeText: {fileID: 0}
+  glossarySpeedText: {fileID: 0}
+  glossaryStunResistText: {fileID: 0}
+  glossaryResistText: {fileID: 0}
   glossaryHealth: {fileID: 1606517594}
   settingButton: {fileID: 2070248650}
   settingsPanel: {fileID: 1711332423}
@@ -12906,7 +12943,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.08839035, a: 0.57254905}
+  m_Color: {r: 1, g: 0, b: 0.08839035, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

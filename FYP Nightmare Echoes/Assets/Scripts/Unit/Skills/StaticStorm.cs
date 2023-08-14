@@ -12,7 +12,7 @@ namespace NightmareEchoes.Unit
             throw new System.NotImplementedException();
         }
 
-        public override bool Cast(OverlayTile target)
+        public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
             throw new System.NotImplementedException();
         }

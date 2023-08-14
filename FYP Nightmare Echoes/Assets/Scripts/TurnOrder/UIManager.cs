@@ -270,13 +270,11 @@ namespace NightmareEchoes.TurnOrder
         public void AttackButton()
         {
             CurrentUnit.BasicAttack();
-            //PassTurn();
         }
 
         public void Skill1Button()
         {
             CurrentUnit.Skill1();
-            //TurnOrderController.Instance.PassTurn();
         }
 
         public void Skill2Button()
@@ -365,7 +363,7 @@ namespace NightmareEchoes.TurnOrder
                     {
                         return currentUnitStatusEffectPool[i];
                     }
-                 }
+                }
             }
             else if(panel == inspectedUnitStatusEffectsPanel)
             {
