@@ -128,24 +128,25 @@ MonoBehaviour:
     resistModifier: 0
   _isHostile: 0
   _direction: 0
+  _typeOfUnit: 0
   activeTile: {fileID: 0}
   buffList:
   - {fileID: 11400000, guid: 0b4c3b0b67d18984eba3ca55d51908a0, type: 2}
-  - {fileID: 11400000, guid: 99695b3589d99054cbfd35aba4f52c88, type: 2}
-  debuffList:
   - {fileID: 11400000, guid: 5fbd22f3e0cf3c34bb576a37d36d21e2, type: 2}
-  tokenList:
-  - {fileID: 11400000, guid: 601d001264cdab5438fa84240f088d52, type: 2}
+  debuffList:
+  - {fileID: 11400000, guid: 7a184d26147cceb45ab60c05f13a6362, type: 2}
+  - {fileID: 11400000, guid: 8b383960bf7e0cb4ca7526952b68c93f, type: 2}
+  tokenList: []
   basicAttack: {fileID: 2001383901}
-  basicAttackDesc:
+  basicAttackDesc: Mage Basic Attack
   skill1: {fileID: 6673351901997673441}
-  skill1Desc:
+  skill1Desc: Mage Skill1
   skill2: {fileID: 6673351901997673440}
-  skill2Desc:
+  skill2Desc: Mage Skill 2
   skill3: {fileID: 6673351901997673447}
-  skill3Desc:
+  skill3Desc: Mage Skill 3
   passive: {fileID: 6673351901997673446}
-  passiveDesc: 
+  passiveDesc: Mage Passive
   sprites:
   - {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
@@ -222,7 +223,7 @@ MonoBehaviour:
   targetUnitAlignment: 0
   aoeType: 0
   skillType: 0
-  skillDescription:
+  skillDescription: 
 --- !u!114 &6673351901997673441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,9 +234,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51951608a39719848a00ca5503575cd7, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  skillName:
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: 
   damage: 8
   cooldown: 0
   range: 4
@@ -244,7 +245,7 @@ MonoBehaviour:
   targetUnitAlignment: 2
   aoeType: 2
   skillType: 0
-  skillDescription:
+  skillDescription: 
 --- !u!114 &6673351901997673440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +267,7 @@ MonoBehaviour:
   targetUnitAlignment: 0
   aoeType: 0
   skillType: 0
-  skillDescription:
+  skillDescription: 
 --- !u!114 &6673351901997673447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,7 +289,7 @@ MonoBehaviour:
   targetUnitAlignment: 0
   aoeType: 0
   skillType: 0
-  skillDescription:
+  skillDescription: 
 --- !u!114 &6673351901997673446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,9 +300,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ea9fdb1423da3e4f93ac4d150a168a9, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  skillName:
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: 
   damage: 0
   cooldown: 0
   range: 0
@@ -310,4 +311,4 @@ MonoBehaviour:
   targetUnitAlignment: 2
   aoeType: 2
   skillType: 0
-  skillDescription:
+  skillDescription: 

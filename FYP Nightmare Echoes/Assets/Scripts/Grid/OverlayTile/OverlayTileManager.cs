@@ -153,11 +153,11 @@ namespace NightmareEchoes.Grid
 
             if (tileMap.GetTile(UnitGridPos))
             {
-                Debug.Log("This tile is occupied by player at" + UnitGridPos);
+                //Debug.Log("This tile is occupied by player at" + UnitGridPos);
             }
             else 
             {
-                Debug.Log("tileNotOccupied");
+                //Debug.Log("tileNotOccupied");
             }
         }
 

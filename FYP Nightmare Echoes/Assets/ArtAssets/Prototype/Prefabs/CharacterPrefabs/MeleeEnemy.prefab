@@ -140,6 +140,7 @@ MonoBehaviour:
     resistModifier: 0
   _isHostile: 1
   _direction: 0
+  _typeOfUnit: 1
   activeTile: {fileID: 0}
   buffList:
   - {fileID: 11400000, guid: 99695b3589d99054cbfd35aba4f52c88, type: 2}
@@ -156,6 +157,7 @@ MonoBehaviour:
   passive: {fileID: 0}
   passiveDesc: Melee Passive
   sprites: []
+  basicAttackRange: 0
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4

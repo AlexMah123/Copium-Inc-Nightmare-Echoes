@@ -26,6 +26,7 @@ namespace NightmareEchoes.Unit
 
         [SerializeField] protected bool _isHostile;
         [SerializeField] protected Direction _direction;
+        [SerializeField] protected TypeOfUnit _typeOfUnit;
 
         [Header("Tile Related")]
         [SerializeField] protected OverlayTile activeTile;
@@ -90,7 +91,13 @@ namespace NightmareEchoes.Unit
             get => _direction;
             set => _direction = value;
         }
-        
+
+        public TypeOfUnit TypeOfUnit
+        {
+            get => _typeOfUnit;
+            set => _typeOfUnit = value;
+        }
+
         #endregion
 
         #region Tile Related
@@ -350,6 +357,12 @@ namespace NightmareEchoes.Unit
         South = 1,
         East = 2,
         West = 3,
+    }
+
+    public enum TypeOfUnit
+    {
+        RANGED_UNIT = 0,
+        MELEE_UNIT = 1,
     }
 
     [Serializable]

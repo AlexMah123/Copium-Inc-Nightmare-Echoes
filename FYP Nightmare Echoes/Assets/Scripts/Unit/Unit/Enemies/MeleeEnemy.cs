@@ -7,7 +7,9 @@ namespace NightmareEchoes.Unit.Enemy
 {
     public class MeleeEnemy : Units
     {
-        
+
+        public int basicAttackRange;
+
         protected override void Awake()
         {
             base.Awake();

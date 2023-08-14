@@ -7,11 +7,13 @@ using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Inputs;
 
-//created by Vinn, editted by Alex
+//created by Vinn, editted by Alex and Ter
 namespace NightmareEchoes.Unit.Pathfinding
 {
     public class PathfindingManager : MonoBehaviour
     {
+        public static PathfindingManager Instance;
+
         [SerializeField] GameObject OTC; 
 
         [Header("Current Unit")]
@@ -40,7 +42,19 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         //Changes by Vinn
         [SerializeField] private LayerMask UnitLayer;
-        
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
+        }
+
         private void Start()
         {
 
@@ -137,29 +151,29 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (path.Count > 0)
             {
                 CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
-                MoveAlongPath();
+                MoveAlongPath(currentSelectedUnitGO, path);
             }
         }
 
 
         #region Movement along Tile
-        private void MoveAlongPath()
+        public void MoveAlongPath(GameObject go, List<OverlayTile> pathL)
         {
             var step = movingSpeed * Time.deltaTime;
 
-            var zIndex = path[0].transform.position.z;
+            var zIndex = pathL[0].transform.position.z;
 
-            currentSelectedUnitGO.transform.position = Vector2.MoveTowards(currentSelectedUnitGO.transform.position, path[0].transform.position, step);
+            go.transform.position = Vector2.MoveTowards(go.transform.position, pathL[0].transform.position, step);
 
-            currentSelectedUnitGO.transform.position = new Vector3(currentSelectedUnitGO.transform.position.x, currentSelectedUnitGO.transform.position.y, zIndex);
+            go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, zIndex);
 
-            if (Vector2.Distance(currentSelectedUnitGO.transform.position, path[0].transform.position) < 0.0001f)
+            if (Vector2.Distance(go.transform.position, pathL[0].transform.position) < 0.0001f)
             {
-                PositionCharacterOnTile(path[0]);
-                path.RemoveAt(0);
+                PositionCharacterOnTile(pathL[0], go);
+                pathL.RemoveAt(0);
             }
 
-            if (path.Count == 0)
+            if (pathL.Count == 0)
             {
                 //if i dont place this function here it wont render the tile range after it moves (Only on  the initial click)
                 //GetInRangeTiles();
@@ -195,11 +209,11 @@ namespace NightmareEchoes.Unit.Pathfinding
             return null;
         }
 
-        private void PositionCharacterOnTile(OverlayTile tile)
+        private void PositionCharacterOnTile(OverlayTile tile, GameObject go)
         {
-            currentSelectedUnitGO.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
-            currentSelectedUnitGO.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
-            currentSelectedUnitGO.GetComponent<Units>().ActiveTile = tile;
+            go.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
+            go.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
+            go.GetComponent<Units>().ActiveTile = tile;
         }
 
         private void GetInRangeTiles()
