@@ -2,17 +2,11 @@ using System.Collections.Generic;
 using NightmareEchoes.Grid;
 using UnityEngine;
 
+//Created by JH
 namespace NightmareEchoes.Unit
 {
     public class ArcaneBlast : Skill
     {
-        [SerializeField] private int secondaryDamage = 4;
-
-        public override bool Cast(Units target)
-        {
-            throw new System.NotImplementedException();
-        }
-        
         public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
             if (target.CheckUnitOnTile())

@@ -23,7 +23,7 @@ namespace NightmareEchoes.Unit.Combat
         public List<Units> aliveHostileUnits;
         public List<Units> deadHostileUnits;
 
-        public bool turnEnded = false;
+        public bool turnEnded;
         
         private Skill activeSkill;
         private List<OverlayTile> skillRangeTiles;
@@ -88,45 +88,20 @@ namespace NightmareEchoes.Unit.Combat
         {
             //Clear Active Renders 
             RenderOverlayTile.Instance.ClearTargetingRenders();
+            
+            //Stop Coroutines
+            StopAllCoroutines();
 
             if (activeSkill != null && activeSkill == skill)
             {
+                activeSkill.StopAllCoroutines();
                 activeSkill = null;
                 return;
             }
             
             activeSkill = skill;
-            
-            //====================Getting Attack Ranges====================
-            var tileRange = new List<OverlayTile>();
-            var possibleTileCoords = new List<Vector2Int>();
-            
-            //Select Shape
-            switch (skill.TargetArea.ToString())
-            {
-                case "Line":
-                    possibleTileCoords = LineRange(unit.ActiveTile, skill.Range, false);
-                    break;
-                case "Square":
-                    possibleTileCoords = SquareRange(unit.ActiveTile, skill.Range);
-                    break;
-                case "Crosshair":
-                    possibleTileCoords = LineRange(unit.ActiveTile, skill.Range, true);
-                    break;
-                default:
-                    Debug.LogWarning("ERROR");
-                    break;
-            }
-            
-            //Trim Out of Bounds
-            foreach (var coord in possibleTileCoords.Where(coord =>  OverlayTileManager.Instance.map.ContainsKey(coord)))
-            {
-                if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
-                    tileRange.Add(tile);
-            }
-            
-            skillRangeTiles = tileRange;
-            //============================================================
+
+            skillRangeTiles = CalculateRange(unit, skill);
         }
 
         private void EndTurn()
@@ -167,7 +142,8 @@ namespace NightmareEchoes.Unit.Combat
             var aoeArea = activeSkill.AoeType switch
             {
                 AOEType.Square => SquareRange(target, 1),
-                AOEType.Cross => LineRange(target, 1, false)
+                AOEType.Cross => LineRange(target, 1, false),
+                AOEType.NonAOE => SquareRange(target, 0)
             };
             
             aoePreviewTiles.Clear();
@@ -180,6 +156,11 @@ namespace NightmareEchoes.Unit.Combat
             
             if (!Input.GetMouseButtonDown(0)) return;
             StartCoroutine(WaitForSkill(target, aoePreviewTiles));
+        }
+        
+        public void SecondaryTargeting()
+        {
+            RenderOverlayTile.Instance.ClearTargetingRenders();
         }
         
         #endregion
@@ -232,7 +213,42 @@ namespace NightmareEchoes.Unit.Combat
         #endregion
         
         #region Casting Range Calculation
-        private List<Vector2Int> LineRange(OverlayTile startTile, int range, bool isCrosshair)
+
+        private List<OverlayTile> CalculateRange(Units unit, Skill skill)
+        {
+            var tileRange = new List<OverlayTile>();
+            var possibleTileCoords = new List<Vector2Int>();
+
+            var range = skill.Range;
+
+            //Select Shape
+            switch (skill.TargetArea.ToString())
+            {
+                case "Line":
+                    possibleTileCoords = LineRange(unit.ActiveTile, range, false);
+                    break;
+                case "Square":
+                    possibleTileCoords = SquareRange(unit.ActiveTile, range);
+                    break;
+                case "Crosshair":
+                    possibleTileCoords = LineRange(unit.ActiveTile, range, true);
+                    break;
+                default:
+                    Debug.LogWarning("ERROR");
+                    break;
+            }
+            
+            //Trim Out of Bounds
+            foreach (var coord in possibleTileCoords.Where(coord =>  OverlayTileManager.Instance.map.ContainsKey(coord)))
+            {
+                if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
+                    tileRange.Add(tile);
+            }
+
+            return tileRange;
+        }
+        
+        public List<Vector2Int> LineRange(OverlayTile startTile, int range, bool isCrosshair)
         {
             var possibleTileCoords = new List<Vector2Int>();
             var i = 1;
@@ -248,7 +264,7 @@ namespace NightmareEchoes.Unit.Combat
             return possibleTileCoords;
         }
         
-        private List<Vector2Int> SquareRange(OverlayTile startTile, int range)
+        public List<Vector2Int> SquareRange(OverlayTile startTile, int range)
         {
             var possibleTileCoords = new List<Vector2Int>();
 

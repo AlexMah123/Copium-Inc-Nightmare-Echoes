@@ -18,5 +18,15 @@ namespace NightmareEchoes.Unit
         {
             CombatManager.Instance.SelectSkill(this, skill1);
         }
+
+        public override void Skill2()
+        {
+            CombatManager.Instance.SelectSkill(this, skill2);
+        }
+        
+        public override void Skill3()
+        {
+            CombatManager.Instance.SelectSkill(this, skill3);
+        }
     }
 }

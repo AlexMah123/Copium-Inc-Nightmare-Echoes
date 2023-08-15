@@ -4,6 +4,7 @@ using System.Reflection;
 using NightmareEchoes.Grid;
 using UnityEngine;
 
+//Created by JH
 namespace NightmareEchoes.Unit
 {
     public abstract class Skill : MonoBehaviour
@@ -17,6 +18,11 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected TargetUnitAlignment targetUnitAlignment;
         [SerializeField] protected AOEType aoeType;
         [SerializeField] protected SkillType skillType;
+        
+        [Header("Two-step targeting")]
+        [SerializeField] protected bool hasSecondaryTargeting;
+        [SerializeField] protected int secondaryDamage;
+        [SerializeField] protected int secondaryRange;
         
         [field: TextArea(1,10)][SerializeField] protected string skillDescription;
 
@@ -76,6 +82,24 @@ namespace NightmareEchoes.Unit
             set => skillType = value;
         }
 
+        public bool HasSecondaryTargeting
+        {
+            get => hasSecondaryTargeting;
+            set => hasSecondaryTargeting = value;
+        }
+
+        public int SecondaryDamage
+        {
+            get => secondaryDamage;
+            set => secondaryDamage = value;
+        }
+
+        public int SecondaryRange
+        {
+            get => secondaryRange;
+            set => secondaryRange = value;
+        }
+        
         public string SkillDescription
         {
             get => skillDescription;
@@ -84,8 +108,30 @@ namespace NightmareEchoes.Unit
 
         #endregion
 
-        public abstract bool Cast(Units target);
-        public abstract bool Cast(OverlayTile target, List<OverlayTile> aoeTiles);
+        public virtual bool Cast(Units target)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual bool SecondaryCast(Units target)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual bool SecondaryCast(OverlayTile target, List<OverlayTile> aoeTiles)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual IEnumerator SecondaryStep()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     public enum TargetType

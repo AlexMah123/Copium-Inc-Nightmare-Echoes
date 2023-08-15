@@ -287,13 +287,11 @@ namespace NightmareEchoes.TurnOrder
         public void Skill2Button()
         {
             CurrentUnit.Skill2();
-            TurnOrderController.Instance.PassTurn();
         }
 
         public void Skill3Button()
         {
             CurrentUnit.Skill3();
-            TurnOrderController.Instance.PassTurn();
         }
 
         #endregion
