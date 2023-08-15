@@ -32,7 +32,7 @@ namespace NightmareEchoes.Unit
 
         private IEnumerator Test()
         {
-            
+            yield return null;
         }
     }
 }
