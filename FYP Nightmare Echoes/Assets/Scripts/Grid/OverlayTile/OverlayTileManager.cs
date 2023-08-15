@@ -82,9 +82,10 @@ namespace NightmareEchoes.Grid
             }
         }
         
-        public List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile , List<OverlayTile> LimitTiles )
+        public List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile , List<OverlayTile> LimitTiles)
         {
             var map = OverlayTileManager.Instance.map;
+
 
             //Dictionary for the tileRange
             Dictionary<Vector2Int, OverlayTile> tileToSearch = new Dictionary<Vector2Int, OverlayTile> ();

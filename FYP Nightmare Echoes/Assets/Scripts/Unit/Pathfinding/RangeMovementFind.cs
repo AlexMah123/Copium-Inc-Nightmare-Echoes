@@ -26,7 +26,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 foreach (var item in TileForPreviousStep)
                 {
-                        surroundingTiles.AddRange(OverlayTileManager.Instance.GetNeighbourTiles(item, new List<OverlayTile>()));
+                    surroundingTiles.AddRange(OverlayTileManager.Instance.GetNeighbourTiles(item, new List<OverlayTile>()));
                 }
 
                 inRangeTiles.AddRange(surroundingTiles);

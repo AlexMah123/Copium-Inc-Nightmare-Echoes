@@ -35,22 +35,37 @@ namespace NightmareEchoes.UI
             switch(button)
             {
                 case Button.Basic:
+                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.BasicAttackDesc))
+                        return;
+
                     toolTip = TurnOrderController.Instance.CurrentUnit.BasicAttackDesc;
                     break;
 
                 case Button.Skill1:
+                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.Skill1Desc))
+                        return;
+
                     toolTip = TurnOrderController.Instance.CurrentUnit.Skill1Desc;
                     break;
 
                 case Button.Skill2:
+                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.Skill2Desc))
+                        return;
+
                     toolTip = TurnOrderController.Instance.CurrentUnit.Skill2Desc;
                     break;
 
                 case Button.Skill3:
+                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.Skill3Desc))
+                        return;
+
                     toolTip = TurnOrderController.Instance.CurrentUnit.Skill3Desc;
                     break;
 
                 case Button.Passive:
+                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.PassiveDesc))
+                        return;
+
                     toolTip = TurnOrderController.Instance.CurrentUnit.PassiveDesc;
                     break;
             }

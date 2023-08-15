@@ -22,6 +22,13 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
+            //update effects & stats
+            controller.CurrentUnit.ApplyAllStatusEffects();
+            controller.CurrentUnit.UpdateAllStatusEffectLifeTime();
+            controller.CurrentUnit.UpdateAllStats();
+
+            UIManager.Instance.UpdateStatusEffectUI();
+
             //when you change phases, change the current unit to the next unit
             if (controller.CurrentUnitQueue.Count > 0)
             {
@@ -34,6 +41,7 @@ namespace NightmareEchoes.TurnOrder
             
             yield return new WaitForSeconds(controller.enemyDelay);
 
+            
 
             //if there is at least 2 elements in queue
             if (controller.CurrentUnitQueue.Count > 1)

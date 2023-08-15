@@ -123,7 +123,7 @@ namespace NightmareEchoes.TurnOrder
         private void Update()
         {
 
-            #region Current Unit
+            #region Current Unit text
             if (CurrentUnit != null)
             {
                 currentUnitProfile.image.sprite = CurrentUnit.Sprite;
@@ -142,7 +142,7 @@ namespace NightmareEchoes.TurnOrder
             }
             #endregion
 
-            #region Inspected Unit
+            #region Inspected Unit text
             if(inspectedUnit != null)
             {
                 inspectedUnitProfile.image.sprite = inspectedUnit.Sprite;
@@ -188,11 +188,7 @@ namespace NightmareEchoes.TurnOrder
             }
             #endregion
 
-            #region character glossary
-
-            #endregion
-
-            #region current unit indicator
+            #region current unit indicator 
             if (CurrentUnit != null)
             {
                 if (!unitIndicator.activeSelf)
@@ -245,12 +241,12 @@ namespace NightmareEchoes.TurnOrder
             if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.startPhase)
             {
                 phaseText.text = $"Start Phase";
-
+                phaseText.color = Color.white;
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.planPhase)
             {
                 phaseText.text = $"Plan Phase";
-
+                phaseText.color = Color.white;
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.playerPhase)
             {
@@ -265,6 +261,7 @@ namespace NightmareEchoes.TurnOrder
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.endPhase)
             {
                 phaseText.text = $"End's Phase";
+                phaseText.color = Color.white;
             }
 
 
@@ -577,27 +574,30 @@ namespace NightmareEchoes.TurnOrder
                         glossaryObj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = 
                             currentUnitTotalStatusEffectList[i].icon;
 
+                        TextMeshProUGUI glossaryObjText = glossaryObj.GetComponentInChildren<TextMeshProUGUI>();
+
+
                         if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.BUFF)
                         {
-                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            glossaryObjText.text =
                             $"{currentUnitTotalStatusEffectList[i].description} " +
                             $"(<color=green>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
                         }
                         else if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.DEBUFF)
                         {
-                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            glossaryObjText.text =
                             $"{currentUnitTotalStatusEffectList[i].description} " +
                             $"(<color=#FF6C6C>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
                         }
                         else if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.POSITIVETOKEN)
                         {
-                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            glossaryObjText.text =
                             $"{currentUnitTotalStatusEffectList[i].description} " +
                             $"(<color=blue>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
                         }
                         else if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.NEGATIVETOKEN)
                         {
-                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            glossaryObjText.text =
                             $"{currentUnitTotalStatusEffectList[i].description} " +
                             $"(<color=yellow>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
                         }
@@ -632,28 +632,30 @@ namespace NightmareEchoes.TurnOrder
                     {
                         glossaryObj.transform.GetChild(0).GetComponentInChildren<Image>().sprite =
                             inspectedUnitTotalStatusEffectList[i].icon;
-                        
+
+                        TextMeshProUGUI glossaryObjText = glossaryObj.GetComponentInChildren<TextMeshProUGUI>();
+
                         if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.BUFF)
                         {
-                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            glossaryObjText.text =
                             $"{inspectedUnitTotalStatusEffectList[i].description} " +
                             $"(<color=green>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
                         }
                         else if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.DEBUFF)
                         {
-                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            glossaryObjText.text =
                             $"{inspectedUnitTotalStatusEffectList[i].description} " +
                             $"(<color=#FF6C6C>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
                         }
                         else if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.POSITIVETOKEN)
                         {
-                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            glossaryObjText.text =
                             $"{inspectedUnitTotalStatusEffectList[i].description} " +
                             $"(<color=blue>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
                         }
                         else if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.NEGATIVETOKEN)
                         {
-                            glossaryObj.GetComponentInChildren<TextMeshProUGUI>().text =
+                            glossaryObjText.text =
                             $"{inspectedUnitTotalStatusEffectList[i].description} " +
                             $"(<color=yellow>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
                         }

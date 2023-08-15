@@ -7,17 +7,20 @@ namespace NightmareEchoes.Unit
     [CreateAssetMenu(fileName = "Wound", menuName = "Unit Modifiers/Debuff/Wound")]
     public class Wound : Modifier
     {
+        [Space(15), Header("Status Effect Values")]
         [SerializeField] int woundDmg;
         [SerializeField] int woundStack = 1;
 
-        public override void Awake()
+        public override void AwakeStatusEffect()
         {
             genericValue = woundStack;
+            modifierDuration = woundStack;
         }
 
         public override void ApplyEffect(GameObject unit)
         {
             unit.GetComponent<Units>().stats.Health -= woundDmg * woundStack;
+
         }
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
@@ -27,13 +30,9 @@ namespace NightmareEchoes.Unit
 
         public override void UpdateLifeTime()
         {
-
+            modifierDuration--;
         }
 
-        public override void Remove()
-        {
-
-        }
 
         
     }

@@ -24,6 +24,13 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
+            //update effects & stats
+            controller.CurrentUnit.ApplyAllStatusEffects();
+            controller.CurrentUnit.UpdateAllStatusEffectLifeTime();
+            controller.CurrentUnit.UpdateAllStats();
+
+            UIManager.Instance.UpdateStatusEffectUI();
+
             //when you change phases, change the current unit to the next unit
             if (controller.CurrentUnitQueue.Count > 0)
             {
@@ -34,6 +41,9 @@ namespace NightmareEchoes.TurnOrder
         IEnumerator WaitForTurnEnd()
         {
             yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
+
+            
+
             CombatManager.Instance.turnEnded = false;
             controller.PassTurn();
         }

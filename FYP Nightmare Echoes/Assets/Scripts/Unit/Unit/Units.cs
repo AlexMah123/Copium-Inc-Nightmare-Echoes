@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using NightmareEchoes.Grid;
+using System.Linq;
 
 //created by Alex
 namespace NightmareEchoes.Unit
@@ -127,30 +128,84 @@ namespace NightmareEchoes.Unit
         #region Unit Skill Properties
         public string BasicAttackDesc
         {
-            get => basicAttack.SkillDescription;
+            get
+            {
+                if(basicAttack == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return basicAttack.SkillDescription;
+                }
+            } 
+
             private set => basicAttack.SkillDescription = value;
         }
 
         public string Skill1Desc
         {
-            get => skill1.SkillDescription;
+            get
+            {
+                if (skill1 == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return skill1.SkillDescription;
+                }
+            }
+
             private set => skill1.SkillDescription = value;
         }
+
         public string Skill2Desc
         {
-            get => skill2.SkillDescription; 
+            get
+            {
+                if (skill2 == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return skill2.SkillDescription;
+                }
+            }
             private set => skill2.SkillDescription = value;
         }
 
         public string Skill3Desc
         {
-            get => skill3.SkillDescription; 
+            get
+            {
+                if (skill3 == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return skill3.SkillDescription;
+                }
+            }
             private set => skill3.SkillDescription = value;
         }
 
         public string PassiveDesc
         {
-            get => passive.SkillDescription;
+            get
+            {
+                if (passive == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return passive.SkillDescription;
+                }
+            }
+
             private set => passive.SkillDescription = value;
         }
         #endregion
@@ -178,8 +233,10 @@ namespace NightmareEchoes.Unit
             rb2D.freezeRotation = true;
             rb2D.gravityScale = 0f;
 
+            //MANDATORY, DO NOT REMOVE
             baseStats.Reset();
-            UpdateStats();
+            AwakeAllStatusEffects();
+            UpdateAllStats();
         }
 
         protected virtual void Start()
@@ -252,6 +309,8 @@ namespace NightmareEchoes.Unit
 
         #endregion
 
+
+        #region Utility
         public void ShowPopUpText(string damage)
         {
             if(damageTextPrefab)
@@ -268,12 +327,96 @@ namespace NightmareEchoes.Unit
             if (hitTile)
                 activeTile = hitTile.collider.gameObject.GetComponent<OverlayTile>();
         }
+        #endregion
 
-
-        #region Status Effects
-        public void UpdateStats()
+        #region Status Effects Updates
+        //call to add buff to unit
+        protected void AddBuff(Modifier buff)
         {
-            modifiedStats = ApplyModifiers(modifiedStats);
+            switch (buff.modifierType)
+            {
+                case ModifierType.BUFF:
+                    buff.AwakeStatusEffect();
+                    BuffList.Add(buff);
+                    break;
+
+                case ModifierType.DEBUFF:
+                    buff.AwakeStatusEffect();
+                    DebuffList.Add(buff);
+                    break;
+
+                case ModifierType.POSITIVETOKEN:
+                    buff.AwakeStatusEffect();
+                    TokenList.Add(buff);
+                    break;
+            }
+        }
+
+        //call only on instantiation of object
+        public void AwakeAllStatusEffects()
+        {
+            List<Modifier> totalStatusEffects = BuffList.Concat(DebuffList).Concat(TokenList).ToList();
+
+            foreach (Modifier statusEffect in totalStatusEffects)
+            {
+                statusEffect.AwakeStatusEffect();
+            }
+        }
+
+        public void ApplyAllStatusEffects()
+        {
+            for (int i = 0; i < BuffList.Count; i++)
+            {
+                BuffList[i].ApplyEffect(gameObject);
+            }
+
+            for (int i = 0; i < DebuffList.Count; i++)
+            {
+                DebuffList[i].ApplyEffect(gameObject);
+            }
+
+            for (int i = 0; i < TokenList.Count; i++)
+            {
+                TokenList[i].ApplyEffect(gameObject);
+            }
+        }
+
+        public void UpdateAllStatusEffectLifeTime()
+        {
+            for (int i = BuffList.Count - 1; i >= 0 ; i--)
+            {
+                BuffList[i].UpdateLifeTime();
+
+                if (BuffList[i].modifierDuration <= 0)
+                {
+                    BuffList.RemoveAt(i);
+                }
+            }
+
+            for (int i = DebuffList.Count - 1; i >= 0; i--)
+            {
+                DebuffList[i].UpdateLifeTime();
+
+                if (DebuffList[i].modifierDuration <= 0)
+                {
+                    DebuffList.RemoveAt(i);
+                }
+            }
+
+            for (int i = TokenList.Count - 1; i >= 0; i--)
+            {
+                TokenList[i].UpdateLifeTime();
+
+                if (TokenList[i].modifierDuration <= 0)
+                {
+                    TokenList.RemoveAt(i);
+                }
+            }
+        }
+
+        public void UpdateAllStats()
+        {
+            modifiedStats = ApplyAllModifiers(modifiedStats);
 
             stats.MaxHealth = baseStats.MaxHealth + modifiedStats.healthModifier;
             stats.Health = stats.Health;
@@ -283,40 +426,23 @@ namespace NightmareEchoes.Unit
             stats.Resist = baseStats.Resist + modifiedStats.resistModifier;
         }
 
-        public void ApplyStatusEffects()
-        {
-            for (int i = 0; i < buffList.Count; i++)
-            {
-                buffList[i].ApplyEffect(gameObject);
-            }
 
-            for (int i = 0; i < debuffList.Count; i++)
-            {
-                debuffList[i].ApplyEffect(gameObject);
-            }
-
-            for (int i = 0; i < tokenList.Count; i++)
-            {
-                tokenList[i].ApplyEffect(gameObject);
-            }
-        }
-
-
-        protected ModifiersStruct ApplyModifiers(ModifiersStruct modifiers)
+        //used in UpdateStats, do not directly call
+        protected ModifiersStruct ApplyAllModifiers(ModifiersStruct modifiers)
         {
             ModifiersStruct temp = new();
 
-            for(int i = 0; i < buffList.Count; i++) 
+            for (int i = 0; i < buffList.Count; i++)
             {
                 temp = buffList[i].ApplyModifier(temp);
             }
 
-            for(int i = 0; i < debuffList.Count; i++)
+            for (int i = 0; i < debuffList.Count; i++)
             {
                 temp = debuffList[i].ApplyModifier(temp);
             }
 
-            for(int i = 0; i < tokenList.Count; i++)
+            for (int i = 0; i < tokenList.Count; i++)
             {
                 temp = tokenList[i].ApplyModifier(temp);
             }
@@ -326,25 +452,11 @@ namespace NightmareEchoes.Unit
             return modifiers;
         }
 
-        protected void AddBuff(Modifier buff)
-        {
-            switch(buff.modifierType)
-            {
-                case ModifierType.BUFF:
-                    BuffList.Add(buff);
-                    break;
-
-                case ModifierType.DEBUFF:
-                    DebuffList.Add(buff);
-                    break;
-
-                case ModifierType.POSITIVETOKEN:
-                    TokenList.Add(buff);
-                    break;
-            }
-        }
-
         #endregion
+
+
+
+
     }
 
     public enum Direction

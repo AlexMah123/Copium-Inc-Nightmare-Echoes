@@ -131,7 +131,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                     }
                     else if (currentSelectedUnitGO != null)
                     {
-                        path = PathFind.FindPath(currentSelectedUnitGO.GetComponent<Units>().ActiveTile, overlayTile, inRangeTiles);
+                        path = PathFind.FindPath(currentSelectedUnit.ActiveTile, overlayTile, inRangeTiles);
                         //overlayTile.isCurenttlyStandingOn = false;
                     }
                 }
@@ -222,11 +222,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             {
                 item.HideTile();
             }
-        }
-
-        private void UnitPos()
-        { 
-            
         }
 
 

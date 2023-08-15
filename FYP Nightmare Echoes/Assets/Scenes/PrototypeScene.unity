@@ -1039,7 +1039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: tokenList.Array.size
@@ -1050,9 +1050,13 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: buffList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 99695b3589d99054cbfd35aba4f52c88, type: 2}
+    - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 5fbd22f3e0cf3c34bb576a37d36d21e2, type: 2}
+      objectReference: {fileID: 11400000, guid: 601d001264cdab5438fa84240f088d52, type: 2}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.data[2]
       value: 
@@ -1060,11 +1064,11 @@ PrefabInstance:
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 5fbd22f3e0cf3c34bb576a37d36d21e2, type: 2}
+      objectReference: {fileID: 11400000, guid: 0b4c3b0b67d18984eba3ca55d51908a0, type: 2}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 5fbd22f3e0cf3c34bb576a37d36d21e2, type: 2}
+      objectReference: {fileID: 11400000, guid: 0b4c3b0b67d18984eba3ca55d51908a0, type: 2}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.data[5]
       value: 
@@ -1080,13 +1084,25 @@ PrefabInstance:
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: debuffList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 7a184d26147cceb45ab60c05f13a6362, type: 2}
+      objectReference: {fileID: 11400000, guid: 0652adf493ca2cb4b99e693b456faf71, type: 2}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: debuffList.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 8b383960bf7e0cb4ca7526952b68c93f, type: 2}
+      objectReference: {fileID: 11400000, guid: 7a184d26147cceb45ab60c05f13a6362, type: 2}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: debuffList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a184d26147cceb45ab60c05f13a6362, type: 2}
+    - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: debuffList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a184d26147cceb45ab60c05f13a6362, type: 2}
+    - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: debuffList.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b383960bf7e0cb4ca7526952b68c93f, type: 2}
+    - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: debuffList.Array.data[5]
       value: 
       objectReference: {fileID: 11400000, guid: 8b383960bf7e0cb4ca7526952b68c93f, type: 2}
     - target: {fileID: 2658365863807529696, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
@@ -9179,12 +9195,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: buffList.Array.size
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: debuffList.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: buffList.Array.data[0]
       value: 
+      objectReference: {fileID: 11400000, guid: 0b4c3b0b67d18984eba3ca55d51908a0, type: 2}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: buffList.Array.data[1]
+      value: 
       objectReference: {fileID: 11400000, guid: 99695b3589d99054cbfd35aba4f52c88, type: 2}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: buffList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5fbd22f3e0cf3c34bb576a37d36d21e2, type: 2}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: buffList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 601d001264cdab5438fa84240f088d52, type: 2}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: debuffList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6ce5388554b9c7e45b40d412d28b2296, type: 2}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: debuffList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0652adf493ca2cb4b99e693b456faf71, type: 2}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: debuffList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1df4c40340d04bc4988288118f5f48dc, type: 2}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: debuffList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a184d26147cceb45ab60c05f13a6362, type: 2}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: debuffList.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b383960bf7e0cb4ca7526952b68c93f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
 --- !u!1 &1481047561
@@ -11346,6 +11398,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: buffList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: debuffList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: buffList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b4c3b0b67d18984eba3ca55d51908a0, type: 2}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: buffList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 99695b3589d99054cbfd35aba4f52c88, type: 2}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: buffList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5fbd22f3e0cf3c34bb576a37d36d21e2, type: 2}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: buffList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 601d001264cdab5438fa84240f088d52, type: 2}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: debuffList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6ce5388554b9c7e45b40d412d28b2296, type: 2}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: debuffList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0652adf493ca2cb4b99e693b456faf71, type: 2}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: debuffList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1df4c40340d04bc4988288118f5f48dc, type: 2}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: debuffList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a184d26147cceb45ab60c05f13a6362, type: 2}
+    - target: {fileID: 8143709165264484512, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+      propertyPath: debuffList.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b383960bf7e0cb4ca7526952b68c93f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
 --- !u!1 &1969376219

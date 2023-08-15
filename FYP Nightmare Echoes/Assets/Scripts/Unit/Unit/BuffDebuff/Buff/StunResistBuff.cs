@@ -9,11 +9,14 @@ namespace NightmareEchoes.Unit
     [CreateAssetMenu(fileName = "StunResistBuff", menuName = "Unit Modifiers/Buff/StunResist Buff")]
     public class StunResistBuff : Modifier
     {
+        [Space(15), Header("Status Effect Values")]
         [SerializeField] float stunResistBuff;
+        [SerializeField] int buffDuration;
 
-        public override void Awake()
+        public override void AwakeStatusEffect()
         {
             genericValue = stunResistBuff;
+            modifierDuration = buffDuration;
 
         }
 
@@ -30,12 +33,7 @@ namespace NightmareEchoes.Unit
 
         public override void UpdateLifeTime()
         {
-
-        }
-
-        public override void Remove()
-        {
-
+            modifierDuration--;
         }
     }
 }

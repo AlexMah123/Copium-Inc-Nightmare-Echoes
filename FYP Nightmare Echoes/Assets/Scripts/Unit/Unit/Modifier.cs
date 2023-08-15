@@ -13,15 +13,17 @@ namespace NightmareEchoes.Unit
         public Sprite icon;
         public new string name;
         [TextArea (1,5)]public string description;
-        public float genericValue;
+
+        [Space(15), Header("Runtime Values")]
         public ModifierType modifierType;
+        [SerializeField] public float genericValue;
+        [SerializeField] public int modifierDuration;
 
 
-        public abstract void Awake();
+        public abstract void AwakeStatusEffect();
         public abstract void ApplyEffect(GameObject unit);
         public abstract ModifiersStruct ApplyModifier(ModifiersStruct mod);
         public abstract void UpdateLifeTime();
-        public abstract void Remove();
     }
 
     public enum ModifierType

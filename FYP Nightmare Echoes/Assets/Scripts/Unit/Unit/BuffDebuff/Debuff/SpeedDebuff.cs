@@ -9,11 +9,15 @@ namespace NightmareEchoes.Unit
     [CreateAssetMenu(fileName = "SpeedDebuff", menuName = "Unit Modifiers/Debuff/Speed debuff")]
     public class SpeedDebuff : Modifier
     {
+        [Space(15), Header("Status Effect Values")]
         [SerializeField] int speedDebuff;
+        [SerializeField] int debuffDuration;
 
-        public override void Awake()
+        public override void AwakeStatusEffect()
         {
             genericValue = speedDebuff;
+            modifierDuration = debuffDuration;
+
         }
 
         public override void ApplyEffect(GameObject unit)
@@ -29,12 +33,10 @@ namespace NightmareEchoes.Unit
 
         public override void UpdateLifeTime()
         {
+            modifierDuration--;
 
         }
 
-        public override void Remove()
-        {
 
-        }
     }
 }

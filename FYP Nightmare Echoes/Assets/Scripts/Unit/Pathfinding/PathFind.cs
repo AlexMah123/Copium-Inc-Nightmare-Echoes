@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using NightmareEchoes.Grid;
-using Unity.Android.Types;
 using UnityEngine.Tilemaps;
 
 
@@ -39,9 +38,9 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 foreach (var neighbour in neighbourTiles) 
                 {
-                    if (neighbour.isBlocked || endList.Contains(neighbour) )
+                    if (neighbour.isBlocked || endList.Contains(neighbour))
                     {
-                        neighbour.HideTile();
+
                         continue;
                     }
 
