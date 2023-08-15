@@ -1039,7 +1039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: tokenList.Array.size
@@ -1047,16 +1047,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: debuffList.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 99695b3589d99054cbfd35aba4f52c88, type: 2}
+      objectReference: {fileID: 11400000, guid: 0b4c3b0b67d18984eba3ca55d51908a0, type: 2}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 601d001264cdab5438fa84240f088d52, type: 2}
+      objectReference: {fileID: 11400000, guid: 5fbd22f3e0cf3c34bb576a37d36d21e2, type: 2}
     - target: {fileID: 1622779789872064204, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: buffList.Array.data[2]
       value: 
@@ -12595,6 +12595,7 @@ MonoBehaviour:
   OverLayTileManagerObj: {fileID: 0}
   testBool: 0
   ifSelectedUnit: 0
+  inRangeTiles: []
   UnitListOnScreen: []
   UnitLayer:
     serializedVersion: 2
