@@ -16,15 +16,5 @@ namespace NightmareEchoes.Unit
         {
             throw new System.NotImplementedException();
         }
-        
-        public override bool SecondaryCast(Units target)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override bool SecondaryCast(OverlayTile target, List<OverlayTile> aoeTiles)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

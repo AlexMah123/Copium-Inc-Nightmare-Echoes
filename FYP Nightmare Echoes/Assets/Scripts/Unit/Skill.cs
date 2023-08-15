@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using NightmareEchoes.Grid;
+using NightmareEchoes.Unit.Combat;
 using UnityEngine;
 
 //Created by JH
@@ -19,8 +21,6 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected AOEType aoeType;
         [SerializeField] protected SkillType skillType;
         
-        [Header("Two-step targeting")]
-        [SerializeField] protected bool hasSecondaryTargeting;
         [SerializeField] protected int secondaryDamage;
         [SerializeField] protected int secondaryRange;
         
@@ -82,12 +82,6 @@ namespace NightmareEchoes.Unit
             set => skillType = value;
         }
 
-        public bool HasSecondaryTargeting
-        {
-            get => hasSecondaryTargeting;
-            set => hasSecondaryTargeting = value;
-        }
-
         public int SecondaryDamage
         {
             get => secondaryDamage;
@@ -118,19 +112,14 @@ namespace NightmareEchoes.Unit
             throw new System.NotImplementedException();
         }
 
-        public virtual bool SecondaryCast(Units target)
+        public virtual bool SecondaryCast()
         {
             throw new System.NotImplementedException();
         }
 
-        public virtual bool SecondaryCast(OverlayTile target, List<OverlayTile> aoeTiles)
+        public virtual void Reset()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public virtual IEnumerator SecondaryStep()
-        {
-            throw new System.NotImplementedException();
+            
         }
     }
 

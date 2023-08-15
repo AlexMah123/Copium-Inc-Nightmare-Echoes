@@ -31,6 +31,8 @@ namespace NightmareEchoes.Unit.Combat
 
         private Camera cam;
 
+        private bool secondaryTargeting;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -48,7 +50,7 @@ namespace NightmareEchoes.Unit.Combat
 
         private void Update()
         {
-            if (activeSkill)
+            if (activeSkill && !secondaryTargeting)
             {
                 switch (activeSkill.TargetType)
                 {
@@ -95,6 +97,7 @@ namespace NightmareEchoes.Unit.Combat
             if (activeSkill != null && activeSkill == skill)
             {
                 activeSkill.StopAllCoroutines();
+                activeSkill.Reset();
                 activeSkill = null;
                 return;
             }
@@ -107,7 +110,10 @@ namespace NightmareEchoes.Unit.Combat
         private void EndTurn()
         {
             activeSkill.GetComponent<Units>().ShowPopUpText(activeSkill.SkillName);
+            activeSkill.Reset();
             activeSkill = null;
+
+            secondaryTargeting = false;
             
             RenderOverlayTile.Instance.ClearTargetingRenders();
 
@@ -160,7 +166,7 @@ namespace NightmareEchoes.Unit.Combat
         
         public void SecondaryTargeting()
         {
-            RenderOverlayTile.Instance.ClearTargetingRenders();
+            secondaryTargeting = true;
         }
         
         #endregion
@@ -209,6 +215,13 @@ namespace NightmareEchoes.Unit.Combat
         {
             
         }
+        
+        //Set Custom Range
+        public void SetCustomRange(List<OverlayTile> tiles)
+        {
+            RenderOverlayTile.Instance.ClearTargetingRenders();
+            skillRangeTiles = tiles;
+        }
 
         #endregion
         
@@ -239,11 +252,7 @@ namespace NightmareEchoes.Unit.Combat
             }
             
             //Trim Out of Bounds
-            foreach (var coord in possibleTileCoords.Where(coord =>  OverlayTileManager.Instance.map.ContainsKey(coord)))
-            {
-                if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
-                    tileRange.Add(tile);
-            }
+            tileRange = OverlayTileManager.Instance.TrimOutOfBounds(possibleTileCoords);
 
             return tileRange;
         }

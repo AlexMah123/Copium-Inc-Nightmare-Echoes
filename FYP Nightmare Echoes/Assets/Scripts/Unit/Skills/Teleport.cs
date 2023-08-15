@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Unit.Combat;
 using UnityEngine;
@@ -9,30 +11,65 @@ namespace NightmareEchoes.Unit
 {
     public class Teleport : Skill
     {
+        private bool enableTargeting;
+        private OverlayTile targetTile;
+        private List<OverlayTile> tileRanges;
+
+        private void Update()
+        {
+            if (!enableTargeting) return;
+            if (!Input.GetMouseButtonDown(0)) return;
+            var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            if (!hit) return;
+            var target = hit.collider.gameObject.GetComponent<OverlayTile>();
+            if (!target) return;
+            if (target.CheckUnitOnTile()) return;
+            
+            if (tileRanges.All(tile => tile != target)) return;
+
+            targetTile = target;
+        }
+
         public override bool Cast(Units target)
         {
-            CombatManager.Instance.SecondaryTargeting();
-            return true;
+            if (!enableTargeting)
+            {
+                CombatManager.Instance.SecondaryTargeting();
+                StartCoroutine(CastTeleport(target));
+            }
+            return GetDestination();
         }
 
-        public override bool SecondaryCast(Units target)
+        public override bool SecondaryCast()
         {
-            throw new System.NotImplementedException();
+            return GetDestination();
         }
 
-        public override bool SecondaryCast(OverlayTile target, List<OverlayTile> aoeTiles)
+        private bool GetDestination()
         {
-            throw new System.NotImplementedException();
-        }
-        
-        public virtual IEnumerator SecondaryStep()
-        {
-            throw new System.NotImplementedException();
+            return targetTile;
         }
 
-        private IEnumerator Test()
+        public override void Reset()
         {
-            yield return null;
+            enableTargeting = false;
+            targetTile = null;
+            tileRanges.Clear();
+        }
+
+        private IEnumerator CastTeleport(Units targetUnit)
+        {
+            var cm = CombatManager.Instance;
+            var range = cm.SquareRange(targetUnit.ActiveTile, secondaryRange);
+            tileRanges = OverlayTileManager.Instance.TrimOutOfBounds(range);
+            cm.SetCustomRange(tileRanges);
+
+            enableTargeting = true;
+
+            yield return new WaitUntil(GetDestination);
+            
+            targetUnit.transform.position = targetTile.transform.position;
+            targetUnit.UpdateLocation();
         }
     }
 }

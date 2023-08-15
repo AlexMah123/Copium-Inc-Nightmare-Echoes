@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.WSA;
@@ -139,6 +140,19 @@ namespace NightmareEchoes.Grid
             return neighbours;
         }
 
+        public List<OverlayTile> TrimOutOfBounds(List<Vector2Int> list)
+        {
+            var tileRange = new List<OverlayTile>();
+            
+            foreach (var coord in list.Where(coord => map.ContainsKey(coord)))
+            {
+                if (map.TryGetValue(coord, out var tile))
+                    tileRange.Add(tile);
+            }
+
+            return tileRange;
+        }
+        
     }
 }
 

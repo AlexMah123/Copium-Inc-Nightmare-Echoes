@@ -1134,6 +1134,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6673351901997673440, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: range
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673351901997673440, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: aoeType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673351901997673440, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: skillType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673351901997673440, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: targetArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673351901997673440, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: secondaryRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673351901997673440, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: skillDescription
       value: 'Target Hero or Enemy inside 2 Tiles Range, then Teleport him within
         3 Tiles Range of Target.
@@ -1147,6 +1167,10 @@ PrefabInstance:
 
         Cast on Enemy: Apply
         1 Vulnerable and 1 Weaken'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673351901997673440, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+      propertyPath: targetUnitAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6673351901997673441, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
       propertyPath: skillDescription
@@ -1228,12 +1252,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overlaytilePrefab: {fileID: 9094230702253638198, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
   overlayContainer: {fileID: 1901869097}
-  testUnitPos: {fileID: 1552525191}
-  UnitListOnScreen:
-  - {fileID: 1552525191}
-  - {fileID: 709965280}
-  - {fileID: 550274457}
-  TileisTaken: 0
 --- !u!114 &439802450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1784,11 +1802,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544033754}
   m_CullTransparentMesh: 1
---- !u!1 &550274457 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3376283141138650508, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
-  m_PrefabInstance: {fileID: 1961892244}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &556637474
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,11 +2316,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704776107}
   m_CullTransparentMesh: 1
---- !u!1 &709965280 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5583804447610931201, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
-  m_PrefabInstance: {fileID: 1429316038}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &734128878
 GameObject:
   m_ObjectHideFlags: 0
@@ -9509,11 +9517,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1547541196}
   m_CullTransparentMesh: 1
---- !u!1 &1552525191 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 726962122940716085, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
-  m_PrefabInstance: {fileID: 272944229}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1597697569
 GameObject:
   m_ObjectHideFlags: 0
@@ -12496,6 +12499,7 @@ MonoBehaviour:
   OverLayTileManagerObj: {fileID: 0}
   testBool: 0
   ifSelectedUnit: 0
+  UnitListOnScreen: []
   UnitLayer:
     serializedVersion: 2
     m_Bits: 1
