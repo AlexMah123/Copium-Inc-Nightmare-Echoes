@@ -30,6 +30,7 @@ namespace NightmareEchoes.Unit
 
         [Header("Tile Related")]
         [SerializeField] protected OverlayTile activeTile;
+        [SerializeField] protected OverlayTile isOccupiedTile;
 
         [Header("Buff Debuff Token")]
         [SerializeField] protected List<Modifier> buffList = new List<Modifier>();

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
 
 //created by Vinn, editted by Alex
 namespace NightmareEchoes.Grid
@@ -13,7 +14,7 @@ namespace NightmareEchoes.Grid
         public OverlayTile overlaytilePrefab;
         public GameObject overlayContainer;
 
-        [SerializeField] GameObject testUnitPos;
+
 
 
         //Dicitonary to store overlay tile position from grid pos
@@ -35,9 +36,6 @@ namespace NightmareEchoes.Grid
 
         private void Update()
         {
-
-                DetectPlayerPos();
-            
         }
 
 
@@ -139,26 +137,6 @@ namespace NightmareEchoes.Grid
             }
 
             return neighbours;
-        }
-
-        public void DetectPlayerPos()
-        {
-            var tileMap = gameObject.GetComponentInChildren<Tilemap>();
-
-            Vector3Int unitPos = new Vector3Int(Mathf.RoundToInt(testUnitPos.transform.position.x), Mathf.RoundToInt(testUnitPos.transform.position.y),0);
-
-            Vector3Int UnitGridPos = tileMap.WorldToCell(unitPos);
-
-            TileBase tile = tileMap.GetTile(UnitGridPos);
-
-            if (tileMap.GetTile(UnitGridPos))
-            {
-                //Debug.Log("This tile is occupied by player at" + UnitGridPos);
-            }
-            else 
-            {
-                //Debug.Log("tileNotOccupied");
-            }
         }
 
     }

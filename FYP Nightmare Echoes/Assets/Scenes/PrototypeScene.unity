@@ -1228,7 +1228,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overlaytilePrefab: {fileID: 9094230702253638198, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
   overlayContainer: {fileID: 1901869097}
-  testUnitPos: {fileID: 709965280}
+  testUnitPos: {fileID: 1552525191}
+  UnitListOnScreen:
+  - {fileID: 1552525191}
+  - {fileID: 709965280}
+  - {fileID: 550274457}
+  TileisTaken: 0
 --- !u!114 &439802450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1779,6 +1784,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544033754}
   m_CullTransparentMesh: 1
+--- !u!1 &550274457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3376283141138650508, guid: 1eb45e2040d68864e9ea187385ee4d5a, type: 3}
+  m_PrefabInstance: {fileID: 1961892244}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &556637474
 GameObject:
   m_ObjectHideFlags: 0
@@ -9499,6 +9509,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1547541196}
   m_CullTransparentMesh: 1
+--- !u!1 &1552525191 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 726962122940716085, guid: 040df1ba78d5dc94fb4d614ba8bc423c, type: 3}
+  m_PrefabInstance: {fileID: 272944229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1597697569
 GameObject:
   m_ObjectHideFlags: 0
@@ -12450,7 +12465,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.08839035, a: 0}
+  m_Color: {r: 1, g: 0, b: 0.08839035, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -12483,7 +12498,7 @@ MonoBehaviour:
   ifSelectedUnit: 0
   UnitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
 --- !u!1001 &601295391118310419
 PrefabInstance:
   m_ObjectHideFlags: 0

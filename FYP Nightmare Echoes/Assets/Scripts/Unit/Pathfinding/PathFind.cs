@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using NightmareEchoes.Grid;
+using Unity.Android.Types;
+using UnityEngine.Tilemaps;
 
 
 //created by Vinn
@@ -11,7 +13,7 @@ namespace NightmareEchoes.Unit.Pathfinding
     public static class PathFind
     {
         //The list at the end creates a limitor to how far the player can move which works for our player boundary range
-        public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> LimitTiles )
+        public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> LimitTiles)
         {
             List<OverlayTile> openList = new List<OverlayTile>();
             List<OverlayTile> endList = new List<OverlayTile>();
@@ -37,8 +39,9 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 foreach (var neighbour in neighbourTiles) 
                 {
-                    if (neighbour.isBlocked || endList.Contains(neighbour))
+                    if (neighbour.isBlocked || endList.Contains(neighbour) )
                     {
+                        neighbour.HideTile();
                         continue;
                     }
 
@@ -79,5 +82,6 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             return finishedList;
         }
+
     }
 }

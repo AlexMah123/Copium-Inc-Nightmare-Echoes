@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Inputs;
+using PlasticPipe.PlasticProtocol.Messages;
 
 //created by Vinn, editted by Alex and Ter
 namespace NightmareEchoes.Unit.Pathfinding
@@ -35,10 +36,11 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         List<OverlayTile> path = new List<OverlayTile>();
         List<OverlayTile> inRangeTiles = new List<OverlayTile>();
+        public List<GameObject> UnitListOnScreen;
 
         RaycastHit2D? focusedTileHit;
         OverlayTile overlayTile;
-
+        OverlayTileManager overlayTileManager;
 
         //Changes by Vinn
         [SerializeField] private LayerMask UnitLayer;
@@ -69,6 +71,9 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             PlayerInputPathfinding();
+
+
+
         }
 
         public void PlayerInputPathfinding()
@@ -94,7 +99,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                         currentSelectedUnitGO = unit.gameObject;
                         currentSelectedUnit = unit;
                         ifSelectedUnit = true;
-                        overlayTile.PlayerOnTile = true;
+                        //overlayTile.PlayerOnTile = true;
 
                         RaycastHit2D hitOverlayTile = Physics2D.Raycast(currentSelectedUnitGO.transform.position, Vector2.zero, Mathf.Infinity, overlayTileMask);
 
@@ -114,6 +119,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     ifSelectedUnit = false;
                 }
+
+                
 
             }
 
@@ -241,6 +248,13 @@ namespace NightmareEchoes.Unit.Pathfinding
                 item.HideTile();
             }
         }
+
+        private void UnitPos()
+        { 
+            
+        }
+
+
         #endregion
     }
 }

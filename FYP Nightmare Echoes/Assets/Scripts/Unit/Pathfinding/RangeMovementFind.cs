@@ -26,15 +26,26 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 foreach (var item in TileForPreviousStep)
                 {
-                    surroundingTiles.AddRange(OverlayTileManager.Instance.GetNeighbourTiles(item, new List<OverlayTile>()));
+                        surroundingTiles.AddRange(OverlayTileManager.Instance.GetNeighbourTiles(item, new List<OverlayTile>()));
                 }
 
                 inRangeTiles.AddRange(surroundingTiles);
                 TileForPreviousStep = surroundingTiles.Distinct().ToList();
                 stepCount++;
+
             }
 
-            return inRangeTiles.Distinct().ToList();
+            var cleanedTiles = new List<OverlayTile>();
+
+            foreach (var tile in inRangeTiles.Distinct().ToList())
+            {
+                if (!tile.CheckUnitOnTile())
+                {
+                    cleanedTiles.Add(tile);
+                }
+            }
+
+            return cleanedTiles.Distinct().ToList();
         }
     }
 }
