@@ -32,12 +32,11 @@ namespace NightmareEchoes.Unit.Pathfinding
                 inRangeTiles.AddRange(surroundingTiles);
                 TileForPreviousStep = surroundingTiles.Distinct().ToList();
                 stepCount++;
-
             }
 
             var removedTilesWithObstacles = inRangeTiles.Distinct().ToList().Where(tile => !tile.CheckUnitOnTile()).ToList();
 
-            return (from tile in removedTilesWithObstacles let path = PathFind.FindPath(startTile, tile, removedTilesWithObstacles) where path.Count <= range select tile).ToList();
+            return (from tile in removedTilesWithObstacles let path = PathFind.FindPath(startTile, tile, removedTilesWithObstacles) where path.Count <= range && path.Count > 0 select tile).ToList();
         }
     }
 }
