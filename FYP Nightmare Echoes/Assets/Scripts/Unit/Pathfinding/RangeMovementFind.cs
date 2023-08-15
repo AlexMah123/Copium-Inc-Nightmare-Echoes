@@ -35,17 +35,17 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             }
 
+            var removedTilesWithObstacles = inRangeTiles.Distinct().ToList().Where(tile => !tile.CheckUnitOnTile()).ToList();
+
             var cleanedTiles = new List<OverlayTile>();
-
-            foreach (var tile in inRangeTiles.Distinct().ToList())
-            {
-                if (!tile.CheckUnitOnTile())
-                {
+            foreach (var tile in removedTilesWithObstacles)
+            { 
+                var path = PathFind.FindPath(startTile, tile, removedTilesWithObstacles);
+                if (path.Count <= range)
                     cleanedTiles.Add(tile);
-                }
             }
-
-            return cleanedTiles.Distinct().ToList();
+            
+            return cleanedTiles;
         }
     }
 }
