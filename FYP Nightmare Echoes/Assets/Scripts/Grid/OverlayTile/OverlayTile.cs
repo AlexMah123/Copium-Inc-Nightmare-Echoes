@@ -69,18 +69,6 @@ namespace NightmareEchoes.Grid
         {
             return new Color(c.r, c.g, c.b, c.a);
         }
-        
-        public void isPlayerOnTile(bool isOnTile)
-        {
-            if (isOnTile == true)
-            {
-                HideTile();
-            }
-            else if (isOnTile == false)
-            { 
-                ShowMoveTile();
-            }
-        }
 
         public GameObject CheckUnitOnTile()
         {

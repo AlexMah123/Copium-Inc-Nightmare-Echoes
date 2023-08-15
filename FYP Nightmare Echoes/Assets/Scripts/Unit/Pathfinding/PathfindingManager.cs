@@ -35,7 +35,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] bool ifSelectedUnit = false;
 
         List<OverlayTile> path = new List<OverlayTile>();
-        List<OverlayTile> inRangeTiles = new List<OverlayTile>();
+        [SerializeField] List<OverlayTile> inRangeTiles = new List<OverlayTile>();
         public List<GameObject> UnitListOnScreen;
 
         RaycastHit2D? focusedTileHit;
@@ -71,9 +71,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             PlayerInputPathfinding();
-
-
-
         }
 
         public void PlayerInputPathfinding()
@@ -81,14 +78,8 @@ namespace NightmareEchoes.Unit.Pathfinding
             //if player clicked and has not previously selected a unit, raycast and check
             if (Input.GetMouseButtonDown(0) && !ifSelectedUnit)
             {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-
-                int overlayTileMask = LayerMask.GetMask("Overlay Tile");
-                int unitMask = LayerMask.GetMask("Unit");
-                
                 //Mouse Position to select unit
-                RaycastHit2D hitUnit = Physics2D.Raycast(mousePos2D, Vector2.zero, Mathf.Infinity, unitMask);
+                var hitUnit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
 
                 //if you hit a unit then get component
                 if (hitUnit)
@@ -99,9 +90,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                         currentSelectedUnitGO = unit.gameObject;
                         currentSelectedUnit = unit;
                         ifSelectedUnit = true;
-                        //overlayTile.PlayerOnTile = true;
 
-                        RaycastHit2D hitOverlayTile = Physics2D.Raycast(currentSelectedUnitGO.transform.position, Vector2.zero, Mathf.Infinity, overlayTileMask);
+                        var hitOverlayTile = Physics2D.Raycast(currentSelectedUnitGO.transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
 
                         if (hitOverlayTile.collider.gameObject.GetComponent<OverlayTile>())
                         {
@@ -119,12 +109,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     ifSelectedUnit = false;
                 }
-
-                
-
             }
-
-
+            
             focusedTileHit = GetFocusedTile();
 
             if (focusedTileHit.HasValue)
@@ -142,17 +128,13 @@ namespace NightmareEchoes.Unit.Pathfinding
                     if (currentSelectedUnitGO == null)
                     {
                         //PositionCharacterOnTile(overlayTile);
-
                     }
                     else if (currentSelectedUnitGO != null)
                     {
                         path = PathFind.FindPath(currentSelectedUnitGO.GetComponent<Units>().ActiveTile, overlayTile, inRangeTiles);
                         //overlayTile.isCurenttlyStandingOn = false;
-
                     }
                 }
-
-
             }
 
             if (path.Count > 0)
@@ -161,7 +143,6 @@ namespace NightmareEchoes.Unit.Pathfinding
                 MoveAlongPath(currentSelectedUnitGO, path);
             }
         }
-
 
         #region Movement along Tile
         public void MoveAlongPath(GameObject go, List<OverlayTile> pathL)
@@ -199,13 +180,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         #region Overlay Tile Related
         public RaycastHit2D? GetFocusedTile()
         {
-            //Converting mousePos to mousePos in the 2D world
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-
-            int overlayTileMask = LayerMask.GetMask("Overlay Tile");
-
-            RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos2D, Vector2.zero, Mathf.Infinity, overlayTileMask);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
 
             //Checks if the raycast has hit anything
             if (hits.Length > 0)
