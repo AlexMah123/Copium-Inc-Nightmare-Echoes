@@ -123,21 +123,19 @@ MonoBehaviour:
     resistModifier: 0
   _isHostile: 1
   _direction: 0
+  _typeOfUnit: 0
   activeTile: {fileID: 0}
+  isOccupiedTile: {fileID: 0}
   buffList: []
   debuffList: []
   tokenList: []
   basicAttack: {fileID: 0}
-  basicAttackDesc: Range Enemy Basic
   skill1: {fileID: 0}
-  skill1Desc: Range Enemy Skill 1
   skill2: {fileID: 0}
-  skill2Desc: Range Enemy Skill 2
   skill3: {fileID: 0}
-  skill3Desc: Range Enemy Skill 3
   passive: {fileID: 0}
-  passiveDesc: Range Enemy Passive
   sprites: []
+  basicAttackRange: 0
 --- !u!60 &964070419
 PolygonCollider2D:
   m_ObjectHideFlags: 0

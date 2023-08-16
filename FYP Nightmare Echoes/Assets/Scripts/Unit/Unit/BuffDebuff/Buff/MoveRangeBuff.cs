@@ -8,14 +8,14 @@ namespace NightmareEchoes.Unit
     [CreateAssetMenu(fileName = "MoveRangeBuff", menuName = "Unit Modifiers/Buff/MoveRange Buff")]
     public class MoveRangeBuff : Modifier
     {
-        [Space(15), Header("Status Effect Values")]
+        [Space(15), Header("Runtime Values")]
         [SerializeField] int moveRangeBuff;
         [SerializeField] int buffDuration;
 
         public override void AwakeStatusEffect()
         {
-            genericValue = moveRangeBuff;
-            modifierDuration = buffDuration;
+            moveRangeBuff = (int)genericValue;
+            buffDuration = modifierDuration;
 
         }
 
@@ -32,8 +32,12 @@ namespace NightmareEchoes.Unit
 
         public override void UpdateLifeTime()
         {
-            modifierDuration--;
+            buffDuration--;
         }
 
+        public override float ReturnLifeTime()
+        {
+            return buffDuration;
+        }
     }
 }

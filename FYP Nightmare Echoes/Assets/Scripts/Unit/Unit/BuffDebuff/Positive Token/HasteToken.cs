@@ -5,17 +5,16 @@ using UnityEngine;
 //created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "ResistDebuff", menuName = "Unit Modifiers/Debuff/Resist Debuff")]
-    public class ResistDebuff : Modifier
+    [CreateAssetMenu(fileName = "HasteToken", menuName = "Unit Modifiers/PositiveToken/Haste Token")]
+    public class HasteToken : Modifier
     {
         [Space(15), Header("Runtime Values")]
-        [SerializeField] float resistDebuff;
-        [SerializeField] int debuffDuration;
+        [SerializeField] int buffDuration;
 
         public override void AwakeStatusEffect()
         {
-            resistDebuff = genericValue;
-            debuffDuration = modifierDuration;
+            buffDuration = modifierDuration;
+
         }
 
         public override void ApplyEffect(GameObject unit)
@@ -25,19 +24,17 @@ namespace NightmareEchoes.Unit
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            mod.resistModifier -= resistDebuff;
             return mod;
         }
 
         public override void UpdateLifeTime()
         {
-            debuffDuration--;
+            buffDuration--;
         }
 
         public override float ReturnLifeTime()
         {
-            return debuffDuration;
+            return buffDuration;
         }
-
     }
 }

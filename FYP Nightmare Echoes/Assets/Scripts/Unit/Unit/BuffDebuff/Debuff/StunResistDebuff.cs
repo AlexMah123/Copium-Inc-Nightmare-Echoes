@@ -9,14 +9,14 @@ namespace NightmareEchoes.Unit
     [CreateAssetMenu(fileName = "StunResistDebuff", menuName = "Unit Modifiers/Debuff/StunResist Debuff")]
     public class StunResistDebuff : Modifier
     {
-        [Space(15), Header("Status Effect Values")]
+        [Space(15), Header("Runtime Values")]
         [SerializeField] float stunResistDebuff;
         [SerializeField] int debuffDuration;
 
         public override void AwakeStatusEffect()
         {
-            genericValue = stunResistDebuff;
-            modifierDuration = debuffDuration;
+            stunResistDebuff = genericValue;
+            debuffDuration = modifierDuration;
 
         }
 
@@ -33,9 +33,13 @@ namespace NightmareEchoes.Unit
 
         public override void UpdateLifeTime()
         {
-            modifierDuration--;
+            debuffDuration--;
 
         }
 
+        public override float ReturnLifeTime()
+        {
+            return debuffDuration;
+        }
     }
 }

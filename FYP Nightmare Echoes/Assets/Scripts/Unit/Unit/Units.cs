@@ -242,8 +242,9 @@ namespace NightmareEchoes.Unit
         protected virtual void Start()
         {
             stats.Health = stats.MaxHealth;
+            AddBuff(GetStatusEffect.Instance.CreateModifier("MoveRange Buff", 2, 1));
         }
-        
+
         protected virtual void Update()
         {
             if(sprites.Count > 0)
@@ -273,8 +274,8 @@ namespace NightmareEchoes.Unit
 
         #region Override Functions
         public virtual void Move()
-        { 
-        
+        {
+
         }
 
         public virtual void BasicAttack()
@@ -282,25 +283,30 @@ namespace NightmareEchoes.Unit
 
         }
 
+
         public virtual void Passive()
         {
 
         }
+
 
         public virtual void Skill1()
         {
 
         }
 
+
         public virtual void Skill2()
         {
 
         }
 
+
         public virtual void Skill3()
         {
 
         }
+
 
         public virtual void TakeDamage(int damage)
         {
@@ -349,7 +355,15 @@ namespace NightmareEchoes.Unit
                     buff.AwakeStatusEffect();
                     TokenList.Add(buff);
                     break;
+
+                case ModifierType.NEGATIVETOKEN:
+                    buff.AwakeStatusEffect();
+                    TokenList.Add(buff);
+                    break;
+
             }
+
+            UpdateAllStats();
         }
 
         //call only on instantiation of object
@@ -387,7 +401,7 @@ namespace NightmareEchoes.Unit
             {
                 BuffList[i].UpdateLifeTime();
 
-                if (BuffList[i].modifierDuration <= 0)
+                if (BuffList[i].ReturnLifeTime() <= 0)
                 {
                     BuffList.RemoveAt(i);
                 }
@@ -397,7 +411,7 @@ namespace NightmareEchoes.Unit
             {
                 DebuffList[i].UpdateLifeTime();
 
-                if (DebuffList[i].modifierDuration <= 0)
+                if (DebuffList[i].ReturnLifeTime() <= 0)
                 {
                     DebuffList.RemoveAt(i);
                 }
@@ -407,7 +421,7 @@ namespace NightmareEchoes.Unit
             {
                 TokenList[i].UpdateLifeTime();
 
-                if (TokenList[i].modifierDuration <= 0)
+                if (TokenList[i].ReturnLifeTime() <= 0)
                 {
                     TokenList.RemoveAt(i);
                 }

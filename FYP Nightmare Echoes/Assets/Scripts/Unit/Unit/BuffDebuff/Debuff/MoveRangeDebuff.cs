@@ -8,15 +8,14 @@ namespace NightmareEchoes.Unit
     [CreateAssetMenu(fileName = "MoveRangeDebuff", menuName = "Unit Modifiers/Debuff/MoveRange Debuff")]
     public class MoveRangeDebuff : Modifier
     {
-        [Space(15), Header("Status Effect Values")]
+        [Space(15), Header("Runtime Values")]
         [SerializeField] int moveRangeDebuff;
         [SerializeField] int debuffDuration;
 
         public override void AwakeStatusEffect()
         {
-            genericValue = moveRangeDebuff;
-            modifierDuration = debuffDuration;
-
+            moveRangeDebuff = (int)genericValue;
+            debuffDuration = modifierDuration;
         }
 
         public override void ApplyEffect(GameObject unit)
@@ -32,9 +31,12 @@ namespace NightmareEchoes.Unit
 
         public override void UpdateLifeTime()
         {
-            modifierDuration--;
+            debuffDuration--;
 
         }
-
+        public override float ReturnLifeTime()
+        {
+            return debuffDuration;
+        }
     }
 }

@@ -470,11 +470,11 @@ namespace NightmareEchoes.TurnOrder
                                 break;
 
                             case ModifierType.POSITIVETOKEN:
-                                statusEffectImage.color = Color.yellow;
+                                statusEffectImage.color = new Color(0, 0.7f, 1, 1);
                                 break;
 
                             case ModifierType.NEGATIVETOKEN:
-                                //enter different color
+                                statusEffectImage.color = Color.yellow;
                                 break;
                         }
 
@@ -525,11 +525,11 @@ namespace NightmareEchoes.TurnOrder
                                 break;
 
                             case ModifierType.POSITIVETOKEN:
-                                statusEffectImage.color = Color.yellow;
+                                statusEffectImage.color = new Color(0, 0.7f, 1, 1);
                                 break;
 
                             case ModifierType.NEGATIVETOKEN:
-                                //enter different color
+                                statusEffectImage.color = Color.yellow;
                                 break;
                         }
 
@@ -581,27 +581,31 @@ namespace NightmareEchoes.TurnOrder
                         {
                             glossaryObjText.text =
                             $"{currentUnitTotalStatusEffectList[i].description} " +
-                            $"(<color=green>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
+                            $"(<color=green>{currentUnitTotalStatusEffectList[i].genericValue}</color>)" +
+                            $" (<color=#A5FFF1>Duration: {currentUnitTotalStatusEffectList[i].ReturnLifeTime()}</color>)";
                         }
                         else if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.DEBUFF)
                         {
                             glossaryObjText.text =
                             $"{currentUnitTotalStatusEffectList[i].description} " +
-                            $"(<color=#FF6C6C>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
+                            $"(<color=red>{currentUnitTotalStatusEffectList[i].genericValue}</color>)" +
+                            $" (<color=#A5FFF1>Duration: {currentUnitTotalStatusEffectList[i].ReturnLifeTime()}</color>)";
                         }
                         else if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.POSITIVETOKEN)
                         {
                             glossaryObjText.text =
                             $"{currentUnitTotalStatusEffectList[i].description} " +
-                            $"(<color=blue>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
+                            $"(<color=#00BAFF>{currentUnitTotalStatusEffectList[i].genericValue}</color>)" +
+                            $" (<color=#A5FFF1>Duration: {currentUnitTotalStatusEffectList[i].ReturnLifeTime()}</color>)";
                         }
                         else if (currentUnitTotalStatusEffectList[i].modifierType == ModifierType.NEGATIVETOKEN)
                         {
                             glossaryObjText.text =
                             $"{currentUnitTotalStatusEffectList[i].description} " +
-                            $"(<color=yellow>{currentUnitTotalStatusEffectList[i].genericValue}</color>)";
+                            $"(<color=yellow>{currentUnitTotalStatusEffectList[i].genericValue}</color>)" +
+                            $" (<color=#A5FFF1>Duration: {currentUnitTotalStatusEffectList[i].ReturnLifeTime()}</color>)";
                         }
-                        
+
 
                         glossaryObj.SetActive(true);
                     }
@@ -639,25 +643,30 @@ namespace NightmareEchoes.TurnOrder
                         {
                             glossaryObjText.text =
                             $"{inspectedUnitTotalStatusEffectList[i].description} " +
-                            $"(<color=green>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
+                            $"(<color=green>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)" +
+                            $" (<color=#A5FFF1>Duration: {inspectedUnitTotalStatusEffectList[i].ReturnLifeTime()}</color>)";
                         }
                         else if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.DEBUFF)
                         {
                             glossaryObjText.text =
                             $"{inspectedUnitTotalStatusEffectList[i].description} " +
-                            $"(<color=#FF6C6C>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
+                            $"(<color=red>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)" +
+                            $" (<color=#A5FFF1>Duration: {inspectedUnitTotalStatusEffectList[i].ReturnLifeTime()}</color>)";
+
                         }
                         else if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.POSITIVETOKEN)
                         {
                             glossaryObjText.text =
                             $"{inspectedUnitTotalStatusEffectList[i].description} " +
-                            $"(<color=blue>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
+                            $"(<color=#00BAFF>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)" +
+                            $" (<color=#A5FFF1>Duration: {inspectedUnitTotalStatusEffectList[i].ReturnLifeTime()}</color>)";
                         }
                         else if (inspectedUnitTotalStatusEffectList[i].modifierType == ModifierType.NEGATIVETOKEN)
                         {
                             glossaryObjText.text =
                             $"{inspectedUnitTotalStatusEffectList[i].description} " +
-                            $"(<color=yellow>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)";
+                            $"(<color=yellow>{inspectedUnitTotalStatusEffectList[i].genericValue}</color>)" +
+                            $" (<color=#A5FFF1>Duration: {inspectedUnitTotalStatusEffectList[i].ReturnLifeTime()}</color>)";
                         }
 
                         glossaryObj.SetActive(true);
