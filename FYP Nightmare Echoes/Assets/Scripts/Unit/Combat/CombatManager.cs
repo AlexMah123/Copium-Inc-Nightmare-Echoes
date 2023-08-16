@@ -94,12 +94,17 @@ namespace NightmareEchoes.Unit.Combat
             //Stop Coroutines
             StopAllCoroutines();
 
-            if (activeSkill != null && activeSkill == skill)
+            secondaryTargeting = false;
+
+            if (activeSkill != null)
             {
                 activeSkill.StopAllCoroutines();
                 activeSkill.Reset();
-                activeSkill = null;
-                return;
+                if (activeSkill == skill)
+                {
+                    activeSkill = null;
+                    return;
+                }
             }
             
             activeSkill = skill;

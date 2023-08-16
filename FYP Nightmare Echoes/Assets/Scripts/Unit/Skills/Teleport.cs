@@ -34,14 +34,10 @@ namespace NightmareEchoes.Unit
         {
             if (!enableTargeting)
             {
+                enableTargeting = true;
                 CombatManager.Instance.SecondaryTargeting();
                 StartCoroutine(CastTeleport(target));
             }
-            return GetDestination();
-        }
-
-        public override bool SecondaryCast()
-        {
             return GetDestination();
         }
 
@@ -54,7 +50,6 @@ namespace NightmareEchoes.Unit
         {
             enableTargeting = false;
             targetTile = null;
-            tileRanges.Clear();
         }
 
         private IEnumerator CastTeleport(Units targetUnit)
@@ -63,8 +58,6 @@ namespace NightmareEchoes.Unit
             var range = cm.SquareRange(targetUnit.ActiveTile, secondaryRange);
             tileRanges = OverlayTileManager.Instance.TrimOutOfBounds(range);
             cm.SetCustomRange(tileRanges);
-
-            enableTargeting = true;
 
             yield return new WaitUntil(GetDestination);
             
