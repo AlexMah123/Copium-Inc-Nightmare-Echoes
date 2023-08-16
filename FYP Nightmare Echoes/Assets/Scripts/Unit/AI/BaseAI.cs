@@ -6,47 +6,58 @@ using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine.Tilemaps;
 using System.Linq;
 
-//by Terrence
+//by Terrence, editted by alex
 namespace NightmareEchoes.Unit.AI
 {
     public class BaseAI : MonoBehaviour
     {
+        [Header("Hero List + Unit List")]
         [SerializeField] List<Units> heroList, unitList;
-        [SerializeField] Units thisUnit, target;
-        Units closestHero;
+
+        [Space(20), Header("Path List to hero")]
+        public List<OverlayTile> pathList = new List<OverlayTile>();
+
+        Units target, closestHero;
         float closestRange, targetRange;
-        bool inAtkRange;
-        bool inMoveAtkRange;
+        bool inAtkRange, inMoveAtkRange;
         int rangePlaceholder = 1;
         List<OverlayTile> moveableTiles;
         List<OverlayTile> attackFromLocations = new List<OverlayTile>();
 
         OverlayTile currTile, targetTile;
         OverlayTile moveToTile, bestMoveTile;
-        List<OverlayTile> pathList = new List<OverlayTile>();
+
+        
+
         Dictionary<Units, int> distancesDict = new Dictionary<Units, int>();
         Dictionary<string, float> utilityDictionary = new Dictionary<string, float>();
-        
         Dictionary<Units, float> aggroDictionary = new Dictionary<Units, float>();
         float healthPercent;
+
+        private void Awake()
+        {
+            
+        }
 
         private void Start()
         {
             
         }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("============= New Action! =============");
-                MakeDecision();
+                //MakeDecision();
             }
 
-            StartCoroutine(MoveProcess());
+            //StartCoroutine(MoveProcess());
         }
-        public void MakeDecision()
+
+        public void MakeDecision(Units thisUnit)
         {
-            SortHeroesByDistance();
+            SortHeroesByDistance(thisUnit);
             currTile = thisUnit.ActiveTile;
             moveableTiles = RangeMovementFind.TileMovementRange(currTile, thisUnit.stats.MoveRange);
 
@@ -65,7 +76,7 @@ namespace NightmareEchoes.Unit.AI
             {
                 //example list
                 case "Attack":
-                    AggressiveAction();
+                    AggressiveAction(thisUnit);
                     break;
                 case "Retreat":
                     Debug.Log("Retreat Triggered");
@@ -73,7 +84,7 @@ namespace NightmareEchoes.Unit.AI
             }
         }
 
-        void AggressiveAction()
+        void AggressiveAction(Units thisUnit)
         {
             //Range hardcoded as placeholder
             if (thisUnit.TypeOfUnit == TypeOfUnit.RANGED_UNIT)
@@ -164,7 +175,8 @@ namespace NightmareEchoes.Unit.AI
                 //wait until in position, then pass turn
             }
         }
-        void SortHeroesByDistance()
+
+        void SortHeroesByDistance(Units thisUnit)
         {
             UpdateLists();
 
@@ -249,7 +261,7 @@ namespace NightmareEchoes.Unit.AI
             }
             else return false;
         }
-        IEnumerator MoveProcess()
+        public IEnumerator MoveProcess(Units thisUnit)
         {
             if (pathList.Count > 0) 
             {

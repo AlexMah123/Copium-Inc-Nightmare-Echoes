@@ -19,7 +19,7 @@ namespace NightmareEchoes.Unit
 
         public override void ApplyEffect(GameObject unit)
         {
-            
+            unit.GetComponent<Units>().StunToken = true;
         }
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)

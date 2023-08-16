@@ -21,34 +21,49 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected GameObject damageTextPrefab;
         //[SerializeField] protected GameObject popUpTextPrefab;
 
-        public BaseStats baseStats = new BaseStats();
-        public BaseStats stats = new BaseStats();
-        public ModifiersStruct modifiedStats = new();
-
         [SerializeField] protected bool _isHostile;
         [SerializeField] protected Direction _direction;
         [SerializeField] protected TypeOfUnit _typeOfUnit;
 
-        [Header("Tile Related")]
-        [SerializeField] protected OverlayTile activeTile;
-        [SerializeField] protected OverlayTile isOccupiedTile;
+        public BaseStats baseStats = new BaseStats();
+        public BaseStats stats = new BaseStats();
+        public ModifiersStruct modifiedStats = new();
 
-        [Header("Buff Debuff Token")]
+        [Space(15), Header("Buff Debuff")]
         [SerializeField] protected List<Modifier> buffList = new List<Modifier>();
         [SerializeField] protected List<Modifier> debuffList = new List<Modifier>();
         [SerializeField] protected List<Modifier> tokenList = new List<Modifier>();
 
-        [Header("Unit Skills")]
+        [Space(15), Header("Positive Token Bools")]
+        [SerializeField] protected bool dodgeToken;
+        [SerializeField] protected bool blockToken;
+        [SerializeField] protected bool strengthToken;
+        [SerializeField] protected bool hasteToken;
+        [SerializeField] protected bool barrierToken;
+        [SerializeField] protected bool stealthToken;
+
+        [Space(15), Header("Negative Token Bools")]
+        [SerializeField] protected bool blindToken;
+        [SerializeField] protected bool vulnerableToken;
+        [SerializeField] protected bool weakenToken;
+        [SerializeField] protected bool vertigoToken;
+        [SerializeField] protected bool stunToken;
+        [SerializeField] protected bool immobilizeToken;
+
+
+        [Space(15), Header("Unit Skills")]
         [SerializeField] protected Skill basicAttack;
         [SerializeField] protected Skill skill1;
         [SerializeField] protected Skill skill2;
         [SerializeField] protected Skill skill3;
         [SerializeField] protected Skill passive;
 
-
-        [Tooltip("Sprites are ordered in north, south, east, west")]
+        [Space(15),Header("Sprite Directions"), Tooltip("Sprites are ordered in north, south, east, west")]
         [SerializeField] List<Sprite> sprites = new List<Sprite>(); //ordered in NSEW
 
+        [Space(15), Header("Tile Related")]
+        [SerializeField] protected OverlayTile activeTile;
+        [SerializeField] protected OverlayTile isOccupiedTile;
 
         #region Class Properties
 
@@ -97,13 +112,84 @@ namespace NightmareEchoes.Unit
 
         #endregion
 
-        #region Tile Related
-        public OverlayTile ActiveTile
+
+        #region Positive Token Bool
+        public bool DodgeToken
         {
-            get => activeTile;
-            set => activeTile = value;
+            get => dodgeToken;
+            set => dodgeToken = value;
+        }
+
+        public bool BlockToken
+        {
+            get => blockToken;
+            set => blockToken = value;
+        }
+
+        public bool StrengthToken
+        {
+            get => strengthToken;
+            set => strengthToken = value;
+        }
+
+        public bool HasteToken
+        {
+            get => hasteToken;
+            set => hasteToken = value;
+        }
+
+        public bool BarrierToken
+        {
+            get => barrierToken;
+            set => barrierToken = value;
+        }
+
+        public bool StealthToken
+        {
+            get => stealthToken;
+            set => stealthToken = value;
+        }
+        #endregion 
+
+
+        #region Negative Token Bool
+        public bool BlindToken
+        {
+            get => blindToken;
+            set => blindToken = value;
+        }
+
+        public bool VulnerableToken
+        {
+            get => vulnerableToken;
+            set => vulnerableToken = value;
+        }
+
+        public bool WeakenToken
+        {
+            get => weakenToken;
+            set => weakenToken = value;
+        }
+
+        public bool VertigoToken
+        {
+            get => vertigoToken;
+            set => vertigoToken = value;
+        }
+
+        public bool StunToken
+        {
+            get => stunToken;
+            set => stunToken = value;
+        }
+
+        public bool ImmobilizeToken
+        {
+            get => immobilizeToken;
+            set => immobilizeToken = value;
         }
         #endregion
+
 
         #region Buff Debuff Token
         public List<Modifier> BuffList
@@ -124,6 +210,7 @@ namespace NightmareEchoes.Unit
             set => tokenList = value;
         }
         #endregion
+
 
         #region Unit Skill Properties
         public string BasicAttackDesc
@@ -210,6 +297,14 @@ namespace NightmareEchoes.Unit
         }
         #endregion
 
+
+        #region Tile Related
+        public OverlayTile ActiveTile
+        {
+            get => activeTile;
+            set => activeTile = value;
+        }
+        #endregion
         #endregion
 
         protected virtual void Awake()
@@ -247,7 +342,12 @@ namespace NightmareEchoes.Unit
 
         protected virtual void Update()
         {
-            if(sprites.Count > 0)
+            if (stats.Health == 0)
+            {
+                Destroy(gameObject);
+            }
+
+            if (sprites.Count > 0)
             {
                 switch (Direction)
                 {
@@ -377,7 +477,7 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        public void ApplyAllStatusEffects()
+        public void ApplyAllBuffDebuffs()
         {
             for (int i = 0; i < BuffList.Count; i++)
             {
@@ -388,7 +488,10 @@ namespace NightmareEchoes.Unit
             {
                 DebuffList[i].ApplyEffect(gameObject);
             }
+        }
 
+        public void ApplyAllTokenEffects()
+        {
             for (int i = 0; i < TokenList.Count; i++)
             {
                 TokenList[i].ApplyEffect(gameObject);
@@ -502,7 +605,10 @@ namespace NightmareEchoes.Unit
         public int Health
         {
             get => _health;
-            set => _health = value;
+            set
+            {
+                _health = Mathf.Clamp(value, 0, _maxHealth);
+            }
         }
 
         public int MaxHealth

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5583804447610931203}
   - component: {fileID: 5583804447610931200}
-  - component: {fileID: 5286765588085795049}
   - component: {fileID: 8893637955381217503}
+  - component: {fileID: 5286765588085795049}
   - component: {fileID: 5583804447610931213}
   - component: {fileID: 2309720267678754650}
   m_Layer: 6
@@ -88,22 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5286765588085795049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583804447610931201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be6f037fb0b5df942b4d24a692fd5e6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heroList: []
-  unitList: []
-  thisUnit: {fileID: 8893637955381217503}
-  target: {fileID: 0}
 --- !u!114 &8893637955381217503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +104,9 @@ MonoBehaviour:
   _name: Melee Enemy
   _sprite: {fileID: -331225865, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  _isHostile: 1
+  _direction: 0
+  _typeOfUnit: 1
   baseStats:
     _maxHealth: 20
     _speed: 5
@@ -138,21 +125,45 @@ MonoBehaviour:
     moveRangeModifier: 0
     stunResistModifier: 0
     resistModifier: 0
-  _isHostile: 1
-  _direction: 0
-  _typeOfUnit: 1
-  activeTile: {fileID: 0}
-  isOccupiedTile: {fileID: 0}
   buffList: []
   debuffList: []
   tokenList: []
+  dodgeToken: 0
+  blockToken: 0
+  strengthToken: 0
+  hasteToken: 0
+  barrierToken: 0
+  stealthToken: 0
+  blindToken: 0
+  vulnerableToken: 0
+  weakenToken: 0
+  vertigoToken: 0
+  stunToken: 0
+  immobilizeToken: 0
   basicAttack: {fileID: 0}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
   skill3: {fileID: 0}
   passive: {fileID: 0}
   sprites: []
+  activeTile: {fileID: 0}
+  isOccupiedTile: {fileID: 0}
   basicAttackRange: 0
+--- !u!114 &5286765588085795049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583804447610931201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be6f037fb0b5df942b4d24a692fd5e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroList: []
+  unitList: []
+  pathList: []
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4

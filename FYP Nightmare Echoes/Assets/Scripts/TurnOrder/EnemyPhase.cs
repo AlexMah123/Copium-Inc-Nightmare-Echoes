@@ -1,29 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
+using NightmareEchoes.Unit.AI;
+using NightmareEchoes.Unit.Pathfinding;
+using Unity.VisualScripting.Antlr3.Runtime.Collections;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
 {
     public class EnemyPhase : Phase
     {
+        BaseAI enemyAI;
+        bool finishedMoving = false;
+
         protected override void OnEnter()
         {
-            //controller.CurrentUnit.TakeDamage(2);
+            //insert start of turn effects
+            enemyAI = controller.CurrentUnit.GetComponent<BaseAI>();
+
             controller.StartCoroutine(EnemyTurn());
 
-            //insert start of turn effects
         }
 
         protected override void OnUpdate()
         {
-
+            //start a couroutine to move
+            enemyAI.StartCoroutine(enemyAI.MoveProcess(controller.CurrentUnit));
         }
 
         protected override void OnExit()
         {
             //update effects & stats
-            controller.CurrentUnit.ApplyAllStatusEffects();
+            controller.CurrentUnit.ApplyAllBuffDebuffs();
             controller.CurrentUnit.UpdateAllStatusEffectLifeTime();
             controller.CurrentUnit.UpdateAllStats();
 
@@ -41,7 +50,10 @@ namespace NightmareEchoes.TurnOrder
             
             yield return new WaitForSeconds(controller.enemyDelay);
 
-            
+
+            enemyAI.MakeDecision(controller.CurrentUnit);
+            Debug.Log("Make Decision");
+            yield return new WaitUntil(() => enemyAI.pathList.Count == 0);
 
             //if there is at least 2 elements in queue
             if (controller.CurrentUnitQueue.Count > 1)
