@@ -144,9 +144,18 @@ namespace NightmareEchoes.Unit.Combat
 
         public void SetActiveAoe(Skill skill, List<OverlayTile> tiles)
         {
-            activeAoes.Add(skill, tiles);
-            Debug.Log(tiles);
-            activeAoesCD.Add(skill, skill.AoeDuration);
+            //Check for dupe (usually wont happen as skill cd is longer than aoe duration but just in case)
+            if (activeAoes.TryGetValue(skill, out var list))
+            {
+                RenderOverlayTile.Instance.ClearCustomRenders(list);
+                activeAoes[skill] = tiles;
+                activeAoesCD[skill] = skill.AoeDuration;
+            }
+            else
+            {
+                activeAoes.Add(skill, tiles);
+                activeAoesCD.Add(skill, skill.AoeDuration);
+            }
         }
 
         #endregion
@@ -247,7 +256,6 @@ namespace NightmareEchoes.Unit.Combat
             foreach (var kvp in activeAoes)
             {
                 RenderOverlayTile.Instance.RenderCustomColor(kvp.Value, kvp.Key.AoeColor);
-                Debug.Log($"{kvp.Key} {kvp.Value.Count}");
             }
         }
         

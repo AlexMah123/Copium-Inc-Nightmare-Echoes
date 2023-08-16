@@ -78,7 +78,7 @@ namespace NightmareEchoes.Grid
             }
         }
 
-        public void HideCustomRenders(List<OverlayTile> list)
+        public void ClearCustomRenders(List<OverlayTile> list)
         {
             foreach (var tile in list)
             {

@@ -15,8 +15,9 @@ namespace NightmareEchoes.Unit
 
         public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
-            CombatManager.Instance.SetActiveAoe(this, aoeTiles);
+            var copy = new List<OverlayTile>(aoeTiles);
 
+            CombatManager.Instance.SetActiveAoe(this, copy);
             return true;
         }
     }
