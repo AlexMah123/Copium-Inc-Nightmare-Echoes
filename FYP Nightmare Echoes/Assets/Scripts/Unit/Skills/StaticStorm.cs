@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using NightmareEchoes.Grid;
+using NightmareEchoes.Unit.Combat;
 using UnityEngine;
 
 namespace NightmareEchoes.Unit
@@ -14,7 +15,9 @@ namespace NightmareEchoes.Unit
 
         public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
-            throw new System.NotImplementedException();
+            CombatManager.Instance.SetActiveAoe(this, aoeTiles);
+
+            return true;
         }
     }
 }

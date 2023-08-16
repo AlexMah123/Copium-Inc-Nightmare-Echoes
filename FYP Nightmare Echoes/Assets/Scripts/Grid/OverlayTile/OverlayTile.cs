@@ -28,7 +28,7 @@ namespace NightmareEchoes.Grid
         [SerializeField] Color moveColor;
         [SerializeField] Color attackRangeColor;
         [SerializeField] Color aoeRangeColor;
-        
+
         [SerializeField] Color enemyColor;
         [SerializeField] Color friendlyColor;
         
@@ -60,6 +60,11 @@ namespace NightmareEchoes.Grid
         public void ShowFriendlyTile()
         {
             sr.color = ConvertColor(friendlyColor);
+        }
+
+        public void ShowCustomColor(Color c)
+        {
+            sr.color = ConvertColor(c);
         }
         
         public void HideTile()

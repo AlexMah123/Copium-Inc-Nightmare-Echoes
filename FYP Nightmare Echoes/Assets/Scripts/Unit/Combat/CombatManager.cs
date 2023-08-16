@@ -28,6 +28,10 @@ namespace NightmareEchoes.Unit.Combat
         private Skill activeSkill;
         private List<OverlayTile> skillRangeTiles;
         private List<OverlayTile> aoePreviewTiles = new();
+        
+        //Active AOEs
+        private Dictionary<Skill, List<OverlayTile>> activeAoes = new();
+        private Dictionary<Skill, int> activeAoesCD = new();
 
         private Camera cam;
 
@@ -84,8 +88,34 @@ namespace NightmareEchoes.Unit.Combat
             
             StartCoroutine(UpdateUnitPositionsAtStart());
         }
+
+        #region Logic Checks
+        private void OnTurnStart()
+        {
+            
+        }
+
+        private void CheckAoe()
+        {
+            
+        }
         
-        //Player Calls
+        private void EndTurn()
+        {
+            activeSkill.GetComponent<Units>().ShowPopUpText(activeSkill.SkillName);
+            activeSkill.Reset();
+            activeSkill = null;
+
+            secondaryTargeting = false;
+            
+            RenderOverlayTile.Instance.ClearTargetingRenders();
+
+            turnEnded = true;
+        }
+        #endregion
+
+        #region Public Calls
+
         public void SelectSkill(Units unit, Skill skill)
         {
             //Clear Active Renders 
@@ -112,19 +142,15 @@ namespace NightmareEchoes.Unit.Combat
             skillRangeTiles = CalculateRange(unit, skill);
         }
 
-        private void EndTurn()
+        public void SetActiveAoe(Skill skill, List<OverlayTile> tiles)
         {
-            activeSkill.GetComponent<Units>().ShowPopUpText(activeSkill.SkillName);
-            activeSkill.Reset();
-            activeSkill = null;
-
-            secondaryTargeting = false;
-            
-            RenderOverlayTile.Instance.ClearTargetingRenders();
-
-            turnEnded = true;
+            activeAoes.Add(skill, tiles);
+            Debug.Log(tiles);
+            activeAoesCD.Add(skill, skill.AoeDuration);
         }
-        
+
+        #endregion
+
         #region Targeting
         private void TargetUnit()
         {
@@ -218,7 +244,11 @@ namespace NightmareEchoes.Unit.Combat
         //Active AOEs
         private void RenderActiveAoe()
         {
-            
+            foreach (var kvp in activeAoes)
+            {
+                RenderOverlayTile.Instance.RenderCustomColor(kvp.Value, kvp.Key.AoeColor);
+                Debug.Log($"{kvp.Key} {kvp.Value.Count}");
+            }
         }
         
         //Set Custom Range

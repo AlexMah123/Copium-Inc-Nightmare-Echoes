@@ -70,6 +70,22 @@ namespace NightmareEchoes.Grid
             }
         }
 
+        public void RenderCustomColor(List<OverlayTile> list, Color c)
+        {
+            foreach (var tile in list)
+            {
+                tile.ShowCustomColor(c);
+            }
+        }
+
+        public void HideCustomRenders(List<OverlayTile> list)
+        {
+            foreach (var tile in list)
+            {
+                tile.HideTile();
+            }
+        }
+
         public void ClearTargetingRenders()
         {
             foreach (var tile in targetingRenders)
