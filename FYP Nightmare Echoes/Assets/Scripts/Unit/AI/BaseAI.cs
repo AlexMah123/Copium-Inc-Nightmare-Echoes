@@ -27,7 +27,8 @@ namespace NightmareEchoes.Unit.AI
         OverlayTile currTile, targetTile;
         OverlayTile moveToTile, bestMoveTile;
 
-        
+        Color pathClr = Color.yellow;
+        Color moveableClr = new Color(1, 0.8f, 0.8f);
 
         Dictionary<Units, int> distancesDict = new Dictionary<Units, int>();
         Dictionary<string, float> utilityDictionary = new Dictionary<string, float>();
@@ -133,7 +134,15 @@ namespace NightmareEchoes.Unit.AI
                     bestMoveTile = attackFromLocations[0];
                     for (int i = 0; i < attackFromLocations.Count; i++)
                     {
+                        if (attackFromLocations[i].CheckUnitOnTile().gameObject.CompareTag("Unit"))
+                        {
+                            continue;
+                        }
                         if (findDist(targetTile, attackFromLocations[i]) > findDist(targetTile, bestMoveTile))
+                        {
+                            bestMoveTile = attackFromLocations[i];
+                        }
+                        else if ((findDist(targetTile, attackFromLocations[i]) == findDist(targetTile, bestMoveTile)) && Random.Range(0.0f,1.0f) > 0.5f )
                         {
                             bestMoveTile = attackFromLocations[i];
                         }
@@ -148,7 +157,15 @@ namespace NightmareEchoes.Unit.AI
                 bestMoveTile = attackFromLocations[0];
                 for (int i = 0; i < attackFromLocations.Count; i++)
                 {
+                    if (attackFromLocations[i].CheckUnitOnTile().gameObject.CompareTag("Unit"))
+                    {
+                        continue;
+                    }
                     if (findDist(targetTile, attackFromLocations[i]) > findDist(targetTile, bestMoveTile))
+                    {
+                        bestMoveTile = attackFromLocations[i];
+                    }
+                    else if ((findDist(targetTile, attackFromLocations[i]) == findDist(targetTile, bestMoveTile)) && Random.Range(0.0f, 1.0f) > 0.5f)
                     {
                         bestMoveTile = attackFromLocations[i];
                     }
@@ -165,7 +182,15 @@ namespace NightmareEchoes.Unit.AI
                 bestMoveTile = moveableTiles[0];
                 for (int i = 0; i < moveableTiles.Count; i++)
                 {
+                    if (moveableTiles[i].isBlocked)
+                    {
+                        continue;
+                    }
                     if (findDist(targetTile, moveableTiles[i]) < findDist(targetTile, bestMoveTile))
+                    {
+                        bestMoveTile = moveableTiles[i];
+                    }
+                    else if ((findDist(targetTile, moveableTiles[i]) == findDist(targetTile, bestMoveTile)) && Random.Range(0.0f, 1.0f) > 0.5f)
                     {
                         bestMoveTile = moveableTiles[i];
                     }
