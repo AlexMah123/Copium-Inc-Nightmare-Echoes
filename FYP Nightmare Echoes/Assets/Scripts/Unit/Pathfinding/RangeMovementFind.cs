@@ -34,9 +34,23 @@ namespace NightmareEchoes.Unit.Pathfinding
                 stepCount++;
             }
 
-            var removedTilesWithObstacles = inRangeTiles.Distinct().ToList().Where(tile => !tile.CheckUnitOnTile()).ToList();
 
-            return (from tile in removedTilesWithObstacles let path = PathFind.FindPath(startTile, tile, removedTilesWithObstacles) where path.Count <= range && path.Count > 0 select tile).ToList();
+
+            var UnitAlignment = startTile.CheckUnitOnTile().GetComponent<Units>().IsHostile;
+
+            var RemovedTileWithObstacles =  new List<OverlayTile>();
+
+            foreach (var tiles in inRangeTiles.Distinct().ToList())
+            { 
+                if (!tiles.CheckUnitOnTile())
+                    RemovedTileWithObstacles.Add(tiles);
+
+                else if (tiles.CheckUnitOnTile().GetComponent<Units>().IsHostile == UnitAlignment)
+                    RemovedTileWithObstacles.Add(tiles);
+            }
+
+            
+            return (from tile in RemovedTileWithObstacles let path = PathFind.FindPath(startTile, tile, RemovedTileWithObstacles) where path.Count <= range && path.Count > 0 select tile).ToList();
         }
     }
 }
