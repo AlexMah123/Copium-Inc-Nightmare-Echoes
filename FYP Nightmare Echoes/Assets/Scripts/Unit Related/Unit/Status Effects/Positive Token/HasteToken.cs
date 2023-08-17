@@ -9,17 +9,16 @@ namespace NightmareEchoes.Unit
     public class HasteToken : Modifier
     {
         [Space(15), Header("Runtime Values")]
-        [SerializeField] int buffDuration;
+        [SerializeField] int tokenStack;
 
         public override void AwakeStatusEffect()
         {
-            buffDuration = modifierDuration;
-
+            tokenStack = modifierDuration;
         }
 
         public override void ApplyEffect(GameObject unit)
         {
-            unit.GetComponent<Units>().StunToken = true;
+            unit.GetComponent<Units>().HasteToken = true;
         }
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
@@ -29,12 +28,12 @@ namespace NightmareEchoes.Unit
 
         public override void UpdateLifeTime()
         {
-            buffDuration--;
+            tokenStack--;
         }
 
         public override float ReturnLifeTime()
         {
-            return buffDuration;
+            return tokenStack;
         }
     }
 }

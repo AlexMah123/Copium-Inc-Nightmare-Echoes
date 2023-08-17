@@ -32,7 +32,7 @@ namespace NightmareEchoes.Unit
 
         public override void BasicAttack()
         {
-            Direction = Direction.West;
+            
         }
 
         public override void Passive()

@@ -25,7 +25,8 @@ namespace NightmareEchoes.TurnOrder
         //Queue<Units> nextUnitQueue = new Queue<Units>();
         public int turnCount;
         public float phaseDelay;
-        public float enemyDelay;
+        public float enemythinkingDelay;
+        public float passTurnDelay;
 
         [SerializeField] Units currentUnit;
         public bool runOnce = false;
@@ -89,8 +90,10 @@ namespace NightmareEchoes.TurnOrder
             currentPhase.OnEnterPhase(this);
         }
 
-        public void PassTurn()
+        public IEnumerator PassTurn()
         {
+            yield return new WaitForSeconds(passTurnDelay);
+
             //if there is at least 2 elements in queue
             if (CurrentUnitQueue.Count > 1)
             {

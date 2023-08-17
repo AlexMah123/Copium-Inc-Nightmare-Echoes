@@ -9,12 +9,11 @@ namespace NightmareEchoes.Unit
     public class StunToken : Modifier
     {
         [Space(15), Header("Runtime Values")]
-        [SerializeField] int debuffDuration;
+        [SerializeField] int tokenStack;
 
         public override void AwakeStatusEffect()
         {
-            debuffDuration = modifierDuration;
-
+            tokenStack = modifierDuration;
         }
 
         public override void ApplyEffect(GameObject unit)
@@ -29,12 +28,12 @@ namespace NightmareEchoes.Unit
 
         public override void UpdateLifeTime()
         {
-            debuffDuration--;
+            tokenStack--;
         }
 
         public override float ReturnLifeTime()
         {
-            return debuffDuration;
+            return tokenStack;
         }
 
         

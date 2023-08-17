@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &601295390074279022
 Transform:
   m_ObjectHideFlags: 0
@@ -99,10 +99,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3b9f39b9fb31d41ac2e498d8e534c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitScriptable: {fileID: 0}
   _name: Ranger
   _sprite: {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  _isHostile: 0
+  _direction: 0
+  _typeOfUnit: 0
   baseStats:
     _maxHealth: 25
     _speed: 5
@@ -121,27 +123,33 @@ MonoBehaviour:
     moveRangeModifier: 0
     stunResistModifier: 0
     resistModifier: 0
-  _isHostile: 0
-  _direction: 0
-  activeTile: {fileID: 0}
   buffList: []
   debuffList: []
   tokenList: []
+  dodgeToken: 0
+  blockToken: 0
+  strengthToken: 0
+  hasteToken: 0
+  barrierToken: 0
+  stealthToken: 0
+  blindToken: 0
+  vulnerableToken: 0
+  weakenToken: 0
+  vertigoToken: 0
+  stunToken: 0
+  immobilizeToken: 0
   basicAttack: {fileID: 0}
-  basicAttackDesc: Ranger Basic Attack
   skill1: {fileID: 0}
-  skill1Desc: Ranger Skill 1
   skill2: {fileID: 0}
-  skill2Desc: Ranger Skill 2
   skill3: {fileID: 0}
-  skill3Desc: Ranger Skill 3
   passive: {fileID: 0}
-  passiveDesc: Ranger Passive
   sprites:
   - {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: 542052453, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: -6517823, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  activeTile: {fileID: 0}
+  isOccupiedTile: {fileID: 0}
 --- !u!50 &6249669551677435555
 Rigidbody2D:
   serializedVersion: 4

@@ -31,6 +31,11 @@ namespace NightmareEchoes.TurnOrder
         [Space(20), Header("Current Unit Info")]
         [SerializeField] List<Button> currentUnitButtonList;
         [SerializeField] Button currentUnitProfile;
+        [SerializeField] TextMeshProUGUI BasicAttackText;
+        [SerializeField] TextMeshProUGUI Skill1Text;
+        [SerializeField] TextMeshProUGUI Skill2Text;
+        [SerializeField] TextMeshProUGUI Skill3Text;
+        [SerializeField] TextMeshProUGUI PassiveText;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
         [SerializeField] TextMeshProUGUI currentUnitHealthText;
         [SerializeField] TextMeshProUGUI currentUnitMoveRangeText;
@@ -136,6 +141,15 @@ namespace NightmareEchoes.TurnOrder
                 currentUnitStunResistText.text = $"Stun Resist: {CurrentUnit.stats.StunResist}%";
                 currentUnitResistText.text = $"Resist: {CurrentUnit.stats.Resist}%";
 
+                if(!CurrentUnit.IsHostile)
+                {
+                    BasicAttackText.text = CurrentUnit.BasicAttackName;
+                    Skill1Text.text = CurrentUnit.Skill1Name;
+                    Skill2Text.text = CurrentUnit.Skill2Name;
+                    Skill3Text.text = CurrentUnit.Skill3Name;
+                    PassiveText.text = CurrentUnit.PassiveName;
+                }
+               
                 currentUnitHealth.maxValue = CurrentUnit.stats.MaxHealth;
                 currentUnitHealth.value = CurrentUnit.stats.Health;
 
@@ -162,12 +176,9 @@ namespace NightmareEchoes.TurnOrder
             if (Input.GetMouseButtonDown(1)) // rightclick on an inspectable unit
             {
                 bool selected = false;
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-
                 int unitMask = LayerMask.GetMask("Unit");
 
-                RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero, Mathf.Infinity, unitMask);
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, unitMask);
 
                 if (hit)
                 {
@@ -292,6 +303,7 @@ namespace NightmareEchoes.TurnOrder
         }
 
         #endregion
+
 
         #region UI Pool
         void InitTurnOrderSpritePool(GameObject panel)
@@ -620,7 +632,7 @@ namespace NightmareEchoes.TurnOrder
                 glossaryName.text = inspectedUnit.Name;
 
                 glossaryMoveRangeText.text = $"Move Range: {inspectedUnit.baseStats.MoveRange} + (<color=yellow>{inspectedUnit.modifiedStats.moveRangeModifier}</color>)";
-                glossarySpeedText.text = $"Speed: {inspectedUnit.baseStats.Speed} + (<color=yellow>{inspectedUnit.modifiedStats.speedModifier})";
+                glossarySpeedText.text = $"Speed: {inspectedUnit.baseStats.Speed} + (<color=yellow>{inspectedUnit.modifiedStats.speedModifier}</color>)";
                 glossaryStunResistText.text = $"Stun Resist: {inspectedUnit.baseStats.StunResist}% + (<color=yellow>{inspectedUnit.modifiedStats.stunResistModifier}%</color>)";
                 glossaryResistText.text = $"Resist: {inspectedUnit.baseStats.Resist}% + (<color=yellow>{inspectedUnit.modifiedStats.resistModifier}%</color>)";
 
@@ -679,11 +691,21 @@ namespace NightmareEchoes.TurnOrder
 
 
         #region Hotbar UI
-        public void EnablePlayerUI(bool enable)
+        public void EnableCurrentUI(bool enable)
         {
-            foreach (Button button in currentUnitButtonList)
+            //first button is profile
+            for(int i = 1; i < currentUnitButtonList.Count; i++) 
             {
-                button.interactable = enable;
+                currentUnitButtonList[i].interactable = enable;
+
+                if (CurrentUnit.IsHostile)
+                {
+                    currentUnitButtonList[i].gameObject.SetActive(false);
+                }
+                else
+                {
+                    currentUnitButtonList[i].gameObject.SetActive(true);
+                }
             }
 
             UpdateStatusEffectUI();

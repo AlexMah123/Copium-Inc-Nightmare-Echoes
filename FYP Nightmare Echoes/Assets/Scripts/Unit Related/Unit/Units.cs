@@ -127,7 +127,15 @@ namespace NightmareEchoes.Unit
         public bool HasteToken
         {
             get => hasteToken;
-            set => hasteToken = value;
+            set
+            {
+                hasteToken = value;
+
+                if(hasteToken == false)
+                {
+                    UpdateTokenEffect(STATUS_EFFECT.HASTE_TOKEN);
+                }
+            }
         }
 
         public bool BarrierToken
@@ -172,7 +180,15 @@ namespace NightmareEchoes.Unit
         public bool StunToken
         {
             get => stunToken;
-            set => stunToken = value;
+            set
+            {
+                stunToken = value;
+
+                if (stunToken == false)
+                {
+                    UpdateTokenEffect(STATUS_EFFECT.STUN_TOKEN);
+                }
+            }
         }
 
         public bool ImmobilizeToken
@@ -205,6 +221,24 @@ namespace NightmareEchoes.Unit
 
 
         #region Unit Skill Properties
+
+        public string BasicAttackName
+        {
+            get
+            {
+                if(basicAttack == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return basicAttack.SkillName;
+                }
+            }
+
+            private set => basicAttack.SkillName = value;
+        }
+
         public string BasicAttackDesc
         {
             get
@@ -220,6 +254,23 @@ namespace NightmareEchoes.Unit
             } 
 
             private set => basicAttack.SkillDescription = value;
+        }
+
+        public string Skill1Name
+        {
+            get
+            {
+                if (skill1 == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return skill1.SkillName;
+                }
+            }
+
+            private set => skill1.SkillName = value;
         }
 
         public string Skill1Desc
@@ -239,6 +290,23 @@ namespace NightmareEchoes.Unit
             private set => skill1.SkillDescription = value;
         }
 
+        public string Skill2Name
+        {
+            get
+            {
+                if (skill2 == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return skill2.SkillName;
+                }
+            }
+
+            private set => skill2.SkillName = value;
+        }
+
         public string Skill2Desc
         {
             get
@@ -255,6 +323,23 @@ namespace NightmareEchoes.Unit
             private set => skill2.SkillDescription = value;
         }
 
+        public string Skill3Name
+        {
+            get
+            {
+                if (skill3 == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return skill3.SkillName;
+                }
+            }
+
+            private set => skill3.SkillName = value;
+        }
+
         public string Skill3Desc
         {
             get
@@ -269,6 +354,23 @@ namespace NightmareEchoes.Unit
                 }
             }
             private set => skill3.SkillDescription = value;
+        }
+
+        public string PassiveName
+        {
+            get
+            {
+                if (passive == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return passive.SkillName;
+                }
+            }
+
+            private set => passive.SkillName = value;
         }
 
         public string PassiveDesc
@@ -329,7 +431,7 @@ namespace NightmareEchoes.Unit
         protected virtual void Start()
         {
             stats.Health = stats.MaxHealth;
-            AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.MOVERANGE_BUFF, 2, 1));
+            //AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.MOVERANGE_BUFF, 2, 1));
         }
 
         protected virtual void Update()
@@ -511,14 +613,22 @@ namespace NightmareEchoes.Unit
                     DebuffList.RemoveAt(i);
                 }
             }
+        }
 
+        //only call in class properties
+        void UpdateTokenEffect(STATUS_EFFECT enumIndex)
+        {
             for (int i = TokenList.Count - 1; i >= 0; i--)
             {
-                TokenList[i].UpdateLifeTime();
-
-                if (TokenList[i].ReturnLifeTime() <= 0)
+                if (TokenList[i].statusEffect == enumIndex)
                 {
-                    TokenList.RemoveAt(i);
+                    TokenList[i].UpdateLifeTime();
+
+
+                    if (TokenList[i].ReturnLifeTime() <= 0)
+                    {
+                        TokenList.RemoveAt(i);
+                    }
                 }
             }
         }

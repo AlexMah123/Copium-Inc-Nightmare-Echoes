@@ -104,10 +104,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9398d2a2c22c5a4db6e5ec18d61a439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitScriptable: {fileID: 11400000, guid: 3b58b24257d5c214d8d8640aa1862bf9, type: 2}
   _name: Mage
   _sprite: {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  _isHostile: 0
+  _direction: 0
+  _typeOfUnit: 0
   baseStats:
     _maxHealth: 25
     _speed: 4
@@ -126,16 +128,21 @@ MonoBehaviour:
     moveRangeModifier: 0
     stunResistModifier: 0
     resistModifier: 0
-  _isHostile: 0
-  _direction: 0
-  _typeOfUnit: 0
-  activeTile: {fileID: 0}
-  isOccupiedTile: {fileID: 0}
-  buffList:
-  - {fileID: 11400000, guid: 0b4c3b0b67d18984eba3ca55d51908a0, type: 2}
-  - {fileID: 11400000, guid: 5fbd22f3e0cf3c34bb576a37d36d21e2, type: 2}
+  buffList: []
   debuffList: []
   tokenList: []
+  dodgeToken: 0
+  blockToken: 0
+  strengthToken: 0
+  hasteToken: 0
+  barrierToken: 0
+  stealthToken: 0
+  blindToken: 0
+  vulnerableToken: 0
+  weakenToken: 0
+  vertigoToken: 0
+  stunToken: 0
+  immobilizeToken: 0
   basicAttack: {fileID: 2001383901}
   skill1: {fileID: 6673351901997673441}
   skill2: {fileID: 6673351901997673440}
@@ -146,6 +153,8 @@ MonoBehaviour:
   - {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: 542052453, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: -6517823, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  activeTile: {fileID: 0}
+  isOccupiedTile: {fileID: 0}
 --- !u!50 &128770042
 Rigidbody2D:
   serializedVersion: 4
@@ -266,7 +275,7 @@ MonoBehaviour:
   skillName: Teleport
   damage: 0
   cooldown: 0
-  range: 5
+  range: 2
   targetType: 0
   targetArea: 1
   targetUnitAlignment: 2
@@ -329,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea9fdb1423da3e4f93ac4d150a168a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: Arcane Intelect
   damage: 0
   cooldown: 0
   range: 0

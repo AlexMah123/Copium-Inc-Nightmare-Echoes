@@ -47,6 +47,7 @@ namespace NightmareEchoes.Unit
 
     public enum STATUS_EFFECT
     {
+        NONE = -1,
         DODGE_TOKEN = 0,
         BLOCK_TOKEN = 1,
         STRENGTH_TOKEN = 2,

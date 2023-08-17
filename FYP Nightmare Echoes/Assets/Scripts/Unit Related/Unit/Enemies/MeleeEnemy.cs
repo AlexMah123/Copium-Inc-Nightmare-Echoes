@@ -37,7 +37,7 @@ namespace NightmareEchoes.Unit.Enemy
 
         public override void BasicAttack()
         {
-            Direction = Direction.South;
+            
             
         }
 

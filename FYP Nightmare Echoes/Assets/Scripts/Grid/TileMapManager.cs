@@ -13,39 +13,16 @@ namespace NightmareEchoes.Grid
         public static TileMapManager Instance;
 
         [Header("Grid")]
-        [SerializeField] public int width;
-        [SerializeField] public int length;
-        [SerializeField] public TileBase testTile;
-
-        
+        public int width;
+        public int length;
+        public TileBase testTile;
         public Tilemap tilemap;
-        public Vector3Int TilePos;
-        private TilemapRenderer tilemapRenderer;
-        private Vector3 spawnPos;
-        private Vector3 endPos;
-        
-        Vector3Int prevTilePos;
-
-        [Header("Pathfinding")]
-        [SerializeField] private GameObject StartPos;
-        [SerializeField] private GameObject EndPos;
-        [SerializeField] public GameObject spawnTest;
-
-        public Vector3 SpawnPos
-        {
-            get => spawnPos;
-            private set => spawnPos = value;
-        }
-      
 
         private void Awake()
         {
-            tilemap = GetComponent<Tilemap>();
-            tilemapRenderer = GetComponent<TilemapRenderer>();
-
             if (Instance != null && Instance != this)
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
             else
             {
@@ -60,7 +37,7 @@ namespace NightmareEchoes.Grid
 
         public void Update()
         {
-
+            
         }
 
         //Source: https://blog.unity.com/engine-platform/procedural-patterns-you-can-use-with-tilemaps-part-1
@@ -86,7 +63,7 @@ namespace NightmareEchoes.Grid
         
         public void RenderMap(int[,] map, Tilemap tilemap, TileBase tile)
         {
-            //Clear the map (ensures we dont overlap)
+            //Clear the map
             tilemap.ClearAllTiles();
             
             //Loop through the width of the map
@@ -123,49 +100,6 @@ namespace NightmareEchoes.Grid
                 }
             }
         }
-
-        public Vector3 GetMouseTilePos()
-        {
-            Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            TilePos = tilemap.WorldToCell(MousePos);
-
-
-            if (tilemap.GetTile(TilePos))
-            {
-                if (prevTilePos != null)
-                {
-                    tilemap.SetTileFlags(prevTilePos, TileFlags.None);
-                    tilemap.SetColor(prevTilePos, Color.white);
-                }
-
-                tilemap.SetTileFlags(TilePos, TileFlags.None);
-                tilemap.SetColor(TilePos, Color.red);
-
-                prevTilePos = TilePos;
-
-                if (StartPos.activeSelf == true)
-                {
-                    spawnPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-                    //StartPos.transform.position = spawnPos;
-                    Debug.Log(" Mouse Click is on" + spawnPos);
-                }
-                else
-                {
-                    endPos = new Vector3(tilemap.CellToLocal(TilePos).x, tilemap.CellToLocal(TilePos).y - 2, 1);
-                    /*StartPos.transform.position = spawnPos;*/
-                    Debug.Log("Second Mouse Click is on" + spawnPos);
-                }
-            }
-
-            return spawnPos;
-        }
-
-        //this section by Terrence, spawning on tiles proof of concept
-        public void GetMouseTilePos2()
-        {
-
-        }
-
     }
 
 

@@ -15,6 +15,7 @@ namespace NightmareEchoes.Unit
         [TextArea (1,5)]public string description;
 
         [Space(15), Header("Status Effect Values")]
+        public STATUS_EFFECT statusEffect;
         public ModifierType modifierType;
         [SerializeField] public float genericValue;
         [SerializeField] public int modifierDuration;

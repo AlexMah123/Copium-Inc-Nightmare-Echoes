@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8143709165264484512}
   - component: {fileID: 964070419}
   - component: {fileID: 503955040074887315}
+  - component: {fileID: 9039162952523036802}
   m_Layer: 6
   m_Name: RangeEnemy
   m_TagString: Inspectable
@@ -99,14 +100,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c814d76c80e3cf45ae37b6cc5f8008a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitScriptable: {fileID: 0}
   _name: Range Enemy
   _sprite: {fileID: 489163364, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  _isHostile: 1
+  _direction: 0
+  _typeOfUnit: 0
   baseStats:
     _maxHealth: 15
     _speed: 4
-    _moveRange: 2
+    _moveRange: 3
     _stunResist: 35
     _resist: 35
   stats:
@@ -121,20 +124,29 @@ MonoBehaviour:
     moveRangeModifier: 0
     stunResistModifier: 0
     resistModifier: 0
-  _isHostile: 1
-  _direction: 0
-  _typeOfUnit: 0
-  activeTile: {fileID: 0}
-  isOccupiedTile: {fileID: 0}
   buffList: []
   debuffList: []
   tokenList: []
+  dodgeToken: 0
+  blockToken: 0
+  strengthToken: 0
+  hasteToken: 0
+  barrierToken: 0
+  stealthToken: 0
+  blindToken: 0
+  vulnerableToken: 0
+  weakenToken: 0
+  vertigoToken: 0
+  stunToken: 0
+  immobilizeToken: 0
   basicAttack: {fileID: 0}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
   skill3: {fileID: 0}
   passive: {fileID: 0}
   sprites: []
+  activeTile: {fileID: 0}
+  isOccupiedTile: {fileID: 0}
   basicAttackRange: 0
 --- !u!60 &964070419
 PolygonCollider2D:
@@ -186,3 +198,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &9039162952523036802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3376283141138650508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e848eb0212a90ef4c9274d2dcec21d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalHeroList: []
+  totalUnitList: []
+  totalPathList: []

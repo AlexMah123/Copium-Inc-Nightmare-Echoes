@@ -5,6 +5,7 @@ using NightmareEchoes.Grid;
 using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using NightmareEchoes.Inputs;
 
 //by Terrence, editted by alex
 namespace NightmareEchoes.Unit.AI
@@ -68,7 +69,7 @@ namespace NightmareEchoes.Unit.AI
                     AggressiveAction(thisUnit);
                     break;
                 case "Retreat":
-                    Debug.Log("Retreat Triggered");
+                    //Debug.Log("Retreat Triggered");
                     break;
             }
         }
@@ -118,7 +119,7 @@ namespace NightmareEchoes.Unit.AI
 
             if (inAtkRange)
             {
-                Debug.Log("Attackin");
+                //Debug.Log("Attackin");
                 bestMoveTile = possibleAttackLocations[0];
                 rngHelper = 1;
                 if (thisUnit.TypeOfUnit == TypeOfUnit.RANGED_UNIT)
@@ -147,7 +148,7 @@ namespace NightmareEchoes.Unit.AI
             }
             else if (inMoveAndAttackRange)
             {
-                Debug.Log("MoveAttackin");
+                //Debug.Log("MoveAttackin");
                 bestMoveTile = possibleAttackLocations[0];
                 rngHelper = 1;
 
@@ -172,7 +173,7 @@ namespace NightmareEchoes.Unit.AI
             }
             else
             {
-                Debug.Log("Movin");
+                //Debug.Log("Movin");
                 //move towards target
                 bestMoveTile = tilesInRange[0];
                 rngHelper = 1;
@@ -198,6 +199,7 @@ namespace NightmareEchoes.Unit.AI
                 }
 
                 totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
+
             }
 
             #endregion
@@ -208,11 +210,7 @@ namespace NightmareEchoes.Unit.AI
             if (totalPathList.Count > 0)
             {
                 PathfindingManager.Instance.MoveAlongPath(thisUnit.gameObject, totalPathList, tilesInRange);
-            }
-
-            if(totalPathList.Count <= 0)
-            {
-                PathfindingManager.Instance.HideTilesInRange(totalPathList);
+                CameraControl.Instance.UpdateCameraPan(thisUnit.gameObject);
             }
         }
 
@@ -236,7 +234,7 @@ namespace NightmareEchoes.Unit.AI
 
             closestHero = sortedHeroes.ToList()[0].Key;
             rangeToClosest = sortedHeroes.ToList()[0].Value;
-            Debug.Log("Closest Hero: " + closestHero.Name + ", " + rangeToClosest + " tiles away");
+            //Debug.Log("Closest Hero: " + closestHero.Name + ", " + rangeToClosest + " tiles away");
         }
 
         void UpdateHeroList()

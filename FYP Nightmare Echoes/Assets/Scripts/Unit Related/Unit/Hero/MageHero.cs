@@ -22,7 +22,7 @@ namespace NightmareEchoes.Unit
             base.Start();
 
             AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.SPEED_BUFF, 10, 2));
-            AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.HASTE_TOKEN, 30, 1));
+            //AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.HASTE_TOKEN, 30, 1));
             AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 30, 1));
         }
 

@@ -9,7 +9,6 @@ namespace NightmareEchoes.TurnOrder
 {
     public abstract class Phase
     {
-        bool newTurn = false;
         protected TurnOrderController controller;
 
         public void OnEnterPhase(TurnOrderController turnOrderController)
@@ -31,13 +30,13 @@ namespace NightmareEchoes.TurnOrder
             }
 
             #region UI
-            if (controller.currentPhase == controller.playerPhase)
+            if ((controller.currentPhase == controller.playerPhase) && !controller.CurrentUnit.StunToken)
             {
-                UIManager.Instance.EnablePlayerUI(true);
+                UIManager.Instance.EnableCurrentUI(true);
             }
             else
             {
-                UIManager.Instance.EnablePlayerUI(false);
+                UIManager.Instance.EnableCurrentUI(false);
             }
 
             #endregion

@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5511814863228984316}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.15, y: -2.622, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 21681451
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
   m_Color: {r: 0, g: 0.93359566, b: 1, a: 0}
   m_FlipX: 0
@@ -104,9 +104,9 @@ MonoBehaviour:
   isBlocked: 0
   prevTile: {fileID: 0}
   gridLocation: {x: 0, y: 0, z: 0}
-  PlayerOnTile: 0
+  isClickable: 1
   inactiveColor: {r: 0, g: 0, b: 0, a: 0}
-  moveColor: {r: 1, g: 1, b: 1, a: 0.49019608}
+  moveColor: {r: 1, g: 1, b: 1, a: 0.39215687}
   attackRangeColor: {r: 0.92687, g: 1, b: 0, a: 0.39215687}
   aoeRangeColor: {r: 0, g: 1, b: 0.8227351, a: 0.39215687}
   enemyColor: {r: 1, g: 0, b: 0, a: 0.39215687}

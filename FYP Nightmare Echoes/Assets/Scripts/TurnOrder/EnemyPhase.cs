@@ -20,14 +20,31 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnEnter()
         {
-            //insert start of turn effects
+            //Init here
             if (controller.CurrentUnit != null)
                 enemyAI = controller.CurrentUnit.GetComponent<BasicEnemyAI>();
 
-            controller.StartCoroutine(EnemyTurn());
-            
-            aoeSkillsPassed.Clear();
 
+            //start of turn effects
+            if(controller.CurrentUnit != null)
+            {
+                controller.CurrentUnit.ApplyAllTokenEffects();
+
+                if (controller.CurrentUnit.StunToken == true)
+                {
+                    controller.CurrentUnit.StunToken = false;
+
+                    UIManager.Instance.EnableCurrentUI(false);
+                    UIManager.Instance.UpdateStatusEffectUI();
+
+                    controller.StartCoroutine(controller.PassTurn());
+                }
+            }
+
+            
+            //Start Turn
+            controller.StartCoroutine(EnemyTurn());
+            aoeSkillsPassed.Clear();
         }
 
         protected override void OnUpdate()
@@ -52,6 +69,7 @@ namespace NightmareEchoes.TurnOrder
             {
                 //update effects & stats
                 controller.CurrentUnit.ApplyAllBuffDebuffs();
+                controller.CurrentUnit.ApplyAllTokenEffects();
                 controller.CurrentUnit.UpdateAllStatusEffectLifeTime();
                 controller.CurrentUnit.UpdateAllStats();
             }
@@ -69,34 +87,16 @@ namespace NightmareEchoes.TurnOrder
         IEnumerator EnemyTurn()
         {
             
-            yield return new WaitForSeconds(controller.enemyDelay);
+            yield return new WaitForSeconds(controller.enemythinkingDelay);
             
             if(controller.CurrentUnit != null)
             {
                 enemyAI.MakeDecision(controller.CurrentUnit);
-                Debug.Log("Make Decision");
             }
 
             yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
 
-            //if there is at least 2 elements in queue
-            if (controller.CurrentUnitQueue.Count > 1)
-            {
-                //if the second element exist, check hostile and change accordingly, else endPhase
-                if (controller.CurrentUnitQueue.ToArray()[1].IsHostile)
-                {
-                    controller.ChangePhase(TurnOrderController.Instance.enemyPhase);
-                }
-                else
-                {
-                    controller.ChangePhase(TurnOrderController.Instance.playerPhase);
-
-                }                
-            }
-            else
-            {
-                controller.ChangePhase(TurnOrderController.Instance.endPhase);
-            }
+            controller.StartCoroutine(controller.PassTurn());
         }
     }
 }

@@ -11,8 +11,26 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
-            //Insert start of turn effects
+            //Init here
 
+
+            //Insert start of turn effects
+            if (controller.CurrentUnit != null)
+            {
+                controller.CurrentUnit.ApplyAllTokenEffects();
+
+                if (controller.CurrentUnit.StunToken == true)
+                {
+                    controller.CurrentUnit.StunToken = false;
+
+                    UIManager.Instance.EnableCurrentUI(false);
+                    UIManager.Instance.UpdateStatusEffectUI();
+
+                    controller.StartCoroutine(controller.PassTurn());
+                }
+            }
+
+            //Start Turn
             controller.StartCoroutine(WaitForTurnEnd());
         }
 
@@ -27,6 +45,7 @@ namespace NightmareEchoes.TurnOrder
             if(controller.CurrentUnit != null)
             {
                 controller.CurrentUnit.ApplyAllBuffDebuffs();
+                controller.CurrentUnit.ApplyAllTokenEffects();
                 controller.CurrentUnit.UpdateAllStatusEffectLifeTime();
                 controller.CurrentUnit.UpdateAllStats();
             }
@@ -48,7 +67,7 @@ namespace NightmareEchoes.TurnOrder
             
 
             CombatManager.Instance.turnEnded = false;
-            controller.PassTurn();
+            controller.StartCoroutine(controller.PassTurn());
         }
         
     }
