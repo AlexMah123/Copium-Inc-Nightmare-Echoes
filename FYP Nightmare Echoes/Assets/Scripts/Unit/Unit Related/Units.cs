@@ -435,9 +435,10 @@ namespace NightmareEchoes.Unit
         }
         #endregion
 
+
         #region Status Effects Updates
         //call to add buff to unit
-        protected void AddBuff(Modifier buff)
+        public void AddBuff(Modifier buff)
         {
             switch (buff.modifierType)
             {
@@ -460,7 +461,6 @@ namespace NightmareEchoes.Unit
                     buff.AwakeStatusEffect();
                     TokenList.Add(buff);
                     break;
-
             }
 
             UpdateAllStats();

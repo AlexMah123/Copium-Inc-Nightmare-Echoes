@@ -14,7 +14,7 @@ namespace NightmareEchoes.TurnOrder
     public class EnemyPhase : Phase
     {
         BasicEnemyAI enemyAI;
-        bool finishedMoving = false;
+
 
         private List<Skill> aoeSkillsPassed = new();
 
@@ -34,8 +34,8 @@ namespace NightmareEchoes.TurnOrder
         {
             //start a couroutine to move
             if (enemyAI == null || controller.CurrentUnit == null) return;
-                
-            enemyAI.StartCoroutine(enemyAI.MoveProcess(controller.CurrentUnit));
+
+            enemyAI.MoveProcess(controller.CurrentUnit);
 
             var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
             if (aoeDmg)

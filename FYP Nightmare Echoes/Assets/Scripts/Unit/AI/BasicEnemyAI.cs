@@ -203,7 +203,7 @@ namespace NightmareEchoes.Unit.AI
             #endregion
         }
 
-        public IEnumerator MoveProcess(Units thisUnit)
+        public void MoveProcess(Units thisUnit)
         {
             if (totalPathList.Count > 0)
             {
@@ -214,8 +214,6 @@ namespace NightmareEchoes.Unit.AI
             {
                 PathfindingManager.Instance.HideTilesInRange(totalPathList);
             }
-
-            yield return new WaitUntil(() => totalPathList.Count == 0);
         }
 
 
