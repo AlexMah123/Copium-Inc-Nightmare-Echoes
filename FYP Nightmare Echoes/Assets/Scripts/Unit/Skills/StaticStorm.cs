@@ -10,7 +10,8 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(Units target)
         {
-            throw new System.NotImplementedException();
+            target.TakeDamage(damage);
+            return true;
         }
 
         public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)

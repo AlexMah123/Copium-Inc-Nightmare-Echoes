@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using NightmareEchoes.Unit;
 using UnityEngine;
 using NightmareEchoes.Unit.AI;
+using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using Unity.VisualScripting.Antlr3.Runtime.Collections;
 
@@ -14,12 +16,16 @@ namespace NightmareEchoes.TurnOrder
         BasicEnemyAI enemyAI;
         bool finishedMoving = false;
 
+        private List<Skill> aoeSkillsPassed = new();
+
         protected override void OnEnter()
         {
             //insert start of turn effects
             enemyAI = controller.CurrentUnit.GetComponent<BasicEnemyAI>();
 
             controller.StartCoroutine(EnemyTurn());
+            
+            aoeSkillsPassed.Clear();
 
         }
 
@@ -27,6 +33,14 @@ namespace NightmareEchoes.TurnOrder
         {
             //start a couroutine to move
             enemyAI.StartCoroutine(enemyAI.MoveProcess(controller.CurrentUnit));
+
+            var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
+            if (aoeDmg)
+            {
+                if (aoeSkillsPassed.Contains(aoeDmg)) return;
+                aoeDmg.Cast(controller.CurrentUnit);
+                aoeSkillsPassed.Add(aoeDmg);
+            }
         }
 
         protected override void OnExit()
@@ -49,7 +63,7 @@ namespace NightmareEchoes.TurnOrder
         {
             
             yield return new WaitForSeconds(controller.enemyDelay);
-
+            
 
             enemyAI.MakeDecision(controller.CurrentUnit);
             Debug.Log("Make Decision");
