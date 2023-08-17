@@ -48,10 +48,14 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-            //update effects & stats
-            controller.CurrentUnit.ApplyAllBuffDebuffs();
-            controller.CurrentUnit.UpdateAllStatusEffectLifeTime();
-            controller.CurrentUnit.UpdateAllStats();
+            if (controller.CurrentUnit != null)
+            {
+                //update effects & stats
+                controller.CurrentUnit.ApplyAllBuffDebuffs();
+                controller.CurrentUnit.UpdateAllStatusEffectLifeTime();
+                controller.CurrentUnit.UpdateAllStats();
+            }
+            
 
             UIManager.Instance.UpdateStatusEffectUI();
 

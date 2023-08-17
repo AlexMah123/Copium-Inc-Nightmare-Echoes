@@ -51,7 +51,7 @@ namespace NightmareEchoes.Unit.AI
             PathfindingManager.Instance.ShowTilesInRange(tilesInRange);
 
             healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
-            Debug.Log(healthPercent);
+            //Debug.Log(healthPercent);
 
             //weight calculations
             utilityDictionary.Clear();
@@ -190,7 +190,7 @@ namespace NightmareEchoes.Unit.AI
                             rngHelper++;
                             if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
                             {
-                                Debug.Log(1.0f / rngHelper);
+                                //Debug.Log(1.0f / rngHelper);
                                 bestMoveTile = tilesInRange[i];
                             }
                         }

@@ -1,4 +1,3 @@
-using NightmareEchoes.Unit.Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ namespace NightmareEchoes.Unit
     public class Units : MonoBehaviour
     {
         [Header("Unit Info")]
-        [SerializeField] protected BaseUnitScriptable _unitScriptable;
         [SerializeField] protected string _name;
         [SerializeField] protected Sprite _sprite;
         protected SpriteRenderer spriteRenderer;
@@ -68,12 +66,6 @@ namespace NightmareEchoes.Unit
         #region Class Properties
 
         #region Unit Info Properties
-        public BaseUnitScriptable UnitScriptable
-        {
-            get => _unitScriptable;
-            private set => _unitScriptable = value;
-        }
-
         public Sprite Sprite
         {
             get => _sprite;
@@ -337,7 +329,7 @@ namespace NightmareEchoes.Unit
         protected virtual void Start()
         {
             stats.Health = stats.MaxHealth;
-            AddBuff(GetStatusEffect.Instance.CreateModifier("MoveRange Buff", 2, 1));
+            AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.MOVERANGE_BUFF, 2, 1));
         }
 
         protected virtual void Update()
@@ -570,9 +562,6 @@ namespace NightmareEchoes.Unit
         }
 
         #endregion
-
-
-
 
     }
 

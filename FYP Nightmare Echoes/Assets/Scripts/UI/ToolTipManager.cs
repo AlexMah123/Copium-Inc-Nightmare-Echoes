@@ -89,16 +89,34 @@ namespace NightmareEchoes.UI
 
             tooltipWindow.gameObject.SetActive(true);
 
-            if(mousePos.x + tooltipWindow.sizeDelta.x >= Screen.width)
+            Vector2 newPosition = mousePos + new Vector2(10, tooltipWindow.sizeDelta.y); // Add an offset for spacing
+
+            Vector2 tooltipPositionRelativeToCenter = new Vector2(
+                newPosition.x - tooltipWindow.sizeDelta.x * 0.5f,
+                newPosition.y - tooltipWindow.sizeDelta.y * 0.5f
+            );
+
+            // Adjust horizontal position if tooltip is going off the screen
+            if (tooltipPositionRelativeToCenter.x < 0)
             {
-                tooltipWindow.transform.position = 
-                    new Vector2(mousePos.x - tooltipWindow.sizeDelta.x / 10, mousePos.y + (tooltipWindow.sizeDelta.y/2));
+                newPosition.x = tooltipWindow.sizeDelta.x * 0.5f;
             }
-            else
+            else if (tooltipPositionRelativeToCenter.x + tooltipWindow.sizeDelta.x > Screen.width)
             {
-                tooltipWindow.transform.position = new Vector2(mousePos.x, mousePos.y + tooltipWindow.sizeDelta.y);
+                newPosition.x = Screen.width - tooltipWindow.sizeDelta.x * 0.5f;
             }
-            
+
+            // Adjust vertical position if tooltip is going off the screen
+            if (tooltipPositionRelativeToCenter.y < 0)
+            {
+                newPosition.y = tooltipWindow.sizeDelta.y * 0.5f;
+            }
+            else if (tooltipPositionRelativeToCenter.y + tooltipWindow.sizeDelta.y > Screen.height)
+            {
+                newPosition.y = Screen.height - tooltipWindow.sizeDelta.y * 0.5f;
+            }
+
+            tooltipWindow.transform.position = newPosition;
         }
 
         private void HideToolTip()
