@@ -64,9 +64,11 @@ namespace NightmareEchoes.TurnOrder
             
             yield return new WaitForSeconds(controller.enemyDelay);
             
-
-            enemyAI.MakeDecision(controller.CurrentUnit);
-            Debug.Log("Make Decision");
+            if(controller.CurrentUnit != null)
+            {
+                enemyAI.MakeDecision(controller.CurrentUnit);
+                Debug.Log("Make Decision");
+            }
 
             yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
 

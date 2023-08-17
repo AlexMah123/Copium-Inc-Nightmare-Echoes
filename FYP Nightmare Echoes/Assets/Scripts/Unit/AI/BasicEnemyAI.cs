@@ -191,9 +191,16 @@ namespace NightmareEchoes.Unit.AI
         {
             if (totalPathList.Count > 0)
             {
-                PathfindingManager.Instance.MoveAlongPath(thisUnit.gameObject, totalPathList);
-                yield return null;
+                PathfindingManager.Instance.MoveAlongPath(thisUnit.gameObject, totalPathList, tilesInRange);
             }
+
+            if(totalPathList.Count <= 0)
+            {
+                Debug.Log("Hide Tile");
+                PathfindingManager.Instance.HideTilesInRange(totalPathList);
+            }
+
+            yield return new WaitUntil(() => totalPathList.Count == 0);
         }
 
 

@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Inputs;
-using PlasticPipe.PlasticProtocol.Messages;
 
 //created by Vinn, editted by Alex and Ter
 namespace NightmareEchoes.Unit.Pathfinding
@@ -24,7 +23,8 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] float movingSpeed;
         [SerializeField] bool ifSelectedUnit = false;
 
-        List<OverlayTile> path = new List<OverlayTile>();
+        List<OverlayTile> pathList = new List<OverlayTile>();
+        List<OverlayTile> tempList = new List<OverlayTile>();
         [SerializeField] List<OverlayTile> tilesInRange = new List<OverlayTile>();
 
         RaycastHit2D? focusedTile;
@@ -113,29 +113,29 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                         if (!overlayTile.CheckUnitOnTile())
                         {
-                            path = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, tilesInRange);
+                            pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, tilesInRange);
                         }
                     }
                     
                 }
             }
 
-            if (path.Count > 0)
+            if (pathList.Count > 0)
             {
                 CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
-                MoveAlongPath(currentSelectedUnitGO, path);
+                MoveAlongPath(currentSelectedUnitGO, pathList, tilesInRange);
             }
+
+            
         }
 
         #region Movement along Tile
-        public void MoveAlongPath(GameObject go, List<OverlayTile> pathList)
+        public void MoveAlongPath(GameObject go, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
         {
             var step = movingSpeed * Time.deltaTime;
-
             var zIndex = pathList[0].transform.position.z;
 
             go.transform.position = Vector2.MoveTowards(go.transform.position, pathList[0].transform.position, step);
-
             go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, zIndex);
 
             if (Vector2.Distance(go.transform.position, pathList[0].transform.position) < 0.0001f)
@@ -146,7 +146,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             if (pathList.Count == 0)
             {
-                HideTilesInRange(pathList);
+                HideTilesInRange(tilesInRange);
                 ifSelectedUnit = false;
             }
 
@@ -190,9 +190,9 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
         }
 
-        private void HideTilesInRange(List<OverlayTile> tilesToHide)
+        public void HideTilesInRange(List<OverlayTile> tilesInRange)
         {
-            foreach (var item in tilesToHide)
+            foreach (var item in tilesInRange)
             {
                 item.HideTile();
             }
