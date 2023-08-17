@@ -15,35 +15,19 @@ namespace NightmareEchoes.Unit.Pathfinding
     {
         public static PathfindingManager Instance;
 
-        [SerializeField] GameObject OTC; 
+        [SerializeField] GameObject overlayTileContainer; 
 
         [Header("Current Unit")]
         [SerializeField] GameObject currentSelectedUnitGO;
         [SerializeField] float movingSpeed;
         Units currentSelectedUnit;
-        bool cameraPanning = false;
-
-
-        //Vinn test changes
-        public string UnitTag;
-        [SerializeField] List <GameObject> UnitsOnScreen = new List<GameObject>();
-        [SerializeField] GameObject testUnitPos;
-        [SerializeField] GameObject OverLayTileManagerObj;
-        //OverlayTileManager tilemapManager;
-        [SerializeField] bool testBool;
-
         [SerializeField] bool ifSelectedUnit = false;
 
         List<OverlayTile> path = new List<OverlayTile>();
-        [SerializeField] List<OverlayTile> inRangeTiles = new List<OverlayTile>();
-        public List<GameObject> UnitListOnScreen;
+        [SerializeField] List<OverlayTile> tilesInRange = new List<OverlayTile>();
 
         RaycastHit2D? focusedTileHit;
         OverlayTile overlayTile;
-        OverlayTileManager overlayTileManager;
-
-        //Changes by Vinn
-        [SerializeField] private LayerMask UnitLayer;
 
         private void Awake()
         {
@@ -67,7 +51,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 ifSelectedUnit = false;
-                RangeTilesOff();
+                HideTilesInRange();
             }
 
             PlayerInputPathfinding();
@@ -97,7 +81,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                         {
                             currentSelectedUnit.ActiveTile = hitOverlayTile.collider.GetComponent<OverlayTile>();
 
-                            GetInRangeTiles();
+                            ShowTilesInRange();
                         }
                     }
                     else
@@ -118,8 +102,6 @@ namespace NightmareEchoes.Unit.Pathfinding
                 overlayTile = focusedTileHit.Value.collider.GetComponent<OverlayTile>();
                 transform.position = overlayTile.transform.position;
 
-                //gameObject.GetComponent<SpriteRenderer>().sortingOrder = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
-
                 if (Input.GetMouseButtonDown(0) && ifSelectedUnit)
                 {
                     //commented out so it does not show tile randomly
@@ -134,7 +116,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                         if (!overlayTile.CheckUnitOnTile())
                         {
-                            path = PathFind.FindPath(currentSelectedUnit.ActiveTile, overlayTile, inRangeTiles);
+                            path = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, tilesInRange);
                         }
                     }
                     
@@ -149,27 +131,27 @@ namespace NightmareEchoes.Unit.Pathfinding
         }
 
         #region Movement along Tile
-        public void MoveAlongPath(GameObject go, List<OverlayTile> pathL)
+        public void MoveAlongPath(GameObject go, List<OverlayTile> pathList)
         {
             var step = movingSpeed * Time.deltaTime;
 
-            var zIndex = pathL[0].transform.position.z;
+            var zIndex = pathList[0].transform.position.z;
 
-            go.transform.position = Vector2.MoveTowards(go.transform.position, pathL[0].transform.position, step);
+            go.transform.position = Vector2.MoveTowards(go.transform.position, pathList[0].transform.position, step);
 
             go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, zIndex);
 
-            if (Vector2.Distance(go.transform.position, pathL[0].transform.position) < 0.0001f)
+            if (Vector2.Distance(go.transform.position, pathList[0].transform.position) < 0.0001f)
             {
-                PositionCharacterOnTile(pathL[0], go);
-                pathL.RemoveAt(0);
+                SetUnitPositionOnTile(pathList[0], go);
+                pathList.RemoveAt(0);
             }
 
-            if (pathL.Count == 0)
+            if (pathList.Count == 0)
             {
                 //if i dont place this function here it wont render the tile range after it moves (Only on  the initial click)
                 //GetInRangeTiles();
-                RangeTilesOff();
+                HideTilesInRange();
                 ifSelectedUnit = false;
 
                 //RangeIsActive = false;  
@@ -195,34 +177,34 @@ namespace NightmareEchoes.Unit.Pathfinding
             return null;
         }
 
-        private void PositionCharacterOnTile(OverlayTile tile, GameObject go)
+        private void SetUnitPositionOnTile(OverlayTile tile, GameObject go)
         {
             go.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
-            go.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
+            //go.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
             go.GetComponent<Units>().ActiveTile = tile;
         }
 
-        private void GetInRangeTiles()
+        private void ShowTilesInRange()
         {
             //This hides the previous patterns once it starts moving again
-            foreach (var item in inRangeTiles)
+            foreach (var item in tilesInRange)
             {
                 item.HideTile();
             }
 
             //Gets the value of the start pos and the maximum range is the amount you can set
-            inRangeTiles = RangeMovementFind.TileMovementRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
+            tilesInRange = PathFinding.FindTilesInRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
 
             //This displays all the tiles in range 
-            foreach (var item in inRangeTiles)
+            foreach (var item in tilesInRange)
             {
                 item.ShowMoveTile();
             }
         }
 
-        private void RangeTilesOff()
+        private void HideTilesInRange()
         {
-            foreach (var item in inRangeTiles)
+            foreach (var item in tilesInRange)
             {
                 item.HideTile();
             }

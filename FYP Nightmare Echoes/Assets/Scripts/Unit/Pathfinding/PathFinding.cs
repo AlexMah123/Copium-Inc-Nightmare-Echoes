@@ -6,10 +6,10 @@ using NightmareEchoes.Grid;
 using UnityEngine.Tilemaps;
 
 
-//created by Vinn
+//created by Vinn, editted by Alex
 namespace NightmareEchoes.Unit.Pathfinding
 {
-    public static class PathFind
+    public static class PathFinding
     {
         //The list at the end creates a limitor to how far the player can move which works for our player boundary range
         public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> LimitTiles)
@@ -60,6 +60,51 @@ namespace NightmareEchoes.Unit.Pathfinding
             return new List<OverlayTile>();    
         }
 
+        public static List<OverlayTile> FindTilesInRange(OverlayTile startTile, int range)
+        {
+            var inRangeTiles = new List<OverlayTile>();
+            int stepCount = 0;
+
+            inRangeTiles.Add(startTile);
+
+            var TileForPreviousStep = new List<OverlayTile>();
+            TileForPreviousStep.Add(startTile);
+
+            while (stepCount < range)
+            {
+                var surroundingTiles = new List<OverlayTile>();
+
+                foreach (var item in TileForPreviousStep)
+                {
+                    surroundingTiles.AddRange(OverlayTileManager.Instance.GetNeighbourTiles(item, new List<OverlayTile>()));
+                }
+
+                inRangeTiles.AddRange(surroundingTiles);
+                TileForPreviousStep = surroundingTiles.Distinct().ToList();
+                stepCount++;
+            }
+
+
+
+            var UnitAlignment = startTile.CheckUnitOnTile().GetComponent<Units>().IsHostile;
+
+            var RemovedTileWithObstacles = new List<OverlayTile>();
+
+            foreach (var tiles in inRangeTiles.Distinct().ToList())
+            {
+                if (!tiles.CheckUnitOnTile())
+                    RemovedTileWithObstacles.Add(tiles);
+
+                else if (tiles.CheckUnitOnTile().GetComponent<Units>().IsHostile == UnitAlignment)
+                    RemovedTileWithObstacles.Add(tiles);
+            }
+
+
+            return (from tile in RemovedTileWithObstacles let path = FindPath(startTile, tile, RemovedTileWithObstacles) where path.Count <= range && path.Count > 0 select tile).ToList();
+        }
+
+
+        #region Pathfind Calculation
         private static int GetManHattenDistance(OverlayTile start , OverlayTile neighbour)
         {
             return Mathf.Abs(start.gridLocation.x - neighbour.gridLocation.x) + Mathf.Abs(start.gridLocation.y - neighbour.gridLocation.y);
@@ -81,6 +126,6 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             return finishedList;
         }
-
+        #endregion
     }
 }

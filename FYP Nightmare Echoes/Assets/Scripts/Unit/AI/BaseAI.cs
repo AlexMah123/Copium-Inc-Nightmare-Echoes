@@ -60,7 +60,7 @@ namespace NightmareEchoes.Unit.AI
         {
             SortHeroesByDistance(thisUnit);
             currTile = thisUnit.ActiveTile;
-            moveableTiles = RangeMovementFind.TileMovementRange(currTile, thisUnit.stats.MoveRange);
+            moveableTiles = PathFinding.FindTilesInRange(currTile, thisUnit.stats.MoveRange);
 
             healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
             Debug.Log(healthPercent);
@@ -146,7 +146,7 @@ namespace NightmareEchoes.Unit.AI
                             }
                         }
                     }
-                    pathList = PathFind.FindPath(currTile, bestMoveTile, moveableTiles);
+                    pathList = PathFinding.FindPath(currTile, bestMoveTile, moveableTiles);
                 }
                 //wait until in position, then attack
             }
@@ -169,7 +169,7 @@ namespace NightmareEchoes.Unit.AI
                     }
                 }
 
-                pathList = PathFind.FindPath(currTile, bestMoveTile, moveableTiles);
+                pathList = PathFinding.FindPath(currTile, bestMoveTile, moveableTiles);
                 //wait until in position, then attack
 
             }
@@ -193,7 +193,7 @@ namespace NightmareEchoes.Unit.AI
                     }
                 }
 
-                pathList = PathFind.FindPath(currTile, bestMoveTile, moveableTiles);
+                pathList = PathFinding.FindPath(currTile, bestMoveTile, moveableTiles);
                 //wait until in position, then pass turn
             }
         }
