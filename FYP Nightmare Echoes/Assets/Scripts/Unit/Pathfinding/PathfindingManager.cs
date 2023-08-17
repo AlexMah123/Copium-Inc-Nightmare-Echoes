@@ -52,7 +52,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 ifSelectedUnit = false;
-                HideTilesInRange();
+                HideTilesInRange(tilesInRange);
             }
 
             PlayerInputPathfinding();
@@ -82,7 +82,10 @@ namespace NightmareEchoes.Unit.Pathfinding
                         {
                             currentSelectedUnit.ActiveTile = hitOverlayTile.collider.GetComponent<OverlayTile>();
 
-                            ShowTilesInRange();
+                            //Gets the value of the start pos and the maximum range is the amount you can set
+                            tilesInRange = PathFinding.FindTilesInRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
+
+                            ShowTilesInRange(tilesInRange);
                         }
                     }
                     else
@@ -143,7 +146,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             if (pathList.Count == 0)
             {
-                HideTilesInRange();
+                HideTilesInRange(pathList);
                 ifSelectedUnit = false;
             }
 
@@ -172,27 +175,24 @@ namespace NightmareEchoes.Unit.Pathfinding
             go.GetComponent<Units>().ActiveTile = tile;
         }
 
-        private void ShowTilesInRange()
+        public void ShowTilesInRange(List<OverlayTile> overlayTileList)
         {
             //This hides the previous patterns once it starts moving again
-            foreach (var item in tilesInRange)
+            foreach (var item in overlayTileList)
             {
                 item.HideTile();
             }
 
-            //Gets the value of the start pos and the maximum range is the amount you can set
-            tilesInRange = PathFinding.FindTilesInRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
-
             //This displays all the tiles in range 
-            foreach (var item in tilesInRange)
+            foreach (var item in overlayTileList)
             {
                 item.ShowMoveTile();
             }
         }
 
-        private void HideTilesInRange()
+        private void HideTilesInRange(List<OverlayTile> tilesToHide)
         {
-            foreach (var item in tilesInRange)
+            foreach (var item in tilesToHide)
             {
                 item.HideTile();
             }

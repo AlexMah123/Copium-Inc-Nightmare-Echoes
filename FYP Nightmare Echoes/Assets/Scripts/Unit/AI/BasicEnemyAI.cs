@@ -45,7 +45,9 @@ namespace NightmareEchoes.Unit.AI
             //sort heros by distance and find tiles in range
             SortHeroesByDistance(thisUnit);
             unitCurrentTile = thisUnit.ActiveTile;
+
             tilesInRange = PathFinding.FindTilesInRange(unitCurrentTile, thisUnit.stats.MoveRange);
+            PathfindingManager.Instance.ShowTilesInRange(tilesInRange);
 
             healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
             Debug.Log(healthPercent);
