@@ -21,7 +21,8 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnEnter()
         {
             //insert start of turn effects
-            enemyAI = controller.CurrentUnit.GetComponent<BasicEnemyAI>();
+            if (controller.CurrentUnit != null)
+                enemyAI = controller.CurrentUnit.GetComponent<BasicEnemyAI>();
 
             controller.StartCoroutine(EnemyTurn());
             
@@ -32,6 +33,8 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnUpdate()
         {
             //start a couroutine to move
+            if (enemyAI == null || controller.CurrentUnit == null) return;
+                
             enemyAI.StartCoroutine(enemyAI.MoveProcess(controller.CurrentUnit));
 
             var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);

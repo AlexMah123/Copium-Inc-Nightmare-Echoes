@@ -250,13 +250,13 @@ namespace NightmareEchoes.Unit.Combat
 
         private void Render()
         {
+            RenderActiveAoe();
             if (activeSkill)
             {
                 RenderRangeAndUnits();
                 if (activeSkill.TargetType == TargetType.AOE)
                     RenderAOETarget();
             }
-            RenderActiveAoe();
         }
         
         //Attack Range and Units in Range
