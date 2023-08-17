@@ -11,13 +11,13 @@ namespace NightmareEchoes.TurnOrder
 {
     public class EnemyPhase : Phase
     {
-        BaseAI enemyAI;
+        BasicEnemyAI enemyAI;
         bool finishedMoving = false;
 
         protected override void OnEnter()
         {
             //insert start of turn effects
-            enemyAI = controller.CurrentUnit.GetComponent<BaseAI>();
+            enemyAI = controller.CurrentUnit.GetComponent<BasicEnemyAI>();
 
             controller.StartCoroutine(EnemyTurn());
 
@@ -53,7 +53,8 @@ namespace NightmareEchoes.TurnOrder
 
             enemyAI.MakeDecision(controller.CurrentUnit);
             Debug.Log("Make Decision");
-            yield return new WaitUntil(() => enemyAI.pathList.Count == 0);
+
+            yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
 
             //if there is at least 2 elements in queue
             if (controller.CurrentUnitQueue.Count > 1)

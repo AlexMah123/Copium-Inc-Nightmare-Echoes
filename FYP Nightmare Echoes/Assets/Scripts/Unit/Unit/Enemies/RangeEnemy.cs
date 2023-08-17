@@ -6,7 +6,7 @@ using UnityEngine;
 //created by Alex
 namespace NightmareEchoes.Unit.Enemy
 {
-    [RequireComponent(typeof(BaseAI))]
+    [RequireComponent(typeof(BasicEnemyAI))]
     public class RangeEnemy : Units
     {
 
