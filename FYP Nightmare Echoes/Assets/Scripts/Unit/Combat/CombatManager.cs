@@ -214,6 +214,8 @@ namespace NightmareEchoes.Unit.Combat
 
         private void TargetGround()
         {
+            aoePreviewTiles.Clear();
+            
             var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
             if (!hit) return;
             var target = hit.collider.gameObject.GetComponent<OverlayTile>();
@@ -227,7 +229,6 @@ namespace NightmareEchoes.Unit.Combat
                 AOEType.NonAOE => SquareRange(target, 0)
             };
             
-            aoePreviewTiles.Clear();
             aoePreviewTiles.Add(target);
             foreach (var coord in aoeArea.Where(coord => OverlayTileManager.Instance.map.ContainsKey(coord)))
             {
