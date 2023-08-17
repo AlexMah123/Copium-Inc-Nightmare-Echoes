@@ -21,6 +21,7 @@ namespace NightmareEchoes.Unit.AI
         float rangeToTarget, rangeToClosest;
         bool inAtkRange, inMoveAndAttackRange;
         int rangePlaceholder = 1;
+        int rngHelper;
         List<OverlayTile> tilesInRange;
         List<OverlayTile> possibleAttackLocations = new List<OverlayTile>();
 
@@ -119,7 +120,7 @@ namespace NightmareEchoes.Unit.AI
             {
                 Debug.Log("Attackin");
                 bestMoveTile = possibleAttackLocations[0];
-
+                rngHelper = 1;
                 if (thisUnit.TypeOfUnit == TypeOfUnit.RANGED_UNIT)
                 {
                     bestMoveTile = possibleAttackLocations[0];
@@ -130,9 +131,13 @@ namespace NightmareEchoes.Unit.AI
                         {
                             bestMoveTile = possibleAttackLocations[i];
                         }
-                        else if ((FindDistanceBetweenTile(targetTile, possibleAttackLocations[i]) == FindDistanceBetweenTile(targetTile, bestMoveTile)) && Random.Range(0.0f, 1.0f) > 0.5f)
+                        else if (FindDistanceBetweenTile(targetTile, possibleAttackLocations[i]) == FindDistanceBetweenTile(targetTile, bestMoveTile))
                         {
-                            bestMoveTile = possibleAttackLocations[i];
+                            rngHelper++;
+                            if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                            {
+                                bestMoveTile = possibleAttackLocations[i];
+                            }
                         }
                     }
 
@@ -144,6 +149,7 @@ namespace NightmareEchoes.Unit.AI
             {
                 Debug.Log("MoveAttackin");
                 bestMoveTile = possibleAttackLocations[0];
+                rngHelper = 1;
 
                 for (int i = 0; i < possibleAttackLocations.Count; i++)
                 {
@@ -151,9 +157,13 @@ namespace NightmareEchoes.Unit.AI
                     {
                         bestMoveTile = possibleAttackLocations[i];
                     }
-                    else if ((FindDistanceBetweenTile(targetTile, possibleAttackLocations[i]) == FindDistanceBetweenTile(targetTile, bestMoveTile)) && Random.Range(0.0f, 1.0f) > 0.5f)
+                    else if (FindDistanceBetweenTile(targetTile, possibleAttackLocations[i]) == FindDistanceBetweenTile(targetTile, bestMoveTile))
                     {
-                        bestMoveTile = possibleAttackLocations[i];
+                        rngHelper++;
+                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                        {
+                            bestMoveTile = possibleAttackLocations[i];
+                        }
                     }
                 }
 
@@ -165,6 +175,7 @@ namespace NightmareEchoes.Unit.AI
                 Debug.Log("Movin");
                 //move towards target
                 bestMoveTile = tilesInRange[0];
+                rngHelper = 1;
 
                 for (int i = 0; i < tilesInRange.Count; i++)
                 {
@@ -174,9 +185,14 @@ namespace NightmareEchoes.Unit.AI
                         {
                             bestMoveTile = tilesInRange[i];
                         }
-                        else if ((FindDistanceBetweenTile(targetTile, tilesInRange[i]) == FindDistanceBetweenTile(targetTile, bestMoveTile)) && Random.Range(0.0f, 1.0f) > 0.5f)
+                        else if (FindDistanceBetweenTile(targetTile, tilesInRange[i]) == FindDistanceBetweenTile(targetTile, bestMoveTile))
                         {
-                            bestMoveTile = tilesInRange[i];
+                            rngHelper++;
+                            if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                            {
+                                Debug.Log(1.0f / rngHelper);
+                                bestMoveTile = tilesInRange[i];
+                            }
                         }
                     }
                 }
@@ -196,7 +212,6 @@ namespace NightmareEchoes.Unit.AI
 
             if(totalPathList.Count <= 0)
             {
-                Debug.Log("Hide Tile");
                 PathfindingManager.Instance.HideTilesInRange(totalPathList);
             }
 
