@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NightmareEchoes.Unit.Combat;
 using UnityEngine;
 
 //created by Alex
@@ -11,6 +12,7 @@ namespace NightmareEchoes.TurnOrder
         {
             controller.StartCoroutine(Start());
             //check for any effects
+            CombatManager.Instance.OnTurnStart();
         }
 
         protected override void OnUpdate()

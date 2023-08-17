@@ -90,14 +90,49 @@ namespace NightmareEchoes.Unit.Combat
         }
 
         #region Logic Checks
-        private void OnTurnStart()
+        public void OnTurnStart()
         {
-            
+            foreach (var kvp in activeAoesCD)
+            {
+                activeAoesCD[kvp.Key]--;
+                if (kvp.Value <= 0)
+                {
+                    activeAoes.TryGetValue(kvp.Key, out var tilesToBeCleared);
+                    activeAoesCD.Remove(kvp.Key);
+                    activeAoes.Remove(kvp.Key);
+
+                    RenderOverlayTile.Instance.ClearCustomRenders(tilesToBeCleared);
+                }
+                else if (activeAoes.TryGetValue(kvp.Key, out var list))
+                {
+                    foreach (var tile in list.Where(tile => tile.CheckUnitOnTile()))
+                    {
+                        kvp.Key.Cast(tile.CheckUnitOnTile().GetComponent<Units>());
+                    }
+                }
+            }
         }
 
-        private void CheckAoe()
+        //Check which tiles the unit passes
+        //If the tile is an AOE tile, return the skill it is associated with
+        public Skill CheckAoe(Units unit)
         {
+            var hit = Physics2D.Raycast(unit.transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            if (!hit) return null;
+            var target = hit.collider.gameObject.GetComponent<OverlayTile>();
             
+            foreach (var kvp in activeAoes)
+            {
+                foreach (var tile in kvp.Value)
+                {
+                    if (target == tile)
+                    {
+                        return kvp.Key;
+                    }
+                }
+            }
+
+            return null;
         }
         
         private void EndTurn()
