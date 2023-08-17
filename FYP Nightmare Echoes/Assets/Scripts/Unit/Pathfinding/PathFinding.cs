@@ -30,7 +30,6 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     //finalize our path
                     return GetFinishedList(start,end);
-
                 }
 
                 //function to get neighbourTiles
@@ -104,7 +103,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         }
 
 
-        #region Pathfind Calculation
+        #region Find Pathfind Calculation
         private static int GetManHattenDistance(OverlayTile start , OverlayTile neighbour)
         {
             return Mathf.Abs(start.gridLocation.x - neighbour.gridLocation.x) + Mathf.Abs(start.gridLocation.y - neighbour.gridLocation.y);
@@ -127,5 +126,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             return finishedList;
         }
         #endregion
+
     }
 }

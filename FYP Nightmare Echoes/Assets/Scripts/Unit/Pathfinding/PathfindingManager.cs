@@ -15,18 +15,19 @@ namespace NightmareEchoes.Unit.Pathfinding
     {
         public static PathfindingManager Instance;
 
+        [Header("Overlay Tile Container")]
         [SerializeField] GameObject overlayTileContainer; 
 
         [Header("Current Unit")]
+        Units currentSelectedUnit;
         [SerializeField] GameObject currentSelectedUnitGO;
         [SerializeField] float movingSpeed;
-        Units currentSelectedUnit;
         [SerializeField] bool ifSelectedUnit = false;
 
         List<OverlayTile> path = new List<OverlayTile>();
         [SerializeField] List<OverlayTile> tilesInRange = new List<OverlayTile>();
 
-        RaycastHit2D? focusedTileHit;
+        RaycastHit2D? focusedTile;
         OverlayTile overlayTile;
 
         private void Awake()
@@ -95,23 +96,16 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
             }
             
-            focusedTileHit = GetFocusedTile();
+            focusedTile = GetFocusedTile();
 
-            if (focusedTileHit.HasValue)
+            if (focusedTile.HasValue)
             {
-                overlayTile = focusedTileHit.Value.collider.GetComponent<OverlayTile>();
+                overlayTile = focusedTile.Value.collider.GetComponent<OverlayTile>();
                 transform.position = overlayTile.transform.position;
 
                 if (Input.GetMouseButtonDown(0) && ifSelectedUnit)
                 {
-                    //commented out so it does not show tile randomly
-                    //overlayTile.ShowTile();
-
-                    if (currentSelectedUnitGO == null)
-                    {
-                        //PositionCharacterOnTile(overlayTile);
-                    }
-                    else if (currentSelectedUnitGO != null)
+                    if (currentSelectedUnitGO != null)
                     {
 
                         if (!overlayTile.CheckUnitOnTile())
@@ -149,13 +143,8 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             if (pathList.Count == 0)
             {
-                //if i dont place this function here it wont render the tile range after it moves (Only on  the initial click)
-                //GetInRangeTiles();
                 HideTilesInRange();
                 ifSelectedUnit = false;
-
-                //RangeIsActive = false;  
-
             }
 
         }
@@ -180,7 +169,6 @@ namespace NightmareEchoes.Unit.Pathfinding
         private void SetUnitPositionOnTile(OverlayTile tile, GameObject go)
         {
             go.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
-            //go.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
             go.GetComponent<Units>().ActiveTile = tile;
         }
 
