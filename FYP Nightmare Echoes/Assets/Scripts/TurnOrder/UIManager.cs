@@ -172,6 +172,10 @@ namespace NightmareEchoes.TurnOrder
                 inspectedUnitHealth.maxValue = inspectedUnit.stats.MaxHealth;
                 inspectedUnitHealth.value = inspectedUnit.stats.Health;
             }
+            else
+            {
+                EnableInspectedUI(false);
+            }
 
             if (Input.GetMouseButtonDown(1)) // rightclick on an inspectable unit
             {
@@ -560,7 +564,7 @@ namespace NightmareEchoes.TurnOrder
                 glossaryPrefabPool[i].SetActive(false);
             }
 
-            if (text == "Current")
+            if (text == "Current" && CurrentUnit != null)
             {
                 glossaryImage.sprite = CurrentUnit.Sprite;
                 glossaryImage.color = new Color(
@@ -623,7 +627,7 @@ namespace NightmareEchoes.TurnOrder
                     }
                 }
             }
-            else if (text == "Inspected")
+            else if (text == "Inspected" && inspectedUnit != null)
             {
                 glossaryImage.sprite = inspectedUnit.Sprite;
                 glossaryImage.color = new Color(
@@ -698,14 +702,22 @@ namespace NightmareEchoes.TurnOrder
             {
                 currentUnitButtonList[i].interactable = enable;
 
-                if (CurrentUnit.IsHostile)
+                if(CurrentUnit != null)
                 {
-                    currentUnitButtonList[i].gameObject.SetActive(false);
+                    if (CurrentUnit.IsHostile)
+                    {
+                        currentUnitButtonList[i].gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        currentUnitButtonList[i].gameObject.SetActive(true);
+                    }
                 }
                 else
                 {
-                    currentUnitButtonList[i].gameObject.SetActive(true);
+                    currentUnitButtonList[i].gameObject.SetActive(false);
                 }
+
             }
 
             UpdateStatusEffectUI();

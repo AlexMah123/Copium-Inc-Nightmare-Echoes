@@ -23,7 +23,9 @@ namespace NightmareEchoes.Unit
 
             AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.SPEED_BUFF, 10, 2));
             //AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.HASTE_TOKEN, 30, 1));
-            AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 30, 1));
+            //AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 30, 1));
+            AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+
         }
 
         protected override void Update()
