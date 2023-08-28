@@ -27,6 +27,9 @@ namespace NightmareEchoes.Unit
         
         [SerializeField] protected int secondaryDamage;
         [SerializeField] protected int secondaryRange;
+
+        [Header("Additional Effects")] 
+        [SerializeField] protected bool inflictKnockback;
         
         [field: TextArea(1,10)][SerializeField] protected string skillDescription;
 
@@ -114,6 +117,12 @@ namespace NightmareEchoes.Unit
         {
             get => skillDescription;
             set => skillDescription = value;
+        }
+
+        public bool InflictKnockback
+        {
+            get => inflictKnockback;
+            set => inflictKnockback = value;
         }
 
         #endregion

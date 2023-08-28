@@ -28,7 +28,9 @@ namespace NightmareEchoes.Unit.Combat
         private Skill activeSkill;
         private List<OverlayTile> skillRangeTiles;
         private List<OverlayTile> aoePreviewTiles = new();
-        
+        private OverlayTile mainTile;
+        private List<GameObject> ghostSprites = new();
+
         //Active AOEs
         private Dictionary<Skill, List<OverlayTile>> activeAoes = new();
         private Dictionary<Skill, int> activeAoesCD = new();
@@ -215,11 +217,13 @@ namespace NightmareEchoes.Unit.Combat
         private void TargetGround()
         {
             aoePreviewTiles.Clear();
+            ClearPreviews();
             
             var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
             if (!hit) return;
             var target = hit.collider.gameObject.GetComponent<OverlayTile>();
             if (!target) return;
+            mainTile = target;
             if (skillRangeTiles.All(tile => tile != target)) return;
             
             var aoeArea = activeSkill.AoeType switch
@@ -235,6 +239,11 @@ namespace NightmareEchoes.Unit.Combat
                 if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
                     aoePreviewTiles.Add(tile);
             }
+
+            if (activeSkill.InflictKnockback)
+            {
+                PreviewKnockback();
+            }
             
             if (!Input.GetMouseButtonDown(0)) return;
             StartCoroutine(WaitForSkill(target, aoePreviewTiles));
@@ -244,10 +253,10 @@ namespace NightmareEchoes.Unit.Combat
         {
             secondaryTargeting = true;
         }
-        
+
         #endregion
 
-        #region Rendering Tile Colors
+        #region Rendering Tile Colors and Previews
 
         private void Render()
         {
@@ -300,6 +309,36 @@ namespace NightmareEchoes.Unit.Combat
         {
             RenderOverlayTile.Instance.ClearTargetingRenders();
             skillRangeTiles = tiles;
+        }
+        
+        //Previews
+
+        private void ClearPreviews()
+        {
+            foreach (var unit in ghostSprites)
+            {
+                Destroy(unit.gameObject);
+            }
+            ghostSprites.Clear();
+        }
+        
+        private void PreviewKnockback()
+        {
+            foreach (var tile in aoePreviewTiles)
+            {
+                if (tile == mainTile) continue;
+                if (!tile.CheckUnitOnTile()) continue;
+
+                var direction = tile.transform.position - mainTile.transform.position;
+                var destination = tile.transform.position + direction;
+                
+                var unit = tile.CheckUnitOnTile().GetComponent<Units>();
+                var clone = Instantiate(unit.gameObject);
+                ghostSprites.Add(clone);
+
+                clone.transform.position = destination;
+                clone.GetComponent<SpriteRenderer>().color = Color.white;
+            }
         }
 
         #endregion
