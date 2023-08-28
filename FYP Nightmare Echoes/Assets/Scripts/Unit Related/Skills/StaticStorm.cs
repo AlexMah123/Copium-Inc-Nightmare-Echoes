@@ -17,6 +17,14 @@ namespace NightmareEchoes.Unit
         public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
             var copy = new List<OverlayTile>(aoeTiles);
+            
+            foreach (var tile in aoeTiles)
+            {
+                if (!tile.CheckUnitOnTile()) continue;
+  
+                var unit = tile.CheckUnitOnTile().GetComponent<Units>();
+                unit.TakeDamage(damage);
+            }
 
             CombatManager.Instance.SetActiveAoe(this, copy);
             return true;
