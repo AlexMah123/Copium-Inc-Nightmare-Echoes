@@ -164,6 +164,10 @@ namespace NightmareEchoes.TurnOrder
                 currentUnitHealth.value = CurrentUnit.stats.Health;
 
             }
+            else
+            {
+                EnableCurrentUI(false);
+            }
             #endregion
 
             #region Inspected Unit text

@@ -84,7 +84,6 @@ namespace NightmareEchoes.TurnOrder
             if (controller.CurrentUnitQueue.Count > 0)
             {
                 controller.CurrentUnitQueue.Dequeue();
-                //controller.passedTurnOrderList.Add(controller.CurrentUnit);
             }
         }
 

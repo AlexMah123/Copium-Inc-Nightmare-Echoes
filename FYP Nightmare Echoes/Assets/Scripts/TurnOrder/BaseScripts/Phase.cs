@@ -21,7 +21,6 @@ namespace NightmareEchoes.TurnOrder
             {
                 controller.runOnce = true;
                 controller.CalculateTurnOrder();
-                //controller.passedTurnOrderList.Clear();
             }
 
             //calculate turn order every turn
@@ -50,16 +49,16 @@ namespace NightmareEchoes.TurnOrder
                 CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
             }
 
-            //updates the UI during each phase & updates status effect 
-            UIManager.Instance.UpdateTurnOrderUI();
-            UIManager.Instance.UpdateStatusEffectUI();
+            
 
             OnEnter();
         }
 
         public void OnUpdatePhase()
         {
-            
+            //updates the UI during each phase & updates status effect 
+            UIManager.Instance.UpdateTurnOrderUI();
+            UIManager.Instance.UpdateStatusEffectUI();
 
             OnUpdate();
         }

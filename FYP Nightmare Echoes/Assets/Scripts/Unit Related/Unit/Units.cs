@@ -13,6 +13,8 @@ namespace NightmareEchoes.Unit
     [RequireComponent(typeof(PolygonCollider2D), typeof(Rigidbody2D)), Serializable]
     public class Units : MonoBehaviour
     {
+        public event Action<Units> OnDestroyedEvent;
+
         [Header("Unit Info")]
         [SerializeField] protected string _name;
         [SerializeField] protected Sprite _sprite;
@@ -57,13 +59,13 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected Skill skill3;
         [SerializeField] protected Skill passive;
 
-        [Space(15),Header("Sprite Directions"), Tooltip("Sprites are ordered in north, south, east, west")]
+        [Space(15), Header("Sprite Directions"), Tooltip("Sprites are ordered in north, south, east, west")]
         [SerializeField] List<Sprite> sprites = new List<Sprite>(); //ordered in NSEW
         [SerializeField] GameObject frontModel;
         [SerializeField] GameObject backModel;
         [SerializeField] Animator frontAnimator;
         [SerializeField] Animator backAnimator;
-        
+
 
         [Space(15), Header("Tile Related")]
         [SerializeField] protected OverlayTile activeTile;
@@ -137,7 +139,7 @@ namespace NightmareEchoes.Unit
             {
                 hasteToken = value;
 
-                if(hasteToken == false)
+                if (hasteToken == false)
                 {
                     UpdateTokenEffect(STATUS_EFFECT.HASTE_TOKEN);
                 }
@@ -208,7 +210,7 @@ namespace NightmareEchoes.Unit
         #region Buff Debuff Token
         public List<Modifier> BuffList
         {
-            get => buffList; 
+            get => buffList;
             set => buffList = value;
         }
 
@@ -232,7 +234,7 @@ namespace NightmareEchoes.Unit
         {
             get
             {
-                if(basicAttack == null)
+                if (basicAttack == null)
                 {
                     return null;
                 }
@@ -249,7 +251,7 @@ namespace NightmareEchoes.Unit
         {
             get
             {
-                if(basicAttack == null)
+                if (basicAttack == null)
                 {
                     return null;
                 }
@@ -257,7 +259,7 @@ namespace NightmareEchoes.Unit
                 {
                     return basicAttack.SkillDescription;
                 }
-            } 
+            }
 
             private set => basicAttack.SkillDescription = value;
         }
@@ -409,10 +411,12 @@ namespace NightmareEchoes.Unit
 
         private void OnDestroy()
         {
-            if(!IsHostile)
+            if (!IsHostile)
             {
                 PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             }
+
+            OnDestroyedEvent?.Invoke(this);
         }
 
         protected virtual void Awake()
@@ -497,12 +501,12 @@ namespace NightmareEchoes.Unit
                 switch (Direction)
                 {
                     case Direction.North: //back facing
-                        if(frontModel != null && backModel != null)
+                        if (frontModel != null && backModel != null)
                         {
                             frontModel.SetActive(false);
                             backModel.SetActive(true);
                         }
-                        
+
                         transform.localRotation = Quaternion.Euler(0, 0, 0);
                         break;
 
@@ -512,7 +516,7 @@ namespace NightmareEchoes.Unit
                             frontModel.SetActive(true);
                             backModel.SetActive(false);
                         }
-                        
+
                         transform.localRotation = Quaternion.Euler(0, 0, 0);
                         break;
 
@@ -532,7 +536,7 @@ namespace NightmareEchoes.Unit
                             frontModel.SetActive(false);
                             backModel.SetActive(true);
                         }
-                        
+
                         transform.localRotation = Quaternion.Euler(0, 180, 0);
                         break;
 
@@ -579,7 +583,7 @@ namespace NightmareEchoes.Unit
 
         public virtual void TakeDamage(int damage)
         {
-            if(frontModel != null && frontModel.activeSelf)
+            if (frontModel != null && frontModel.activeSelf)
             {
                 frontAnimator.SetBool("GettingHit", true);
             }
@@ -589,6 +593,13 @@ namespace NightmareEchoes.Unit
             }
 
         }
+
+        [ContextMenu("Destroy Object")]
+        public void DestroyObject()
+        {
+            Destroy(gameObject);
+        }
+
         #endregion
 
 

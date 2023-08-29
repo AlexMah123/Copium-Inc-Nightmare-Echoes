@@ -109,7 +109,7 @@ MonoBehaviour:
   baseStats:
     _maxHealth: 15
     _speed: 4
-    _moveRange: 3
+    _moveRange: 2
     _stunResist: 35
     _resist: 35
   stats:
@@ -145,6 +145,10 @@ MonoBehaviour:
   skill3: {fileID: 0}
   passive: {fileID: 0}
   sprites: []
+  frontModel: {fileID: 0}
+  backModel: {fileID: 0}
+  frontAnimator: {fileID: 0}
+  backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
   isOccupiedTile: {fileID: 0}
   basicAttackRange: 0
@@ -173,10 +177,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.45, y: 0}
-      - {x: 0, y: -0.225}
-      - {x: 0.45, y: 0}
-      - {x: 0, y: 0.225}
+    - - {x: -0.8, y: 0}
+      - {x: 0, y: -0.4}
+      - {x: 0.8, y: 0}
+      - {x: 0, y: 0.4}
 --- !u!50 &503955040074887315
 Rigidbody2D:
   serializedVersion: 4
@@ -213,3 +217,4 @@ MonoBehaviour:
   totalHeroList: []
   totalUnitList: []
   totalPathList: []
+  tilesInRange: []
