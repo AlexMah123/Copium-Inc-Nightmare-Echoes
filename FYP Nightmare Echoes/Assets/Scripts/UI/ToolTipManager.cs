@@ -148,11 +148,12 @@ namespace NightmareEchoes.UI
 
                 CameraControl.Instance.UpdateCameraPan(hoveredTurnOrderUnit);
             }
-         }
+        }
 
         private void HideTurnOrderToolTip()
         {
             CameraControl.Instance.UpdateCameraPan(TurnOrderController.Instance.CurrentUnit.gameObject);
+            isHoveringTurnOrderUnit = false;
             hoverIndicator.SetActive(false);
 
             //UNCOMMENT IF WE WANT TO HIDE WHEN HOVER OFF

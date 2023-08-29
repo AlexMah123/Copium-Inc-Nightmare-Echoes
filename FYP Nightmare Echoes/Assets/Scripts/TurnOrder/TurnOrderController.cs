@@ -130,8 +130,14 @@ namespace NightmareEchoes.TurnOrder
 
         private void OnUnitDestroy(Units destroyedUnit)
         {
-            CurrentUnitQueue = new Queue<Units>(CurrentUnitQueue.Where(x => x != destroyedUnit));    
             destroyedUnit.OnDestroyedEvent -= OnUnitDestroy;
+
+            CurrentUnitQueue = new Queue<Units>(CurrentUnitQueue.Where(x => x != destroyedUnit));
+
+            if(UIManager.Instance != null) 
+            {
+                UIManager.Instance.UpdateTurnOrderUI();
+            }
         }
 
         //delegate for sort()
