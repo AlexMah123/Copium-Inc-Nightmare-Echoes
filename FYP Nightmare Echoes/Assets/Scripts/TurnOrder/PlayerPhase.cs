@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NightmareEchoes.Unit;
 using NightmareEchoes.Unit.Combat;
+using NightmareEchoes.Unit.Pathfinding;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -41,9 +42,12 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-            //update effects & stats
             if(controller.CurrentUnit != null)
             {
+                //Hide tiles only on exit
+                PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+
+                //update effects & stats
                 controller.CurrentUnit.ApplyAllBuffDebuffs();
                 controller.CurrentUnit.ApplyAllTokenEffects();
                 controller.CurrentUnit.UpdateAllStatusEffectLifeTime();

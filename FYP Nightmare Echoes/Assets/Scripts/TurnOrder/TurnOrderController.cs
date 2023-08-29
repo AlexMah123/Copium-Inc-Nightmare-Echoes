@@ -20,7 +20,6 @@ namespace NightmareEchoes.TurnOrder
 
         [Header("Turn Order")]
         public List<Units> turnOrderList = new List<Units>();
-        //[SerializeField] List<Units> nextTurnOrderList = new List<Units>();
         Queue<Units> currentUnitQueue = new Queue<Units>();
         //Queue<Units> nextUnitQueue = new Queue<Units>();
         public int turnCount;
@@ -125,6 +124,19 @@ namespace NightmareEchoes.TurnOrder
             for(int i = 0; i < turnOrderList.Count; i++)
             {
                 CurrentUnitQueue.Enqueue(turnOrderList[i]);
+                turnOrderList[i].OnDestroyedEvent += OnUnitDestroy;
+            }
+        }
+
+        private void OnUnitDestroy(Units destroyedUnit)
+        {
+            destroyedUnit.OnDestroyedEvent -= OnUnitDestroy;
+
+            CurrentUnitQueue = new Queue<Units>(CurrentUnitQueue.Where(x => x != destroyedUnit));
+
+            if(UIManager.Instance != null) 
+            {
+                UIManager.Instance.UpdateTurnOrderUI();
             }
         }
 

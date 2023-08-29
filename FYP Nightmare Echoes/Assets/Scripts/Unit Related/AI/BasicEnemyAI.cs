@@ -23,7 +23,7 @@ namespace NightmareEchoes.Unit.AI
         bool inAtkRange, inMoveAndAttackRange;
         int rangePlaceholder = 1;
         int rngHelper;
-        List<OverlayTile> tilesInRange;
+        public List<OverlayTile> tilesInRange;
         List<OverlayTile> possibleAttackLocations = new List<OverlayTile>();
 
         OverlayTile unitCurrentTile, targetTile;
@@ -36,6 +36,11 @@ namespace NightmareEchoes.Unit.AI
         Dictionary<string, float> utilityDictionary = new Dictionary<string, float>();
         Dictionary<Units, float> aggroDictionary = new Dictionary<Units, float>();
         float healthPercent;
+
+        private void OnDestroy()
+        {
+            PathfindingManager.Instance.HideTilesInRange(tilesInRange);
+        }
 
         private void Awake()
         {

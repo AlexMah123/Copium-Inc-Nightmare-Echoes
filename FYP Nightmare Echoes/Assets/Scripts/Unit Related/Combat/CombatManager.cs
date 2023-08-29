@@ -146,6 +146,7 @@ namespace NightmareEchoes.Unit.Combat
             secondaryTargeting = false;
             
             RenderOverlayTile.Instance.ClearTargetingRenders();
+            ClearPreviews();
 
             turnEnded = true;
         }

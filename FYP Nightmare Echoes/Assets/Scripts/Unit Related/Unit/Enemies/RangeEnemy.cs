@@ -63,6 +63,8 @@ namespace NightmareEchoes.Unit.Enemy
 
         public override void TakeDamage(int damage)
         {
+            base.TakeDamage(damage);
+
             ShowPopUpText(damage.ToString());
             stats.Health -= damage;
         }
