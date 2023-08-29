@@ -332,12 +332,15 @@ namespace NightmareEchoes.Unit.Combat
                 var direction = tile.transform.position - mainTile.transform.position;
                 var destination = tile.transform.position + direction;
                 
-                var unit = tile.CheckUnitOnTile().GetComponent<Units>();
-                var clone = Instantiate(unit.gameObject);
+                var unitSprite = tile.CheckUnitOnTile().GetComponent<SpriteRenderer>().sprite;
+                var clone = Instantiate(gameObject);
+                var cloneSr = clone.AddComponent<SpriteRenderer>();
+                cloneSr.sprite = unitSprite;
+                cloneSr.sortingLayerID = SortingLayer.NameToID("Unit");
                 ghostSprites.Add(clone);
 
                 clone.transform.position = destination;
-                clone.GetComponent<SpriteRenderer>().color = Color.white;
+                cloneSr.color = Color.white;
             }
         }
 
