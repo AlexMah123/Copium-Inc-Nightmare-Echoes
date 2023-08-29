@@ -67,6 +67,9 @@ namespace NightmareEchoes.TurnOrder
         {
             if (controller.CurrentUnit != null)
             {
+                //Hide tiles only on exit
+                PathfindingManager.Instance.HideTilesInRange(enemyAI.tilesInRange);
+
                 //update effects & stats
                 controller.CurrentUnit.ApplyAllBuffDebuffs();
                 controller.CurrentUnit.ApplyAllTokenEffects();
@@ -81,6 +84,7 @@ namespace NightmareEchoes.TurnOrder
             if (controller.CurrentUnitQueue.Count > 0)
             {
                 controller.CurrentUnitQueue.Dequeue();
+                //controller.passedTurnOrderList.Add(controller.CurrentUnit);
             }
         }
 

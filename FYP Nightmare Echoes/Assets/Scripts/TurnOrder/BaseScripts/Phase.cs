@@ -19,9 +19,13 @@ namespace NightmareEchoes.TurnOrder
             //only run once to calculate the turn order and enqueue till the endPhase
             if(!controller.runOnce)
             {
-                controller.CalculateTurnOrder();
                 controller.runOnce = true;
+                controller.CalculateTurnOrder();
+                //controller.passedTurnOrderList.Clear();
             }
+
+            //calculate turn order every turn
+            //controller.CalculateTurnOrder();
 
             //updates the current unit for turn order
             if (controller.CurrentUnitQueue.Count > 0 ) 

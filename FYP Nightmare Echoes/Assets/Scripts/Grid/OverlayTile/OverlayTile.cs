@@ -39,37 +39,61 @@ namespace NightmareEchoes.Grid
         
         public void ShowMoveTile()
         {
-            sr.color = ConvertColor(moveColor);
+            if(sr != null)
+            {
+                sr.color = ConvertColor(moveColor);
+
+            }
         }
         
         public void ShowAttackTile()
         {
-            sr.color = ConvertColor(attackRangeColor);
+            if(sr != null) 
+            {
+                sr.color = ConvertColor(attackRangeColor);
+            }
         }
 
         public void ShowAoeTiles()
         {
-            sr.color = ConvertColor(aoeRangeColor);
+            if(sr != null)
+            {
+                sr.color = ConvertColor(aoeRangeColor);
+
+            }
         }
 
         public void ShowEnemyTile()
         {
-            sr.color = ConvertColor(enemyColor);
+            if(sr != null)
+            {
+                sr.color = ConvertColor(enemyColor);
+
+            }
         }
 
         public void ShowFriendlyTile()
         {
-            sr.color = ConvertColor(friendlyColor);
+            if(sr != null)
+            {
+                sr.color = ConvertColor(friendlyColor);
+            }
         }
 
         public void ShowCustomColor(Color c)
         {
-            sr.color = ConvertColor(c);
+            if(sr != null)
+            {
+                sr.color = ConvertColor(c);
+            }
         }
         
         public void HideTile()
         {
-            sr.color = ConvertColor(inactiveColor);
+            if (sr != null)
+            {
+                sr.color = ConvertColor(inactiveColor);
+            }
         }
 
         private Color ConvertColor(Color c)

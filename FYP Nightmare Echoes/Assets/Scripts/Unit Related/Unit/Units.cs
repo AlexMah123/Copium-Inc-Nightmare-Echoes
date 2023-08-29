@@ -5,11 +5,12 @@ using TMPro;
 using UnityEngine;
 using NightmareEchoes.Grid;
 using System.Linq;
+using NightmareEchoes.Unit.Pathfinding;
 
 //created by Alex
 namespace NightmareEchoes.Unit
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(PolygonCollider2D)), Serializable]
+    [RequireComponent(typeof(PolygonCollider2D), typeof(Rigidbody2D)), Serializable]
     public class Units : MonoBehaviour
     {
         [Header("Unit Info")]
@@ -58,6 +59,11 @@ namespace NightmareEchoes.Unit
 
         [Space(15),Header("Sprite Directions"), Tooltip("Sprites are ordered in north, south, east, west")]
         [SerializeField] List<Sprite> sprites = new List<Sprite>(); //ordered in NSEW
+        [SerializeField] GameObject frontModel;
+        [SerializeField] GameObject backModel;
+        [SerializeField] Animator frontAnimator;
+        [SerializeField] Animator backAnimator;
+        
 
         [Space(15), Header("Tile Related")]
         [SerializeField] protected OverlayTile activeTile;
@@ -401,17 +407,24 @@ namespace NightmareEchoes.Unit
         #endregion
         #endregion
 
+        private void OnDestroy()
+        {
+            if(!IsHostile)
+            {
+                PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+            }
+        }
+
         protected virtual void Awake()
         {
-            Direction = Direction.North;
             spriteRenderer = GetComponent<SpriteRenderer>();
 
             //collider presets
             Vector2[] points = new Vector2[4];
-            points[0] = new Vector2(-0.45f, 0f);
-            points[1] = new Vector2(0f, -0.225f);
-            points[2] = new Vector2(0.45f, 0f);
-            points[3] = new Vector2(0, 0.225f);
+            points[0] = new Vector2(-0.8f, 0f);
+            points[1] = new Vector2(0f, -0.4f);
+            points[2] = new Vector2(0.8f, 0f);
+            points[3] = new Vector2(0, 0.4f);
 
             PolygonCollider2D polyCollider = GetComponent<PolygonCollider2D>();
             polyCollider.points = points;
@@ -445,20 +458,82 @@ namespace NightmareEchoes.Unit
             {
                 switch (Direction)
                 {
-                    case Direction.North:
-                        SpriteRenderer.sprite = sprites[(int)Direction.North];
+                    case Direction.North: //back facing
+
+                        if (SpriteRenderer != null)
+                        {
+                            SpriteRenderer.sprite = sprites[(int)Direction.North];
+                        }
                         break;
 
-                    case Direction.South:
-                        SpriteRenderer.sprite = sprites[(int)Direction.South];
+                    case Direction.South: //front facing
+                        if (SpriteRenderer != null)
+                        {
+                            SpriteRenderer.sprite = sprites[(int)Direction.South];
+
+                        }
                         break;
 
-                    case Direction.East:
-                        SpriteRenderer.sprite = sprites[(int)Direction.East];
+                    case Direction.East: //front facing
+                        if (SpriteRenderer != null)
+                        {
+                            SpriteRenderer.sprite = sprites[(int)Direction.East];
+
+                        }
                         break;
 
-                    case Direction.West:
-                        SpriteRenderer.sprite = sprites[(int)Direction.West];
+                    case Direction.West: //back facing
+                        if (SpriteRenderer != null)
+                        {
+                            SpriteRenderer.sprite = sprites[(int)Direction.West];
+
+                        }
+                        break;
+
+                }
+            }
+            else
+            {
+                switch (Direction)
+                {
+                    case Direction.North: //back facing
+                        if(frontModel != null && backModel != null)
+                        {
+                            frontModel.SetActive(false);
+                            backModel.SetActive(true);
+                        }
+                        
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        break;
+
+                    case Direction.South: //front facing
+                        if (frontModel != null && backModel != null)
+                        {
+                            frontModel.SetActive(true);
+                            backModel.SetActive(false);
+                        }
+                        
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        break;
+
+                    case Direction.East: //front facing
+                        if (frontModel != null && backModel != null)
+                        {
+                            frontModel.SetActive(true);
+                            backModel.SetActive(false);
+                        }
+
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        break;
+
+                    case Direction.West: //back facing
+                        if (frontModel != null && backModel != null)
+                        {
+                            frontModel.SetActive(false);
+                            backModel.SetActive(true);
+                        }
+                        
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
                         break;
 
                 }
@@ -504,9 +579,16 @@ namespace NightmareEchoes.Unit
 
         public virtual void TakeDamage(int damage)
         {
+            if(frontModel != null && frontModel.activeSelf)
+            {
+                frontAnimator.SetBool("GettingHit", true);
+            }
+            else if (backModel != null && backModel.activeSelf)
+            {
+                backAnimator.SetBool("GettingHit", true);
+            }
 
         }
-
         #endregion
 
 

@@ -132,8 +132,18 @@ namespace NightmareEchoes.TurnOrder
             if (CurrentUnit != null)
             {
                 currentUnitProfile.image.sprite = CurrentUnit.Sprite;
-                currentUnitProfile.image.color = new Color(CurrentUnit.SpriteRenderer.color.r,
+
+                //slowly remove this as animations come out
+                if(CurrentUnit.SpriteRenderer != null)
+                {
+                    currentUnitProfile.image.color = new Color(CurrentUnit.SpriteRenderer.color.r,
                     CurrentUnit.SpriteRenderer.color.g, CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
+                }
+                else
+                {
+                    currentUnitProfile.image.color = Color.white;
+                }
+
                 currentUnitNameText.text = $"{CurrentUnit.Name}";
                 currentUnitHealthText.text = $"{CurrentUnit.stats.Health}/{CurrentUnit.stats.MaxHealth}";
                 currentUnitSpeedText.text = $"Speed: {CurrentUnit.stats.Speed}";
@@ -160,8 +170,18 @@ namespace NightmareEchoes.TurnOrder
             if(inspectedUnit != null)
             {
                 inspectedUnitProfile.image.sprite = inspectedUnit.Sprite;
-                inspectedUnitProfile.image.color = new Color(inspectedUnit.SpriteRenderer.color.r,
-                     inspectedUnit.SpriteRenderer.color.g, inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
+
+                //slowly remove this as animations come out
+                if (inspectedUnit.SpriteRenderer != null)
+                {
+                    inspectedUnitProfile.image.color = new Color(inspectedUnit.SpriteRenderer.color.r,
+                                         inspectedUnit.SpriteRenderer.color.g, inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
+                }
+                else
+                {
+                    inspectedUnitProfile.image.color = Color.white;
+                }
+
                 inspectedUnitNameText.text = $"{inspectedUnit.Name}";
                 inspectedUnitHealthText.text = $"{inspectedUnit.stats.Health}/{inspectedUnit.stats.MaxHealth}";
                 inspectedUnitSpeedText.text = $"Speed: {inspectedUnit.stats.Speed}";
@@ -434,11 +454,21 @@ namespace NightmareEchoes.TurnOrder
                 if(image != null)
                 {
                     image.GetComponent<Image>().sprite = TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].Sprite;
-                    image.GetComponent<Image>().color =
+                    
+                    //slowly remove this as animations come out
+                    if(TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer != null)
+                    {
+                        image.GetComponent<Image>().color =
                         new Color(TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.r,
                         TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.g,
                         TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.b,
                         TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.a);
+                    }
+                    else
+                    {
+                        image.GetComponent<Image>().color = Color.white;
+                    }
+                    
 
                     image.SetActive(true);
                 }
@@ -504,7 +534,6 @@ namespace NightmareEchoes.TurnOrder
             if (inspectedUnit != null)
             {
                 //total list of status effect
-                //inspectedUnitStatusEffectList.Clear();
                 inspectedUnitTotalStatusEffectList = inspectedUnit.BuffList.Concat(inspectedUnit.DebuffList).Concat(inspectedUnit.TokenList).ToList();
 
                 //reset pool
@@ -567,9 +596,19 @@ namespace NightmareEchoes.TurnOrder
             if (text == "Current" && CurrentUnit != null)
             {
                 glossaryImage.sprite = CurrentUnit.Sprite;
-                glossaryImage.color = new Color(
+
+                //slowly remove as animations come out
+                if (CurrentUnit.SpriteRenderer != null)
+                {
+                    glossaryImage.color = new Color(
                     CurrentUnit.SpriteRenderer.color.r, CurrentUnit.SpriteRenderer.color.g,
                     CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
+                }
+                else
+                {
+                    glossaryImage.color = Color.white;
+                }
+                
                 glossaryName.text = CurrentUnit.Name;
 
                 glossaryMoveRangeText.text = $"Move Range: {CurrentUnit.baseStats.MoveRange} + (<color=yellow>{CurrentUnit.modifiedStats.moveRangeModifier}</color>)";
@@ -630,10 +669,19 @@ namespace NightmareEchoes.TurnOrder
             else if (text == "Inspected" && inspectedUnit != null)
             {
                 glossaryImage.sprite = inspectedUnit.Sprite;
-                glossaryImage.color = new Color(
+
+                //slowly remove as animations come out
+                if (inspectedUnit.SpriteRenderer != null)
+                {
+                    glossaryImage.color = new Color(
                     inspectedUnit.SpriteRenderer.color.r, inspectedUnit.SpriteRenderer.color.g,
                     inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
-                glossaryName.text = inspectedUnit.Name;
+                    glossaryName.text = inspectedUnit.Name;
+                }
+                else
+                {
+                    glossaryImage.color = Color.white;
+                }
 
                 glossaryMoveRangeText.text = $"Move Range: {inspectedUnit.baseStats.MoveRange} + (<color=yellow>{inspectedUnit.modifiedStats.moveRangeModifier}</color>)";
                 glossarySpeedText.text = $"Speed: {inspectedUnit.baseStats.Speed} + (<color=yellow>{inspectedUnit.modifiedStats.speedModifier}</color>)";

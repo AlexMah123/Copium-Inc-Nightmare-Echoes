@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2658365863807529696}
   - component: {fileID: 2048295167523587102}
   - component: {fileID: 1622779789872064204}
+  - component: {fileID: 872868314859461815}
   - component: {fileID: 128770042}
   - component: {fileID: 5105758200137203564}
   - component: {fileID: 2001383901}
@@ -81,12 +82,12 @@ SpriteRenderer:
   m_SortingLayerID: -1735001907
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 7b2a6e4df0cddda45a43b861364e43e0, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.13, y: 0.16}
+  m_Size: {x: 4.22, y: 4.74}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -105,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Mage
-  _sprite: {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  _sprite: {fileID: 21300000, guid: 7b2a6e4df0cddda45a43b861364e43e0, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   _isHostile: 0
   _direction: 0
@@ -149,12 +150,32 @@ MonoBehaviour:
   skill3: {fileID: 6673351901997673447}
   passive: {fileID: 6673351901997673446}
   sprites:
-  - {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  - {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  - {fileID: 542052453, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  - {fileID: -6517823, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: 21300000, guid: 7b2a6e4df0cddda45a43b861364e43e0, type: 3}
+  - {fileID: 21300000, guid: 7b2a6e4df0cddda45a43b861364e43e0, type: 3}
+  - {fileID: 21300000, guid: 7b2a6e4df0cddda45a43b861364e43e0, type: 3}
+  - {fileID: 21300000, guid: 7b2a6e4df0cddda45a43b861364e43e0, type: 3}
   activeTile: {fileID: 0}
   isOccupiedTile: {fileID: 0}
+--- !u!95 &872868314859461815
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726962122940716085}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1bba932f8e7ccf246aa255254caa8361, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!50 &128770042
 Rigidbody2D:
   serializedVersion: 4
@@ -193,8 +214,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.34375, y: 0.53125}
-    newSize: {x: 0.13, y: 0.16}
+    oldSize: {x: 1, y: 1.1232227}
+    newSize: {x: 4.22, y: 4.74}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -230,6 +251,7 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
+  inflictKnockback: 0
   skillDescription: "Single Target, 4 Direction, Deal 6 Damage\r\nEmpower: Deal 9
     Damage and Apply 1 Blind\r"
 --- !u!114 &6673351901997673441
@@ -257,6 +279,7 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 4
   secondaryRange: 0
+  inflictKnockback: 1
   skillDescription: "AOE Attack, 4 Direction, \nDeal 8 Damage in the middle and 4
     Damage at the side, Knockback enemy 1 tile\r\nCooldown: 2 Turns\r\nEmpower: Stun
     (80%)\r"
@@ -285,6 +308,7 @@ MonoBehaviour:
   skillType: 2
   secondaryDamage: 0
   secondaryRange: 3
+  inflictKnockback: 0
   skillDescription: 'Target Hero or Enemy inside 2 Tiles Range, then Teleport him
     within 3 Tiles Range of Target.
 
@@ -322,6 +346,7 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 1
+  inflictKnockback: 0
   skillDescription: "AOE, Create Static Storm that last for 2 Turns\nEnemies that
     pass through the storm take 4 Damage, Enemy that Stay in (Start Turn) take 4
     damage and apply 1 Weaken\r\nCooldown: 3 Turns\r\nEmpower: Apply 2 Blind and
@@ -338,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea9fdb1423da3e4f93ac4d150a168a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillName: Arcane Intelect
+  skillName: Arcane Intellect
   damage: 0
   cooldown: 0
   range: 0
@@ -351,4 +376,5 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
+  inflictKnockback: 0
   skillDescription: Every 3 Turns, Empower Skills (Click to Enable)

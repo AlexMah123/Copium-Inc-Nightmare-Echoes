@@ -24,10 +24,9 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] bool ifSelectedUnit = false;
 
         List<OverlayTile> pathList = new List<OverlayTile>();
-        List<OverlayTile> tempList = new List<OverlayTile>();
-        [SerializeField] List<OverlayTile> tilesInRange = new List<OverlayTile>();
+        public List<OverlayTile> playerTilesInRange = new List<OverlayTile>();
 
-        RaycastHit2D? focusedTile;
+        RaycastHit2D? hoveredTile;
         OverlayTile overlayTile;
 
         private void Awake()
@@ -52,7 +51,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 ifSelectedUnit = false;
-                HideTilesInRange(tilesInRange);
+                HideTilesInRange(playerTilesInRange);
             }
 
             PlayerInputPathfinding();
@@ -83,9 +82,9 @@ namespace NightmareEchoes.Unit.Pathfinding
                             currentSelectedUnit.ActiveTile = hitOverlayTile.collider.GetComponent<OverlayTile>();
 
                             //Gets the value of the start pos and the maximum range is the amount you can set
-                            tilesInRange = PathFinding.FindTilesInRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
+                            playerTilesInRange = PathFinding.FindTilesInRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
 
-                            ShowTilesInRange(tilesInRange);
+                            ShowTilesInRange(playerTilesInRange);
                         }
                     }
                     else
@@ -99,11 +98,11 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
             }
             
-            focusedTile = GetFocusedTile();
+            hoveredTile = GetFocusedTile();
 
-            if (focusedTile.HasValue)
+            if (hoveredTile.HasValue)
             {
-                overlayTile = focusedTile.Value.collider.GetComponent<OverlayTile>();
+                overlayTile = hoveredTile.Value.collider.GetComponent<OverlayTile>();
                 transform.position = overlayTile.transform.position;
 
                 if (Input.GetMouseButtonDown(0) && ifSelectedUnit)
@@ -113,7 +112,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                         if (!overlayTile.CheckUnitOnTile())
                         {
-                            pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, tilesInRange);
+                            pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
                         }
                     }
                     
@@ -123,7 +122,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (pathList.Count > 0)
             {
                 CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
-                MoveAlongPath(currentSelectedUnitGO, pathList, tilesInRange);
+                MoveAlongPath(currentSelectedUnitGO, pathList, playerTilesInRange);
             }
 
             
@@ -144,9 +143,9 @@ namespace NightmareEchoes.Unit.Pathfinding
                 pathList.RemoveAt(0);
             }
 
-            if (pathList.Count == 0)
+            if (pathList.Count <= 0)
             {
-                HideTilesInRange(tilesInRange);
+                //HideTilesInRange(tilesInRange);
                 ifSelectedUnit = false;
             }
 
