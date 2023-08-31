@@ -6,6 +6,7 @@ using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine.Tilemaps;
 using System.Linq;
 using NightmareEchoes.Inputs;
+using NightmareEchoes.Unit.Combat;
 
 //by Terrence, editted by alex
 namespace NightmareEchoes.Unit.AI
@@ -149,7 +150,10 @@ namespace NightmareEchoes.Unit.AI
 
                     totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
                 }
-                //wait until in position, then attack
+
+                //wait until in position
+
+                CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
             }
             else if (inMoveAndAttackRange)
             {
@@ -174,7 +178,10 @@ namespace NightmareEchoes.Unit.AI
                 }
 
                 totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
-                //wait until in position, then attack
+
+                //wait until in position
+
+                CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
             }
             else
             {

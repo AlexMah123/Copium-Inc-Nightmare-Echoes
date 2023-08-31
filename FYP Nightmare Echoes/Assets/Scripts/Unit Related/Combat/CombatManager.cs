@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using NightmareEchoes.Grid;
 
-//created by JH
+//created by JH, edited by Ter
 namespace NightmareEchoes.Unit.Combat
 {
     public class CombatManager : MonoBehaviour
@@ -257,6 +257,42 @@ namespace NightmareEchoes.Unit.Combat
 
         #endregion
 
+        #region Enemy Targeting
+        public void EnemyTargetUnit(Units target, Skill skill)
+        {
+            activeSkill = skill;
+            StartCoroutine(WaitForSkill(target));
+        }
+
+        public void EnemyTargetGround(Vector3 TargetTile, Skill skill)
+        {
+            activeSkill = skill;
+
+            var hit = Physics2D.Raycast(TargetTile, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            if (!hit) return;
+            var target = hit.collider.gameObject.GetComponent<OverlayTile>();
+            if (!target) return;
+            if (skillRangeTiles.All(tile => tile != target)) return;
+
+            var aoeArea = activeSkill.AoeType switch
+            {
+                AOEType.Square => SquareRange(target, 1),
+                AOEType.Cross => LineRange(target, 1, false),
+                AOEType.NonAOE => SquareRange(target, 0)
+            };
+
+            aoePreviewTiles.Add(target);
+            foreach (var coord in aoeArea.Where(coord => OverlayTileManager.Instance.map.ContainsKey(coord)))
+            {
+                if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
+                    aoePreviewTiles.Add(tile);
+            }
+
+            StartCoroutine(WaitForSkill(target, aoePreviewTiles));
+        }
+
+        #endregion
+
         #region Rendering Tile Colors and Previews
 
         private void Render()
@@ -345,7 +381,7 @@ namespace NightmareEchoes.Unit.Combat
             }
         }
 
-        #endregion
+        #endregion 
         
         #region Casting Range Calculation
 

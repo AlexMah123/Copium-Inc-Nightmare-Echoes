@@ -7,7 +7,7 @@ using NightmareEchoes.Grid;
 using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
 
-//created by Alex
+//created by Alex, edited by Ter
 namespace NightmareEchoes.Unit
 {
     [RequireComponent(typeof(PolygonCollider2D), typeof(Rigidbody2D)), Serializable]
@@ -264,6 +264,23 @@ namespace NightmareEchoes.Unit
             private set => basicAttack.SkillDescription = value;
         }
 
+        public Skill BasicAttackSkill
+        {
+            get
+            {
+                if (basicAttack == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return basicAttack;
+                }
+            }
+
+            private set => basicAttack = value;
+        }
+
         public string Skill1Name
         {
             get
@@ -296,6 +313,23 @@ namespace NightmareEchoes.Unit
             }
 
             private set => skill1.SkillDescription = value;
+        }
+        
+        public Skill Skill1Skill
+        {
+            get
+            {
+                if (skill1 == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return skill1;
+                }
+            }
+
+            private set => skill1 = value;
         }
 
         public string Skill2Name
@@ -331,6 +365,23 @@ namespace NightmareEchoes.Unit
             private set => skill2.SkillDescription = value;
         }
 
+        public Skill Skill2Skill
+        {
+            get
+            {
+                if (skill2 == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return skill2;
+                }
+            }
+
+            private set => skill2 = value;
+        }
+
         public string Skill3Name
         {
             get
@@ -364,6 +415,22 @@ namespace NightmareEchoes.Unit
             private set => skill3.SkillDescription = value;
         }
 
+        public Skill Skill3Skill
+        {
+            get
+            {
+                if (skill3 == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return skill3;
+                }
+            }
+
+            private set => skill3 = value;
+        }
         public string PassiveName
         {
             get
@@ -396,6 +463,23 @@ namespace NightmareEchoes.Unit
             }
 
             private set => passive.SkillDescription = value;
+        }
+
+        public Skill PassiveSkill
+        {
+            get
+            {
+                if (passive == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return passive;
+                }
+            }
+
+            private set => passive = value;
         }
         #endregion
 
