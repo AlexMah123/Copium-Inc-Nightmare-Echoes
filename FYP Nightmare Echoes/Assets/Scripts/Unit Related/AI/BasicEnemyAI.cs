@@ -82,15 +82,7 @@ namespace NightmareEchoes.Unit.AI
 
         void AggressiveAction(Units thisUnit)
         {
-            //Range hardcoded as placeholder
-            if (thisUnit.TypeOfUnit == TypeOfUnit.RANGED_UNIT)
-            {
-                rangePlaceholder = 4;
-            }
-            else if (thisUnit.TypeOfUnit == TypeOfUnit.MELEE_UNIT)
-            {
-                rangePlaceholder = 1;
-            }
+            rangePlaceholder = thisUnit.gameObject.GetComponent<Skill>().Range;
 
             targetHero = closestHero;
             rangeToTarget = rangeToClosest;
@@ -147,6 +139,7 @@ namespace NightmareEchoes.Unit.AI
                             }
                         }
                     }
+                    targetTile.ShowCustomColor(Color.red);
 
                     totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
                 }
@@ -181,6 +174,7 @@ namespace NightmareEchoes.Unit.AI
 
                 //wait until in position
 
+                targetTile.ShowCustomColor(new Color(1, 0, 0, 0.5f));
                 CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
             }
             else
