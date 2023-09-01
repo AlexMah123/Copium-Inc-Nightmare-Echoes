@@ -139,9 +139,12 @@ namespace NightmareEchoes.Unit.AI
                             }
                         }
                     }
-                    targetTile.ShowCustomColor(Color.red);
+                    targetTile.ShowEnemyTile();
+
+                    //wait until in position
 
                     totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
+                    //targetTile.HideTile();
                 }
 
                 //wait until in position
@@ -172,10 +175,11 @@ namespace NightmareEchoes.Unit.AI
 
                 totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
 
+                targetTile.ShowEnemyTile();
                 //wait until in position
 
-                targetTile.ShowCustomColor(new Color(1, 0, 0, 0.5f));
                 CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
+                //targetTile.HideTile();
             }
             else
             {
