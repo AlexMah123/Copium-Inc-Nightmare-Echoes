@@ -110,7 +110,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                     if (currentSelectedUnitGO != null)
                     {
 
-                        if (!overlayTile.CheckUnitOnTile())
+                        if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
                         {
                             pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
                         }
@@ -145,7 +145,8 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             if (pathList.Count <= 0)
             {
-                //HideTilesInRange(tilesInRange);
+                //later comment out line 149
+                HideTilesInRange(tilesInRange);
                 ifSelectedUnit = false;
             }
 

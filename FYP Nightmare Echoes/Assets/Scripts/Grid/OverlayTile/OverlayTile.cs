@@ -110,6 +110,15 @@ namespace NightmareEchoes.Grid
             var target = hit.collider.gameObject;
             return !target ? null : target;
         }
+
+        public GameObject CheckObstacleOnTile()
+        {
+            var hit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Obstacles"));
+
+            if (!hit) return null;
+            var target = hit.collider.gameObject;
+            return !target ? null : target;
+        }
     }
 }
 

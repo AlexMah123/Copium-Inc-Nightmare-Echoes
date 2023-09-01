@@ -91,11 +91,12 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             foreach (var tiles in inRangeTiles.Distinct().ToList())
             {
-                if (!tiles.CheckUnitOnTile())
+                if (!tiles.CheckUnitOnTile() /*&& !tiles.CheckObstacleOnTile()*/)
                     RemovedTileWithObstacles.Add(tiles);
 
                 else if (tiles.CheckUnitOnTile().GetComponent<Units>().IsHostile == UnitAlignment)
                     RemovedTileWithObstacles.Add(tiles);
+
             }
 
 

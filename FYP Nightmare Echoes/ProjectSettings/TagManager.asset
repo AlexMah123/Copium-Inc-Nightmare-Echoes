@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Inspectable
   - Tile Overlay
+  - Obstacles
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - Unit
   - Overlay Tile
-  - 
+  - Obstacles
   - 
   - 
   - 
@@ -51,4 +52,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 1275735921
+    locked: 0
+  - name: Obstacle
+    uniqueID: 2351172999
     locked: 0
