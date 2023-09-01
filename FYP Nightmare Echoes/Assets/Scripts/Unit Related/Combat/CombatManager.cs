@@ -94,6 +94,7 @@ namespace NightmareEchoes.Unit.Combat
         #region Logic Checks
         public void OnTurnStart()
         {
+            turnEnded = false;
             foreach (var kvp in activeAoesCD)
             {
                 activeAoesCD[kvp.Key]--;
