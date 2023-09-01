@@ -99,6 +99,8 @@ namespace NightmareEchoes.TurnOrder
 
             yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
 
+            CombatManager.Instance.turnEnded = false;
+
             controller.StartCoroutine(controller.PassTurn());
         }
     }
