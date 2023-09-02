@@ -500,7 +500,10 @@ namespace NightmareEchoes.Unit
                 PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             }
 
-            OnDestroyedEvent?.Invoke(this);
+            if(!Application.isEditor)
+            {
+                OnDestroyedEvent?.Invoke(this);
+            }
         }
 
         protected virtual void Awake()

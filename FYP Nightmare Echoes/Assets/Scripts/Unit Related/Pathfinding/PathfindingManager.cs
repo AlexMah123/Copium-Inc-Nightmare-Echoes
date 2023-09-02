@@ -39,6 +39,8 @@ namespace NightmareEchoes.Unit.Pathfinding
             {
                 Instance = this;
             }
+
+            playerTilesInRange.Clear();
         }
 
         private void Start()

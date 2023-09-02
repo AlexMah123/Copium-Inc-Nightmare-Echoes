@@ -134,9 +134,12 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnitQueue = new Queue<Units>(CurrentUnitQueue.Where(x => x != destroyedUnit));
 
-            if(UIManager.Instance != null) 
+            if (UIManager.Instance != null) 
             {
-                UIManager.Instance.UpdateTurnOrderUI();
+                if(UIManager.Instance.turnOrderSpritePool.Count > 0)
+                {
+                    UIManager.Instance.UpdateTurnOrderUI();
+                }
             }
         }
 

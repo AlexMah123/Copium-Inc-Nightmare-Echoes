@@ -24,7 +24,7 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI currentTurnNum;
         [SerializeField] TextMeshProUGUI phaseText;
 
-        List<GameObject> turnOrderSpritePool = new List<GameObject>();
+        public List<GameObject> turnOrderSpritePool = new List<GameObject>();
         [SerializeField] Color playerTurn;
         [SerializeField] Color enemyTurn;
 
