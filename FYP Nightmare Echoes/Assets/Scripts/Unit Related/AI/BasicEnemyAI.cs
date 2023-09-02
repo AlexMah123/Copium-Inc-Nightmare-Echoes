@@ -19,10 +19,13 @@ namespace NightmareEchoes.Unit.AI
         [Space(20), Header("Path List to hero")]
         public List<OverlayTile> totalPathList = new List<OverlayTile>();
 
+        [Space(20), Header("Enemy Specifics")]
+        public float attackDelay = 1f;
+
         Units targetHero, closestHero;
         float rangeToTarget, rangeToClosest;
-        bool inAtkRange, inMoveAndAttackRange;
-        int rangePlaceholder = 1;
+        public bool inAtkRange, inMoveAndAttackRange, hasAttacked;
+        int rangePlaceholder;
         int rngHelper;
         public List<OverlayTile> tilesInRange;
         List<OverlayTile> possibleAttackLocations = new List<OverlayTile>();
@@ -50,6 +53,9 @@ namespace NightmareEchoes.Unit.AI
 
         public void MakeDecision(Units thisUnit)
         {
+            //reset values
+            hasAttacked = false;
+
             //sort heros by distance and find tiles in range
             SortHeroesByDistance(thisUnit);
             unitCurrentTile = thisUnit.ActiveTile;
@@ -139,17 +145,15 @@ namespace NightmareEchoes.Unit.AI
                             }
                         }
                     }
-                    targetTile.ShowEnemyTile();
-
-                    //wait until in position
 
                     totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
-                    //targetTile.HideTile();
                 }
 
                 //wait until in position
+                //targetTile.ShowEnemyTile();
 
-                CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
+                //CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
+                //targetTile.HideTile();
             }
             else if (inMoveAndAttackRange)
             {
@@ -175,10 +179,10 @@ namespace NightmareEchoes.Unit.AI
 
                 totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
 
-                targetTile.ShowEnemyTile();
                 //wait until in position
+                //targetTile.ShowEnemyTile();
 
-                CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
+                //CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
                 //targetTile.HideTile();
             }
             else
@@ -222,8 +226,26 @@ namespace NightmareEchoes.Unit.AI
                 PathfindingManager.Instance.MoveAlongPath(thisUnit.gameObject, totalPathList, tilesInRange);
                 CameraControl.Instance.UpdateCameraPan(thisUnit.gameObject);
             }
+
+            //Attack Process
+            if(totalPathList.Count == 0 && (inAtkRange || inMoveAndAttackRange) && !hasAttacked)
+            {
+                if(targetTile.CheckUnitOnTile().GetComponent<Units>() != null)
+                {
+                    targetTile.ShowEnemyTile();
+                    CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
+                    StartCoroutine(Delay());
+                    hasAttacked = true;
+                }
+
+            }
         }
 
+        IEnumerator Delay()
+        {
+            yield return new WaitForSeconds(attackDelay);
+            targetTile.HideTile();
+        }
 
         #region Calculations
         void SortHeroesByDistance(Units thisUnit)

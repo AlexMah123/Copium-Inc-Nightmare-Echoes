@@ -65,10 +65,15 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
+            CombatManager.Instance.turnEnded = false;
+
             if (controller.CurrentUnit != null)
             {
                 //Hide tiles only on exit
-                PathfindingManager.Instance.HideTilesInRange(enemyAI.tilesInRange);
+                if(enemyAI.tilesInRange.Count > 0)
+                {
+                    PathfindingManager.Instance.HideTilesInRange(enemyAI.tilesInRange);
+                }
 
                 //update effects & stats
                 controller.CurrentUnit.ApplyAllBuffDebuffs();
@@ -97,9 +102,14 @@ namespace NightmareEchoes.TurnOrder
                 enemyAI.MakeDecision(controller.CurrentUnit);
             }
 
-            yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
-
-            CombatManager.Instance.turnEnded = false;
+            if(!enemyAI.inAtkRange && !enemyAI.inMoveAndAttackRange)
+            {
+                yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
+            }
+            else
+            {
+                yield return new WaitUntil(() => enemyAI.hasAttacked == true);
+            }
 
             controller.StartCoroutine(controller.PassTurn());
         }

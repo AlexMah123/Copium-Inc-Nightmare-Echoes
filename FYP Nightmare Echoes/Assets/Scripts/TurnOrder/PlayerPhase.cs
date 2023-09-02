@@ -42,10 +42,15 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-            if(controller.CurrentUnit != null)
+            CombatManager.Instance.turnEnded = false;
+
+            if (controller.CurrentUnit != null)
             {
                 //Hide tiles only on exit
-                PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+                if(PathfindingManager.Instance.playerTilesInRange.Count > 0)
+                {
+                    PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+                }
 
                 //update effects & stats
                 controller.CurrentUnit.ApplyAllBuffDebuffs();
@@ -70,7 +75,6 @@ namespace NightmareEchoes.TurnOrder
 
             
 
-            CombatManager.Instance.turnEnded = false;
             controller.StartCoroutine(controller.PassTurn());
         }
         
