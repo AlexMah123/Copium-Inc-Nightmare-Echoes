@@ -137,21 +137,46 @@ namespace NightmareEchoes.Unit.Pathfinding
             go.transform.position = Vector2.MoveTowards(go.transform.position, pathList[0].transform.position, step);
             go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, zIndex);
 
-            if (Vector2.Distance(go.transform.position, pathList[0].transform.position) < 0.0001f)
+            if (Vector2.Distance(go.transform.position, pathList[0].transform.position) < 0.01f)
             {
                 SetUnitPositionOnTile(pathList[0], go);
                 pathList.RemoveAt(0);
             }
+            if (pathList.Count > 1)
+            { 
+                Vector3 Direction = (pathList[1].gridLocation - pathList[0].gridLocation);
+                if (Direction == new Vector3(1, 0, 0))
+                {
+                    Debug.Log("Moving up" + Direction);
+                    currentSelectedUnit.Direction = Unit.Direction.North;
+                }
+                else if (Direction == new Vector3(-1, 0, 0))
+                {
+                    Debug.Log("Moving down" + Direction);
+                    currentSelectedUnit.Direction = Unit.Direction.South;
+                }
+                else if (Direction == new Vector3(0, 1, 0))
+                {
+                    Debug.Log("Moving Right" + Direction);
+                    currentSelectedUnit.Direction = Unit.Direction.West;
+                }
+                else if (Direction == new Vector3(0, -1, 0))
+                {
+                    Debug.Log("Moving Left" + Direction);
+                    currentSelectedUnit.Direction = Unit.Direction.East;
+                }
 
+
+                Debug.Log("Direction Y" + Direction.y);
+            }
             if (pathList.Count <= 0)
             {
                 //later comment out line 149
                 HideTilesInRange(tilesInRange);
                 ifSelectedUnit = false;
+                Debug.Log("Character is not moving ");
             }
-
         }
-
         #endregion
 
 
