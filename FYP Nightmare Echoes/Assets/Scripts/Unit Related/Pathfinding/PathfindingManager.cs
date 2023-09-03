@@ -122,59 +122,53 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (pathList.Count > 0)
             {
                 CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
-                MoveAlongPath(currentSelectedUnitGO, pathList, playerTilesInRange);
+                MoveAlongPath(currentSelectedUnit, pathList, playerTilesInRange);
             }
 
             
         }
 
         #region Movement along Tile
-        public void MoveAlongPath(GameObject go, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
+        public void MoveAlongPath(Units unit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
         {
             var step = movingSpeed * Time.deltaTime;
             var zIndex = pathList[0].transform.position.z;
 
-            go.transform.position = Vector2.MoveTowards(go.transform.position, pathList[0].transform.position, step);
-            go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, zIndex);
+            unit.transform.position = Vector2.MoveTowards(unit.transform.position, pathList[0].transform.position, step);
+            unit.transform.position = new Vector3(unit.transform.position.x, unit.transform.position.y, zIndex);
 
-            if (Vector2.Distance(go.transform.position, pathList[0].transform.position) < 0.01f)
+            if (Vector2.Distance(unit.transform.position, pathList[0].transform.position) < 0.01f)
             {
-                SetUnitPositionOnTile(pathList[0], go);
+                SetUnitPositionOnTile(pathList[0], unit.gameObject);
                 pathList.RemoveAt(0);
             }
-            if (pathList.Count > 1)
-            { 
-                Vector3 Direction = (pathList[1].gridLocation - pathList[0].gridLocation);
-                if (Direction == new Vector3(1, 0, 0))
-                {
-                    Debug.Log("Moving up" + Direction);
-                    currentSelectedUnit.Direction = Unit.Direction.North;
-                }
-                else if (Direction == new Vector3(-1, 0, 0))
-                {
-                    Debug.Log("Moving down" + Direction);
-                    currentSelectedUnit.Direction = Unit.Direction.South;
-                }
-                else if (Direction == new Vector3(0, 1, 0))
-                {
-                    Debug.Log("Moving Right" + Direction);
-                    currentSelectedUnit.Direction = Unit.Direction.West;
-                }
-                else if (Direction == new Vector3(0, -1, 0))
-                {
-                    Debug.Log("Moving Left" + Direction);
-                    currentSelectedUnit.Direction = Unit.Direction.East;
-                }
 
+            if (pathList.Count > 0 && unit != null)
+            {
+                Vector3Int direction = pathList[0].gridLocation - unit.ActiveTile.gridLocation;
 
-                Debug.Log("Direction Y" + Direction.y);
+                if (direction == new Vector3Int(1, 0, 0))
+                {
+                    unit.Direction = Direction.North;
+                }
+                else if (direction == new Vector3Int(-1, 0, 0))
+                {
+                    unit.Direction = Direction.South;
+                }
+                else if (direction == new Vector3Int(0, 1, 0))
+                {
+                    unit.Direction = Direction.West;
+                }
+                else if (direction == new Vector3Int(0, -1, 0))
+                {
+                    unit.Direction = Direction.East;
+                }
             }
+
             if (pathList.Count <= 0)
             {
-                //later comment out line 149
                 //HideTilesInRange(tilesInRange);
                 ifSelectedUnit = false;
-                Debug.Log("Character is not moving ");
             }
         }
         #endregion

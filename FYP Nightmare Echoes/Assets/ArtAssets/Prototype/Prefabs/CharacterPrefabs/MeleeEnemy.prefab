@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5583804447610931213}
   - component: {fileID: 2309720267678754650}
   - component: {fileID: 1429316040}
+  - component: {fileID: 4139838481242840768}
   m_Layer: 6
   m_Name: MeleeEnemy
   m_TagString: Inspectable
@@ -79,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -331225865, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  m_Color: {r: 0.7254902, g: 0, b: 1, a: 1}
+  m_Color: {r: 0.7254901, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -140,12 +141,16 @@ MonoBehaviour:
   vertigoToken: 0
   stunToken: 0
   immobilizeToken: 0
-  basicAttack: {fileID: 1429316040}
+  basicAttack: {fileID: 4139838481242840768}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
   skill3: {fileID: 0}
   passive: {fileID: 0}
-  sprites: []
+  sprites:
+  - {fileID: 536578034, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: -112463209, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: 706767098, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: 1357633693, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   frontModel: {fileID: 0}
   backModel: {fileID: 0}
   frontAnimator: {fileID: 0}
@@ -168,7 +173,7 @@ MonoBehaviour:
   totalHeroList: []
   totalUnitList: []
   totalPathList: []
-  attackDelay: 1
+  attackDelay: 2
   inAtkRange: 0
   inMoveAndAttackRange: 0
   hasAttacked: 0
@@ -224,6 +229,33 @@ PolygonCollider2D:
       - {x: 0.203125, y: 0}
       - {x: 0.203125, y: 0.5}
 --- !u!114 &1429316040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583804447610931201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a620bb1cc8fa19b4ba3e4345c742ea07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Slash
+  damage: 6
+  cooldown: 0
+  range: 1
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  skillDescription: 
+--- !u!114 &4139838481242840768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

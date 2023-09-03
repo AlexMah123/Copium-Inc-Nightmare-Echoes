@@ -223,14 +223,14 @@ namespace NightmareEchoes.Unit.AI
         {
             if (totalPathList.Count > 0)
             {
-                PathfindingManager.Instance.MoveAlongPath(thisUnit.gameObject, totalPathList, tilesInRange);
+                PathfindingManager.Instance.MoveAlongPath(thisUnit, totalPathList, tilesInRange);
                 CameraControl.Instance.UpdateCameraPan(thisUnit.gameObject);
             }
 
             //Attack Process
             if(totalPathList.Count == 0 && (inAtkRange || inMoveAndAttackRange) && !hasAttacked)
             {
-                if(targetTile.CheckUnitOnTile().GetComponent<Units>() != null)
+                if(targetTile.CheckUnitOnTile()?.GetComponent<Units>() != null )
                 {
                     targetTile.ShowEnemyTile();
                     CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
