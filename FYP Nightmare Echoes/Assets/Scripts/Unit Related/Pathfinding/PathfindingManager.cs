@@ -111,13 +111,11 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     if (currentSelectedUnitGO != null)
                     {
-
                         if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
                         {
                             pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
                         }
                     }
-                    
                 }
             }
 

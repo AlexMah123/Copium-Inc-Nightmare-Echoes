@@ -91,15 +91,16 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             foreach (var tiles in inRangeTiles.Distinct().ToList())
             {
-                if (!tiles.CheckUnitOnTile() /*&& !tiles.CheckObstacleOnTile()*/)
+                if (!tiles.CheckUnitOnTile() && !tiles.CheckObstacleOnTile())
+                {
                     RemovedTileWithObstacles.Add(tiles);
-
-                else if (tiles.CheckUnitOnTile().GetComponent<Units>().IsHostile == UnitAlignment)
-                    RemovedTileWithObstacles.Add(tiles);
-
+                }
+                else if (tiles.CheckUnitOnTile()!= null)
+                {
+                    if (tiles.CheckUnitOnTile().GetComponent<Units>().IsHostile == UnitAlignment)
+                        RemovedTileWithObstacles.Add(tiles);
+                }
             }
-
-
             return (from tile in RemovedTileWithObstacles let path = FindPath(startTile, tile, RemovedTileWithObstacles) where path.Count <= range && path.Count > 0 select tile).ToList();
         }
 
