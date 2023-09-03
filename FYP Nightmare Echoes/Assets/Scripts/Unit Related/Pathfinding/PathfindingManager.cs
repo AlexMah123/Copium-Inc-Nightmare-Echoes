@@ -172,7 +172,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (pathList.Count <= 0)
             {
                 //later comment out line 149
-                HideTilesInRange(tilesInRange);
+                //HideTilesInRange(tilesInRange);
                 ifSelectedUnit = false;
                 Debug.Log("Character is not moving ");
             }
