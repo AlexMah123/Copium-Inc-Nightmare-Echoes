@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static NightmareEchoes.Grid.ArrowScript;
+using static NightmareEchoes.Grid.ArrowRenderer;
 //created by Vinn
 namespace NightmareEchoes.Grid
 {

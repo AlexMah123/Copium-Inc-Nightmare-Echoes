@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Inputs;
-using static NightmareEchoes.Grid.ArrowScript;
+
 //created by Vinn, editted by Alex and Ter
 namespace NightmareEchoes.Unit.Pathfinding
 {
@@ -24,7 +24,6 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] bool ifSelectedUnit = false;
 
         [Header("Arrow Renderer")]
-        ArrowScript arrowScript;
         bool isMoving = false;
 
 
@@ -50,7 +49,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         private void Start()
         {
-            arrowScript = new ArrowScript();
+            
         }
 
 
@@ -113,7 +112,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 overlayTile = hoveredTile.Value.collider.GetComponent<OverlayTile>();
                 transform.position = overlayTile.transform.position;
 
-                if (playerTilesInRange.Contains(overlayTile) && !isMoving)
+                if (playerTilesInRange.Contains(overlayTile) && !isMoving && ifSelectedUnit)
                 {
                     pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
 
@@ -127,7 +126,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                         var prevTile = i > 0 ? pathList[i - 1] : currentSelectedUnit.ActiveTile;
                         var futTile = i < pathList.Count - 1 ? pathList[i + 1] : null;
 
-                        var arrowDir = arrowScript.TranslateDirection(prevTile, pathList[i], futTile);
+                        var arrowDir = ArrowRenderer.TranslateDirection(prevTile, pathList[i], futTile);
                         pathList[i].SetArrowSprite(arrowDir);
                     }
                 }
@@ -138,20 +137,16 @@ namespace NightmareEchoes.Unit.Pathfinding
                     {
                         if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
                         {
-
-                                isMoving = true;
+                            isMoving = true;
                         }
                     }
                 }
             }
+
             if (isMoving)
             {
                 CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
                 MoveAlongPath(currentSelectedUnit, pathList, playerTilesInRange);
-                if (pathList.Count == 0)
-                {
-                    isMoving = false;
-                }
             }
         }
 
@@ -196,6 +191,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             {
                 //Comment this out later
                 HideTilesInRange(tilesInRange);
+                isMoving = false;
                 ifSelectedUnit = false;
             }
         }
