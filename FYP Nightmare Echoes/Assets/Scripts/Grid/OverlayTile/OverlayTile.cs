@@ -135,8 +135,6 @@ namespace NightmareEchoes.Grid
             {
                 arrow.color = new Color(1, 1, 1, 1);
                 arrow.sprite = arrows[(int)d];
-                //Might Need To Comment This Out
-                //arrow.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
             }
         }
     }

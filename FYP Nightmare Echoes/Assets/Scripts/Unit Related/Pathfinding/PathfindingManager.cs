@@ -138,17 +138,20 @@ namespace NightmareEchoes.Unit.Pathfinding
                     {
                         if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
                         {
-                            //pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
-                            isMoving = true;
+
+                                isMoving = true;
                         }
                     }
                 }
             }
-            if (pathList.Count > 0)
+            if (isMoving)
             {
                 CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
                 MoveAlongPath(currentSelectedUnit, pathList, playerTilesInRange);
-                isMoving = false;
+                if (pathList.Count == 0)
+                {
+                    isMoving = false;
+                }
             }
         }
 
