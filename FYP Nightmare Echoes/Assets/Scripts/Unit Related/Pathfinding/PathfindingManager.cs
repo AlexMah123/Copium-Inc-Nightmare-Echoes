@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Inputs;
-
+using static NightmareEchoes.Grid.ArrowScript;
 //created by Vinn, editted by Alex and Ter
 namespace NightmareEchoes.Unit.Pathfinding
 {
@@ -23,12 +23,16 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] float movingSpeed;
         [SerializeField] bool ifSelectedUnit = false;
 
+        [Header("Arrow Renderer")]
+        ArrowScript arrowScript;
+        bool isMoving = false;
+
+
         List<OverlayTile> pathList = new List<OverlayTile>();
         public List<OverlayTile> playerTilesInRange = new List<OverlayTile>();
 
         RaycastHit2D? hoveredTile;
         OverlayTile overlayTile;
-
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -41,12 +45,14 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             playerTilesInRange.Clear();
+
         }
 
         private void Start()
         {
-
+            arrowScript = new ArrowScript();
         }
+
 
         void Update()
         {
@@ -60,7 +66,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         }
 
         public void PlayerInputPathfinding()
-        {
+        { 
             //if player clicked and has not previously selected a unit, raycast and check
             if (Input.GetMouseButtonDown(0) && !ifSelectedUnit)
             {
@@ -107,25 +113,43 @@ namespace NightmareEchoes.Unit.Pathfinding
                 overlayTile = hoveredTile.Value.collider.GetComponent<OverlayTile>();
                 transform.position = overlayTile.transform.position;
 
+                if (playerTilesInRange.Contains(overlayTile) && !isMoving)
+                {
+                    pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
+
+                    foreach (var item in playerTilesInRange)
+                    {
+                        item.SetArrowSprite(ArrowDirections.None);
+                    }
+
+                    for (int i = 0; i < pathList.Count; i++)
+                    {
+                        var prevTile = i > 0 ? pathList[i - 1] : currentSelectedUnit.ActiveTile;
+                        var futTile = i < pathList.Count - 1 ? pathList[i + 1] : null;
+
+                        var arrowDir = arrowScript.TranslateDirection(prevTile, pathList[i], futTile);
+                        pathList[i].SetArrowSprite(arrowDir);
+                    }
+                }
+
                 if (Input.GetMouseButtonDown(0) && ifSelectedUnit)
                 {
                     if (currentSelectedUnitGO != null)
                     {
                         if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
                         {
-                            pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
+                            //pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
+                            isMoving = true;
                         }
                     }
                 }
             }
-
             if (pathList.Count > 0)
             {
                 CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
                 MoveAlongPath(currentSelectedUnit, pathList, playerTilesInRange);
+                isMoving = false;
             }
-
-            
         }
 
         #region Movement along Tile
@@ -167,7 +191,8 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             if (pathList.Count <= 0)
             {
-                //HideTilesInRange(tilesInRange);
+                //Comment this out later
+                HideTilesInRange(tilesInRange);
                 ifSelectedUnit = false;
             }
         }

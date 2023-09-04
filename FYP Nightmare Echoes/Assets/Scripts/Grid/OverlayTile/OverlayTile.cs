@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static NightmareEchoes.Grid.ArrowScript;
 //created by Vinn
 namespace NightmareEchoes.Grid
 {
@@ -26,12 +26,15 @@ namespace NightmareEchoes.Grid
         [SerializeField] Color inactiveColor;
 
         [SerializeField] Color moveColor;
-        [SerializeField] Color attackRangeColor;
+        [SerializeField] Color attackRangeColor; 
         [SerializeField] Color aoeRangeColor;
 
         [SerializeField] Color enemyColor;
         [SerializeField] Color friendlyColor;
-        
+
+
+        public List<Sprite> arrows;
+
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
@@ -93,6 +96,7 @@ namespace NightmareEchoes.Grid
             if (sr != null)
             {
                 sr.color = ConvertColor(inactiveColor);
+                SetArrowSprite(ArrowDirections.None);
             }
         }
 
@@ -118,6 +122,22 @@ namespace NightmareEchoes.Grid
             if (!hit) return null;
             var target = hit.collider.gameObject;
             return !target ? null : target;
+        }
+
+        public void SetArrowSprite(ArrowDirections d)
+        {
+            var arrow = GetComponentsInChildren<SpriteRenderer>()[1];
+            if (d == ArrowDirections.None)
+            {
+                arrow.color = new Color(1, 1, 1, 0);
+            }
+            else
+            {
+                arrow.color = new Color(1, 1, 1, 1);
+                arrow.sprite = arrows[(int)d];
+                //Might Need To Comment This Out
+                //arrow.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
+            }
         }
     }
 }
