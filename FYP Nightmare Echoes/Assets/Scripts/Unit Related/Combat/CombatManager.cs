@@ -235,9 +235,9 @@ namespace NightmareEchoes.Unit.Combat
             };
             
             aoePreviewTiles.Add(target);
-            foreach (var coord in aoeArea.Where(coord => OverlayTileManager.Instance.map.ContainsKey(coord)))
+            foreach (var coord in aoeArea.Where(coord => OverlayTileManager.Instance.gridDictionary.ContainsKey(coord)))
             {
-                if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
+                if (OverlayTileManager.Instance.gridDictionary.TryGetValue(coord, out var tile))
                     aoePreviewTiles.Add(tile);
             }
 
@@ -282,9 +282,9 @@ namespace NightmareEchoes.Unit.Combat
             };
 
             aoePreviewTiles.Add(target);
-            foreach (var coord in aoeArea.Where(coord => OverlayTileManager.Instance.map.ContainsKey(coord)))
+            foreach (var coord in aoeArea.Where(coord => OverlayTileManager.Instance.gridDictionary.ContainsKey(coord)))
             {
-                if (OverlayTileManager.Instance.map.TryGetValue(coord, out var tile))
+                if (OverlayTileManager.Instance.gridDictionary.TryGetValue(coord, out var tile))
                     aoePreviewTiles.Add(tile);
             }
 

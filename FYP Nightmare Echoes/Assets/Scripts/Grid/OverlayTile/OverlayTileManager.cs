@@ -14,11 +14,8 @@ namespace NightmareEchoes.Grid
         public OverlayTile overlaytilePrefab;
         public GameObject overlayContainer;
 
-
-
-
         //Dicitonary to store overlay tile position from grid pos
-        public Dictionary<Vector2Int, OverlayTile> map;
+        public Dictionary<Vector2Int, OverlayTile> gridDictionary;
 
         private void Awake()
         {
@@ -34,16 +31,11 @@ namespace NightmareEchoes.Grid
             InitOverlayTiles();
         }
 
-        private void Update()
-        {
-        }
-
-
         void InitOverlayTiles()
         {
             //generating the grid
             var tileMap = gameObject.GetComponentInChildren<Tilemap>();
-            map = new Dictionary<Vector2Int, OverlayTile>();
+            gridDictionary = new Dictionary<Vector2Int, OverlayTile>();
             //getting the bounds of the map
             BoundsInt bounds = tileMap.cellBounds;
 
@@ -59,7 +51,7 @@ namespace NightmareEchoes.Grid
                         var TileKey = new Vector2Int(x, y);
 
                         //Make sure the tilemap has the tile we are looking for
-                        if (tileMap.HasTile(tileLocation) && !map.ContainsKey(TileKey))
+                        if (tileMap.HasTile(tileLocation) && !gridDictionary.ContainsKey(TileKey))
                         {
                             //Instantiating the tileprefab over the grid and storing the position in the girdContainer
                             var overlayTile = Instantiate(overlaytilePrefab, overlayContainer.transform);
@@ -74,7 +66,7 @@ namespace NightmareEchoes.Grid
                             overlayTile.GetComponent<SpriteRenderer>().sortingOrder = tileMap.GetComponent<TilemapRenderer>().sortingOrder;
                             overlayTile.gridLocation = tileLocation;
                             childCount++;
-                            map.Add(TileKey, overlayTile);
+                            gridDictionary.Add(TileKey, overlayTile);
                         }
                     }
                 }
@@ -83,8 +75,7 @@ namespace NightmareEchoes.Grid
         
         public List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile , List<OverlayTile> LimitTiles)
         {
-            var map = OverlayTileManager.Instance.map;
-
+            var map = gridDictionary;
 
             //Dictionary for the tileRange
             Dictionary<Vector2Int, OverlayTile> tileToSearch = new Dictionary<Vector2Int, OverlayTile> ();
@@ -144,9 +135,9 @@ namespace NightmareEchoes.Grid
         {
             var tileRange = new List<OverlayTile>();
             
-            foreach (var coord in list.Where(coord => map.ContainsKey(coord)))
+            foreach (var coord in list.Where(coord => gridDictionary.ContainsKey(coord)))
             {
-                if (map.TryGetValue(coord, out var tile))
+                if (gridDictionary.TryGetValue(coord, out var tile))
                     tileRange.Add(tile);
             }
 

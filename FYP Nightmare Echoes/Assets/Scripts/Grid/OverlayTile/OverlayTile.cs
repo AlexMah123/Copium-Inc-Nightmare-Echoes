@@ -8,19 +8,14 @@ namespace NightmareEchoes.Grid
 {
    public class OverlayTile : MonoBehaviour
     {
-
-
         public int G;
         public int H;
-
-        public bool isCurenttlyStandingOn = false;
 
         public int F { get { return G + H; } }
 
         public bool isBlocked;
         public OverlayTile prevTile;
         public Vector3Int gridLocation;
-        public bool isClickable = true;
 
         private SpriteRenderer sr;
         [SerializeField] Color inactiveColor;

@@ -25,21 +25,23 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         //ArrowBool Detection Stuff
         bool isMoving = false;
-        bool isDragMoving = false;
+        bool isDragging = false;
 
-        Vector3 mouseStartPos;
+        //Mouse Detection
         Vector3 mousePrevPos;
         [SerializeField] float dragThreshold = 1f;
 
         //This Vector3Int is to return player to the previous position when they press escape
         private OverlayTile revertUnitPosition;
 
-
         List<OverlayTile> pathList = new List<OverlayTile>();
+        List<OverlayTile> tempPathList = new List<OverlayTile>();
         public List<OverlayTile> playerTilesInRange = new List<OverlayTile>();
 
         RaycastHit2D? hoveredTile;
         OverlayTile overlayTile;
+        OverlayTile lastAddedTile = null;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -52,14 +54,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             playerTilesInRange.Clear();
-
         }
-
-        private void Start()
-        {
-            
-        }
-
 
         void Update()
         {
@@ -68,10 +63,11 @@ namespace NightmareEchoes.Unit.Pathfinding
                 //ifSelectedUnit = false;
                 //HideTilesInRange(playerTilesInRange);
 
-                if (currentSelectedUnit != null)
+                if (currentSelectedUnit != null && revertUnitPosition != null)
                 {
                     SetUnitPositionOnTile(revertUnitPosition,currentSelectedUnitGO);
-                    pathList.Clear();
+
+                    ClearArrow();
                 }
             }
 
@@ -80,102 +76,31 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         public void PlayerInputPathfinding()
         { 
-           
+            //Check HoverTile based on mouse pos if its on the map
             hoveredTile = GetFocusedTile();
 
-            if (hoveredTile.HasValue)
+            #region Check for types of input
+            //Set Movement for Player if dragging
+            if (Input.GetMouseButtonDown(0))
             {
-                overlayTile = hoveredTile.Value.collider.GetComponent<OverlayTile>();
-                transform.position = overlayTile.transform.position;
-                if (Input.GetMouseButtonDown(0) && ifSelectedUnit)
-                {
-                    if (playerTilesInRange.Contains(overlayTile) && !isMoving && ifSelectedUnit)
-                    {
-                        pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
-                        if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
-                        {
-                            foreach (var item in playerTilesInRange)
-                            {
-                                item.SetArrowSprite(ArrowDirections.None);
-                            }
-
-                            for (int i = 0; i < pathList.Count; i++)
-                            {
-                                var prevTile = i > 0 ? pathList[i - 1] : currentSelectedUnit.ActiveTile;
-                                var futTile = i < pathList.Count - 1 ? pathList[i + 1] : null;
-
-                                var arrowDir = ArrowRenderer.TranslateDirection(prevTile, pathList[i], futTile);
-                                pathList[i].SetArrowSprite(arrowDir);
-                            }
-
-                            
-
-
-                            isMoving = true;
-                            isDragMoving = false;
-                            mouseStartPos = Input.mousePosition;
-                            mousePrevPos = mouseStartPos;
-                        }
-                    }
-                }
-                if (Input.GetMouseButtonDown(0) && ifSelectedUnit && (hoveredTile.HasValue == currentSelectedUnit.ActiveTile) && !isDragMoving)
-                {
-                    float dist = Vector3.Distance(Input.mousePosition,mousePrevPos);
-                    if (dist > dragThreshold)
-                    {
-                        isDragMoving = true;
-                    }
-                    
-                    mousePrevPos = Input.mousePosition;
-
-                }
+                isDragging = false;
+                mousePrevPos = Input.mousePosition;
             }
 
-            if (isDragMoving)
+            if (Input.GetMouseButton(0))
             {
-                if (playerTilesInRange.Contains(overlayTile) && !isMoving && ifSelectedUnit)
+                float dist = Vector3.Distance(Input.mousePosition, mousePrevPos);
+
+                if (dist > dragThreshold)
                 {
-
-                    var hitTile = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
-                    if (hitTile)
-                    {
-                        var dragTile = hitTile.collider.gameObject.GetComponent<OverlayTile>();
-
-                        if (dragTile != null)
-                        {
-                            if (!pathList.Contains(dragTile))
-                            {
-                                pathList.Add(dragTile);
-
-                            }
-                        }
-                    }
-
-                    if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
-                    {
-                        foreach (var item in playerTilesInRange)
-                        {
-                            item.SetArrowSprite(ArrowDirections.None);
-                        }
-
-                        for (int i = 0; i < pathList.Count; i++)
-                        {
-                            var prevTile = i > 0 ? pathList[i - 1] : currentSelectedUnit.ActiveTile;
-                            var futTile = i < pathList.Count - 1 ? pathList[i + 1] : null;
-
-                            var arrowDir = ArrowRenderer.TranslateDirection(prevTile, pathList[i], futTile);
-                            pathList[i].SetArrowSprite(arrowDir);
-                        }
-                    }
+                    isDragging = true;
                 }
 
-                if (Input.GetMouseButtonUp(0))
-                {
-                    isMoving = true;
-                    isDragMoving = false; 
-                }
+                mousePrevPos = Input.mousePosition;
             }
+            #endregion
 
+            #region selecting a player to move
             //if player clicked and has not previously selected a unit, raycast and check
             if (Input.GetMouseButtonDown(0) && !ifSelectedUnit)
             {
@@ -215,34 +140,108 @@ namespace NightmareEchoes.Unit.Pathfinding
                     ifSelectedUnit = false;
                 }
             }
+            #endregion
 
+            #region selecting tile to move on
+            if (hoveredTile.HasValue)
+            {
+                overlayTile = hoveredTile.Value.collider.GetComponent<OverlayTile>();
+                transform.position = overlayTile.transform.position;
+
+                //if you are not moving and you selected a unit
+                if (playerTilesInRange.Contains(overlayTile) && !isMoving && ifSelectedUnit)
+                {
+                    if(Input.GetMouseButtonDown(0))
+                    {
+                        pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
+                        tempPathList = pathList;
+
+                        if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
+                        {
+                            RenderArrow();
+                            isMoving = true;
+                        }
+                    }
+                    else if(isDragging)
+                    {
+                        var hitTile = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+                        
+                        /*if(Camera.main.ScreenToWorldPoint(Input.mousePosition) == revertUnitPosition.gridLocation)
+                        {
+                            ClearArrow();
+                        }*/
+
+                        if (hitTile)
+                        {
+                            var dragTile = hitTile.collider.gameObject.GetComponent<OverlayTile>();
+
+                            if (dragTile != null)
+                            {
+                                if(lastAddedTile == null || AreTilesAdjacent(lastAddedTile, dragTile))
+                                {
+                                    if(!pathList.Contains(dragTile))
+                                    {
+                                        pathList.Add(dragTile);
+                                        lastAddedTile = dragTile;
+                                    }
+                                    else if(pathList.Contains(dragTile) && lastAddedTile == pathList[pathList.Count - 1])
+                                    {
+                                        pathList.Remove(lastAddedTile);
+                                        lastAddedTile = pathList.Count > 0 ? pathList[pathList.Count - 1] : null;
+                                    }
+                                }
+                            }
+                        }
+ 
+                        if ((!overlayTile.CheckUnitOnTile() || overlayTile == currentSelectedUnit.ActiveTile)&& !overlayTile.CheckObstacleOnTile())
+                        {
+                            RenderArrow();
+                        }
+
+                        if (Input.GetMouseButtonUp(0))
+                        {
+                            tempPathList = pathList;
+                            isMoving = true;
+                            isDragging = false;
+                            lastAddedTile = null;
+                        }
+                    }
+                }
+            }
+            #endregion
+
+
+            //When unit is moving
             if (isMoving)
             {
                 CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
                 MoveAlongPath(currentSelectedUnit, pathList, playerTilesInRange);
             }
-
-
         }
 
         #region Movement along Tile
         public void MoveAlongPath(Units unit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
         {
-            var step = movingSpeed * Time.deltaTime;
-            var zIndex = pathList[0].transform.position.z;
-
-            unit.transform.position = Vector2.MoveTowards(unit.transform.position, pathList[0].transform.position, step);
-            unit.transform.position = new Vector3(unit.transform.position.x, unit.transform.position.y, zIndex);
-
-            if (Vector2.Distance(unit.transform.position, pathList[0].transform.position) < 0.01f)
+            //units movement
+            if(pathList.Count > 0) 
             {
-                SetUnitPositionOnTile(pathList[0], unit.gameObject);
+                var step = movingSpeed * Time.deltaTime;
+                var zIndex = pathList[0].transform.position.z;
 
-                pathList[0].SetArrowSprite(ArrowDirections.None);
+                unit.transform.position = Vector2.MoveTowards(unit.transform.position, pathList[0].transform.position, step);
+                unit.transform.position = new Vector3(unit.transform.position.x, unit.transform.position.y, zIndex);
 
-                pathList.RemoveAt(0);
+                if (Vector2.Distance(unit.transform.position, pathList[0].transform.position) < 0.01f)
+                {
+                    SetUnitPositionOnTile(pathList[0], unit.gameObject);
+
+                    pathList[0].SetArrowSprite(ArrowDirections.None);
+
+                    pathList.RemoveAt(0);
+                }
             }
 
+            //set the units direction facing
             if (pathList.Count > 0 && unit != null)
             {
                 Vector3Int direction = pathList[0].gridLocation - unit.ActiveTile.gridLocation;
@@ -269,14 +268,47 @@ namespace NightmareEchoes.Unit.Pathfinding
             {
                 //Comment this out later
                 //HideTilesInRange(tilesInRange);
-                isMoving = false;
                 //ifSelectedUnit = false;
+                isMoving = false;
             }
         }
         #endregion
 
 
         #region Overlay Tile Related
+        bool AreTilesAdjacent(OverlayTile tile1, OverlayTile tile2)
+        {
+            if((Mathf.Abs(tile2.gridLocation.x - tile1.gridLocation.x) == 1) && tile1.gridLocation.y == tile2.gridLocation.y)
+            {
+                return true;
+            }
+
+            if ((Mathf.Abs(tile2.gridLocation.y - tile1.gridLocation.y) == 1) && tile1.gridLocation.x == tile2.gridLocation.x)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        void RenderArrow()
+        {
+            foreach (var item in playerTilesInRange)
+            {
+                item.SetArrowSprite(ArrowDirections.None);
+            }
+
+            for (int i = 0; i < pathList.Count; i++)
+            {
+                var prevTile = i > 0 ? pathList[i - 1] : currentSelectedUnit.ActiveTile;
+                var futTile = i < pathList.Count - 1 ? pathList[i + 1] : null;
+
+                var arrowDir = ArrowRenderer.TranslateDirection(prevTile, pathList[i], futTile);
+                pathList[i].SetArrowSprite(arrowDir);
+            }
+        }
+
         public RaycastHit2D? GetFocusedTile()
         {
             RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
@@ -317,6 +349,24 @@ namespace NightmareEchoes.Unit.Pathfinding
             {
                 item.HideTile();
             }
+        }
+
+        public void ClearUnitPosition()
+        {
+            ClearArrow();
+            revertUnitPosition = null;
+            ifSelectedUnit = false;
+        }
+
+        public void ClearArrow()
+        {
+            foreach (var tile in tempPathList)
+            {
+                tile.SetArrowSprite(ArrowDirections.None);
+            }
+
+            tempPathList.Clear();
+            pathList.Clear();
         }
         #endregion
     }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using NightmareEchoes.Unit;
 using NightmareEchoes.TurnOrder;
 using System.Linq;
+using NightmareEchoes.Unit.Pathfinding;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -313,21 +314,32 @@ namespace NightmareEchoes.TurnOrder
         public void AttackButton()
         {
             CurrentUnit.BasicAttack();
+            PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+            PathfindingManager.Instance.ClearUnitPosition();
         }
 
         public void Skill1Button()
         {
             CurrentUnit.Skill1();
+            PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+            PathfindingManager.Instance.ClearUnitPosition();
+
         }
 
         public void Skill2Button()
         {
             CurrentUnit.Skill2();
+            PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+            PathfindingManager.Instance.ClearUnitPosition();
+
         }
 
         public void Skill3Button()
         {
             CurrentUnit.Skill3();
+            PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+            PathfindingManager.Instance.ClearUnitPosition();
+
         }
 
         #endregion
