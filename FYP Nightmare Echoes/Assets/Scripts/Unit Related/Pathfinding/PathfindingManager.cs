@@ -23,8 +23,16 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] float movingSpeed;
         [SerializeField] bool ifSelectedUnit = false;
 
-        [Header("Arrow Renderer")]
+        //ArrowBool Detection Stuff
         bool isMoving = false;
+        bool isDragMoving = false;
+
+        Vector3 mouseStartPos;
+        Vector3 mousePrevPos;
+        [SerializeField] float dragThreshold = 1f;
+
+        //This Vector3Int is to return player to the previous position when they press escape
+        private OverlayTile revertUnitPosition;
 
 
         List<OverlayTile> pathList = new List<OverlayTile>();
@@ -57,8 +65,14 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                ifSelectedUnit = false;
-                HideTilesInRange(playerTilesInRange);
+                //ifSelectedUnit = false;
+                //HideTilesInRange(playerTilesInRange);
+
+                if (currentSelectedUnit != null)
+                {
+                    SetUnitPositionOnTile(revertUnitPosition,currentSelectedUnitGO);
+                    pathList.Clear();
+                }
             }
 
             PlayerInputPathfinding();
@@ -66,6 +80,102 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         public void PlayerInputPathfinding()
         { 
+           
+            hoveredTile = GetFocusedTile();
+
+            if (hoveredTile.HasValue)
+            {
+                overlayTile = hoveredTile.Value.collider.GetComponent<OverlayTile>();
+                transform.position = overlayTile.transform.position;
+                if (Input.GetMouseButtonDown(0) && ifSelectedUnit)
+                {
+                    if (playerTilesInRange.Contains(overlayTile) && !isMoving && ifSelectedUnit)
+                    {
+                        pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
+                        if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
+                        {
+                            foreach (var item in playerTilesInRange)
+                            {
+                                item.SetArrowSprite(ArrowDirections.None);
+                            }
+
+                            for (int i = 0; i < pathList.Count; i++)
+                            {
+                                var prevTile = i > 0 ? pathList[i - 1] : currentSelectedUnit.ActiveTile;
+                                var futTile = i < pathList.Count - 1 ? pathList[i + 1] : null;
+
+                                var arrowDir = ArrowRenderer.TranslateDirection(prevTile, pathList[i], futTile);
+                                pathList[i].SetArrowSprite(arrowDir);
+                            }
+
+                            
+
+
+                            isMoving = true;
+                            isDragMoving = false;
+                            mouseStartPos = Input.mousePosition;
+                            mousePrevPos = mouseStartPos;
+                        }
+                    }
+                }
+                if (Input.GetMouseButtonDown(0) && ifSelectedUnit && (hoveredTile.HasValue == currentSelectedUnit.ActiveTile) && !isDragMoving)
+                {
+                    float dist = Vector3.Distance(Input.mousePosition,mousePrevPos);
+                    if (dist > dragThreshold)
+                    {
+                        isDragMoving = true;
+                    }
+                    
+                    mousePrevPos = Input.mousePosition;
+
+                }
+            }
+
+            if (isDragMoving)
+            {
+                if (playerTilesInRange.Contains(overlayTile) && !isMoving && ifSelectedUnit)
+                {
+
+                    var hitTile = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+                    if (hitTile)
+                    {
+                        var dragTile = hitTile.collider.gameObject.GetComponent<OverlayTile>();
+
+                        if (dragTile != null)
+                        {
+                            if (!pathList.Contains(dragTile))
+                            {
+                                pathList.Add(dragTile);
+
+                            }
+                        }
+                    }
+
+                    if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
+                    {
+                        foreach (var item in playerTilesInRange)
+                        {
+                            item.SetArrowSprite(ArrowDirections.None);
+                        }
+
+                        for (int i = 0; i < pathList.Count; i++)
+                        {
+                            var prevTile = i > 0 ? pathList[i - 1] : currentSelectedUnit.ActiveTile;
+                            var futTile = i < pathList.Count - 1 ? pathList[i + 1] : null;
+
+                            var arrowDir = ArrowRenderer.TranslateDirection(prevTile, pathList[i], futTile);
+                            pathList[i].SetArrowSprite(arrowDir);
+                        }
+                    }
+                }
+
+                if (Input.GetMouseButtonUp(0))
+                {
+                    isMoving = true;
+                    isDragMoving = false; 
+                }
+            }
+
             //if player clicked and has not previously selected a unit, raycast and check
             if (Input.GetMouseButtonDown(0) && !ifSelectedUnit)
             {
@@ -76,6 +186,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 if (hitUnit)
                 {
                     var unit = hitUnit.collider.gameObject.GetComponent<Units>();
+
                     if (unit && !unit.IsHostile)
                     {
                         currentSelectedUnitGO = unit.gameObject;
@@ -90,7 +201,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                             //Gets the value of the start pos and the maximum range is the amount you can set
                             playerTilesInRange = PathFinding.FindTilesInRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
-
+                            revertUnitPosition = currentSelectedUnit.ActiveTile;
                             ShowTilesInRange(playerTilesInRange);
                         }
                     }
@@ -104,50 +215,14 @@ namespace NightmareEchoes.Unit.Pathfinding
                     ifSelectedUnit = false;
                 }
             }
-            
-            hoveredTile = GetFocusedTile();
-
-            if (hoveredTile.HasValue)
-            {
-                overlayTile = hoveredTile.Value.collider.GetComponent<OverlayTile>();
-                transform.position = overlayTile.transform.position;
-
-                if (playerTilesInRange.Contains(overlayTile) && !isMoving && ifSelectedUnit)
-                {
-                    pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, overlayTile, playerTilesInRange);
-
-                    foreach (var item in playerTilesInRange)
-                    {
-                        item.SetArrowSprite(ArrowDirections.None);
-                    }
-
-                    for (int i = 0; i < pathList.Count; i++)
-                    {
-                        var prevTile = i > 0 ? pathList[i - 1] : currentSelectedUnit.ActiveTile;
-                        var futTile = i < pathList.Count - 1 ? pathList[i + 1] : null;
-
-                        var arrowDir = ArrowRenderer.TranslateDirection(prevTile, pathList[i], futTile);
-                        pathList[i].SetArrowSprite(arrowDir);
-                    }
-                }
-
-                if (Input.GetMouseButtonDown(0) && ifSelectedUnit)
-                {
-                    if (currentSelectedUnitGO != null)
-                    {
-                        if (!overlayTile.CheckUnitOnTile() && !overlayTile.CheckObstacleOnTile())
-                        {
-                            isMoving = true;
-                        }
-                    }
-                }
-            }
 
             if (isMoving)
             {
                 CameraControl.Instance.UpdateCameraPan(currentSelectedUnitGO);
                 MoveAlongPath(currentSelectedUnit, pathList, playerTilesInRange);
             }
+
+
         }
 
         #region Movement along Tile
@@ -162,6 +237,9 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (Vector2.Distance(unit.transform.position, pathList[0].transform.position) < 0.01f)
             {
                 SetUnitPositionOnTile(pathList[0], unit.gameObject);
+
+                pathList[0].SetArrowSprite(ArrowDirections.None);
+
                 pathList.RemoveAt(0);
             }
 
@@ -190,9 +268,9 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (pathList.Count <= 0)
             {
                 //Comment this out later
-                HideTilesInRange(tilesInRange);
+                //HideTilesInRange(tilesInRange);
                 isMoving = false;
-                ifSelectedUnit = false;
+                //ifSelectedUnit = false;
             }
         }
         #endregion
@@ -240,8 +318,6 @@ namespace NightmareEchoes.Unit.Pathfinding
                 item.HideTile();
             }
         }
-
-
         #endregion
     }
 }
