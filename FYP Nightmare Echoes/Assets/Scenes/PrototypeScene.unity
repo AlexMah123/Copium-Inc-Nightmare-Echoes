@@ -10761,11 +10761,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overlayTileContainer: {fileID: 1901869097}
-  currentSelectedUnitGO: {fileID: 0}
   movingSpeed: 4
   ifSelectedUnit: 0
-  dragThreshold: 1
+  dragThreshold: 1.1
+  pathList: []
+  tempPathList: []
   playerTilesInRange: []
+  lastAddedTile: {fileID: 0}
 --- !u!1001 &601295391118310419
 PrefabInstance:
   m_ObjectHideFlags: 0

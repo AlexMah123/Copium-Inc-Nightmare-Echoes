@@ -69,7 +69,6 @@ namespace NightmareEchoes.Unit
 
         [Space(15), Header("Tile Related")]
         [SerializeField] protected OverlayTile activeTile;
-        [SerializeField] protected OverlayTile isOccupiedTile;
 
         #region Class Properties
 
@@ -512,10 +511,10 @@ namespace NightmareEchoes.Unit
 
             //collider presets
             Vector2[] points = new Vector2[4];
-            points[0] = new Vector2(-0.8f, 0f);
-            points[1] = new Vector2(0f, -0.4f);
-            points[2] = new Vector2(0.8f, 0f);
-            points[3] = new Vector2(0, 0.4f);
+            points[0] = new Vector2(-0.85f, 0f);
+            points[1] = new Vector2(0f, -0.45f);
+            points[2] = new Vector2(0.85f, 0f);
+            points[3] = new Vector2(0, 0.45f);
 
             PolygonCollider2D polyCollider = GetComponent<PolygonCollider2D>();
             polyCollider.points = points;

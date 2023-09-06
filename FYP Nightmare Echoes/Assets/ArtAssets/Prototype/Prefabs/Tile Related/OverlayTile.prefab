@@ -185,11 +185,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   G: 0
   H: 0
-  isCurenttlyStandingOn: 0
   isBlocked: 0
   prevTile: {fileID: 0}
   gridLocation: {x: 0, y: 0, z: 0}
-  isClickable: 1
   inactiveColor: {r: 0, g: 0, b: 0, a: 0}
   moveColor: {r: 1, g: 1, b: 1, a: 0.39215687}
   attackRangeColor: {r: 0.92687, g: 1, b: 0, a: 0.39215687}
@@ -235,7 +233,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.45, y: 0}
-      - {x: 0, y: -0.225}
-      - {x: 0.45, y: 0}
-      - {x: 0, y: 0.225}
+    - - {x: -0.5, y: 0}
+      - {x: 0, y: -0.25}
+      - {x: 0.5, y: 0}
+      - {x: 0, y: 0.25}
