@@ -66,8 +66,7 @@ namespace NightmareEchoes.TurnOrder
 
         void Start()
         {
-            turnCount = 1;
-            ChangePhase(planPhase);
+            Invoke("StartGame", 1f);
         }
 
         void Update()
@@ -76,6 +75,12 @@ namespace NightmareEchoes.TurnOrder
             {
                 currentPhase.OnUpdatePhase();
             }
+        }
+
+        void StartGame()
+        {
+            turnCount = 1;
+            ChangePhase(planPhase);
         }
 
         public void ChangePhase(Phase newPhase)
@@ -115,7 +120,7 @@ namespace NightmareEchoes.TurnOrder
         #region Turn Order Calculations
         public void CalculateTurnOrder()
         {
-            turnOrderList = FindObjectsOfType<Units>().ToList();
+            turnOrderList = new List<Units>(FindObjectsOfType<Units>());
             turnOrderList.Sort(CompareSpeed); //sorts in ascending order
             turnOrderList.Reverse();
 
