@@ -10,6 +10,7 @@ namespace NightmareEchoes.Unit
         public override bool Cast(Units target)
         {
             target.TakeDamage(damage);
+            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
             return true;
         }
     }
