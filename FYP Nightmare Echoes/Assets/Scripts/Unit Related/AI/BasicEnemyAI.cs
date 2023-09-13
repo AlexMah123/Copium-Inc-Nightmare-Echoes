@@ -58,31 +58,35 @@ namespace NightmareEchoes.Unit.AI
 
             //sort heros by distance and find tiles in range
             SortHeroesByDistance(thisUnit);
-            unitCurrentTile = thisUnit.ActiveTile;
 
-            tilesInRange = PathFinding.FindTilesInRange(unitCurrentTile, thisUnit.stats.MoveRange);
-            PathfindingManager.Instance.ShowTilesInRange(tilesInRange);
-
-            healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
-            //Debug.Log(healthPercent);
-
-            //weight calculations
-            utilityDictionary.Clear();
-            utilityDictionary.Add("Attack", healthPercent);
-            utilityDictionary.Add("Retreat", 40);
-            
-            //sort by most utility score
-            var SortedOptions = utilityDictionary.OrderByDescending(utilityDictionary => utilityDictionary.Value);
-
-            switch (SortedOptions.ToList()[0].Key)
+            if (totalHeroList[0] != null)
             {
-                //example list
-                case "Attack":
-                    AggressiveAction(thisUnit);
-                    break;
-                case "Retreat":
-                    //Debug.Log("Retreat Triggered");
-                    break;
+                unitCurrentTile = thisUnit.ActiveTile;
+
+                tilesInRange = PathFinding.FindTilesInRange(unitCurrentTile, thisUnit.stats.MoveRange);
+                PathfindingManager.Instance.ShowTilesInRange(tilesInRange);
+
+                healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
+                //Debug.Log(healthPercent);
+
+                //weight calculations
+                utilityDictionary.Clear();
+                utilityDictionary.Add("Attack", healthPercent);
+                utilityDictionary.Add("Retreat", 40);
+
+                //sort by most utility score
+                var SortedOptions = utilityDictionary.OrderByDescending(utilityDictionary => utilityDictionary.Value);
+
+                switch (SortedOptions.ToList()[0].Key)
+                {
+                    //example list
+                    case "Attack":
+                        AggressiveAction(thisUnit);
+                        break;
+                    case "Retreat":
+                        //Debug.Log("Retreat Triggered");
+                        break;
+                }
             }
         }
 
