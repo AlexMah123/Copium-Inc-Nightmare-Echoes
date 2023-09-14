@@ -349,12 +349,11 @@ namespace NightmareEchoes.Unit.Combat
         }
         
         //Previews
-
         private void ClearPreviews()
         {
             foreach (var unit in ghostSprites)
             {
-                Destroy(unit.gameObject);
+                unit.SetActive(false);
             }
             ghostSprites.Clear();
         }
@@ -370,12 +369,13 @@ namespace NightmareEchoes.Unit.Combat
                 var destination = tile.transform.position + direction;
                 
                 var unitSprite = tile.CheckUnitOnTile().GetComponent<SpriteRenderer>().sprite;
-                var clone = Instantiate(gameObject);
-                var cloneSr = clone.AddComponent<SpriteRenderer>();
+                var clone = GetClone();
+                var cloneSr = clone.GetComponent<SpriteRenderer>();
                 cloneSr.sprite = unitSprite;
                 cloneSr.sortingLayerID = SortingLayer.NameToID("Unit");
                 ghostSprites.Add(clone);
-
+                
+                clone.SetActive(true);
                 clone.transform.position = destination;
                 cloneSr.color = Color.white;
             }
@@ -468,5 +468,33 @@ namespace NightmareEchoes.Unit.Combat
             yield return new WaitUntil(() => activeSkill.Cast(target, aoeTiles));
             EndTurn();
         }
+
+        #region Object Pooling
+        
+        private List<GameObject> clonePool = new();
+        private int cloneCount = 0;
+
+        GameObject GetClone()
+        {
+            { 
+                foreach (var clone in clonePool)
+                {
+                    if (!clone.activeInHierarchy) 
+                    { 
+                        return clone; 
+                    }
+                } 
+  
+                GameObject obj = Instantiate(gameObject);
+                obj.AddComponent<SpriteRenderer>();
+                obj.SetActive(false); 
+                obj.name = $"{obj.name} {cloneCount++}"; 
+                clonePool.Add(obj); 
+                return obj; 
+            }
+        }
+
+
+        #endregion
     }
 }
