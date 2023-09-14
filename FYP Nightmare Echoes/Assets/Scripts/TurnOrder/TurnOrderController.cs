@@ -29,6 +29,12 @@ namespace NightmareEchoes.TurnOrder
 
         [SerializeField] Units currentUnit;
         public bool runOnce = false;
+        public bool gameOver = false;
+
+        [Header("Hero List")]
+        List<Units> totalUnitList = new List<Units>();
+        List<Units> totalHeroList = new List<Units>();
+
 
         #region Class Properties
         public Units CurrentUnit
@@ -167,5 +173,30 @@ namespace NightmareEchoes.TurnOrder
             return _a.stats.Speed.CompareTo(_b.stats.Speed);
         }
         #endregion
+
+        public List<Units> FindAllHeros()
+        {
+            //check if any hero exist
+            totalHeroList.Clear();
+            totalUnitList = FindObjectsOfType<Units>().ToList();
+
+            //filter by heroes
+            foreach (var unit in totalUnitList)
+            {
+                if (!unit.IsHostile)
+                {
+                    totalHeroList.Add(unit);
+                }
+            }
+
+            if (totalHeroList.Count > 0) 
+            {
+                return totalUnitList;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

@@ -52,7 +52,10 @@ namespace NightmareEchoes.TurnOrder
             //start a couroutine to move
             if (enemyAI == null || controller.CurrentUnit == null) return;
 
-            enemyAI.MoveProcess(controller.CurrentUnit);
+            if (enemyAI.TotalHeroList.Count > 0)
+            {
+                enemyAI.MoveProcess(controller.CurrentUnit);
+            }
 
             var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
             if (aoeDmg)
@@ -67,12 +70,12 @@ namespace NightmareEchoes.TurnOrder
         {
             CombatManager.Instance.turnEnded = false;
 
-            if (controller.CurrentUnit != null)
+            if (controller.CurrentUnit != null && enemyAI != null)
             {
                 //Hide tiles only on exit
-                if(enemyAI.tilesInRange.Count > 0)
+                if(enemyAI.TilesInRange.Count > 0)
                 {
-                    PathfindingManager.Instance.HideTilesInRange(enemyAI.tilesInRange);
+                    PathfindingManager.Instance.HideTilesInRange(enemyAI.TilesInRange);
                 }
 
                 //update effects & stats
@@ -110,6 +113,7 @@ namespace NightmareEchoes.TurnOrder
             {
                 yield return new WaitUntil(() => enemyAI.hasAttacked == true);
             }
+
 
             controller.StartCoroutine(controller.PassTurn());
         }

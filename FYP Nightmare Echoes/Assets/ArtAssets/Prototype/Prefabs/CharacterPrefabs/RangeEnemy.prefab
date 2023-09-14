@@ -103,11 +103,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Range Enemy
-  _sprite: {fileID: 489163364, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  sprite: {fileID: 489163364, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
-  _isHostile: 1
-  _direction: 0
-  _typeOfUnit: 0
+  isHostile: 1
+  direction: 0
+  typeOfUnit: 0
   baseStats:
     _maxHealth: 15
     _speed: 4
@@ -156,7 +156,6 @@ MonoBehaviour:
   frontAnimator: {fileID: 0}
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
-  isOccupiedTile: {fileID: 0}
   basicAttackRange: 0
 --- !u!114 &9039162952523036802
 MonoBehaviour:
@@ -177,7 +176,6 @@ MonoBehaviour:
   inAtkRange: 0
   inMoveAndAttackRange: 0
   hasAttacked: 0
-  tilesInRange: []
 --- !u!114 &1961892246
 MonoBehaviour:
   m_ObjectHideFlags: 0

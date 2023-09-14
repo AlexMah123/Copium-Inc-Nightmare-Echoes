@@ -6,6 +6,7 @@ using UnityEngine;
 using NightmareEchoes.Grid;
 using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
+using NightmareEchoes.Unit.AI;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.Unit
@@ -17,14 +18,14 @@ namespace NightmareEchoes.Unit
 
         [Header("Unit Info")]
         [SerializeField] protected string _name;
-        [SerializeField] protected Sprite _sprite;
+        [SerializeField] protected Sprite sprite;
         protected SpriteRenderer spriteRenderer;
         [SerializeField] protected GameObject damageTextPrefab;
         //[SerializeField] protected GameObject popUpTextPrefab;
 
-        [SerializeField] protected bool _isHostile;
-        [SerializeField] protected Direction _direction;
-        [SerializeField] protected TypeOfUnit _typeOfUnit;
+        [SerializeField] protected bool isHostile;
+        [SerializeField] protected Direction direction;
+        [SerializeField] protected TypeOfUnit typeOfUnit;
 
         public BaseStats baseStats = new BaseStats();
         public BaseStats stats = new BaseStats();
@@ -75,8 +76,8 @@ namespace NightmareEchoes.Unit
         #region Unit Info Properties
         public Sprite Sprite
         {
-            get => _sprite;
-            set => _sprite = value;
+            get => sprite;
+            set => sprite = value;
         }
 
         public SpriteRenderer SpriteRenderer
@@ -93,20 +94,20 @@ namespace NightmareEchoes.Unit
 
         public bool IsHostile
         {
-            get => _isHostile;
+            get => isHostile;
             private set => IsHostile = value;
         }
 
         public Direction Direction
         {
-            get => _direction;
-            set => _direction = value;
+            get => direction;
+            set => direction = value;
         }
 
         public TypeOfUnit TypeOfUnit
         {
-            get => _typeOfUnit;
-            set => _typeOfUnit = value;
+            get => typeOfUnit;
+            set => typeOfUnit = value;
         }
 
         #endregion
@@ -492,19 +493,6 @@ namespace NightmareEchoes.Unit
         #endregion
         #endregion
 
-        private void OnDestroy()
-        {
-            if (!IsHostile)
-            {
-                PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            }
-
-            if(!Application.isEditor)
-            {
-                OnDestroyedEvent?.Invoke(this);
-            }
-        }
-
         protected virtual void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -541,6 +529,16 @@ namespace NightmareEchoes.Unit
         {
             if (stats.Health == 0)
             {
+                if (!IsHostile)
+                {
+                    PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+                }
+                else
+                {
+                    PathfindingManager.Instance.HideTilesInRange(GetComponent<BasicEnemyAI>().TilesInRange);
+                }
+
+                OnDestroyedEvent?.Invoke(this);
                 Destroy(gameObject);
             }
 

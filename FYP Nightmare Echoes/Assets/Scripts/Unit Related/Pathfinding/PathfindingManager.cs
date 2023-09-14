@@ -148,7 +148,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                         currentSelectedUnit.ActiveTile = currentHoveredOverlayTile;
 
                         //Gets the value of the start pos and the maximum range is the amount you can set
-                        playerTilesInRange = PathFinding.FindTilesInRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
+                        playerTilesInRange = Pathfinding.FindTilesInRange(currentSelectedUnit.ActiveTile, currentSelectedUnit.stats.MoveRange);
 
                         //store values for players when they cancel their action
                         revertUnitPosition = currentSelectedUnit.ActiveTile;
@@ -168,7 +168,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             //currentHoverOverlayTile wont be null because you always are on the map
             if (Input.GetMouseButtonDown(0) && !isMoving && ifSelectedUnit && (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentSelectedUnit?.ActiveTile))
             {
-                pathList = PathFinding.FindPath(currentSelectedUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
+                pathList = Pathfinding.FindPath(currentSelectedUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
                 tempPathList = new List<OverlayTile>(pathList);
 
                 if (!currentHoveredOverlayTile.CheckUnitOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())

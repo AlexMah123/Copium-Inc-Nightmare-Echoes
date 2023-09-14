@@ -9,7 +9,7 @@ using UnityEngine.Tilemaps;
 //created by Vinn, editted by Alex
 namespace NightmareEchoes.Unit.Pathfinding
 {
-    public static class PathFinding
+    public static class Pathfinding
     {
         //The list at the end creates a limitor to how far the player can move which works for our player boundary range
         public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> LimitTiles)

@@ -27,7 +27,7 @@ namespace NightmareEchoes.Unit.AI
         public bool inAtkRange, inMoveAndAttackRange, hasAttacked;
         int rangePlaceholder;
         int rngHelper;
-        public List<OverlayTile> tilesInRange;
+        List<OverlayTile> tilesInRange;
         List<OverlayTile> possibleAttackLocations = new List<OverlayTile>();
 
         OverlayTile unitCurrentTile, targetTile;
@@ -41,10 +41,20 @@ namespace NightmareEchoes.Unit.AI
         Dictionary<Units, float> aggroDictionary = new Dictionary<Units, float>();
         float healthPercent;
 
-        private void OnDestroy()
+        #region Class Attributes
+        public List<OverlayTile> TilesInRange
         {
-            PathfindingManager.Instance.HideTilesInRange(tilesInRange);
+            get => tilesInRange;
+            set => tilesInRange = value;
         }
+
+        public List<Units> TotalHeroList
+        {
+            get => totalHeroList;
+            set => totalHeroList = value;
+        }
+        #endregion
+
 
         private void Awake()
         {
@@ -59,11 +69,11 @@ namespace NightmareEchoes.Unit.AI
             //sort heros by distance and find tiles in range
             SortHeroesByDistance(thisUnit);
 
-            if (totalHeroList[0] != null)
+            if (totalHeroList.Count > 0)
             {
                 unitCurrentTile = thisUnit.ActiveTile;
 
-                tilesInRange = PathFinding.FindTilesInRange(unitCurrentTile, thisUnit.stats.MoveRange);
+                tilesInRange = Pathfinding.Pathfinding.FindTilesInRange(unitCurrentTile, thisUnit.stats.MoveRange);
                 PathfindingManager.Instance.ShowTilesInRange(tilesInRange);
 
                 healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
@@ -88,6 +98,7 @@ namespace NightmareEchoes.Unit.AI
                         break;
                 }
             }
+
         }
 
         void AggressiveAction(Units thisUnit)
@@ -150,14 +161,8 @@ namespace NightmareEchoes.Unit.AI
                         }
                     }
 
-                    totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
+                    totalPathList = Pathfinding.Pathfinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
                 }
-
-                //wait until in position
-                //targetTile.ShowEnemyTile();
-
-                //CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
-                //targetTile.HideTile();
             }
             else if (inMoveAndAttackRange)
             {
@@ -181,13 +186,7 @@ namespace NightmareEchoes.Unit.AI
                     }
                 }
 
-                totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
-
-                //wait until in position
-                //targetTile.ShowEnemyTile();
-
-                //CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
-                //targetTile.HideTile();
+                totalPathList = Pathfinding.Pathfinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
             }
             else
             {
@@ -216,7 +215,7 @@ namespace NightmareEchoes.Unit.AI
                     }
                 }
 
-                totalPathList = PathFinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
+                totalPathList = Pathfinding.Pathfinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
 
             }
 
@@ -231,17 +230,21 @@ namespace NightmareEchoes.Unit.AI
                 CameraControl.Instance.UpdateCameraPan(thisUnit.gameObject);
             }
 
-            //Attack Process
-            if(totalPathList.Count == 0 && (inAtkRange || inMoveAndAttackRange) && !hasAttacked)
+            if (totalPathList.Count == 0 && (inAtkRange || inMoveAndAttackRange) && !hasAttacked && totalHeroList.Count > 0)
             {
-                if(targetTile.CheckUnitOnTile()?.GetComponent<Units>() != null )
-                {
-                    targetTile.ShowEnemyTile();
-                    CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
-                    StartCoroutine(Delay());
-                    hasAttacked = true;
-                }
+                AttackProcess(thisUnit);
+            }
+        }
 
+        public void AttackProcess(Units thisUnit)
+        {
+            if (targetTile.CheckUnitOnTile()?.GetComponent<Units>() != null)
+            {
+                targetTile.ShowEnemyTile();
+                CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
+
+                StartCoroutine(Delay());
+                hasAttacked = true;
             }
         }
 
@@ -256,21 +259,29 @@ namespace NightmareEchoes.Unit.AI
         {
             UpdateHeroList();
 
-            //sorting
-            int i, distTemp;
-
-            //creating/updating distancesDict
-            distancesDictionary.Clear();
-            for (i = 0; i < totalHeroList.Count; i++)
+            if(totalHeroList.Count > 0)
             {
-                distTemp = (int)FindDistanceBetweenUnit(thisUnit, totalHeroList[i]);
-                distancesDictionary.Add(totalHeroList[i], distTemp);
-            }
-            var sortedHeroes = distancesDictionary.OrderBy(distancesDict => distancesDict.Value);
+                //creating/updating distancesDict
+                distancesDictionary.Clear();
+                for (int i = 0; i < totalHeroList.Count; i++)
+                {
+                    int distTemp = (int)FindDistanceBetweenUnit(thisUnit, totalHeroList[i]);
+                    distancesDictionary.Add(totalHeroList[i], distTemp);
+                }
+                var sortedHeroes = distancesDictionary.OrderBy(distancesDict => distancesDict.Value);
 
-            closestHero = sortedHeroes.ToList()[0].Key;
-            rangeToClosest = sortedHeroes.ToList()[0].Value;
-            //Debug.Log("Closest Hero: " + closestHero.Name + ", " + rangeToClosest + " tiles away");
+                closestHero = sortedHeroes.ToList()[0].Key;
+                rangeToClosest = sortedHeroes.ToList()[0].Value;
+                //Debug.Log("Closest Hero: " + closestHero.Name + ", " + rangeToClosest + " tiles away");
+            }
+            else
+            {
+                distancesDictionary.Clear();
+                closestHero = null;
+                rangeToClosest = 0;
+            }
+
+
         }
 
         void UpdateHeroList()

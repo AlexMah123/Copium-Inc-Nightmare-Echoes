@@ -100,11 +100,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Ranger
-  _sprite: {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  sprite: {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
-  _isHostile: 0
-  _direction: 0
-  _typeOfUnit: 0
+  isHostile: 0
+  direction: 0
+  typeOfUnit: 0
   baseStats:
     _maxHealth: 25
     _speed: 5
@@ -153,7 +153,6 @@ MonoBehaviour:
   frontAnimator: {fileID: 0}
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
-  isOccupiedTile: {fileID: 0}
 --- !u!50 &6249669551677435555
 Rigidbody2D:
   serializedVersion: 4

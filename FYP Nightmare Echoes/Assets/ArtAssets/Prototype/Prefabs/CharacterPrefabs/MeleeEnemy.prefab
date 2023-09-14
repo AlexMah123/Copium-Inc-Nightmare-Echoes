@@ -103,11 +103,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Melee Enemy
-  _sprite: {fileID: -331225865, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  sprite: {fileID: -331225865, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
-  _isHostile: 1
-  _direction: 0
-  _typeOfUnit: 1
+  isHostile: 1
+  direction: 0
+  typeOfUnit: 0
   baseStats:
     _maxHealth: 20
     _speed: 5
@@ -156,7 +156,6 @@ MonoBehaviour:
   frontAnimator: {fileID: 0}
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
-  isOccupiedTile: {fileID: 0}
   basicAttackRange: 0
 --- !u!114 &165478112691146583
 MonoBehaviour:
@@ -177,7 +176,6 @@ MonoBehaviour:
   inAtkRange: 0
   inMoveAndAttackRange: 0
   hasAttacked: 0
-  tilesInRange: []
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4

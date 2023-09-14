@@ -100,11 +100,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Bounty Hunter
-  _sprite: {fileID: 1830408377, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  sprite: {fileID: 1830408377, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
-  _isHostile: 0
-  _direction: 0
-  _typeOfUnit: 1
+  isHostile: 0
+  direction: 0
+  typeOfUnit: 0
   baseStats:
     _maxHealth: 30
     _speed: 6
@@ -153,7 +153,6 @@ MonoBehaviour:
   frontAnimator: {fileID: 0}
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
-  isOccupiedTile: {fileID: 0}
 --- !u!50 &128770042
 Rigidbody2D:
   serializedVersion: 4

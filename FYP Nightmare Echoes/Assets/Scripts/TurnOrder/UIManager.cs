@@ -7,6 +7,7 @@ using NightmareEchoes.Unit;
 using NightmareEchoes.TurnOrder;
 using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
+using UnityEngine.SceneManagement;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -47,7 +48,7 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] GameObject currentUnitStatusEffectsPanel;
         public List<Modifier> currentUnitTotalStatusEffectList = new List<Modifier>();
 
-        Units CurrentUnit { get => TurnOrderController.Instance.CurrentUnit;}
+        Units CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
 
         [Space(20), Header("Inspectable Info")]
         public Units inspectedUnit;
@@ -93,6 +94,9 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] GameObject settingsPanel;
         [NonSerialized] public bool gameIsPaused = false;
 
+        [Header("Game Over")]
+        [SerializeField] GameObject gameOverPanel;
+
 
         [Space(20), Header("Current Unit Indicator")]
         //[SerializeField] TextMeshProUGUI unitAction;
@@ -135,7 +139,7 @@ namespace NightmareEchoes.TurnOrder
                 currentUnitProfile.image.sprite = CurrentUnit.Sprite;
 
                 //slowly remove this as animations come out
-                if(CurrentUnit.SpriteRenderer != null)
+                if (CurrentUnit.SpriteRenderer != null)
                 {
                     currentUnitProfile.image.color = new Color(CurrentUnit.SpriteRenderer.color.r,
                     CurrentUnit.SpriteRenderer.color.g, CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
@@ -152,7 +156,7 @@ namespace NightmareEchoes.TurnOrder
                 currentUnitStunResistText.text = $"Stun Resist: {CurrentUnit.stats.StunResist}%";
                 currentUnitResistText.text = $"Resist: {CurrentUnit.stats.Resist}%";
 
-                if(!CurrentUnit.IsHostile)
+                if (!CurrentUnit.IsHostile)
                 {
                     BasicAttackText.text = CurrentUnit.BasicAttackName;
                     Skill1Text.text = CurrentUnit.Skill1Name;
@@ -160,7 +164,7 @@ namespace NightmareEchoes.TurnOrder
                     Skill3Text.text = CurrentUnit.Skill3Name;
                     PassiveText.text = CurrentUnit.PassiveName;
                 }
-               
+
                 currentUnitHealth.maxValue = CurrentUnit.stats.MaxHealth;
                 currentUnitHealth.value = CurrentUnit.stats.Health;
 
@@ -172,7 +176,7 @@ namespace NightmareEchoes.TurnOrder
             #endregion
 
             #region Inspected Unit text
-            if(inspectedUnit != null)
+            if (inspectedUnit != null)
             {
                 inspectedUnitProfile.image.sprite = inspectedUnit.Sprite;
 
@@ -257,13 +261,13 @@ namespace NightmareEchoes.TurnOrder
 
             #region TurnOrderPanel
 
-            currentTurnNum.text = $"{ TurnOrderController.Instance.turnCount}";
+            currentTurnNum.text = $"{TurnOrderController.Instance.turnCount}";
 
 
             //sets indicator to the first image on the list
             if (turnOrderSpritePool[0].activeSelf)
             {
-                if(!turnIndicator.activeSelf)
+                if (!turnIndicator.activeSelf)
                 {
                     turnIndicator.SetActive(true);
                 }
@@ -367,11 +371,11 @@ namespace NightmareEchoes.TurnOrder
                 obj.SetActive(false);
                 obj.name = $"{obj.name} {capIndex++}";
 
-                if(panel == currentUnitStatusEffectsPanel)
+                if (panel == currentUnitStatusEffectsPanel)
                 {
                     currentUnitStatusEffectPool.Add(obj);
                 }
-                else if(panel == inspectedUnitStatusEffectsPanel)
+                else if (panel == inspectedUnitStatusEffectsPanel)
                 {
                     inspectedUnitStatusEffectPool.Add(obj);
                 }
@@ -409,7 +413,7 @@ namespace NightmareEchoes.TurnOrder
 
         GameObject GetStatusEffectObject(GameObject panel)
         {
-            if(panel == currentUnitStatusEffectsPanel)
+            if (panel == currentUnitStatusEffectsPanel)
             {
                 for (int i = 0; i < currentUnitStatusEffectPool.Count; i++)
                 {
@@ -419,7 +423,7 @@ namespace NightmareEchoes.TurnOrder
                     }
                 }
             }
-            else if(panel == inspectedUnitStatusEffectsPanel)
+            else if (panel == inspectedUnitStatusEffectsPanel)
             {
                 for (int i = 0; i < inspectedUnitStatusEffectPool.Count; i++)
                 {
@@ -458,7 +462,10 @@ namespace NightmareEchoes.TurnOrder
             //resets the turn order bar, calculate turn order
             for (int i = 0; i < turnOrderSpritePool.Count; i++)
             {
-                turnOrderSpritePool[i].SetActive(false);
+                if (turnOrderSpritePool[i] != null)
+                {
+                    turnOrderSpritePool[i].SetActive(false);
+                }
             }
 
 
@@ -467,12 +474,12 @@ namespace NightmareEchoes.TurnOrder
             {
                 GameObject image = GetImageObject();
 
-                if(image != null)
+                if (image != null)
                 {
                     image.GetComponent<Image>().sprite = TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].Sprite;
-                    
+
                     //slowly remove this as animations come out
-                    if(TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer != null)
+                    if (TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer != null)
                     {
                         image.GetComponent<Image>().color =
                         new Color(TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.r,
@@ -484,7 +491,7 @@ namespace NightmareEchoes.TurnOrder
                     {
                         image.GetComponent<Image>().color = Color.white;
                     }
-                    
+
 
                     image.SetActive(true);
                 }
@@ -493,7 +500,7 @@ namespace NightmareEchoes.TurnOrder
 
         public void UpdateStatusEffectUI()
         {
-            if(CurrentUnit != null)
+            if (CurrentUnit != null)
             {
                 //total list of current unit status effect
                 currentUnitTotalStatusEffectList = CurrentUnit.BuffList.Concat(CurrentUnit.DebuffList).Concat(CurrentUnit.TokenList).ToList();
@@ -545,7 +552,7 @@ namespace NightmareEchoes.TurnOrder
                     }
                 }
             }
-           
+
             //inspected unit
             if (inspectedUnit != null)
             {
@@ -599,7 +606,7 @@ namespace NightmareEchoes.TurnOrder
                     }
                 }
             }
-}
+        }
 
         public void UpdateGlossaryUI(string text)
         {
@@ -624,7 +631,7 @@ namespace NightmareEchoes.TurnOrder
                 {
                     glossaryImage.color = Color.white;
                 }
-                
+
                 glossaryName.text = CurrentUnit.Name;
 
                 glossaryMoveRangeText.text = $"Move Range: {CurrentUnit.baseStats.MoveRange} + (<color=yellow>{CurrentUnit.modifiedStats.moveRangeModifier}</color>)";
@@ -642,7 +649,7 @@ namespace NightmareEchoes.TurnOrder
 
                     if (glossaryObj != null)
                     {
-                        glossaryObj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = 
+                        glossaryObj.transform.GetChild(0).GetComponentInChildren<Image>().sprite =
                             currentUnitTotalStatusEffectList[i].icon;
 
                         TextMeshProUGUI glossaryObjText = glossaryObj.GetComponentInChildren<TextMeshProUGUI>();
@@ -762,11 +769,11 @@ namespace NightmareEchoes.TurnOrder
         public void EnableCurrentUI(bool enable)
         {
             //first button is profile
-            for(int i = 1; i < currentUnitButtonList.Count; i++) 
+            for (int i = 1; i < currentUnitButtonList.Count; i++)
             {
                 currentUnitButtonList[i].interactable = enable;
 
-                if(CurrentUnit != null)
+                if (CurrentUnit != null)
                 {
                     if (CurrentUnit.IsHostile)
                     {
@@ -800,16 +807,16 @@ namespace NightmareEchoes.TurnOrder
 
         public void CharacterGlossary(string text)
         {
-            SettingsButton();
-
             if (!glossaryPanel.activeSelf)
             {
+                PauseGame(true);
                 settingButton.gameObject.SetActive(false);
                 glossaryPanel.SetActive(true);
                 UpdateGlossaryUI(text);
             }
             else
             {
+                PauseGame(false);
                 settingButton.gameObject.SetActive(true);
                 glossaryPanel.SetActive(false);
             }
@@ -817,19 +824,47 @@ namespace NightmareEchoes.TurnOrder
 
         public void SettingsButton()
         {
-            if (Time.timeScale > 0)
+            //if its active == paused, unpause
+            if(!settingsPanel.activeSelf)
+            {
+                PauseGame(true);
+                settingsPanel.SetActive(true);
+            }
+            else
+            {
+                PauseGame(false);
+                settingsPanel.SetActive(false);
+            }
+        }
+
+        public void MainMenuButton(int sceneIndex)
+        {
+            PauseGame(false);
+            gameOverPanel.SetActive(false);
+
+            SceneManager.LoadScene(sceneIndex);
+        }
+
+        public void GameOver()
+        {
+            PauseGame(true);
+            gameOverPanel.SetActive(true);
+        }
+
+        public void PauseGame(bool state)
+        {
+            if (state)
             {
                 gameIsPaused = true;
                 Time.timeScale = 0;
-                settingsPanel.SetActive(true);
             }
             else
             {
                 gameIsPaused = false;
                 Time.timeScale = 1;
-                settingsPanel.SetActive(false);
             }
         }
         #endregion
+
     }
 }

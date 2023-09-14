@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NightmareEchoes.Inputs;
+using NightmareEchoes.Unit;
 
 
 //created by Alex
@@ -17,14 +18,11 @@ namespace NightmareEchoes.TurnOrder
             controller = turnOrderController;
 
             //only run once to calculate the turn order and enqueue till the endPhase
-            if(!controller.runOnce)
+            if (!controller.runOnce)
             {
                 controller.runOnce = true;
                 controller.CalculateTurnOrder();
             }
-
-            //calculate turn order every turn
-            //controller.CalculateTurnOrder();
 
             //updates the current unit for turn order
             if (controller.CurrentUnitQueue.Count > 0 ) 
@@ -46,7 +44,10 @@ namespace NightmareEchoes.TurnOrder
 
             if(controller.currentPhase == controller.playerPhase || controller.currentPhase == controller.enemyPhase)
             {
-                CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
+                if(controller.CurrentUnit.gameObject != null)
+                {
+                    CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
+                }
             }
 
             //updates the UI during each phase & updates status effect 
@@ -58,7 +59,16 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnUpdatePhase()
         {
-            
+            if (controller.currentPhase != controller.planPhase && controller.currentPhase != controller.startPhase && !controller.gameOver)
+            {
+                if (controller.FindAllHeros() == null)
+                {
+                    //Game Over
+                    controller.gameOver = true;
+                    UIManager.Instance.GameOver();
+                } 
+            }
+
 
             OnUpdate();
         }

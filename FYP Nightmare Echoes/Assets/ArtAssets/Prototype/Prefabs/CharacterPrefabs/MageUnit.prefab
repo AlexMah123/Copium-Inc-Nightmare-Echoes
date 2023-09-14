@@ -3329,14 +3329,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Mage
-  _sprite: {fileID: 21300000, guid: 7b2a6e4df0cddda45a43b861364e43e0, type: 3}
+  sprite: {fileID: 21300000, guid: 7b2a6e4df0cddda45a43b861364e43e0, type: 3}
   damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
-  _isHostile: 0
-  _direction: 1
-  _typeOfUnit: 0
+  isHostile: 0
+  direction: 0
+  typeOfUnit: 0
   baseStats:
     _maxHealth: 25
-    _speed: 4
+    _speed: 5
     _moveRange: 3
     _stunResist: 0
     _resist: 0
@@ -3378,7 +3378,6 @@ MonoBehaviour:
   frontAnimator: {fileID: 8121445182897306612}
   backAnimator: {fileID: 8121445182645513491}
   activeTile: {fileID: 0}
-  isOccupiedTile: {fileID: 0}
 --- !u!114 &8121445182508319264
 MonoBehaviour:
   m_ObjectHideFlags: 0
