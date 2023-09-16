@@ -27,6 +27,7 @@ namespace NightmareEchoes.Unit.AI
         public bool inAtkRange, inMoveAndAttackRange, hasAttacked;
         int rangePlaceholder;
         int rngHelper;
+        float currTileUtil, highestTileUtil;
         List<OverlayTile> tilesInRange;
         List<OverlayTile> possibleAttackLocations = new List<OverlayTile>();
 
@@ -147,7 +148,9 @@ namespace NightmareEchoes.Unit.AI
 
                     for (int i = 0; i < possibleAttackLocations.Count; i++)
                     {
-                        if (FindDistanceBetweenTile(targetTile, possibleAttackLocations[i]) > FindDistanceBetweenTile(targetTile, bestMoveTile))
+                        currTileUtil = FindDistanceBetweenTile(targetTile, possibleAttackLocations[i]);
+
+                        if (currTileUtil > FindDistanceBetweenTile(targetTile, bestMoveTile))
                         {
                             bestMoveTile = possibleAttackLocations[i];
                         }
@@ -172,7 +175,36 @@ namespace NightmareEchoes.Unit.AI
 
                 for (int i = 0; i < possibleAttackLocations.Count; i++)
                 {
-                    if (FindDistanceBetweenTile(targetTile, possibleAttackLocations[i]) > FindDistanceBetweenTile(targetTile, bestMoveTile))
+                    currTileUtil = FindDistanceBetweenTile(targetTile, possibleAttackLocations[i]);
+
+                    switch (targetHero.Direction)
+                    {
+                        case Direction.North:
+                            if ((possibleAttackLocations[i].gridLocation.x > targetTile.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTile.gridLocation.y))
+                            {
+                                currTileUtil += 10;
+                            }
+                            break;
+                        case Direction.South:
+                            if ((possibleAttackLocations[i].gridLocation.x < targetTile.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTile.gridLocation.y))
+                            {
+                                currTileUtil += 10;
+                            }
+                            break;
+                        case Direction.East:
+                            if ((possibleAttackLocations[i].gridLocation.x == targetTile.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < targetTile.gridLocation.y))
+                            {
+                                currTileUtil += 10;
+                            }
+                            break;
+                        case Direction.West:
+                            if ((possibleAttackLocations[i].gridLocation.x == targetTile.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > targetTile.gridLocation.y))
+                            {
+                                currTileUtil += 10;
+                            }
+                            break;
+                    }
+                    if (currTileUtil > FindDistanceBetweenTile(targetTile, bestMoveTile))
                     {
                         bestMoveTile = possibleAttackLocations[i];
                     }
