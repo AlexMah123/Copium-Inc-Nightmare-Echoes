@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NightmareEchoes.Grid
 {
-    public class GridProperties : MonoBehaviour
+    public class LevelGenerator : MonoBehaviour
     {
         // Start is called before the first frame update
         void Start()
