@@ -288,7 +288,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     unit.Direction = Direction.North;
 
-                    if (unit.BackModel != null) //&& unit.BackModel.activeSelf
+                    if (unit.BackModel != null) 
                     {
                         unit.BackAnimator.SetBool("Moving", true);
                         unit.FrontAnimator.SetBool("Moving", false);
@@ -308,7 +308,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     unit.Direction = Direction.South;
 
-                    if (unit.FrontModel != null) //&& unit.FrontModel.activeSelf
+                    if (unit.FrontModel != null)
                     {
                         unit.FrontAnimator.SetBool("Moving", true);
                         unit.BackAnimator.SetBool("Moving", false);
