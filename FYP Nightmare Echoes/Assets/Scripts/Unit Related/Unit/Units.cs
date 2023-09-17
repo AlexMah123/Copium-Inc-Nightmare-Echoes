@@ -61,11 +61,11 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected Skill passive;
 
         [Space(15), Header("Sprite Directions"), Tooltip("Sprites are ordered in north, south, east, west")]
-        [SerializeField] List<Sprite> sprites = new List<Sprite>(); //ordered in NSEW
-        [SerializeField] GameObject frontModel;
-        [SerializeField] GameObject backModel;
-        [SerializeField] Animator frontAnimator;
-        [SerializeField] Animator backAnimator;
+        [SerializeField] protected List<Sprite> sprites = new List<Sprite>(); //ordered in NSEW
+        [SerializeField] protected GameObject frontModel;
+        [SerializeField] protected GameObject backModel;
+        [SerializeField] protected Animator frontAnimator;
+        [SerializeField] protected Animator backAnimator;
 
 
         [Space(15), Header("Tile Related")]
@@ -491,6 +491,35 @@ namespace NightmareEchoes.Unit
             set => activeTile = value;
         }
         #endregion
+
+
+        #region Sprites Directions
+        public GameObject FrontModel
+        {
+            get => frontModel;
+            private set => frontModel = value;
+        }
+
+        public GameObject BackModel
+        {
+            get => backModel;
+            private set => backModel = value;
+        }
+
+        public Animator FrontAnimator
+        {
+            get => frontAnimator;
+            private set => frontAnimator = value;
+        }
+
+        public Animator BackAnimator
+        {
+            get => backAnimator;
+            private set => backAnimator = value;
+        }
+
+        #endregion
+
         #endregion
 
         protected virtual void Awake()

@@ -184,6 +184,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             else if (isDragging && !isMoving && ifSelectedUnit &&
                 (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentSelectedUnit.ActiveTile || currentHoveredOverlayTile == revertUnitPosition))
             {
+                //if the first tile is diagonal, just return and ignore it
                 if (pathList.Count == 0 && !AreTilesAdjacent(currentSelectedUnit.ActiveTile, currentHoveredOverlayTile) && currentHoveredOverlayTile != revertUnitPosition)
                 {
                     return;
@@ -259,6 +260,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             //units movement
             if(pathList.Count > 0) 
             {
+                
                 var step = movingSpeed * Time.deltaTime;
                 var zIndex = pathList[0].transform.position.z;
 
@@ -281,26 +283,53 @@ namespace NightmareEchoes.Unit.Pathfinding
             {
                 Vector3Int direction = pathList[0].gridLocation - unit.ActiveTile.gridLocation;
 
-                if (direction == new Vector3Int(1, 0, 0))
+                //setting directions as well as the moving boolean
+                if (direction == new Vector3Int(1, 0, 0)) //back facing
                 {
                     unit.Direction = Direction.North;
+
+                    if (unit.BackModel != null) //&& unit.BackModel.activeSelf
+                    {
+                        unit.BackAnimator.SetBool("Moving", true);
+                        unit.FrontAnimator.SetBool("Moving", false);
+                    }
                 }
-                else if (direction == new Vector3Int(-1, 0, 0))
-                {
-                    unit.Direction = Direction.South;
-                }
-                else if (direction == new Vector3Int(0, 1, 0))
+                else if (direction == new Vector3Int(0, 1, 0)) //back facing
                 {
                     unit.Direction = Direction.West;
+
+                    if (unit.BackModel != null)
+                    {
+                        unit.BackAnimator.SetBool("Moving", true);
+                        unit.FrontAnimator.SetBool("Moving", false);
+                    }
                 }
-                else if (direction == new Vector3Int(0, -1, 0))
+                else if (direction == new Vector3Int(-1, 0, 0)) //front facing
+                {
+                    unit.Direction = Direction.South;
+
+                    if (unit.FrontModel != null) //&& unit.FrontModel.activeSelf
+                    {
+                        unit.FrontAnimator.SetBool("Moving", true);
+                        unit.BackAnimator.SetBool("Moving", false);
+                    }
+                }
+                else if (direction == new Vector3Int(0, -1, 0)) //front facing
                 {
                     unit.Direction = Direction.East;
+
+                    if (unit.FrontModel != null)
+                    {
+                        unit.FrontAnimator.SetBool("Moving", true);
+                        unit.BackAnimator.SetBool("Moving", false);
+                    }
                 }
             }
 
             if (pathList.Count <= 0)
             {
+                unit.BackAnimator.SetBool("Moving", false);
+                unit.FrontAnimator.SetBool("Moving", false);
                 //remove comment out later if we want to hide tile and reset selectedUnit when we stop moving
                 //HideTilesInRange(tilesInRange);
                 //ifSelectedUnit = false;
@@ -319,8 +348,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             return (Mathf.Abs(tile2.gridLocation.x - tile1.gridLocation.x) == 1 && tile1.gridLocation.y == tile2.gridLocation.y) ||
                    (Mathf.Abs(tile2.gridLocation.y - tile1.gridLocation.y) == 1 && tile1.gridLocation.x == tile2.gridLocation.x);
         }
-
-
 
         void RenderArrow()
         {
