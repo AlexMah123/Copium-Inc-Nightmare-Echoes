@@ -180,10 +180,15 @@ namespace NightmareEchoes.Unit.Pathfinding
                     RenderArrow();
                 }
             }
-            // if player dragged, isnt moving + selected a unit, or if they move to their activetile/starting point
+            // if player dragged move, isnt moving + selected a unit, or if they move to their activetile/starting point
             else if (isDragging && !isMoving && ifSelectedUnit &&
                 (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentSelectedUnit.ActiveTile || currentHoveredOverlayTile == revertUnitPosition))
             {
+                if (pathList.Count == 0 && !AreTilesAdjacent(currentSelectedUnit.ActiveTile, currentHoveredOverlayTile) && currentHoveredOverlayTile != revertUnitPosition)
+                {
+                    return;
+                }
+
                 // if initial tile added or the lastadded tile is adjacent and if the dragtile != the starting tile
                 if (lastAddedTile == null || AreTilesAdjacent(lastAddedTile, currentHoveredOverlayTile) && currentHoveredOverlayTile != revertUnitPosition)
                 {
@@ -310,19 +315,11 @@ namespace NightmareEchoes.Unit.Pathfinding
         #region Overlay Tile Related
         bool AreTilesAdjacent(OverlayTile tile1, OverlayTile tile2)
         {
-            // Check if the tiles are adjacent horizontally or vertically
-            if (Mathf.Abs(tile2.gridLocation.x - tile1.gridLocation.x) == 1 && tile1.gridLocation.y == tile2.gridLocation.y)
-            {
-                return true;
-            }
-            if (Mathf.Abs(tile2.gridLocation.y - tile1.gridLocation.y) == 1 && tile1.gridLocation.x == tile2.gridLocation.x)
-            {
-                return true;
-            }
-
-            // Tiles are not adjacent
-            return false;
+            // Check if the tiles are adjacent horizontally or vertically (not diagonally)
+            return (Mathf.Abs(tile2.gridLocation.x - tile1.gridLocation.x) == 1 && tile1.gridLocation.y == tile2.gridLocation.y) ||
+                   (Mathf.Abs(tile2.gridLocation.y - tile1.gridLocation.y) == 1 && tile1.gridLocation.x == tile2.gridLocation.x);
         }
+
 
 
         void RenderArrow()
