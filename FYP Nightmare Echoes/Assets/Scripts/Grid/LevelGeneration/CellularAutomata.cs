@@ -12,6 +12,7 @@ namespace NightmareEchoes.Grid
         public int x;
         public int z;
         public int density;
+        public int iterations;
         public TileBase testTile;
         public Tilemap tilemap;
         
@@ -29,6 +30,41 @@ namespace NightmareEchoes.Grid
                 }
             }
             return grid;
+        }
+
+        public int[,] ApplyCellularAutomata(int[,] map)
+        {
+            for (var i = 1; i <= iterations; i++)
+            {
+                var tempMap = map;
+                for (var j = 0; j < this.x; j++)
+                {
+                    for (var k = 0; k < this.z; k++)
+                    {
+                        var neighbourWallCount = 0;
+                        for (var x = j - 1; x <= j + 1; x++)
+                        {
+                            for (var z = k - 1; z <= k + 1; z++)
+                            {
+                                if (x >= 0 && x < this.x && z >= 0 && z < this.z)
+                                {
+                                    if (x == j && z == k) continue;
+                                    if (tempMap[x, z] == 0)
+                                        neighbourWallCount++;
+                                }
+                                else
+                                    neighbourWallCount++;
+                            }
+                        }
+                        
+                        if (neighbourWallCount > 4)
+                            map[j, k] = 0;
+                        else
+                            map[j, k] = 1;
+                    }
+                }
+            }
+            return map;
         }
         
         public void GenerateMap(int[,] map)
@@ -60,7 +96,9 @@ namespace NightmareEchoes.Grid
 
             if (GUILayout.Button("CreateMap"))
             {
-                generator.GenerateMap(generator.GenerateNoiseGrid());
+                var map = generator.GenerateNoiseGrid();
+                map = generator.ApplyCellularAutomata(map);
+                generator.GenerateMap(map);
             }
         }
     }
