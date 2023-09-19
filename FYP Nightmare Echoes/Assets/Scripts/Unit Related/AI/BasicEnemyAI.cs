@@ -30,6 +30,8 @@ namespace NightmareEchoes.Unit.AI
         float currTileUtil, highestTileUtil;
         List<OverlayTile> tilesInRange;
         List<OverlayTile> possibleAttackLocations = new List<OverlayTile>();
+        Skill currSelectedSkill;
+        int skillAmount;
 
         OverlayTile unitCurrentTile, targetTile;
         OverlayTile moveToTile, bestMoveTile;
@@ -104,7 +106,37 @@ namespace NightmareEchoes.Unit.AI
 
         void AggressiveAction(Units thisUnit)
         {
-            rangePlaceholder = thisUnit.gameObject.GetComponent<Skill>().Range;
+            skillAmount = 1;
+
+            if (thisUnit.Skill1Skill != null)
+            {
+                skillAmount += 1;
+            }
+            if (thisUnit.Skill2Skill != null)
+            {
+                skillAmount += 2;
+            }
+            if (thisUnit.Skill3Skill != null)
+            {
+                skillAmount += 3;
+            }
+
+            switch (Random.Range(0, skillAmount))
+            {
+                case 1:
+                    currSelectedSkill = thisUnit.Skill1Skill;
+                    break;
+                case 2:
+                    currSelectedSkill = thisUnit.Skill2Skill;
+                    break;
+                case 3:
+                    currSelectedSkill = thisUnit.Skill3Skill;
+                    break;
+                default:
+                    currSelectedSkill = thisUnit.BasicAttackSkill;
+                    break;
+            }
+            rangePlaceholder = currSelectedSkill.Range;
 
             targetHero = closestHero;
             rangeToTarget = rangeToClosest;
