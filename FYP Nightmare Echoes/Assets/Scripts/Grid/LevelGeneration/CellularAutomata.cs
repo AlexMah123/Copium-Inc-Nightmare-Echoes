@@ -73,10 +73,10 @@ namespace NightmareEchoes.Grid
             
             for (int x = 0; x <= map.GetUpperBound(0) ; x++)
             {
-                for (int y = 0; y <= map.GetUpperBound(1); y++)
+                for (int z = 0; z <= map.GetUpperBound(1); z++)
                 {
-                    var tilelocation = new Vector3Int(x, y, 0);
-                    if (map[x, y] == 1)
+                    var tilelocation = new Vector3Int(x, z, 0);
+                    if (map[x, z] == 1)
                     {
                         tilemap.SetTile(tilelocation, testTile);
                     }
