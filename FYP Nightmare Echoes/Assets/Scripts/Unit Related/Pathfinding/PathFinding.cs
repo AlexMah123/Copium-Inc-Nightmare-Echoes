@@ -37,9 +37,9 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 foreach (var neighbour in neighbourTiles) 
                 {
+                    //if the tile is marked blocked, or already is in the list, ignore
                     if (neighbour.isBlocked || endList.Contains(neighbour))
                     {
-
                         continue;
                     }
 
@@ -49,6 +49,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                     neighbour.prevTile = currentOverlayTile;
 
+                    //if there is no duplicate of the tile, add it
                     if (!openList.Contains(neighbour))
                     { 
                         openList.Add(neighbour);
@@ -84,23 +85,28 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
 
-
+            //cache the unit's type based on the start tile's unit
             var UnitAlignment = startTile.CheckUnitOnTile().GetComponent<Units>().IsHostile;
 
             var RemovedTileWithObstacles = new List<OverlayTile>();
 
+            //foreach tile in a filtered list with no duplicates
             foreach (var tiles in inRangeTiles.Distinct().ToList())
             {
+                //if tile does not have a unit and have an obstacle on it
                 if (!tiles.CheckUnitOnTile() && !tiles.CheckObstacleOnTile())
                 {
                     RemovedTileWithObstacles.Add(tiles);
                 }
-                else if (tiles.CheckUnitOnTile()!= null)
+                //else if there is a unit
+                else if (tiles.CheckUnitOnTile() != null)
                 {
+                    //check if that unit is the same type as the UnitAlignment, if so, add it.
                     if (tiles.CheckUnitOnTile().GetComponent<Units>().IsHostile == UnitAlignment)
                         RemovedTileWithObstacles.Add(tiles);
                 }
             }
+
             return (from tile in RemovedTileWithObstacles let path = FindPath(startTile, tile, RemovedTileWithObstacles) where path.Count <= range && path.Count > 0 select tile).ToList();
         }
 
