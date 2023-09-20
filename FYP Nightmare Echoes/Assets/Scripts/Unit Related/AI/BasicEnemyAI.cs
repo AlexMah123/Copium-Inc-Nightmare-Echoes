@@ -174,8 +174,8 @@ namespace NightmareEchoes.Unit.AI
                 //Debug.Log("Attackin");
                 bestMoveTile = possibleAttackLocations[0];
                 rngHelper = 1;
-                if (thisUnit.TypeOfUnit == TypeOfUnit.RANGED_UNIT)
-                {
+                //if (thisUnit.TypeOfUnit == TypeOfUnit.RANGED_UNIT)
+                //{
                     bestMoveTile = possibleAttackLocations[0];
 
                     for (int i = 0; i < possibleAttackLocations.Count; i++)
@@ -197,7 +197,7 @@ namespace NightmareEchoes.Unit.AI
                     }
 
                     totalPathList = Pathfinding.Pathfinding.FindPath(unitCurrentTile, bestMoveTile, tilesInRange);
-                }
+                //}
             }
             else if (inMoveAndAttackRange)
             {
@@ -240,7 +240,7 @@ namespace NightmareEchoes.Unit.AI
                     {
                         bestMoveTile = possibleAttackLocations[i];
                     }
-                    else if (FindDistanceBetweenTile(targetTile, possibleAttackLocations[i]) == FindDistanceBetweenTile(targetTile, bestMoveTile))
+                    else if (currTileUtil == FindDistanceBetweenTile(targetTile, bestMoveTile))
                     {
                         rngHelper++;
                         if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
