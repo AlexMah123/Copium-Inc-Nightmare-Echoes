@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 128770042}
   - component: {fileID: 5105758200137203564}
   - component: {fileID: 1063299835}
+  - component: {fileID: 223763885}
   m_Layer: 6
   m_Name: BountyHunter
   m_TagString: Inspectable
@@ -236,8 +237,8 @@ MonoBehaviour:
   passive: {fileID: 0}
   sprites:
   - {fileID: -1405042302, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  - {fileID: 162367384, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: 1830408377, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: 162367384, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   - {fileID: 1764219699, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   frontModel: {fileID: 2077328174}
   backModel: {fileID: 1344220659}
@@ -307,17 +308,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillName: Slash
-  damage: 5
+  damage: 6
   cooldown: 0
-  range: 3
-  targetType: 1
-  targetArea: 2
-  targetUnitAlignment: 2
-  aoeType: 1
-  aoeDuration: 2
-  aoeColor: {r: 0.27365112, g: 0, b: 1, a: 0.54509807}
+  range: 1
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 0
   secondaryDamage: 0
-  secondaryRange: 1
+  secondaryRange: 0
   inflictKnockback: 0
   skillDescription: Single Target, Deal 5 Damage and Apply 2 Wound
+--- !u!114 &223763885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726962122940716085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724d0a7a466d42248b566ad300a6ebf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Rune Trap
+  damage: 3
+  cooldown: 2
+  range: 2
+  targetType: 0
+  targetArea: 1
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  skillDescription: "Place \u20182\u2019 Traps. When an enemy stepped on, Deal 3
+    Damage, Apply 1 Immobilize (100%) and 2 Wound\r\nCooldown: 2 Turns"

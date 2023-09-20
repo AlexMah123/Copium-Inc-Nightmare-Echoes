@@ -288,7 +288,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     unit.Direction = Direction.North;
 
-                    if (unit.BackModel != null) 
+                    if (unit.BackModel != null && unit.FrontAnimator != null && unit.BackAnimator != null) 
                     {
                         unit.BackAnimator.SetBool("Moving", true);
                         unit.FrontAnimator.SetBool("Moving", false);
@@ -298,7 +298,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     unit.Direction = Direction.West;
 
-                    if (unit.BackModel != null)
+                    if (unit.BackModel != null && unit.FrontAnimator != null && unit.BackAnimator != null)
                     {
                         unit.BackAnimator.SetBool("Moving", true);
                         unit.FrontAnimator.SetBool("Moving", false);
@@ -308,7 +308,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     unit.Direction = Direction.South;
 
-                    if (unit.FrontModel != null)
+                    if (unit.FrontModel != null && unit.FrontAnimator != null && unit.BackAnimator != null)
                     {
                         unit.FrontAnimator.SetBool("Moving", true);
                         unit.BackAnimator.SetBool("Moving", false);
@@ -318,7 +318,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     unit.Direction = Direction.East;
 
-                    if (unit.FrontModel != null)
+                    if (unit.FrontModel != null && unit.FrontAnimator != null && unit.BackAnimator != null)
                     {
                         unit.FrontAnimator.SetBool("Moving", true);
                         unit.BackAnimator.SetBool("Moving", false);
@@ -326,10 +326,14 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
             }
 
-            if (pathList.Count <= 0)
+            if (pathList.Count <= 0 )
             {
-                unit.BackAnimator.SetBool("Moving", false);
-                unit.FrontAnimator.SetBool("Moving", false);
+                if(unit.FrontAnimator != null && unit.BackAnimator != null)
+                {
+                    unit.BackAnimator.SetBool("Moving", false);
+                    unit.FrontAnimator.SetBool("Moving", false);
+                }
+                
                 //remove comment out later if we want to hide tile and reset selectedUnit when we stop moving
                 //HideTilesInRange(tilesInRange);
                 //ifSelectedUnit = false;

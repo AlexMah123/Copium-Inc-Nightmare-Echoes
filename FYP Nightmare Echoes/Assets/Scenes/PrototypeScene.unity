@@ -633,57 +633,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: range
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: damage
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: aoeType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: aoeColor.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: aoeColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: aoeColor.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: targetArea
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: targetType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: aoeDuration
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: secondaryRange
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063299835, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: targetUnitAlignment
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_Name
       value: BountyHunter
-      objectReference: {fileID: 0}
-    - target: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2658365863807529696, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_RootOrder
@@ -691,11 +643,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2658365863807529696, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2658365863807529696, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 2658365863807529696, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -967,39 +919,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223581091}
   m_CullTransparentMesh: 1
---- !u!1 &223763878 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-  m_PrefabInstance: {fileID: 128770038}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &223763885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223763878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724d0a7a466d42248b566ad300a6ebf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: Rune Trap
-  damage: 3
-  cooldown: 2
-  range: 2
-  targetType: 0
-  targetArea: 1
-  targetUnitAlignment: 0
-  aoeType: 0
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 0
-  secondaryDamage: 0
-  secondaryRange: 0
-  inflictKnockback: 0
-  skillDescription: "Place \u20182\u2019 Traps. When an enemy stepped on, Deal 3
-    Damage, Apply 1 Immobilize (100%) and 2 Wound\r\nCooldown: 2 Turns"
 --- !u!1 &246703317
 GameObject:
   m_ObjectHideFlags: 0
