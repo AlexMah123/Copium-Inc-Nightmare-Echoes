@@ -889,6 +889,7 @@ namespace NightmareEchoes.Unit
         West = 3,
     }
 
+
     public enum TypeOfUnit
     {
         RANGED_UNIT = 0,

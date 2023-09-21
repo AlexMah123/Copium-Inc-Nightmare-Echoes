@@ -127,11 +127,14 @@ namespace NightmareEchoes.Unit
 
         #endregion
 
+
+        //Directly on units
         public virtual bool Cast(Units target)
         {
             throw new System.NotImplementedException();
         }
 
+        //For ground
         public virtual bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
             throw new System.NotImplementedException();
@@ -141,6 +144,8 @@ namespace NightmareEchoes.Unit
         {
             throw new System.NotImplementedException();
         }
+
+
 
         public virtual void Reset()
         {
@@ -158,7 +163,8 @@ namespace NightmareEchoes.Unit
     {
         Line = 0,
         Square = 1,
-        Crosshair = 2
+        Crosshair = 2,
+        FrontalAttack = 3
     }
 
     public enum TargetUnitAlignment
