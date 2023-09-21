@@ -8,7 +8,8 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(Units target)
         {
-            target.HealUnit(heal);
+            target.stats.Health += heal;
+            Debug.Log("Healing" + heal);
             return true;
         }
 
