@@ -835,6 +835,19 @@ namespace NightmareEchoes.Unit
 
         }
 
+        public virtual void HealUnit(int healAmount)
+        {
+            if (frontModel != null && frontModel.activeSelf && frontAnimator != null)
+            {
+                frontAnimator.SetBool("GettingHealed", true);
+            }
+            else if (backModel != null && backModel.activeSelf && backAnimator != null)
+            {
+                backAnimator.SetBool("GettingHealed", true);
+            }
+
+        }
+
         [ContextMenu("Destroy Object")]
         public void DestroyObject()
         {

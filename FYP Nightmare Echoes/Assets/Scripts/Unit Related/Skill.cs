@@ -13,6 +13,7 @@ namespace NightmareEchoes.Unit
     {
         [SerializeField] protected string skillName;
         [SerializeField] protected int damage;
+        [SerializeField] protected int heal;
         [SerializeField] protected int cooldown;
         [SerializeField] protected int range;
         [SerializeField] protected TargetType targetType;
