@@ -261,7 +261,7 @@ namespace NightmareEchoes.TurnOrder
 
             #region TurnOrderPanel
 
-            currentTurnNum.text = $"{TurnOrderController.Instance.turnCount}";
+            currentTurnNum.text = $"{TurnOrderController.Instance.cycleCount}";
 
 
             //sets indicator to the first image on the list

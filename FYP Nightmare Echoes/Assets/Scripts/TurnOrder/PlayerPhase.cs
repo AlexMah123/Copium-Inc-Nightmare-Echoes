@@ -13,9 +13,7 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnEnter()
         {
             //Init here
-
-
-            //Insert start of turn effects
+            #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
             {
                 controller.CurrentUnit.ApplyAllTokenEffects();
@@ -30,6 +28,7 @@ namespace NightmareEchoes.TurnOrder
                     controller.StartCoroutine(controller.PassTurn());
                 }
             }
+            #endregion
 
             //Start Turn
             controller.StartCoroutine(WaitForTurnEnd());
@@ -42,6 +41,10 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
+            #region Apply End of Turn Effects/Checks
+            
+            #endregion
+
             CombatManager.Instance.turnEnded = false;
 
             if (controller.CurrentUnit != null)
@@ -55,11 +58,10 @@ namespace NightmareEchoes.TurnOrder
                 //update effects & stats
                 controller.CurrentUnit.ApplyAllBuffDebuffs();
                 controller.CurrentUnit.ApplyAllTokenEffects();
-                controller.CurrentUnit.UpdateAllStatusEffectLifeTime();
-                controller.CurrentUnit.UpdateAllStats();
+                controller.CurrentUnit.UpdateBuffDebuffLifeTime();
+                controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
             }
             
-
             UIManager.Instance.UpdateStatusEffectUI();
 
             //when you change phases, change the current unit to the next unit
@@ -67,16 +69,20 @@ namespace NightmareEchoes.TurnOrder
             {
                 controller.CurrentUnitQueue.Dequeue();
             }
+
+
         }
         
         IEnumerator WaitForTurnEnd()
         {
             yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
 
-            
-
             controller.StartCoroutine(controller.PassTurn());
         }
-        
+
+        #region Status Effect Checks
+
+        #endregion
+
     }
 }

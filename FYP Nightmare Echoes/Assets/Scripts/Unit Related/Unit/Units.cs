@@ -117,19 +117,55 @@ namespace NightmareEchoes.Unit
         public bool DodgeToken
         {
             get => dodgeToken;
-            set => dodgeToken = value;
+            set
+            {
+                dodgeToken = value;
+
+                if(dodgeToken)
+                {
+
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.DODGE_TOKEN);
+                }
+            }
         }
 
         public bool BlockToken
         {
             get => blockToken;
-            set => blockToken = value;
+            set
+            {
+                blockToken = value;
+
+                if (blockToken)
+                {
+                    vulnerableToken = false;
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
+                }
+            }
         }
 
         public bool StrengthToken
         {
             get => strengthToken;
-            set => strengthToken = value;
+            set
+            {
+                strengthToken = value;
+
+                if(strengthToken)
+                {
+                    weakenToken = false;
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
+                }
+            }
         }
 
         public bool HasteToken
@@ -139,9 +175,13 @@ namespace NightmareEchoes.Unit
             {
                 hasteToken = value;
 
-                if (hasteToken == false)
+                if(hasteToken)
                 {
-                    UpdateTokenEffect(STATUS_EFFECT.HASTE_TOKEN);
+                    vertigoToken = false;
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
                 }
             }
         }
@@ -149,13 +189,37 @@ namespace NightmareEchoes.Unit
         public bool BarrierToken
         {
             get => barrierToken;
-            set => barrierToken = value;
+            set
+            {
+                barrierToken = value;
+
+                if(barrierToken)
+                {
+
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.BARRIER_TOKEN);
+                }
+            }
         }
 
         public bool StealthToken
         {
             get => stealthToken;
-            set => stealthToken = value;
+            set
+            {
+                stealthToken = value;
+
+                if(stealthToken)
+                {
+
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
+                }
+            }
         }
         #endregion 
 
@@ -164,25 +228,73 @@ namespace NightmareEchoes.Unit
         public bool BlindToken
         {
             get => blindToken;
-            set => blindToken = value;
+            set
+            {
+                blindToken = value;
+
+                if(blindToken)
+                {
+
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.BLIND_TOKEN);
+                }
+            }
         }
 
         public bool VulnerableToken
         {
             get => vulnerableToken;
-            set => vulnerableToken = value;
+            set
+            {
+                vulnerableToken = value;
+
+                if (vulnerableToken)
+                {
+
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
+                }
+            }
         }
 
         public bool WeakenToken
         {
             get => weakenToken;
-            set => weakenToken = value;
+            set
+            {
+                weakenToken = value;
+
+                if (weakenToken)
+                {
+
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
+                }
+            }
         }
 
         public bool VertigoToken
         {
             get => vertigoToken;
-            set => vertigoToken = value;
+            set
+            {
+                vertigoToken = value;
+
+                if (vertigoToken)
+                {
+                    
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
+                }
+            }
         }
 
         public bool StunToken
@@ -192,9 +304,13 @@ namespace NightmareEchoes.Unit
             {
                 stunToken = value;
 
-                if (stunToken == false)
+                if(stunToken)
                 {
-                    UpdateTokenEffect(STATUS_EFFECT.STUN_TOKEN);
+
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
                 }
             }
         }
@@ -202,7 +318,19 @@ namespace NightmareEchoes.Unit
         public bool ImmobilizeToken
         {
             get => immobilizeToken;
-            set => immobilizeToken = value;
+            set
+            {
+                immobilizeToken = value;
+
+                if (immobilizeToken)
+                {
+
+                }
+                else
+                {
+                    UpdateTokenLifeTime(STATUS_EFFECT.IMMOBILIZE_TOKEN);
+                }
+            }
         }
         #endregion
 
@@ -545,7 +673,7 @@ namespace NightmareEchoes.Unit
             //MANDATORY, DO NOT REMOVE
             baseStats.Reset();
             AwakeAllStatusEffects();
-            UpdateAllStats();
+            UpdateStatsWithoutEndCycleEffect();
         }
 
         protected virtual void Start()
@@ -696,11 +824,11 @@ namespace NightmareEchoes.Unit
 
         public virtual void TakeDamage(int damage)
         {
-            if (frontModel != null && frontModel.activeSelf)
+            if (frontModel != null && frontModel.activeSelf && frontAnimator != null)
             {
                 frontAnimator.SetBool("GettingHit", true);
             }
-            else if (backModel != null && backModel.activeSelf)
+            else if (backModel != null && backModel.activeSelf && backAnimator != null)
             {
                 backAnimator.SetBool("GettingHit", true);
             }
@@ -763,7 +891,7 @@ namespace NightmareEchoes.Unit
                     break;
             }
 
-            UpdateAllStats();
+            UpdateStatsWithoutEndCycleEffect();
         }
 
         //call only on instantiation of object
@@ -798,7 +926,7 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        public void UpdateAllStatusEffectLifeTime()
+        public void UpdateBuffDebuffLifeTime()
         {
             for (int i = BuffList.Count - 1; i >= 0 ; i--)
             {
@@ -822,7 +950,7 @@ namespace NightmareEchoes.Unit
         }
 
         //only call in class properties
-        void UpdateTokenEffect(STATUS_EFFECT enumIndex)
+        void UpdateTokenLifeTime(STATUS_EFFECT enumIndex)
         {
             for (int i = TokenList.Count - 1; i >= 0; i--)
             {
@@ -839,9 +967,9 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        public void UpdateAllStats()
+        public void UpdateStatsWithoutEndCycleEffect()
         {
-            modifiedStats = ApplyAllModifiers(modifiedStats);
+            modifiedStats = ApplyModifiersWithoutEndCycleEffect(modifiedStats);
 
             stats.MaxHealth = baseStats.MaxHealth + modifiedStats.healthModifier;
             stats.Health = stats.Health;
@@ -851,9 +979,49 @@ namespace NightmareEchoes.Unit
             stats.Resist = baseStats.Resist + modifiedStats.resistModifier;
         }
 
+        public void UpdateStatsWithEndCycleEffect()
+        {
+            modifiedStats = ApplyModifiersWithEndCycleEffect(modifiedStats);
+
+            stats.MaxHealth = baseStats.MaxHealth + modifiedStats.healthModifier;
+            stats.Health = stats.Health;
+            stats.Speed = baseStats.Speed + modifiedStats.speedModifier;
+            stats.MoveRange = baseStats.MoveRange + modifiedStats.moveRangeModifier;
+            stats.StunResist = baseStats.StunResist + modifiedStats.stunResistModifier;
+            stats.Resist = baseStats.Resist + modifiedStats.resistModifier;
+        }
 
         //used in UpdateStats, do not directly call
-        protected ModifiersStruct ApplyAllModifiers(ModifiersStruct modifiers)
+        protected ModifiersStruct ApplyModifiersWithoutEndCycleEffect(ModifiersStruct modifiers)
+        {
+            ModifiersStruct temp = new();
+
+            for (int i = 0; i < buffList.Count; i++)
+            {
+                temp = buffList[i].ApplyModifier(temp);
+            }
+
+            for (int i = 0; i < debuffList.Count; i++)
+            {
+                temp = debuffList[i].ApplyModifier(temp);
+            }
+
+            for (int i = 0; i < tokenList.Count; i++)
+            {
+                if (tokenList[i].statusEffect == STATUS_EFFECT.HASTE_TOKEN || tokenList[i].statusEffect == STATUS_EFFECT.VERTIGO_TOKEN)
+                {
+                    continue;
+                }
+
+                temp = tokenList[i].ApplyModifier(temp);
+            }
+
+            modifiers = temp;
+
+            return modifiers;
+        }
+
+        protected ModifiersStruct ApplyModifiersWithEndCycleEffect(ModifiersStruct modifiers)
         {
             ModifiersStruct temp = new();
 
@@ -878,7 +1046,6 @@ namespace NightmareEchoes.Unit
         }
 
         #endregion
-
     }
 
     public enum Direction

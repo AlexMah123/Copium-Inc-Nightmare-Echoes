@@ -22,7 +22,7 @@ namespace NightmareEchoes.TurnOrder
         public List<Units> turnOrderList = new List<Units>();
         Queue<Units> currentUnitQueue = new Queue<Units>();
         //Queue<Units> nextUnitQueue = new Queue<Units>();
-        public int turnCount;
+        public int cycleCount;
         public float phaseDelay;
         public float enemythinkingDelay;
         public float passTurnDelay;
@@ -85,7 +85,7 @@ namespace NightmareEchoes.TurnOrder
 
         void StartGame()
         {
-            turnCount = 1;
+            cycleCount = 1;
             ChangePhase(planPhase);
         }
 
@@ -173,6 +173,7 @@ namespace NightmareEchoes.TurnOrder
             return _a.stats.Speed.CompareTo(_b.stats.Speed);
         }
         #endregion
+
 
         public List<Units> FindAllHeros()
         {

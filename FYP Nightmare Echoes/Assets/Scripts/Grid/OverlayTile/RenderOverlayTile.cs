@@ -23,12 +23,17 @@ namespace NightmareEchoes.Grid
 
         public void RenderAttackRangeTiles(List<OverlayTile> tiles)
         {
-            foreach (var tile in tiles)
+            if (tiles != null)
             {
-                tile.ShowAttackTile();
+                foreach (var tile in tiles)
+                {
+                    tile.ShowAttackTile();
+                }
+
+                targetingRenders = tiles;
+
             }
-            
-            targetingRenders = tiles;
+
         }
 
         public void RenderAoeTiles(List<OverlayTile> tiles)

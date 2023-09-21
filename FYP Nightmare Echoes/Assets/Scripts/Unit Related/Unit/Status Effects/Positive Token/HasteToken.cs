@@ -23,6 +23,8 @@ namespace NightmareEchoes.Unit
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
+            mod.speedModifier += (int)genericValue;
+
             return mod;
         }
 

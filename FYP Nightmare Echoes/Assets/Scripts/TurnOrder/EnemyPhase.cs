@@ -28,9 +28,10 @@ namespace NightmareEchoes.TurnOrder
             //start of turn effects
             if(controller.CurrentUnit != null)
             {
+                //checks and applies all the effects (sets things to true if they exist)
                 controller.CurrentUnit.ApplyAllTokenEffects();
 
-                if (controller.CurrentUnit.StunToken == true)
+                if (controller.CurrentUnit.StunToken)
                 {
                     controller.CurrentUnit.StunToken = false;
 
@@ -40,7 +41,6 @@ namespace NightmareEchoes.TurnOrder
                     controller.StartCoroutine(controller.PassTurn());
                 }
             }
-
             
             //Start Turn
             controller.StartCoroutine(EnemyTurn());
@@ -68,6 +68,10 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
+            #region Apply End of Turn Effects/Checks
+            
+            #endregion
+
             CombatManager.Instance.turnEnded = false;
 
             if (controller.CurrentUnit != null && enemyAI != null)
@@ -81,8 +85,8 @@ namespace NightmareEchoes.TurnOrder
                 //update effects & stats
                 controller.CurrentUnit.ApplyAllBuffDebuffs();
                 controller.CurrentUnit.ApplyAllTokenEffects();
-                controller.CurrentUnit.UpdateAllStatusEffectLifeTime();
-                controller.CurrentUnit.UpdateAllStats();
+                controller.CurrentUnit.UpdateBuffDebuffLifeTime();
+                controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
             }
             
 
