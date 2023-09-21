@@ -1,3 +1,4 @@
+using NightmareEchoes.Unit.Combat;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace NightmareEchoes.Unit
 
         public override void BasicAttack()
         {
-            
+            CombatManager.Instance.SelectSkill(this, basicAttack);
         }
 
         public override void Passive()

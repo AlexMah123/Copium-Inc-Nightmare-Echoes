@@ -647,7 +647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2658365863807529696, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_RootOrder
@@ -11302,7 +11302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279022, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_RootOrder
@@ -11350,6 +11350,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+--- !u!1 &601295391118310420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+  m_PrefabInstance: {fileID: 601295391118310419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &601295391118310421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295391118310420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3854a3de90ccc54409a7ea5f1cc14686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: ArrowShot
+  damage: 4
+  cooldown: 0
+  range: 0
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  skillDescription: Single Target, Deal 4 Damage and 3 Wound, Stop at first enemy
+    hi
 --- !u!1 &7835678771237685685
 GameObject:
   m_ObjectHideFlags: 0
