@@ -136,12 +136,14 @@ namespace NightmareEchoes.TurnOrder
             {
                 CurrentUnitQueue.Enqueue(turnOrderList[i]);
                 turnOrderList[i].OnDestroyedEvent += OnUnitDestroy;
+                turnOrderList[i].OnAddBuffEvent += UIManager.Instance.UpdateStatusEffectUI;
             }
         }
 
         private void OnUnitDestroy(Units destroyedUnit)
         {
             destroyedUnit.OnDestroyedEvent -= OnUnitDestroy;
+            destroyedUnit.OnAddBuffEvent -= UIManager.Instance.UpdateStatusEffectUI;
 
             CurrentUnitQueue = new Queue<Units>(CurrentUnitQueue.Where(x => x != destroyedUnit));
 

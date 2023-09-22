@@ -457,6 +457,7 @@ namespace NightmareEchoes.TurnOrder
 
 
         #region Update UI Functions
+
         public void UpdateTurnOrderUI()
         {
             //resets the turn order bar, calculate turn order

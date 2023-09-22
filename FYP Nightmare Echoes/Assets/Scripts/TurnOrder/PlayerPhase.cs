@@ -19,20 +19,24 @@ namespace NightmareEchoes.TurnOrder
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
             {
+                //TESTING
                 //controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.HASTE_TOKEN, 99, 1));
 
                 controller.CurrentUnit.ApplyAllTokenEffects();
 
-                if (controller.CurrentUnit.StunToken == true)
+                if (controller.CurrentUnit.StunToken)
                 {
                     controller.CurrentUnit.StunToken = false;
-                    tempStun = true;
 
                     UIManager.Instance.EnableCurrentUI(false);
                     UIManager.Instance.UpdateStatusEffectUI();
 
                     controller.StartCoroutine(controller.PassTurn());
                 }
+
+
+
+                controller.CurrentUnit.UpdateStatusEffectEvent();
             }
             #endregion
 
@@ -67,6 +71,7 @@ namespace NightmareEchoes.TurnOrder
                 if (tempStun)
                 {
                     tempStun = false;
+
                     controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_RESISTANCE_BUFF, 50, 1));
                     controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
                 }

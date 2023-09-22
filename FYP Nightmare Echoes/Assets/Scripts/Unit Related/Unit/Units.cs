@@ -15,6 +15,7 @@ namespace NightmareEchoes.Unit
     public class Units : MonoBehaviour
     {
         public event Action<Units> OnDestroyedEvent;
+        public event Action OnAddBuffEvent;
 
         [Header("Unit Info")]
         [SerializeField] protected string _name;
@@ -141,8 +142,12 @@ namespace NightmareEchoes.Unit
 
                 if (blockToken)
                 {
-                    vulnerableToken = false;
-                    UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
+                    if(vulnerableToken)
+                    {
+                        vulnerableToken = false;
+                        UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
+                        UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
+                    }
                 }
                 else
                 {
@@ -160,8 +165,12 @@ namespace NightmareEchoes.Unit
 
                 if(strengthToken)
                 {
-                    weakenToken = false;
-                    UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
+                    if(weakenToken)
+                    {
+                        weakenToken = false;
+                        UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
+                        UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
+                    }
                 }
                 else
                 {
@@ -179,8 +188,12 @@ namespace NightmareEchoes.Unit
 
                 if(hasteToken)
                 {
-                    vertigoToken = false;
-                    UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
+                    if(VertigoToken)
+                    {
+                        vertigoToken = false;
+                        UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
+                        UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
+                    }
                 }
                 else
                 {
@@ -702,6 +715,7 @@ namespace NightmareEchoes.Unit
                 Destroy(gameObject);
             }
 
+            #region Sprite/Animation Updates
             if (sprites.Count > 0)
             {
                 switch (Direction)
@@ -786,6 +800,7 @@ namespace NightmareEchoes.Unit
 
                 }
             }
+            #endregion
         }
 
 
@@ -881,6 +896,12 @@ namespace NightmareEchoes.Unit
 
 
         #region Status Effects Updates
+        public void UpdateStatusEffectEvent()
+        {
+            OnAddBuffEvent?.Invoke();
+        }
+
+
         //call to add buff to unit
         public void AddBuff(Modifier buff)
         {
@@ -907,6 +928,7 @@ namespace NightmareEchoes.Unit
                     break;
             }
 
+            UpdateStatusEffectEvent();
             UpdateStatsWithoutEndCycleEffect();
         }
 

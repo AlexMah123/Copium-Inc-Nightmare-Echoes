@@ -13,8 +13,8 @@ namespace NightmareEchoes.TurnOrder
 {
     public class EnemyPhase : Phase
     {
+        bool tempStun = false;
         BasicEnemyAI enemyAI;
-
 
         private List<Skill> aoeSkillsPassed = new();
 
@@ -24,9 +24,9 @@ namespace NightmareEchoes.TurnOrder
             if (controller.CurrentUnit != null)
                 enemyAI = controller.CurrentUnit.GetComponent<BasicEnemyAI>();
 
-
+            #region Insert Start of Turn Effects/Checks
             //start of turn effects
-            if(controller.CurrentUnit != null)
+            if (controller.CurrentUnit != null)
             {
                 //checks and applies all the effects (sets things to true if they exist)
                 controller.CurrentUnit.ApplyAllTokenEffects();
@@ -40,8 +40,12 @@ namespace NightmareEchoes.TurnOrder
 
                     controller.StartCoroutine(controller.PassTurn());
                 }
+
+
+                controller.CurrentUnit.UpdateStatusEffectEvent();
             }
-            
+            #endregion
+
             //Start Turn
             controller.StartCoroutine(EnemyTurn());
             aoeSkillsPassed.Clear();
@@ -68,10 +72,6 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-            #region Apply End of Turn Effects/Checks
-            
-            #endregion
-
             CombatManager.Instance.turnEnded = false;
 
             if (controller.CurrentUnit != null && enemyAI != null)
@@ -87,8 +87,18 @@ namespace NightmareEchoes.TurnOrder
                 controller.CurrentUnit.ApplyAllTokenEffects();
                 controller.CurrentUnit.UpdateBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
+
+                #region Apply End of Turn Effects/Checks
+                if (tempStun)
+                {
+                    tempStun = false;
+
+                    controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_RESISTANCE_BUFF, 50, 1));
+                    controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
+                }
+                #endregion
             }
-            
+
 
             UIManager.Instance.UpdateStatusEffectUI();
 
