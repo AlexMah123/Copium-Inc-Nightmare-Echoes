@@ -17,6 +17,7 @@ namespace NightmareEchoes.Grid
         //Dicitonary to store overlay tile position from grid pos
         public Dictionary<Vector2Int, OverlayTile> gridDictionary;
 
+        private Camera cam;
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -29,6 +30,8 @@ namespace NightmareEchoes.Grid
             }
             
             InitOverlayTiles();
+            
+            cam = Camera.main;
         }
 
         void InitOverlayTiles()
@@ -143,7 +146,14 @@ namespace NightmareEchoes.Grid
 
             return tileRange;
         }
-        
+
+        public OverlayTile GetOverlayTileOnMouseClick()
+        {
+            var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            if (!hit) return null;
+            var target = hit.collider.gameObject.GetComponent<OverlayTile>();
+            return !target ? null : target;
+        }
     }
 }
 

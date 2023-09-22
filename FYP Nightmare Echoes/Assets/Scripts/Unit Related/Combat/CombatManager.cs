@@ -221,11 +221,10 @@ namespace NightmareEchoes.Unit.Combat
         {
             aoePreviewTiles.Clear();
             ClearPreviews();
-            
-            var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
-            if (!hit) return;
-            var target = hit.collider.gameObject.GetComponent<OverlayTile>();
+
+            var target = OverlayTileManager.Instance.GetOverlayTileOnMouseClick();
             if (!target) return;
+            
             mainTile = target;
             if (skillRangeTiles.All(tile => tile != target)) return;
             
@@ -270,10 +269,9 @@ namespace NightmareEchoes.Unit.Combat
         {
             activeSkill = skill;
 
-            var hit = Physics2D.Raycast(TargetTile, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
-            if (!hit) return;
-            var target = hit.collider.gameObject.GetComponent<OverlayTile>();
+            var target = OverlayTileManager.Instance.GetOverlayTileOnMouseClick();
             if (!target) return;
+            
             if (skillRangeTiles.All(tile => tile != target)) return;
 
             var aoeArea = activeSkill.AoeType switch
