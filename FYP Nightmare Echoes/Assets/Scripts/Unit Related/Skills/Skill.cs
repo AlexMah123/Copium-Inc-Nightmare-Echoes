@@ -11,6 +11,7 @@ namespace NightmareEchoes.Unit
 {
     public abstract class Skill : MonoBehaviour
     {
+        protected Units thisUnit;
         [SerializeField] protected string skillName;
         [SerializeField] protected int damage;
         [SerializeField] protected int heal;
@@ -128,11 +129,15 @@ namespace NightmareEchoes.Unit
 
         #endregion
 
+        private void Awake()
+        {
+            thisUnit = GetComponent<Units>();
+        }
 
         //Directly on units
-        public virtual bool Cast(Units target, Units caster)
+        public virtual bool Cast(Units target)
         {
-            Vector2 CastFrom = new Vector2(caster.ActiveTile.gridLocation.x, caster.ActiveTile.gridLocation.y);
+            Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
             Vector2 CastTo = new Vector2(target.ActiveTile.gridLocation.x, target.ActiveTile.gridLocation.y);
 
             float xDist = CastFrom.x - CastTo.y;
@@ -147,18 +152,18 @@ namespace NightmareEchoes.Unit
                 //North&South
             }
 
-            throw new System.NotImplementedException();
+            return false;
         }
 
         //For ground
         public virtual bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
-            throw new System.NotImplementedException();
+            return false;
         }
 
         public virtual bool SecondaryCast()
         {
-            throw new System.NotImplementedException();
+            return false;
         }
 
 

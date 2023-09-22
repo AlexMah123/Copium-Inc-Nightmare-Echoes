@@ -111,8 +111,8 @@ MonoBehaviour:
     _maxHealth: 25
     _speed: 5
     _moveRange: 3
-    _stunResist: 70
-    _resist: 30
+    _stunResist: 30
+    _resist: 70
   stats:
     _maxHealth: 0
     _speed: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
   buffList: []
   debuffList: []
   tokenList:
-  - {fileID: 11400000, guid: 5d5eb65f1cff41449b281598db5887b3, type: 2}
+  - {fileID: 11400000, guid: cc2fd4a2407474341880d629c9ff4bb6, type: 2}
   dodgeToken: 0
   blockToken: 0
   strengthToken: 0

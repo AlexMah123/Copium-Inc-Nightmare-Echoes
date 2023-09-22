@@ -142,6 +142,7 @@ namespace NightmareEchoes.Unit
                 if (blockToken)
                 {
                     vulnerableToken = false;
+                    UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
                 }
                 else
                 {
@@ -160,6 +161,7 @@ namespace NightmareEchoes.Unit
                 if(strengthToken)
                 {
                     weakenToken = false;
+                    UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
                 }
                 else
                 {
@@ -178,6 +180,7 @@ namespace NightmareEchoes.Unit
                 if(hasteToken)
                 {
                     vertigoToken = false;
+                    UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
                 }
                 else
                 {

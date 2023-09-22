@@ -10,17 +10,23 @@ namespace NightmareEchoes.TurnOrder
 {
     public class PlayerPhase : Phase
     {
+        bool tempStun = false;
+
         protected override void OnEnter()
         {
+            tempStun = false;
             //Init here
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
             {
+                //controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.HASTE_TOKEN, 99, 1));
+
                 controller.CurrentUnit.ApplyAllTokenEffects();
 
                 if (controller.CurrentUnit.StunToken == true)
                 {
                     controller.CurrentUnit.StunToken = false;
+                    tempStun = true;
 
                     UIManager.Instance.EnableCurrentUI(false);
                     UIManager.Instance.UpdateStatusEffectUI();
@@ -41,10 +47,6 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-            #region Apply End of Turn Effects/Checks
-            
-            #endregion
-
             CombatManager.Instance.turnEnded = false;
 
             if (controller.CurrentUnit != null)
@@ -60,8 +62,19 @@ namespace NightmareEchoes.TurnOrder
                 controller.CurrentUnit.ApplyAllTokenEffects();
                 controller.CurrentUnit.UpdateBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
+
+                #region Apply End of Turn Effects/Checks
+                if (tempStun)
+                {
+                    tempStun = false;
+                    controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_RESISTANCE_BUFF, 50, 1));
+                    controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
+                }
+                #endregion
             }
-            
+
+
+
             UIManager.Instance.UpdateStatusEffectUI();
 
             //when you change phases, change the current unit to the next unit

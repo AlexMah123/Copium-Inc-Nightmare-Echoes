@@ -38,6 +38,8 @@ namespace NightmareEchoes.Unit
                 CombatManager.Instance.SecondaryTargeting();
                 StartCoroutine(CastTeleport(target));
             }
+
+
             return GetDestination();
         }
 
