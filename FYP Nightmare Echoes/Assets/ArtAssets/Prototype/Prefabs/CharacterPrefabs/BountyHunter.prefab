@@ -109,7 +109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2658365863807529696
 Transform:
   m_ObjectHideFlags: 0
@@ -231,7 +231,7 @@ MonoBehaviour:
   stunToken: 0
   immobilizeToken: 0
   basicAttack: {fileID: 1063299835}
-  skill1: {fileID: 0}
+  skill1: {fileID: 223763885}
   skill2: {fileID: 0}
   skill3: {fileID: 0}
   passive: {fileID: 0}
@@ -309,10 +309,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Slash
   damage: 6
+  heal: 0
   cooldown: 0
-  range: 1
+  range: 3
   targetType: 0
-  targetArea: 0
+  targetArea: 3
   targetUnitAlignment: 0
   aoeType: 0
   aoeDuration: 0
@@ -321,6 +322,9 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
   skillDescription: Single Target, Deal 5 Damage and Apply 2 Wound
 --- !u!114 &223763885
 MonoBehaviour:
@@ -336,6 +340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Rune Trap
   damage: 3
+  heal: 0
   cooldown: 2
   range: 2
   targetType: 0
@@ -348,5 +353,8 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  placable: 1
+  placableCount: 2
+  placableGameObject: {fileID: 5842767986387668200, guid: 0f88a485a85ac2244a18d50f1cc13fd4, type: 3}
   skillDescription: "Place \u20182\u2019 Traps. When an enemy stepped on, Deal 3
     Damage, Apply 1 Immobilize (100%) and 2 Wound\r\nCooldown: 2 Turns"

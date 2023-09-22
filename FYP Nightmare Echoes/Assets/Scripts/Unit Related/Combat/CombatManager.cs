@@ -36,6 +36,9 @@ namespace NightmareEchoes.Unit.Combat
         //Active AOEs
         private Dictionary<Skill, List<OverlayTile>> activeAoes = new();
         private Dictionary<Skill, int> activeAoesCD = new();
+        
+        //Active Traps
+        private Dictionary<GameObject, Skill> activeTraps = new();
 
         private Camera cam;
 
@@ -60,14 +63,17 @@ namespace NightmareEchoes.Unit.Combat
         {
             if (activeSkill && !secondaryTargeting)
             {
-                switch (activeSkill.TargetType)
+                if (!activeSkill.Placable)
                 {
-                    case TargetType.Single:
-                        TargetUnit();
-                        break;
-                    case TargetType.AOE:
-                        TargetGround();
-                        break;
+                    switch (activeSkill.TargetType)
+                    {
+                        case TargetType.Single:
+                            TargetUnit();
+                            break;
+                        case TargetType.AOE:
+                            TargetGround();
+                            break;
+                    }
                 }
             }
             Render();
@@ -180,6 +186,11 @@ namespace NightmareEchoes.Unit.Combat
             activeSkill = skill;
 
             skillRangeTiles = CalculateRange(unit, skill);
+            
+            if (activeSkill.Placable)
+            {
+                StartCoroutine(PlaceTraps());
+            }
         }
 
         public void SetActiveAoe(Skill skill, List<OverlayTile> tiles)
@@ -222,7 +233,7 @@ namespace NightmareEchoes.Unit.Combat
             aoePreviewTiles.Clear();
             ClearPreviews();
 
-            var target = OverlayTileManager.Instance.GetOverlayTileOnMouseClick();
+            var target = OverlayTileManager.Instance.GetOverlayTileOnMouseCursor();
             if (!target) return;
             
             mainTile = target;
@@ -250,7 +261,7 @@ namespace NightmareEchoes.Unit.Combat
             if (!Input.GetMouseButtonDown(0)) return;
             StartCoroutine(WaitForSkill(target, aoePreviewTiles));
         }
-        
+
         public void SecondaryTargeting()
         {
             secondaryTargeting = true;
@@ -269,7 +280,7 @@ namespace NightmareEchoes.Unit.Combat
         {
             activeSkill = skill;
 
-            var target = OverlayTileManager.Instance.GetOverlayTileOnMouseClick();
+            var target = OverlayTileManager.Instance.GetOverlayTileOnMouseCursor();
             if (!target) return;
             
             if (skillRangeTiles.All(tile => tile != target)) return;
@@ -369,7 +380,7 @@ namespace NightmareEchoes.Unit.Combat
                 var destination = tile.transform.position + direction;
                 
                 var unitSprite = tile.CheckUnitOnTile().GetComponent<SpriteRenderer>().sprite;
-                var clone = GetClone();
+                var clone = GetClone(tile.CheckUnitOnTile());
                 var cloneSr = clone.GetComponent<SpriteRenderer>();
                 cloneSr.sprite = unitSprite;
                 cloneSr.sortingLayerID = SortingLayer.NameToID("Unit");
@@ -501,6 +512,48 @@ namespace NightmareEchoes.Unit.Combat
                 unit.UpdateLocation();
             }
         }
+        
+        IEnumerator PlaceTraps()
+        {
+            var trapCount = 0;
+            var trapList = new List<Vector3>();
+            var trapSprite = activeSkill.PlacableGameObject.GetComponent<SpriteRenderer>().sprite;
+            while (trapCount < activeSkill.PlacableCount)
+            {
+                ClearPreviews();
+
+                foreach (var placedTrapPos in trapList)
+                {
+                    var placedTrapPreview = GetClone(activeSkill.PlacableGameObject);
+                    placedTrapPreview.GetComponent<SpriteRenderer>().sprite = trapSprite;
+                    placedTrapPreview.transform.position = placedTrapPos;
+                    placedTrapPreview.SetActive(true);
+                    ghostSprites.Add(placedTrapPreview);
+                }
+
+                var target = OverlayTileManager.Instance.GetOverlayTileOnMouseCursor();
+                if (target)
+                {
+                    if (!target.CheckUnitOnTile() && !target.CheckObstacleOnTile() && skillRangeTiles.Any(tile => tile == target))
+                    {
+                        var preview = GetClone(activeSkill.PlacableGameObject);
+                        preview.GetComponent<SpriteRenderer>().sprite = trapSprite;
+                        
+                        preview.transform.position = target.transform.position;
+
+                        ghostSprites.Add(preview);
+                        preview.SetActive(true);
+
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            trapList.Add(preview.transform.position);
+                            trapCount++;
+                        }
+                    }
+                }
+                yield return new WaitForSeconds(0.001f);
+            }
+        }
 
         IEnumerator WaitForSkill(Units target)
         {
@@ -519,7 +572,7 @@ namespace NightmareEchoes.Unit.Combat
         private List<GameObject> clonePool = new();
         private int cloneCount = 0;
 
-        GameObject GetClone()
+        GameObject GetClone(GameObject gameObject)
         {
             { 
                 foreach (var clone in clonePool)

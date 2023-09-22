@@ -147,7 +147,7 @@ namespace NightmareEchoes.Grid
             return tileRange;
         }
 
-        public OverlayTile GetOverlayTileOnMouseClick()
+        public OverlayTile GetOverlayTileOnMouseCursor()
         {
             var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
             if (!hit) return null;

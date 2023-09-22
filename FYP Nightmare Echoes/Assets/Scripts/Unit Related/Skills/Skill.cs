@@ -32,6 +32,9 @@ namespace NightmareEchoes.Unit
 
         [Header("Additional Effects")] 
         [SerializeField] protected bool inflictKnockback;
+        [SerializeField] protected bool placable;
+        [SerializeField] protected int placableCount;
+        [SerializeField] protected GameObject placableGameObject;
         
         [field: TextArea(1,10)][SerializeField] protected string skillDescription;
 
@@ -127,6 +130,24 @@ namespace NightmareEchoes.Unit
             set => inflictKnockback = value;
         }
 
+        public bool Placable
+        {
+            get => placable;
+            set => placable = value;
+        }
+
+        public int PlacableCount
+        {
+            get => placableCount;
+            set => placableCount = value;
+        }
+
+        public GameObject PlacableGameObject
+        {
+            get => placableGameObject;
+            set => placableGameObject = value;
+        }
+
         #endregion
 
         private void Awake()
@@ -159,6 +180,12 @@ namespace NightmareEchoes.Unit
         public virtual bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
             return false;
+        }
+        
+        //For specials
+        public virtual bool Cast()
+        {
+            throw new System.NotImplementedException();
         }
 
         public virtual bool SecondaryCast()

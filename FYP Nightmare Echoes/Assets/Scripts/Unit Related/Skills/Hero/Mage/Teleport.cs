@@ -19,9 +19,7 @@ namespace NightmareEchoes.Unit
         {
             if (!enableTargeting) return;
             if (!Input.GetMouseButtonDown(0)) return;
-            var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
-            if (!hit) return;
-            var target = hit.collider.gameObject.GetComponent<OverlayTile>();
+            var target = OverlayTileManager.Instance.GetOverlayTileOnMouseCursor();
             if (!target) return;
             if (target.CheckUnitOnTile()) return;
             
