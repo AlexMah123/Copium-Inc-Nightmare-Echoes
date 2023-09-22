@@ -29,14 +29,18 @@ namespace NightmareEchoes.TurnOrder
         {
             yield return new WaitForSeconds(controller.phaseDelay);
 
-            if (!controller.CurrentUnit.IsHostile)
+            if(controller.CurrentUnit != null) 
             {
-                controller.ChangePhase(controller.playerPhase);
+                if (!controller.CurrentUnit.IsHostile)
+                {
+                    controller.ChangePhase(controller.playerPhase);
+                }
+                else
+                {
+                    controller.ChangePhase(controller.enemyPhase);
+                }
             }
-            else
-            {
-                controller.ChangePhase(controller.enemyPhase);
-            }
+            
         }
     }
 }

@@ -13,13 +13,15 @@ GameObject:
   - component: {fileID: 601295390074279016}
   - component: {fileID: 6249669551677435555}
   - component: {fileID: 136229569}
+  - component: {fileID: 601295391118310421}
+  - component: {fileID: 601295391118310427}
   m_Layer: 6
   m_Name: Ranger
   m_TagString: Inspectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &601295390074279022
 Transform:
   m_ObjectHideFlags: 0
@@ -125,7 +127,8 @@ MonoBehaviour:
     resistModifier: 0
   buffList: []
   debuffList: []
-  tokenList: []
+  tokenList:
+  - {fileID: 11400000, guid: 5d5eb65f1cff41449b281598db5887b3, type: 2}
   dodgeToken: 0
   blockToken: 0
   strengthToken: 0
@@ -138,7 +141,7 @@ MonoBehaviour:
   vertigoToken: 0
   stunToken: 0
   immobilizeToken: 0
-  basicAttack: {fileID: 0}
+  basicAttack: {fileID: 601295391118310421}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
   skill3: {fileID: 0}
@@ -203,3 +206,60 @@ PolygonCollider2D:
       - {x: 0, y: -0.225}
       - {x: 0.45, y: 0}
       - {x: 0, y: 0.225}
+--- !u!114 &601295391118310421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3854a3de90ccc54409a7ea5f1cc14686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: ArrowShot
+  damage: 4
+  heal: 0
+  cooldown: 0
+  range: 4
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  skillDescription: Single Target, Deal 4 Damage and 3 Wound, Stop at first enemy
+    hit
+--- !u!114 &601295391118310427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87f152b07ce2ca429961ef886259aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Suppressing Shot
+  damage: 4
+  heal: 0
+  cooldown: 0
+  range: 2
+  targetType: 0
+  targetArea: 1
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  skillDescription: Single Target, 3 Tiles Range, Deal 4 Damage and Stun (80%)

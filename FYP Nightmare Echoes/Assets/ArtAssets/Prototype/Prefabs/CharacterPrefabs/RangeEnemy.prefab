@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7305331337648946353
 Transform:
   m_ObjectHideFlags: 0
@@ -190,6 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Arrow Shot
   damage: 3
+  heal: 0
   cooldown: 0
   range: 4
   targetType: 0
@@ -267,6 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Arrow Shot
   damage: 3
+  heal: 0
   cooldown: 0
   range: 4
   targetType: 0
