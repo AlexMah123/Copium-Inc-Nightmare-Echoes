@@ -130,8 +130,23 @@ namespace NightmareEchoes.Unit
 
 
         //Directly on units
-        public virtual bool Cast(Units target)
+        public virtual bool Cast(Units target, Units caster)
         {
+            Vector2 CastFrom = new Vector2(caster.ActiveTile.gridLocation.x, caster.ActiveTile.gridLocation.y);
+            Vector2 CastTo = new Vector2(target.ActiveTile.gridLocation.x, target.ActiveTile.gridLocation.y);
+
+            float xDist = CastFrom.x - CastTo.y;
+            float yDist = CastFrom.y - CastTo.x;
+
+            if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
+            {
+                //East&West
+            }
+            else
+            {
+                //North&South
+            }
+
             throw new System.NotImplementedException();
         }
 
