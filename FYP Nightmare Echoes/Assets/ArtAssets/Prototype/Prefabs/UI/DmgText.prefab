@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6045939641622712439}
   - component: {fileID: 1567130971659204638}
   m_Layer: 0
-  m_Name: FloatingText
+  m_Name: DmgText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,8 +123,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4284572159
-  m_fontColor: {r: 1, g: 0.3820755, b: 0.3820755, a: 1}
+    rgba: 4278249983
+  m_fontColor: {r: 1, g: 0.91456765, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -196,7 +196,7 @@ Animator:
   m_GameObject: {fileID: 6451283056320303755}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 57eaeeab7c627b64480e8824d40cab57, type: 2}
+  m_Controller: {fileID: 9100000, guid: a8bdf5e4d9959b1408952abfd7dbca1e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -246,5 +246,5 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1275735921
   m_SortingLayer: 5
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}

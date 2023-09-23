@@ -25,6 +25,7 @@ namespace NightmareEchoes.Unit
         public override void TriggerEffect(Units unit)
         {
             unit.ShowPopUpText("Wound!");
+            unit.ShowDmgText($"-{woundDmg * woundStack}");
             unit.stats.Health -= woundDmg * woundStack;
         }
 

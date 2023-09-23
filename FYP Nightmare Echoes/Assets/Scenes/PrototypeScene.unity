@@ -681,10 +681,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: typeOfUnit
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db783668a420270479acb37d5a8b55f2, type: 3}
 --- !u!1 &142860399
@@ -7751,14 +7747,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
-      propertyPath: buffDebuffList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
-      propertyPath: buffDebuffList.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: f1dc84edec640e841a2dda70159efdfa, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
 --- !u!1 &1469802189
@@ -11286,16 +11274,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: tokenList.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: tokenList.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: d931b96f55325fa4f80059a1f6811c48, type: 2}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: buffDebuffList.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: buffDebuffList.Array.data[0]

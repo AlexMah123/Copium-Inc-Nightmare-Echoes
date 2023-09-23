@@ -22,6 +22,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected Sprite sprite;
         protected SpriteRenderer spriteRenderer;
         [SerializeField] protected GameObject popupTextPrefab;
+        [SerializeField] protected GameObject dmgTextPrefab;
 
         [SerializeField] protected bool isHostile;
         [SerializeField] protected Direction direction;
@@ -877,7 +878,17 @@ namespace NightmareEchoes.Unit
         {
             if(popupTextPrefab)
             {
-                GameObject prefab = Instantiate(popupTextPrefab, transform.localPosition + new Vector3(0.1f, 0.4f, 0), Quaternion.identity);
+                GameObject prefab = Instantiate(popupTextPrefab, transform.localPosition + new Vector3(0.1f, 0.75f, 0), Quaternion.identity);
+                TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
+                textMeshPro.text = text;
+            }
+        }
+
+        public void ShowDmgText(string text)
+        {
+            if (dmgTextPrefab)
+            {
+                GameObject prefab = Instantiate(dmgTextPrefab, transform.localPosition + new Vector3(0.25f, 0.5f, 0), Quaternion.identity);
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = text;
             }

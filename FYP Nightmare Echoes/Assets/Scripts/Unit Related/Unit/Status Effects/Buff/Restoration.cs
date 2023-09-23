@@ -20,6 +20,7 @@ namespace NightmareEchoes.Unit
         public override void ApplyEffect(Units unit)
         {
             unit.ShowPopUpText("Restoration!");
+            unit.ShowDmgText($"+{restorationHeal * restorationStack}");
             unit.stats.Health += restorationHeal * restorationStack;
 
         }
