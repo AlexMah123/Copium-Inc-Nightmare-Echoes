@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using NightmareEchoes.Grid;
-using static UnityEngine.UI.CanvasScaler;
-using UnityEditor.Experimental.GraphView;
 
 //created by JH, edited by Ter
 namespace NightmareEchoes.Unit.Combat
@@ -140,6 +138,25 @@ namespace NightmareEchoes.Unit.Combat
                         return kvp.Key;
                     }
                 }
+            }
+
+            return null;
+        }
+
+        public Skill CheckTrap(Units unit)
+        {
+            var hit = Physics2D.Raycast(unit.transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            if (!hit) return null;
+            var target = hit.collider.gameObject.GetComponent<OverlayTile>();
+            var trap = target.CheckTrapOnTile();
+
+            if (!trap) return null;
+            foreach (var kvp in activeTraps.Where(kvp => kvp.Key == trap))
+            {
+                var activatedTrap = kvp.Key;
+                activeTraps.Remove(kvp.Key);
+                Destroy(activatedTrap);
+                return kvp.Value;
             }
 
             return null;
@@ -534,7 +551,7 @@ namespace NightmareEchoes.Unit.Combat
                 var target = OverlayTileManager.Instance.GetOverlayTileOnMouseCursor();
                 if (target)
                 {
-                    if (!target.CheckUnitOnTile() && !target.CheckObstacleOnTile() && skillRangeTiles.Any(tile => tile == target))
+                    if (!target.CheckUnitOnTile() && !target.CheckObstacleOnTile() && !target.CheckTrapOnTile() && skillRangeTiles.Any(tile => tile == target))
                     {
                         var preview = GetClone(activeSkill.PlacableGameObject);
                         preview.GetComponent<SpriteRenderer>().sprite = trapSprite;
@@ -553,6 +570,14 @@ namespace NightmareEchoes.Unit.Combat
                 }
                 yield return new WaitForSeconds(0.001f);
             }
+
+            foreach (var placedTrapPos in trapList)
+            {
+                var newTrap = Instantiate(activeSkill.PlacableGameObject, placedTrapPos, Quaternion.identity);
+                var skill = activeSkill;
+                activeTraps.Add(newTrap, skill);
+            }
+            EndTurn();
         }
 
         IEnumerator WaitForSkill(Units target)

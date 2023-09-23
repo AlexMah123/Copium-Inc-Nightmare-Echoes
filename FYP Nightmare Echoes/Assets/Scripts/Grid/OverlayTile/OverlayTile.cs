@@ -118,6 +118,15 @@ namespace NightmareEchoes.Grid
             var target = hit.collider.gameObject;
             return !target ? null : target;
         }
+        
+        public GameObject CheckTrapOnTile()
+        {
+            var hit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Traps"));
+
+            if (!hit) return null;
+            var target = hit.collider.gameObject;
+            return !target ? null : target;
+        }
 
         public void SetArrowSprite(ArrowDirections d)
         {
