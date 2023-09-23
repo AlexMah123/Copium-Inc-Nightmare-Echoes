@@ -11287,7 +11287,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: tokenList.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: tokenList.Array.data[0]
@@ -11295,12 +11295,16 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: d931b96f55325fa4f80059a1f6811c48, type: 2}
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: buffDebuffList.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: buffDebuffList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: f1dc84edec640e841a2dda70159efdfa, type: 2}
+      objectReference: {fileID: 11400000, guid: 8b383960bf7e0cb4ca7526952b68c93f, type: 2}
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: buffDebuffList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 429698295c830c14797ecdefd4111df2, type: 2}
     - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_Name
       value: Ranger

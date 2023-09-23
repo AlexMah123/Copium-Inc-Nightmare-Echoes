@@ -19,9 +19,13 @@ namespace NightmareEchoes.Unit
 
         public override void ApplyEffect(Units unit)
         {
+            
+        }
+
+        public override void TriggerEffect(Units unit)
+        {
             unit.ShowPopUpText("Wound!");
             unit.stats.Health -= woundDmg * woundStack;
-
         }
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)

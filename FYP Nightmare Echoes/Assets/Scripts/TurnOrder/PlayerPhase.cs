@@ -15,13 +15,14 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnEnter()
         {
             tempStun = false;
-            //Init here
+
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
             {
                 //TESTING
                 //controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.HASTE_TOKEN, 99, 1));
 
+                #region Tokens
                 controller.CurrentUnit.ApplyAllTokenEffects();
 
                 if (controller.CurrentUnit.StunToken)
@@ -29,13 +30,25 @@ namespace NightmareEchoes.TurnOrder
                     controller.CurrentUnit.StunToken = false;
 
                     UIManager.Instance.EnableCurrentUI(false);
-                    UIManager.Instance.UpdateStatusEffectUI();
 
                     controller.StartCoroutine(controller.PassTurn());
                 }
+                #endregion
+
+                #region BuffDebuff
+                for (int i = controller.CurrentUnit.BuffDebuffList.Count - 1; i >= 0; i--)
+                {
+                    switch (controller.CurrentUnit.BuffDebuffList[i].statusEffect)
+                    {
+                        case STATUS_EFFECT.WOUND_DEBUFF:
+                            controller.CurrentUnit.BuffDebuffList[i].TriggerEffect(controller.CurrentUnit);
+                            break;
+                    }
+                }
+                #endregion
 
 
-
+                UIManager.Instance.UpdateStatusEffectUI();
                 controller.CurrentUnit.UpdateStatusEffectEvent();
             }
             #endregion
@@ -62,6 +75,7 @@ namespace NightmareEchoes.TurnOrder
                 }
                 #endregion
 
+                #region Mandatory Checks
                 //Hide tiles only on exit
                 if (PathfindingManager.Instance.playerTilesInRange.Count > 0)
                 {
@@ -74,6 +88,8 @@ namespace NightmareEchoes.TurnOrder
                 controller.CurrentUnit.UpdateBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
 
+                #endregion
+
                 #region Apply Certain End of Turn Effects/Checks Without Updating Lifetime
                 if (tempStun)
                 {
@@ -83,7 +99,6 @@ namespace NightmareEchoes.TurnOrder
                     controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
                 }
 
-                
                 #endregion
             }
 
