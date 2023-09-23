@@ -599,22 +599,25 @@ namespace NightmareEchoes.Unit.Combat
 
         GameObject GetClone(GameObject gameObject)
         {
-            { 
-                foreach (var clone in clonePool)
-                {
-                    if (!clone.activeInHierarchy) 
-                    { 
-                        return clone; 
-                    }
-                } 
+            foreach (var clone in clonePool)
+            {
+                if (!clone.activeInHierarchy) 
+                { 
+                    return clone; 
+                }
+            } 
   
-                GameObject obj = Instantiate(gameObject);
+            GameObject obj = Instantiate(gameObject);
+
+            if (obj.GetComponent<SpriteRenderer>() == null)
+            {
                 obj.AddComponent<SpriteRenderer>();
-                obj.SetActive(false); 
-                obj.name = $"{obj.name} {cloneCount++}"; 
-                clonePool.Add(obj); 
-                return obj; 
             }
+
+            obj.SetActive(false); 
+            obj.name = $"{obj.name} {cloneCount++}"; 
+            clonePool.Add(obj); 
+            return obj; 
         }
 
 

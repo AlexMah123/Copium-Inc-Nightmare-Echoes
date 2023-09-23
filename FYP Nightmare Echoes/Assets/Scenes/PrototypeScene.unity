@@ -637,10 +637,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BountyHunter
       objectReference: {fileID: 0}
-    - target: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2658365863807529696, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -7707,10 +7703,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 5583804447610931201, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5583804447610931203, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -11274,31 +11266,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: baseStats._speed
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: tokenList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: debuffList.Array.size
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: tokenList.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: cc2fd4a2407474341880d629c9ff4bb6, type: 2}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: tokenList.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 5d5eb65f1cff41449b281598db5887b3, type: 2}
     - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_Name
       value: Ranger
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279022, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_RootOrder
@@ -11612,10 +11588,6 @@ PrefabInstance:
     - target: {fileID: 8121445182508319273, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
       propertyPath: m_Name
       value: MageUnit
-      objectReference: {fileID: 0}
-    - target: {fileID: 8121445182508319273, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}

@@ -3287,7 +3287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8121445182508319272
 Transform:
   m_ObjectHideFlags: 0
@@ -3405,6 +3405,9 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
   skillDescription: "Single Target, 4 Direction, Deal 6 Damage\r\nEmpower: Deal 9
     Damage and Apply 1 Blind\r"
 --- !u!114 &8121445182508319265
@@ -3434,6 +3437,9 @@ MonoBehaviour:
   secondaryDamage: 4
   secondaryRange: 0
   inflictKnockback: 1
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
   skillDescription: "AOE Attack, 4 Direction, \nDeal 8 Damage in the middle and 4
     Damage at the side, Knockback enemy 1 tile\r\nCooldown: 2 Turns\r\nEmpower: Stun
     (80%)\r"
@@ -3464,6 +3470,9 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 3
   inflictKnockback: 0
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
   skillDescription: 'Target Hero or Enemy inside 2 Tiles Range, then Teleport him
     within 3 Tiles Range of Target.
 
@@ -3503,6 +3512,9 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 1
   inflictKnockback: 0
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
   skillDescription: "AOE, Create Static Storm that last for 2 Turns\nEnemies that
     pass through the storm take 4 Damage, Enemy that Stay in (Start Turn) take 4
     damage and apply 1 Weaken\r\nCooldown: 3 Turns\r\nEmpower: Apply 2 Blind and
@@ -3534,6 +3546,9 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
   skillDescription: Every 3 Turns, Empower Skills (Click to Enable)
 --- !u!60 &8121445182508319274
 PolygonCollider2D:

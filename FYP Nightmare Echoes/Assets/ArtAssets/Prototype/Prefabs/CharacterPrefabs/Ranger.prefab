@@ -109,7 +109,7 @@ MonoBehaviour:
   typeOfUnit: 0
   baseStats:
     _maxHealth: 25
-    _speed: 5
+    _speed: 4
     _moveRange: 3
     _stunResist: 30
     _resist: 70
@@ -233,6 +233,9 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
   skillDescription: Single Target, Deal 4 Damage and 3 Wound, Stop at first enemy
     hit
 --- !u!114 &601295391118310427
@@ -262,4 +265,7 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
   skillDescription: Single Target, 3 Tiles Range, Deal 4 Damage and Stun (80%)
