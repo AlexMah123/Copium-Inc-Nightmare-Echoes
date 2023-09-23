@@ -504,7 +504,7 @@ namespace NightmareEchoes.TurnOrder
             if (CurrentUnit != null)
             {
                 //total list of current unit status effect
-                currentUnitTotalStatusEffectList = CurrentUnit.BuffList.Concat(CurrentUnit.DebuffList).Concat(CurrentUnit.TokenList).ToList();
+                currentUnitTotalStatusEffectList = CurrentUnit.BuffDebuffList.Concat(CurrentUnit.TokenList).ToList();
 
                 //reset pool
                 for (int i = 0; i < currentUnitStatusEffectPool.Count; i++)
@@ -558,7 +558,7 @@ namespace NightmareEchoes.TurnOrder
             if (inspectedUnit != null)
             {
                 //total list of status effect
-                inspectedUnitTotalStatusEffectList = inspectedUnit.BuffList.Concat(inspectedUnit.DebuffList).Concat(inspectedUnit.TokenList).ToList();
+                inspectedUnitTotalStatusEffectList = inspectedUnit.BuffDebuffList.Concat(inspectedUnit.TokenList).ToList();
 
                 //reset pool
                 for (int i = 0; i < inspectedUnitStatusEffectPool.Count; i++)

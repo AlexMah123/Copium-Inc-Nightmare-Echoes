@@ -69,10 +69,11 @@ namespace NightmareEchoes.Unit
         STUN_RESISTANCE_BUFF = 16,
 
         WOUND_DEBUFF = 17,
-        MOVERANGE_DEBUFF = 18,
-        SPEED_DEBUFF = 19,
-        RESISTANCE_DEBUFF = 20,
-        STUN_RESISTANCE_DEBUFF = 21,
+        CRIPPLED_DEBUFF = 18,
+        MOVERANGE_DEBUFF = 19,
+        SPEED_DEBUFF = 20,
+        RESISTANCE_DEBUFF = 21,
+        STUN_RESISTANCE_DEBUFF = 22,
     }
 
     [Serializable]

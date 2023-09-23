@@ -2,46 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-//created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "SpeedBuff", menuName = "Unit Modifiers/Buff/Speed Buff")]
-    public class SpeedBuff : Modifier
+    [CreateAssetMenu(fileName = "Crippled", menuName = "Unit Modifiers/Debuff/Crippled")]
+    public class Crippled : Modifier
     {
         [Space(15), Header("Runtime Values")]
-        [SerializeField] int speedBuff;
-        [SerializeField] int buffDuration;
+        [SerializeField] int crippledDmg;
+        [SerializeField] int crippledStack;
 
         public override void AwakeStatusEffect()
         {
-            speedBuff = (int)genericValue;
-            buffDuration = modifierDuration;
+            crippledDmg = (int)genericValue;
+            crippledStack = modifierDuration;
         }
 
         public override void ApplyEffect(Units unit)
         {
+            
+        }
 
+        public override void TriggerEffect(Units unit)
+        {
+            unit.ShowPopUpText("Crippled!");
+            unit.stats.Health -= crippledDmg;
         }
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            mod.speedModifier += speedBuff;
             return mod;
         }
 
         public override void IncreaseLifeTime()
         {
-            buffDuration++;
+            crippledStack++;
         }
 
         public override void UpdateLifeTime()
         {
-            buffDuration--;
+            crippledStack--;
         }
+
         public override float ReturnLifeTime()
         {
-            return buffDuration;
+            return crippledStack;
         }
     }
 }

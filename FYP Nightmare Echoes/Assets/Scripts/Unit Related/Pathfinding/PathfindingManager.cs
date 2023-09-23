@@ -22,6 +22,11 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] float movingSpeed;
         [SerializeField] bool ifSelectedUnit = false;
 
+        [Header("Path list + Tiles in Range")]
+        [SerializeField] List<OverlayTile> pathList = new List<OverlayTile>();
+        [SerializeField] List<OverlayTile> tempPathList = new List<OverlayTile>();
+        public List<OverlayTile> playerTilesInRange = new List<OverlayTile>();
+
         //ArrowBool Detection Stuff
         bool isMoving = false;
         bool isDragging = false;
@@ -31,17 +36,15 @@ namespace NightmareEchoes.Unit.Pathfinding
         Vector3 mousePrevPos;
         [SerializeField] float dragThreshold = 1f;
 
-        //This Vector3Int is to return player to the previous position when they press escape
+        //Temp values whenever a player revert/resets
         private OverlayTile revertUnitPosition;
         private Direction revertUnitDirection;
+        private int revertUnitHealth;
 
-        public List<OverlayTile> pathList = new List<OverlayTile>();
-        public List<OverlayTile> tempPathList = new List<OverlayTile>();
-        public List<OverlayTile> playerTilesInRange = new List<OverlayTile>();
-
+        //hovered tile related
         RaycastHit2D? hoveredTile;
         OverlayTile currentHoveredOverlayTile;
-        public OverlayTile lastAddedTile = null;
+        OverlayTile lastAddedTile = null;
 
         private void Awake()
         {
@@ -70,6 +73,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     SetUnitPositionOnTile(revertUnitPosition, currentSelectedUnit);
                     currentSelectedUnit.Direction = revertUnitDirection;
+                    currentSelectedUnit.stats.Health = revertUnitHealth;
 
                     //Resets everything, not moving, not dragging, and lastaddedtile is null
                     isMoving = false;
@@ -153,6 +157,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                         //store values for players when they cancel their action
                         revertUnitPosition = currentSelectedUnit.ActiveTile;
                         revertUnitDirection = currentSelectedUnit.Direction;
+                        revertUnitHealth = currentSelectedUnit.stats.Health;
 
                         //display tiles in range
                         ShowTilesInRange(playerTilesInRange);
@@ -258,9 +263,24 @@ namespace NightmareEchoes.Unit.Pathfinding
         public void MoveAlongPath(Units unit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
         {
             //units movement
-            if(pathList.Count > 0) 
+            if (pathList.Count > 0 && unit != null) 
             {
-                
+                #region Trigger Movement Related Status Effect Before Movement
+                for (int i = unit.TokenList.Count - 1; i >= 0; i--)
+                {
+                    switch (unit.TokenList[i].statusEffect)
+                    {
+                        case STATUS_EFFECT.IMMOBILIZE_TOKEN:
+                            unit.TokenList[i].TriggerEffect(unit);
+                            isMoving = false;
+
+                            ClearArrow();
+                            pathList.Clear();
+                            return;
+                    }
+                }
+                #endregion
+
                 var step = movingSpeed * Time.deltaTime;
                 var zIndex = pathList[0].transform.position.z;
 
@@ -275,9 +295,24 @@ namespace NightmareEchoes.Unit.Pathfinding
                     pathList[0].SetArrowSprite(ArrowDirections.None);
 
                     pathList.RemoveAt(0);
+
+
+                    #region Triggering Movement Related Status Effect During Movement
+                    for (int i = unit.BuffDebuffList.Count - 1; i >= 0; i--) 
+                    {
+                        switch(unit.BuffDebuffList[i].statusEffect)
+                        {
+                            case STATUS_EFFECT.CRIPPLED_DEBUFF:
+                                unit.BuffDebuffList[i].TriggerEffect(unit);
+                                break;
+                        }
+                    }
+
+                    #endregion
                 }
             }
 
+            #region Setting Unit Direction
             //set the units direction facing based on the vector between player and the next tile
             if (pathList.Count > 0 && unit != null)
             {
@@ -288,7 +323,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     unit.Direction = Direction.North;
 
-                    if (unit.BackModel != null && unit.FrontAnimator != null && unit.BackAnimator != null) 
+                    if (unit.BackModel != null && unit.FrontAnimator != null && unit.BackAnimator != null)
                     {
                         unit.BackAnimator.SetBool("Moving", true);
                         unit.FrontAnimator.SetBool("Moving", false);
@@ -325,6 +360,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                     }
                 }
             }
+            #endregion
+
 
             if (pathList.Count <= 0 )
             {
@@ -418,6 +455,9 @@ namespace NightmareEchoes.Unit.Pathfinding
             //called in unit attack (UIManager button), clears all existing arrows, resets selected unit, reset revertsunitPosition
             ClearArrow();
             revertUnitPosition = null;
+            revertUnitHealth = 0;
+
+
             ifSelectedUnit = false;
             isMoving = false;
             isDragging = false;

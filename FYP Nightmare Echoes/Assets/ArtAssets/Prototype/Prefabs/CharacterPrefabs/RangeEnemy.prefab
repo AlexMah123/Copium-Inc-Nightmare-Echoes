@@ -104,17 +104,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Range Enemy
   sprite: {fileID: 489163364, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   isHostile: 1
   direction: 0
   typeOfUnit: 0
   baseStats:
+    _health: 0
     _maxHealth: 15
     _speed: 4
     _moveRange: 2
     _stunResist: 35
     _resist: 35
   stats:
+    _health: 0
     _maxHealth: 0
     _speed: 0
     _moveRange: 0
@@ -126,8 +128,7 @@ MonoBehaviour:
     moveRangeModifier: 0
     stunResistModifier: 0
     resistModifier: 0
-  buffList: []
-  debuffList: []
+  buffDebuffList: []
   tokenList: []
   dodgeToken: 0
   blockToken: 0
@@ -203,6 +204,9 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
   skillDescription: 
 --- !u!60 &964070419
 PolygonCollider2D:
@@ -253,7 +257,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!114 &4771270882185813531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,4 +285,7 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
   skillDescription: 

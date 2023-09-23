@@ -17,15 +17,21 @@ namespace NightmareEchoes.Unit
             woundStack = modifierDuration;
         }
 
-        public override void ApplyEffect(GameObject unit)
+        public override void ApplyEffect(Units unit)
         {
-            unit.GetComponent<Units>().stats.Health -= woundDmg * woundStack;
+            unit.ShowPopUpText("Wound!");
+            unit.stats.Health -= woundDmg * woundStack;
 
         }
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
             return mod;
+        }
+
+        public override void IncreaseLifeTime()
+        {
+            woundStack++;
         }
 
         public override void UpdateLifeTime()

@@ -19,7 +19,7 @@ namespace NightmareEchoes.Unit
             buffDuration = modifierDuration;
         }
 
-        public override void ApplyEffect(GameObject unit)
+        public override void ApplyEffect(Units unit)
         {
 
         }
@@ -28,6 +28,11 @@ namespace NightmareEchoes.Unit
         {
             mod.stunResistModifier += stunResistBuff;
             return mod;
+        }
+
+        public override void IncreaseLifeTime()
+        {
+            buffDuration++;
         }
 
         public override void UpdateLifeTime()

@@ -2,46 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "ResistBuff", menuName = "Unit Modifiers/Buff/Resist Buff")]
-    public class ResistBuff : Modifier
+    [CreateAssetMenu(fileName = "ImmobilizeToken", menuName = "Unit Modifiers/NegativeToken/Immobilize Token")]
+    public class ImmobilizeToken : Modifier
     {
-        [Space(15), Header("Runtime Effect Values")]
-        [SerializeField] float resistBuff;
-        [SerializeField] int buffDuration;
+        [Space(15), Header("Runtime Values")]
+        [SerializeField] int tokenStack;
 
         public override void AwakeStatusEffect()
         {
-            resistBuff = genericValue;
-            buffDuration = modifierDuration;
+            tokenStack = modifierDuration;
         }
 
         public override void ApplyEffect(Units unit)
         {
+            unit.ShowPopUpText("Immobilized!");
+            unit.ImmobilizeToken = true;
+        }
 
+        public override void TriggerEffect(Units unit)
+        {
+            unit.ShowPopUpText("Cannot Move");
         }
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            mod.resistModifier += resistBuff;
             return mod;
         }
 
         public override void IncreaseLifeTime()
         {
-            buffDuration++;
+            tokenStack++;
         }
 
         public override void UpdateLifeTime()
         {
-            buffDuration--;
+            tokenStack--;
         }
 
         public override float ReturnLifeTime()
         {
-            return buffDuration;
+            return tokenStack;
         }
     }
 }

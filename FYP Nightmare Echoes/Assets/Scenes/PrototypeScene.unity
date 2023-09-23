@@ -681,6 +681,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8747826421340837878, guid: db783668a420270479acb37d5a8b55f2, type: 3}
+      propertyPath: typeOfUnit
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db783668a420270479acb37d5a8b55f2, type: 3}
 --- !u!1 &142860399
@@ -7747,6 +7751,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: buffDebuffList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8893637955381217503, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: buffDebuffList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f1dc84edec640e841a2dda70159efdfa, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
 --- !u!1 &1469802189
@@ -7794,28 +7806,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalPossibleModifiers:
-  - statusEffect: 3
-    modValue: {fileID: 11400000, guid: 5d5eb65f1cff41449b281598db5887b3, type: 2}
   - statusEffect: 13
     modValue: {fileID: 11400000, guid: 0b4c3b0b67d18984eba3ca55d51908a0, type: 2}
-  - statusEffect: 18
+  - statusEffect: 19
     modValue: {fileID: 11400000, guid: 6ce5388554b9c7e45b40d412d28b2296, type: 2}
   - statusEffect: 15
     modValue: {fileID: 11400000, guid: 99695b3589d99054cbfd35aba4f52c88, type: 2}
-  - statusEffect: 20
+  - statusEffect: 21
     modValue: {fileID: 11400000, guid: 0652adf493ca2cb4b99e693b456faf71, type: 2}
   - statusEffect: 14
     modValue: {fileID: 11400000, guid: 5fbd22f3e0cf3c34bb576a37d36d21e2, type: 2}
-  - statusEffect: 19
+  - statusEffect: 20
     modValue: {fileID: 11400000, guid: 1df4c40340d04bc4988288118f5f48dc, type: 2}
   - statusEffect: 16
     modValue: {fileID: 11400000, guid: 601d001264cdab5438fa84240f088d52, type: 2}
-  - statusEffect: 21
+  - statusEffect: 22
     modValue: {fileID: 11400000, guid: 7a184d26147cceb45ab60c05f13a6362, type: 2}
-  - statusEffect: 10
-    modValue: {fileID: 11400000, guid: cc2fd4a2407474341880d629c9ff4bb6, type: 2}
+  - statusEffect: 12
+    modValue: {fileID: 11400000, guid: 429698295c830c14797ecdefd4111df2, type: 2}
   - statusEffect: 17
     modValue: {fileID: 11400000, guid: 8b383960bf7e0cb4ca7526952b68c93f, type: 2}
+  - statusEffect: 18
+    modValue: {fileID: 11400000, guid: f1dc84edec640e841a2dda70159efdfa, type: 2}
+  - statusEffect: 10
+    modValue: {fileID: 11400000, guid: cc2fd4a2407474341880d629c9ff4bb6, type: 2}
+  - statusEffect: 9
+    modValue: {fileID: 11400000, guid: fa768a82058e5e8408f66470386c5046, type: 2}
+  - statusEffect: 11
+    modValue: {fileID: 11400000, guid: d931b96f55325fa4f80059a1f6811c48, type: 2}
+  - statusEffect: 3
+    modValue: {fileID: 11400000, guid: 5d5eb65f1cff41449b281598db5887b3, type: 2}
+  - statusEffect: 0
+    modValue: {fileID: 11400000, guid: 70dcd26159849464aa0c79b61d714e90, type: 2}
 --- !u!1 &1481047561
 GameObject:
   m_ObjectHideFlags: 0
@@ -11252,11 +11274,10 @@ MonoBehaviour:
   overlayTileContainer: {fileID: 1901869097}
   movingSpeed: 4
   ifSelectedUnit: 0
-  dragThreshold: 1.1
   pathList: []
   tempPathList: []
   playerTilesInRange: []
-  lastAddedTile: {fileID: 0}
+  dragThreshold: 1.1
 --- !u!1001 &601295391118310419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11265,13 +11286,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: baseStats._speed
-      value: 6
+      propertyPath: tokenList.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: tokenList.Array.size
+      propertyPath: tokenList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: d931b96f55325fa4f80059a1f6811c48, type: 2}
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: buffDebuffList.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: buffDebuffList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f1dc84edec640e841a2dda70159efdfa, type: 2}
     - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_Name
       value: Ranger

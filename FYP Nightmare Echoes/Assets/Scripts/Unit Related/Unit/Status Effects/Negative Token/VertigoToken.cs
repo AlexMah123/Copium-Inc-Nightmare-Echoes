@@ -16,9 +16,10 @@ namespace NightmareEchoes.Unit
             tokenStack = modifierDuration;
         }
 
-        public override void ApplyEffect(GameObject unit)
+        public override void ApplyEffect(Units unit)
         {
-            unit.GetComponent<Units>().VertigoToken = true;
+            unit.ShowPopUpText("Vertigo!");
+            unit.VertigoToken = true;
         }
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
@@ -26,6 +27,11 @@ namespace NightmareEchoes.Unit
             mod.speedModifier += (int)genericValue;
 
             return mod;
+        }
+
+        public override void IncreaseLifeTime()
+        {
+            tokenStack++;
         }
 
         public override void UpdateLifeTime()

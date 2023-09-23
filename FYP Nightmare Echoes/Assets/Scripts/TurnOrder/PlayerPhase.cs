@@ -55,8 +55,15 @@ namespace NightmareEchoes.TurnOrder
 
             if (controller.CurrentUnit != null)
             {
+                #region End of Turn Effects
+                if (controller.CurrentUnit.ImmobilizeToken)
+                {
+                    controller.CurrentUnit.ImmobilizeToken = false;
+                }
+                #endregion
+
                 //Hide tiles only on exit
-                if(PathfindingManager.Instance.playerTilesInRange.Count > 0)
+                if (PathfindingManager.Instance.playerTilesInRange.Count > 0)
                 {
                     PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
                 }
@@ -67,7 +74,7 @@ namespace NightmareEchoes.TurnOrder
                 controller.CurrentUnit.UpdateBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
 
-                #region Apply End of Turn Effects/Checks
+                #region Apply Certain End of Turn Effects/Checks Without Updating Lifetime
                 if (tempStun)
                 {
                     tempStun = false;
@@ -75,6 +82,8 @@ namespace NightmareEchoes.TurnOrder
                     controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_RESISTANCE_BUFF, 50, 1));
                     controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
                 }
+
+                
                 #endregion
             }
 

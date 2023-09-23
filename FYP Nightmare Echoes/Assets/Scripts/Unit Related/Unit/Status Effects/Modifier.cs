@@ -21,10 +21,16 @@ namespace NightmareEchoes.Unit
         [SerializeField] public int modifierDuration;
 
         public abstract void AwakeStatusEffect();
-        public abstract void ApplyEffect(GameObject unit);
-        public abstract ModifiersStruct ApplyModifier(ModifiersStruct mod);
-        public abstract void UpdateLifeTime();
+        public abstract void ApplyEffect(Units unit);
 
+        public virtual void TriggerEffect(Units unit)
+        {
+
+        }
+
+        public abstract ModifiersStruct ApplyModifier(ModifiersStruct mod);
+        public abstract void IncreaseLifeTime();
+        public abstract void UpdateLifeTime();
         public abstract float ReturnLifeTime();
     }
 

@@ -21,8 +21,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected string _name;
         [SerializeField] protected Sprite sprite;
         protected SpriteRenderer spriteRenderer;
-        [SerializeField] protected GameObject damageTextPrefab;
-        //[SerializeField] protected GameObject popUpTextPrefab;
+        [SerializeField] protected GameObject popupTextPrefab;
 
         [SerializeField] protected bool isHostile;
         [SerializeField] protected Direction direction;
@@ -33,8 +32,7 @@ namespace NightmareEchoes.Unit
         public ModifiersStruct modifiedStats = new();
 
         [Space(15), Header("Buff Debuff")]
-        [SerializeField] protected List<Modifier> buffList = new List<Modifier>();
-        [SerializeField] protected List<Modifier> debuffList = new List<Modifier>();
+        [SerializeField] protected List<Modifier> buffDebuffList = new List<Modifier>();
         [SerializeField] protected List<Modifier> tokenList = new List<Modifier>();
 
         [Space(15), Header("Positive Token Bools")]
@@ -352,16 +350,10 @@ namespace NightmareEchoes.Unit
 
 
         #region Buff Debuff Token
-        public List<Modifier> BuffList
+        public List<Modifier> BuffDebuffList
         {
-            get => buffList;
-            set => buffList = value;
-        }
-
-        public List<Modifier> DebuffList
-        {
-            get => debuffList;
-            set => debuffList = value;
+            get => buffDebuffList;
+            set => buffDebuffList = value;
         }
 
         public List<Modifier> TokenList
@@ -700,6 +692,11 @@ namespace NightmareEchoes.Unit
 
         protected virtual void Update()
         {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.IMMOBILIZE_TOKEN, -4, 1));
+            }
+
             if (stats.Health == 0)
             {
                 if (!IsHostile)
@@ -876,13 +873,13 @@ namespace NightmareEchoes.Unit
 
 
         #region Utility
-        public void ShowPopUpText(string damage)
+        public void ShowPopUpText(string text)
         {
-            if(damageTextPrefab)
+            if(popupTextPrefab)
             {
-                GameObject prefab = Instantiate(damageTextPrefab, transform.localPosition + new Vector3(0.1f, 0.4f, 0), Quaternion.identity);
+                GameObject prefab = Instantiate(popupTextPrefab, transform.localPosition + new Vector3(0.1f, 0.4f, 0), Quaternion.identity);
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
-                textMeshPro.text = damage;
+                textMeshPro.text = text;
             }
         }
 
@@ -908,13 +905,9 @@ namespace NightmareEchoes.Unit
             switch (buff.modifierType)
             {
                 case ModifierType.BUFF:
-                    buff.AwakeStatusEffect();
-                    BuffList.Add(buff);
-                    break;
-
                 case ModifierType.DEBUFF:
                     buff.AwakeStatusEffect();
-                    DebuffList.Add(buff);
+                    BuffDebuffList.Add(buff);
                     break;
 
                 case ModifierType.POSITIVETOKEN:
@@ -935,7 +928,7 @@ namespace NightmareEchoes.Unit
         //call only on instantiation of object
         public void AwakeAllStatusEffects()
         {
-            List<Modifier> totalStatusEffects = BuffList.Concat(DebuffList).Concat(TokenList).ToList();
+            List<Modifier> totalStatusEffects = BuffDebuffList.Concat(TokenList).ToList();
 
             foreach (Modifier statusEffect in totalStatusEffects)
             {
@@ -945,14 +938,9 @@ namespace NightmareEchoes.Unit
 
         public void ApplyAllBuffDebuffs()
         {
-            for (int i = 0; i < BuffList.Count; i++)
+            for (int i = 0; i < BuffDebuffList.Count; i++)
             {
-                BuffList[i].ApplyEffect(gameObject);
-            }
-
-            for (int i = 0; i < DebuffList.Count; i++)
-            {
-                DebuffList[i].ApplyEffect(gameObject);
+                BuffDebuffList[i].ApplyEffect(this);
             }
         }
 
@@ -960,29 +948,19 @@ namespace NightmareEchoes.Unit
         {
             for (int i = 0; i < TokenList.Count; i++)
             {
-                TokenList[i].ApplyEffect(gameObject);
+                TokenList[i].ApplyEffect(this);
             }
         }
 
         public void UpdateBuffDebuffLifeTime()
         {
-            for (int i = BuffList.Count - 1; i >= 0 ; i--)
+            for (int i = BuffDebuffList.Count - 1; i >= 0 ; i--)
             {
-                BuffList[i].UpdateLifeTime();
+                BuffDebuffList[i].UpdateLifeTime();
 
-                if (BuffList[i].ReturnLifeTime() <= 0)
+                if (BuffDebuffList[i].ReturnLifeTime() <= 0)
                 {
-                    BuffList.RemoveAt(i);
-                }
-            }
-
-            for (int i = DebuffList.Count - 1; i >= 0; i--)
-            {
-                DebuffList[i].UpdateLifeTime();
-
-                if (DebuffList[i].ReturnLifeTime() <= 0)
-                {
-                    DebuffList.RemoveAt(i);
+                    BuffDebuffList.RemoveAt(i);
                 }
             }
         }
@@ -1034,14 +1012,9 @@ namespace NightmareEchoes.Unit
         {
             ModifiersStruct temp = new();
 
-            for (int i = 0; i < buffList.Count; i++)
+            for (int i = 0; i < buffDebuffList.Count; i++)
             {
-                temp = buffList[i].ApplyModifier(temp);
-            }
-
-            for (int i = 0; i < debuffList.Count; i++)
-            {
-                temp = debuffList[i].ApplyModifier(temp);
+                temp = buffDebuffList[i].ApplyModifier(temp);
             }
 
             for (int i = 0; i < tokenList.Count; i++)
@@ -1063,14 +1036,9 @@ namespace NightmareEchoes.Unit
         {
             ModifiersStruct temp = new();
 
-            for (int i = 0; i < buffList.Count; i++)
+            for (int i = 0; i < BuffDebuffList.Count; i++)
             {
-                temp = buffList[i].ApplyModifier(temp);
-            }
-
-            for (int i = 0; i < debuffList.Count; i++)
-            {
-                temp = debuffList[i].ApplyModifier(temp);
+                temp = BuffDebuffList[i].ApplyModifier(temp);
             }
 
             for (int i = 0; i < tokenList.Count; i++)
@@ -1105,7 +1073,7 @@ namespace NightmareEchoes.Unit
     public class BaseStats
     {
         [Header("Unit Info")]
-        protected int _health;
+        [SerializeField] protected int _health;
         [SerializeField] protected int _maxHealth;
         [SerializeField] protected int _speed;
         [SerializeField] protected int _moveRange;

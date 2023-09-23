@@ -104,17 +104,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Melee Enemy
   sprite: {fileID: -331225865, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   isHostile: 1
   direction: 0
   typeOfUnit: 0
   baseStats:
+    _health: 0
     _maxHealth: 20
     _speed: 5
     _moveRange: 3
     _stunResist: 20
     _resist: 20
   stats:
+    _health: 0
     _maxHealth: 0
     _speed: 0
     _moveRange: 0
@@ -126,8 +128,7 @@ MonoBehaviour:
     moveRangeModifier: 0
     stunResistModifier: 0
     resistModifier: 0
-  buffList: []
-  debuffList: []
+  buffDebuffList: []
   tokenList: []
   dodgeToken: 0
   blockToken: 0
@@ -196,7 +197,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!60 &2309720267678754650
 PolygonCollider2D:
   m_ObjectHideFlags: 0

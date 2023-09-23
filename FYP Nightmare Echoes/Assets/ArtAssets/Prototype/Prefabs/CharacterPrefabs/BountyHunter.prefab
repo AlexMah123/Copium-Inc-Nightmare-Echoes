@@ -193,17 +193,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Bounty Hunter
   sprite: {fileID: 1830408377, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  damageTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   isHostile: 0
   direction: 0
   typeOfUnit: 0
   baseStats:
+    _health: 0
     _maxHealth: 30
     _speed: 6
     _moveRange: 4
     _stunResist: 30
     _resist: 30
   stats:
+    _health: 0
     _maxHealth: 0
     _speed: 0
     _moveRange: 0
@@ -215,8 +217,7 @@ MonoBehaviour:
     moveRangeModifier: 0
     stunResistModifier: 0
     resistModifier: 0
-  buffList: []
-  debuffList: []
+  buffDebuffList: []
   tokenList: []
   dodgeToken: 0
   blockToken: 0
@@ -265,7 +266,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!60 &5105758200137203564
 PolygonCollider2D:
   m_ObjectHideFlags: 0

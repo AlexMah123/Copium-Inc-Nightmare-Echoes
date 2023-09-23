@@ -20,7 +20,7 @@ namespace NightmareEchoes.Unit
 
         }
 
-        public override void ApplyEffect(GameObject unit)
+        public override void ApplyEffect(Units unit)
         {
 
         }
@@ -29,6 +29,11 @@ namespace NightmareEchoes.Unit
         {
             mod.stunResistModifier -= stunResistDebuff;
             return mod;
+        }
+
+        public override void IncreaseLifeTime()
+        {
+            debuffDuration++;
         }
 
         public override void UpdateLifeTime()
