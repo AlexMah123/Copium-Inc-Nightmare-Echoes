@@ -30,7 +30,17 @@ namespace NightmareEchoes.Unit
 
         public abstract ModifiersStruct ApplyModifier(ModifiersStruct mod);
         public abstract void IncreaseLifeTime();
-        public abstract void UpdateLifeTime();
+
+        public virtual void UpdateLifeTime()
+        {
+
+        }
+
+        public virtual void UpdateLifeTime(Units unit)
+        {
+
+        }
+
         public abstract float ReturnLifeTime();
     }
 

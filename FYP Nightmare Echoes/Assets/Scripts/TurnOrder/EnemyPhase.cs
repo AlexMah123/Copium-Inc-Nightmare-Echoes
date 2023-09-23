@@ -20,28 +20,41 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnEnter()
         {
-            //Init here
-            if (controller.CurrentUnit != null)
-                enemyAI = controller.CurrentUnit.GetComponent<BasicEnemyAI>();
+            //Reseting Values
+            tempStun = false;
 
             #region Insert Start of Turn Effects/Checks
-            //start of turn effects
             if (controller.CurrentUnit != null)
             {
-                //checks and applies all the effects (sets things to true if they exist)
-                controller.CurrentUnit.ApplyAllTokenEffects();
+                //cache enemyAI
+                enemyAI = controller.CurrentUnit.GetComponent<BasicEnemyAI>();
+
+                #region Tokens
+                //controller.CurrentUnit.ApplyAllTokenEffects();
 
                 if (controller.CurrentUnit.StunToken)
                 {
-                    controller.CurrentUnit.StunToken = false;
+                    controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
 
                     UIManager.Instance.EnableCurrentUI(false);
-                    UIManager.Instance.UpdateStatusEffectUI();
-
                     controller.StartCoroutine(controller.PassTurn());
                 }
+                #endregion
+
+                #region BuffDebuff
+                for (int i = controller.CurrentUnit.BuffDebuffList.Count - 1; i >= 0; i--)
+                {
+                    switch (controller.CurrentUnit.BuffDebuffList[i].statusEffect)
+                    {
+                        case STATUS_EFFECT.WOUND_DEBUFF:
+                            controller.CurrentUnit.BuffDebuffList[i].TriggerEffect(controller.CurrentUnit);
+                            break;
+                    }
+                }
+                #endregion
 
 
+                UIManager.Instance.UpdateStatusEffectUI();
                 controller.CurrentUnit.UpdateStatusEffectEvent();
             }
             #endregion
@@ -82,8 +95,17 @@ namespace NightmareEchoes.TurnOrder
 
             if (controller.CurrentUnit != null && enemyAI != null)
             {
+                #region End of Turn Effects
+                if (controller.CurrentUnit.ImmobilizeToken)
+                {
+                    controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.IMMOBILIZE_TOKEN);
+                }
+                #endregion
+
+                #region Mandatory Checks
+
                 //Hide tiles only on exit
-                if(enemyAI.TilesInRange.Count > 0)
+                if (enemyAI.TilesInRange.Count > 0)
                 {
                     PathfindingManager.Instance.HideTilesInRange(enemyAI.TilesInRange);
                 }
@@ -94,7 +116,9 @@ namespace NightmareEchoes.TurnOrder
                 controller.CurrentUnit.UpdateBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
 
-                #region Apply End of Turn Effects/Checks
+                #endregion
+
+                #region Apply Certain End of Turn Effects/Checks Without Updating Lifetime
                 if (tempStun)
                 {
                     tempStun = false;

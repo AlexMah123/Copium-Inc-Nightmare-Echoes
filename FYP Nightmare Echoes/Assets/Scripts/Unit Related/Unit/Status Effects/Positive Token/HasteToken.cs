@@ -16,11 +16,28 @@ namespace NightmareEchoes.Unit
             tokenStack = modifierDuration;
         }
 
+        #region Effects Related
         public override void ApplyEffect(Units unit)
         {
-            unit.ShowPopUpText("Haste!");
             unit.HasteToken = true;
+
+            if (!unit.VertigoToken)
+            {
+                unit.ShowPopUpText("Haste!");
+            }
+            else if (unit.VertigoToken)
+            {
+                unit.ShowPopUpText("Negated Vertigo!");
+                unit.UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
+                unit.UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
+            }
         }
+
+        public override void TriggerEffect(Units unit)
+        {
+            
+        }
+        #endregion
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
@@ -29,21 +46,27 @@ namespace NightmareEchoes.Unit
             return mod;
         }
 
+        #region LifeTime Related
         public override void IncreaseLifeTime()
         {
             tokenStack++;
         }
 
-        public override void UpdateLifeTime()
+        public override void UpdateLifeTime(Units unit)
         {
             tokenStack--;
+
+            if (tokenStack == 0)
+            {
+                unit.HasteToken = false;
+            }
         }
 
         public override float ReturnLifeTime()
         {
             return tokenStack;
         }
+        #endregion
 
-        
     }
 }

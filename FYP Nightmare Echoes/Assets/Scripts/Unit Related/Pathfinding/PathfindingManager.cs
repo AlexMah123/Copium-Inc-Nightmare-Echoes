@@ -75,6 +75,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                     currentSelectedUnit.Direction = revertUnitDirection;
                     currentSelectedUnit.stats.Health = revertUnitHealth;
 
+                    //Add Section to have reverts if they hit a trap.
+
                     //Resets everything, not moving, not dragging, and lastaddedtile is null
                     isMoving = false;
                     isDragging = false;
@@ -99,6 +101,10 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 //update the hovered tile to
                 transform.position = currentHoveredOverlayTile.transform.position;
+            }
+            else
+            {
+                currentHoveredOverlayTile = null;
             }
 
             #region Check for types of input

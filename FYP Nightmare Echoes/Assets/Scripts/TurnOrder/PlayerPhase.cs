@@ -14,23 +14,34 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnEnter()
         {
+            //Reseting Values
             tempStun = false;
 
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
             {
                 //TESTING
-                //controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.HASTE_TOKEN, 99, 1));
+                /*controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.BLOCK_TOKEN, 99, 1));
+                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.VULNERABLE_TOKEN, 99, 1));
+
+                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 99, 1));
+                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 99, 1));
+
+                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.HASTE_TOKEN, 99, 1));
+                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.VERTIGO_TOKEN, 99, 1));
+
+
+                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.IMMOBILIZE_TOKEN, 1, 1));
+                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));*/
 
                 #region Tokens
-                controller.CurrentUnit.ApplyAllTokenEffects();
+                //controller.CurrentUnit.ApplyAllTokenEffects();
 
                 if (controller.CurrentUnit.StunToken)
                 {
-                    controller.CurrentUnit.StunToken = false;
+                    controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
 
                     UIManager.Instance.EnableCurrentUI(false);
-
                     controller.StartCoroutine(controller.PassTurn());
                 }
                 #endregion
@@ -71,7 +82,7 @@ namespace NightmareEchoes.TurnOrder
                 #region End of Turn Effects
                 if (controller.CurrentUnit.ImmobilizeToken)
                 {
-                    controller.CurrentUnit.ImmobilizeToken = false;
+                    controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.IMMOBILIZE_TOKEN);
                 }
                 #endregion
 
@@ -102,8 +113,6 @@ namespace NightmareEchoes.TurnOrder
                 #endregion
             }
 
-
-
             UIManager.Instance.UpdateStatusEffectUI();
 
             //when you change phases, change the current unit to the next unit
@@ -111,8 +120,6 @@ namespace NightmareEchoes.TurnOrder
             {
                 controller.CurrentUnitQueue.Dequeue();
             }
-
-
         }
         
         IEnumerator WaitForTurnEnd()
@@ -121,10 +128,5 @@ namespace NightmareEchoes.TurnOrder
 
             controller.StartCoroutine(controller.PassTurn());
         }
-
-        #region Status Effect Checks
-
-        #endregion
-
     }
 }

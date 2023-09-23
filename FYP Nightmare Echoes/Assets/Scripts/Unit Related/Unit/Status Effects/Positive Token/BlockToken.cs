@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "VertigoToken", menuName = "Unit Modifiers/NegativeToken/Vertigo Token")]
-    public class VertigoToken : Modifier
+    [CreateAssetMenu(fileName = "BlockToken", menuName = "Unit Modifiers/PositiveToken/Block Token")]
+    public class BlockToken : Modifier
     {
         [Space(15), Header("Runtime Values")]
         [SerializeField] int tokenStack;
@@ -16,33 +15,31 @@ namespace NightmareEchoes.Unit
             tokenStack = modifierDuration;
         }
 
-        #region Effect Related
+        #region Effects Related
         public override void ApplyEffect(Units unit)
         {
-            unit.VertigoToken = true;
+            unit.BlockToken = true;
 
-            if (!unit.HasteToken)
+            if (!unit.VulnerableToken)
             {
-                unit.ShowPopUpText("Vertigo!");
+                unit.ShowPopUpText("Block!");
             }
-            else if (unit.HasteToken)
+            else if (unit.VulnerableToken)
             {
-                unit.ShowPopUpText("Negated Haste!");
-                unit.UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
-                unit.UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
+                unit.ShowPopUpText("Negated Vulnerable!");
+                unit.UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
+                unit.UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
             }
         }
 
         public override void TriggerEffect(Units unit)
         {
-            
+
         }
         #endregion
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            mod.speedModifier -= (int)genericValue;
-
             return mod;
         }
 
@@ -58,7 +55,7 @@ namespace NightmareEchoes.Unit
 
             if (tokenStack == 0)
             {
-                unit.VertigoToken = false;
+                unit.BlockToken = false;
             }
         }
 

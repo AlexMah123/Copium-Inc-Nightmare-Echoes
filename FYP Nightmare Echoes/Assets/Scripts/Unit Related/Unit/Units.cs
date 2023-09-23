@@ -7,6 +7,8 @@ using NightmareEchoes.Grid;
 using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Unit.AI;
+using Codice.CM.WorkspaceServer.DataStore;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.Unit
@@ -117,124 +119,37 @@ namespace NightmareEchoes.Unit
         public bool DodgeToken
         {
             get => dodgeToken;
-            set
-            {
-                dodgeToken = value;
-
-                if(dodgeToken)
-                {
-
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.DODGE_TOKEN);
-                }
-            }
+            set => dodgeToken = value;
         }
 
         public bool BlockToken
         {
-            get => blockToken;
-            set
-            {
-                blockToken = value;
-
-                if (blockToken)
-                {
-                    if(vulnerableToken)
-                    {
-                        vulnerableToken = false;
-                        UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
-                        UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
-                    }
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
-                }
-            }
+            get => blockToken; 
+            set => blockToken = value;
         }
 
         public bool StrengthToken
         {
-            get => strengthToken;
-            set
-            {
-                strengthToken = value;
-
-                if(strengthToken)
-                {
-                    if(weakenToken)
-                    {
-                        weakenToken = false;
-                        UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
-                        UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
-                    }
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
-                }
-            }
+            get => strengthToken; 
+            set => strengthToken = value;
         }
 
         public bool HasteToken
         {
-            get => hasteToken;
-            set
-            {
-                hasteToken = value;
-
-                if(hasteToken)
-                {
-                    if(VertigoToken)
-                    {
-                        vertigoToken = false;
-                        UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
-                        UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
-                    }
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
-                }
-            }
+            get => hasteToken; 
+            set => hasteToken = value;
         }
 
         public bool BarrierToken
         {
-            get => barrierToken;
-            set
-            {
-                barrierToken = value;
-
-                if(barrierToken)
-                {
-
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.BARRIER_TOKEN);
-                }
-            }
+            get => barrierToken; 
+            set => barrierToken = value;
         }
 
         public bool StealthToken
         {
             get => stealthToken;
-            set
-            {
-                stealthToken = value;
-
-                if(stealthToken)
-                {
-
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
-                }
-            }
+            set => stealthToken = value;
         }
         #endregion 
 
@@ -243,109 +158,37 @@ namespace NightmareEchoes.Unit
         public bool BlindToken
         {
             get => blindToken;
-            set
-            {
-                blindToken = value;
-
-                if(blindToken)
-                {
-
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.BLIND_TOKEN);
-                }
-            }
+            set => blindToken = value;
         }
 
         public bool VulnerableToken
         {
-            get => vulnerableToken;
-            set
-            {
-                vulnerableToken = value;
-
-                if (vulnerableToken)
-                {
-
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
-                }
-            }
+            get => vulnerableToken; 
+            set => vulnerableToken = value;
         }
 
         public bool WeakenToken
         {
-            get => weakenToken;
-            set
-            {
-                weakenToken = value;
-
-                if (weakenToken)
-                {
-
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
-                }
-            }
+            get => weakenToken; 
+            set => weakenToken = value;
         }
 
         public bool VertigoToken
         {
-            get => vertigoToken;
-            set
-            {
-                vertigoToken = value;
-
-                if (vertigoToken)
-                {
-                    
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
-                }
-            }
+            get => vertigoToken; 
+            set => vertigoToken = value;
         }
 
         public bool StunToken
         {
             get => stunToken;
-            set
-            {
-                stunToken = value;
-
-                if(stunToken)
-                {
-
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
-                }
-            }
+            set => stunToken = value;
         }
 
         public bool ImmobilizeToken
         {
             get => immobilizeToken;
-            set
-            {
-                immobilizeToken = value;
-
-                if (immobilizeToken)
-                {
-
-                }
-                else
-                {
-                    UpdateTokenLifeTime(STATUS_EFFECT.IMMOBILIZE_TOKEN);
-                }
-            }
+            set => immobilizeToken = value;
         }
         #endregion
 
@@ -695,7 +538,7 @@ namespace NightmareEchoes.Unit
         {
             if(Input.GetKeyDown(KeyCode.Space))
             {
-                AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.IMMOBILIZE_TOKEN, -4, 1));
+                //AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.IMMOBILIZE_TOKEN, 1, 1));
             }
 
             if (stats.Health == 0)
@@ -874,11 +717,23 @@ namespace NightmareEchoes.Unit
 
 
         #region Utility
+
+        public Vector3 RandomVector()
+        {
+            Vector2 minRange = new Vector3(-0.5f, 0f);
+            Vector2 maxRange = new Vector3(0.5f, 1f);
+
+            float randomX = UnityEngine.Random.Range(minRange.x, maxRange.x);
+            float randomY = UnityEngine.Random.Range(minRange.y, maxRange.y);
+
+            return new Vector3(randomX, randomY, 0);
+        }
+
         public void ShowPopUpText(string text)
         {
             if(popupTextPrefab)
             {
-                GameObject prefab = Instantiate(popupTextPrefab, transform.localPosition + new Vector3(0.1f, 0.75f, 0), Quaternion.identity);
+                GameObject prefab = Instantiate(popupTextPrefab, transform.localPosition + RandomVector(), Quaternion.identity);
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = text;
             }
@@ -888,7 +743,7 @@ namespace NightmareEchoes.Unit
         {
             if (dmgTextPrefab)
             {
-                GameObject prefab = Instantiate(dmgTextPrefab, transform.localPosition + new Vector3(0.25f, 0.5f, 0), Quaternion.identity);
+                GameObject prefab = Instantiate(dmgTextPrefab, transform.localPosition + RandomVector(), Quaternion.identity);
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = text;
             }
@@ -915,22 +770,22 @@ namespace NightmareEchoes.Unit
         {
             switch (buff.modifierType)
             {
+                //if buff or debuff
                 case ModifierType.BUFF:
                 case ModifierType.DEBUFF:
                     buff.AwakeStatusEffect();
                     BuffDebuffList.Add(buff);
                     break;
 
+                //if positive token or negative token
                 case ModifierType.POSITIVETOKEN:
-                    buff.AwakeStatusEffect();
-                    TokenList.Add(buff);
-                    break;
-
                 case ModifierType.NEGATIVETOKEN:
                     buff.AwakeStatusEffect();
                     TokenList.Add(buff);
+                    buff.ApplyEffect(this);
                     break;
             }
+
 
             UpdateStatusEffectEvent();
             UpdateStatsWithoutEndCycleEffect();
@@ -977,14 +832,13 @@ namespace NightmareEchoes.Unit
         }
 
         //only call in class properties
-        void UpdateTokenLifeTime(STATUS_EFFECT enumIndex)
+        public void UpdateTokenLifeTime(STATUS_EFFECT enumIndex)
         {
             for (int i = TokenList.Count - 1; i >= 0; i--)
             {
                 if (TokenList[i].statusEffect == enumIndex)
                 {
-                    TokenList[i].UpdateLifeTime();
-
+                    TokenList[i].UpdateLifeTime(this);
 
                     if (TokenList[i].ReturnLifeTime() <= 0)
                     {
@@ -992,6 +846,7 @@ namespace NightmareEchoes.Unit
                     }
                 }
             }
+            
         }
 
         public void UpdateStatsWithoutEndCycleEffect()

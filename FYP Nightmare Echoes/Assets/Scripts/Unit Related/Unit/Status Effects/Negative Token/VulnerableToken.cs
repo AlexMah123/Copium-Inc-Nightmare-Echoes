@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "VertigoToken", menuName = "Unit Modifiers/NegativeToken/Vertigo Token")]
-    public class VertigoToken : Modifier
+    [CreateAssetMenu(fileName = "VulnerableToken", menuName = "Unit Modifiers/NegativeToken/Vulnerable Token")]
+    public class VulnerableToken : Modifier
     {
         [Space(15), Header("Runtime Values")]
         [SerializeField] int tokenStack;
@@ -16,33 +15,31 @@ namespace NightmareEchoes.Unit
             tokenStack = modifierDuration;
         }
 
-        #region Effect Related
+        #region Effects Related
         public override void ApplyEffect(Units unit)
         {
-            unit.VertigoToken = true;
+            unit.VulnerableToken = true;
 
-            if (!unit.HasteToken)
+            if (!unit.BlockToken)
             {
-                unit.ShowPopUpText("Vertigo!");
+                unit.ShowPopUpText("Vulnerable!");
             }
-            else if (unit.HasteToken)
+            else if (unit.BlockToken)
             {
-                unit.ShowPopUpText("Negated Haste!");
-                unit.UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
-                unit.UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
+                unit.ShowPopUpText("Negated Block!");
+                unit.UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
+                unit.UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
             }
         }
 
         public override void TriggerEffect(Units unit)
         {
-            
+
         }
         #endregion
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            mod.speedModifier -= (int)genericValue;
-
             return mod;
         }
 
@@ -58,7 +55,7 @@ namespace NightmareEchoes.Unit
 
             if (tokenStack == 0)
             {
-                unit.VertigoToken = false;
+                unit.VulnerableToken = false;
             }
         }
 

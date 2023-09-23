@@ -10,7 +10,7 @@ namespace NightmareEchoes.Unit
     {
         public static GetStatusEffect Instance;
 
-        public List<ModifierDictionary> totalPossibleModifiers = new List<ModifierDictionary>();
+        [NonReorderable] public List<ModifierDictionary> totalPossibleModifiers = new List<ModifierDictionary>();
 
 
         public void Awake()

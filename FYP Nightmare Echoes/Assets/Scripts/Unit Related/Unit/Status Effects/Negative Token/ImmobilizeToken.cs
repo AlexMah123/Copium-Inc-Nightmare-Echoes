@@ -15,35 +15,48 @@ namespace NightmareEchoes.Unit
             tokenStack = modifierDuration;
         }
 
+        #region Effect Related
         public override void ApplyEffect(Units unit)
         {
-            unit.ShowPopUpText("Immobilized!");
-            unit.ImmobilizeToken = true;
+            if(!unit.ImmobilizeToken)
+            {
+                unit.ShowPopUpText("Immobilized!");
+                unit.ImmobilizeToken = true;
+            }
         }
 
         public override void TriggerEffect(Units unit)
         {
             unit.ShowPopUpText("Cannot Move");
         }
+        #endregion
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
             return mod;
         }
 
+
+        #region LifeTime Related
         public override void IncreaseLifeTime()
         {
             tokenStack++;
         }
 
-        public override void UpdateLifeTime()
+        public override void UpdateLifeTime(Units unit)
         {
             tokenStack--;
+
+            if (tokenStack == 0)
+            {
+                unit.ImmobilizeToken = false;
+            }
         }
 
         public override float ReturnLifeTime()
         {
             return tokenStack;
         }
+        #endregion
     }
 }

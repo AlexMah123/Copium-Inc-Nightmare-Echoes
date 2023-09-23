@@ -16,31 +16,43 @@ namespace NightmareEchoes.Unit
             tokenStack = modifierDuration;
         }
 
+        #region Effects Related
         public override void ApplyEffect(Units unit)
         {
             unit.DodgeToken = true;
         }
 
+        public override void TriggerEffect(Units unit)
+        {
+
+        }
+        #endregion
+
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            //mod.speedModifier += (int)genericValue;
-
             return mod;
         }
 
+        #region LifeTime Related
         public override void IncreaseLifeTime()
         {
             tokenStack++;
         }
 
-        public override void UpdateLifeTime()
+        public override void UpdateLifeTime(Units unit)
         {
             tokenStack--;
+
+            if(tokenStack == 0) 
+            {
+                unit.DodgeToken = false;
+            }
         }
 
         public override float ReturnLifeTime()
         {
             return tokenStack;
         }
+        #endregion
     }
 }

@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "VertigoToken", menuName = "Unit Modifiers/NegativeToken/Vertigo Token")]
-    public class VertigoToken : Modifier
+    [CreateAssetMenu(fileName = "StealthToken", menuName = "Unit Modifiers/PositiveToken/Stealth Token")]
+    public class StealthToken : Modifier
     {
         [Space(15), Header("Runtime Values")]
         [SerializeField] int tokenStack;
@@ -16,21 +15,10 @@ namespace NightmareEchoes.Unit
             tokenStack = modifierDuration;
         }
 
-        #region Effect Related
+        #region Effects Related
         public override void ApplyEffect(Units unit)
         {
-            unit.VertigoToken = true;
-
-            if (!unit.HasteToken)
-            {
-                unit.ShowPopUpText("Vertigo!");
-            }
-            else if (unit.HasteToken)
-            {
-                unit.ShowPopUpText("Negated Haste!");
-                unit.UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
-                unit.UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
-            }
+            unit.StealthToken = true;
         }
 
         public override void TriggerEffect(Units unit)
@@ -41,8 +29,6 @@ namespace NightmareEchoes.Unit
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            mod.speedModifier -= (int)genericValue;
-
             return mod;
         }
 
@@ -58,7 +44,7 @@ namespace NightmareEchoes.Unit
 
             if (tokenStack == 0)
             {
-                unit.VertigoToken = false;
+                unit.StealthToken = false;
             }
         }
 
