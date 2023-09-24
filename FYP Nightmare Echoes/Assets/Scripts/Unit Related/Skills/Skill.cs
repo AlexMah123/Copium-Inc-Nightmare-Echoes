@@ -33,7 +33,7 @@ namespace NightmareEchoes.Unit
         [Header("Additional Effects")] 
         [SerializeField] protected bool inflictKnockback;
         [SerializeField] protected bool isBackstabbing;
-        [SerializeField] protected int backstabBonus;
+        [SerializeField] protected int backstabBonus = 3;
         [SerializeField] protected bool placable;
         [SerializeField] protected int placableCount;
         [SerializeField] protected GameObject placableGameObject;
@@ -163,8 +163,8 @@ namespace NightmareEchoes.Unit
             Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
             Vector2 CastTo = new Vector2(target.ActiveTile.gridLocation.x, target.ActiveTile.gridLocation.y);
 
-            float xDist = CastFrom.x - CastTo.y;
-            float yDist = CastFrom.y - CastTo.x;
+            float xDist = CastFrom.x - CastTo.x;
+            float yDist = CastFrom.y - CastTo.y;
 
             if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
             {
@@ -218,8 +218,8 @@ namespace NightmareEchoes.Unit
             Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
             Vector2 CastTo = new Vector2(target.gridLocation.x, target.gridLocation.y);
 
-            float xDist = CastFrom.x - CastTo.y;
-            float yDist = CastFrom.y - CastTo.x;
+            float xDist = CastFrom.x - CastTo.x;
+            float yDist = CastFrom.y - CastTo.y;
 
             if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
             {

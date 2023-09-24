@@ -10,7 +10,17 @@ namespace NightmareEchoes.Unit
         public override bool Cast(Units target)
         {
             base.Cast(target);
-            target.TakeDamage(damage);
+
+            if (isBackstabbing)
+            {
+                target.TakeDamage(damage + backstabBonus);
+            }
+            else
+            {
+                target.TakeDamage(damage);
+            }
+            isBackstabbing = false;
+            
             //knockback
             return true;
         }

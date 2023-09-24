@@ -11,11 +11,22 @@ namespace NightmareEchoes.Unit
         public override bool Cast(Units target)
         {
             base.Cast(target);
-            target.TakeDamage(damage);
+
+            if (isBackstabbing)
+            {
+                target.TakeDamage(damage + backstabBonus);
+            }
+            else
+            {
+                target.TakeDamage(damage);
+            }
+            isBackstabbing = false;
+
             if ((stunChance - target.stats.StunResist) > (Random.Range(0,101)))
             {
                 target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
             }
+
             return true;
         }
     }
