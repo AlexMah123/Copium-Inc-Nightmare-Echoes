@@ -1,21 +1,49 @@
 using System.Collections;
+using NightmareEchoes.Grid;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    public class Lunge : MonoBehaviour
+    //Written by Ter (stolen from jh)
+    public class Lunge : Skill
     {
-        // Start is called before the first frame update
-        void Start()
+        public override bool Cast(Units target)
         {
-        
-        }
+            base.Cast(target);
 
-        // Update is called once per frame
-        void Update()
-        {
-        
+            //move towards
+            var direction = target.transform.position - thisUnit.transform.position;
+            var destination = thisUnit.transform.position + (direction/2);
+
+            var tileOccupied = false;
+            var hit = Physics2D.Raycast(destination, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            if (hit)
+            {
+                var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
+                if (tileDestination)
+                {
+                    if (tileDestination.CheckUnitOnTile())
+                        tileOccupied = true;
+                }
+            }
+            if (!tileOccupied)
+            {
+                thisUnit.transform.position += direction;
+            }
+
+            if (isBackstabbing)
+            {
+                target.TakeDamage(damage + backstabBonus);
+            }
+            else
+            {
+                target.TakeDamage(damage);
+            }
+            isBackstabbing = false;
+
+            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+            return true;
         }
     }
 }
