@@ -263,7 +263,6 @@ namespace NightmareEchoes.Unit.Combat
                 AOEType.NonAOE => SquareRange(target, 0)
             };
             
-            aoePreviewTiles.Add(target);
             foreach (var coord in aoeArea.Where(coord => OverlayTileManager.Instance.gridDictionary.ContainsKey(coord)))
             {
                 if (OverlayTileManager.Instance.gridDictionary.TryGetValue(coord, out var tile))

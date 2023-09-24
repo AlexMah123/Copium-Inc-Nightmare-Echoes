@@ -12,10 +12,12 @@ namespace NightmareEchoes.Grid
 {
     public class LevelGenerator : MonoBehaviour
     {
-        private string path = "Assets\\Scripts\\Grid\\LevelGeneration\\RoomPresets.txt";
-
-        //public List<int[,]> rooms = new();
+        private string roomsPath = "Assets\\Scripts\\Grid\\LevelGeneration\\RoomPresets.txt";
+        private string levelsPath = "Assets\\Scripts\\Grid\\LevelGeneration\\LevelPresets.txt";
+        
         public Dictionary<string, List<int[,]>> rooms = new();
+        public Dictionary<string, int[,]> levels = new();
+        public Dictionary<string, Dictionary<string, int[]>> levelData = new();
 
         public TileBase testTile;
         public Tilemap tilemap;
@@ -24,7 +26,7 @@ namespace NightmareEchoes.Grid
         {
             rooms.Clear();
             
-            StreamReader streamReader = new StreamReader(path);
+            var streamReader = new StreamReader(roomsPath);
             
             var parseRoom = false;
             var roomX = 0;
@@ -85,6 +87,19 @@ namespace NightmareEchoes.Grid
             streamReader.Close();  
         }
 
+        public void ReadLevelsFromFile()
+        {
+            levels.Clear();
+            levelData.Clear();
+
+            var streamReader = new StreamReader(roomsPath);
+
+            while (!streamReader.EndOfStream)
+            {
+                
+            }
+        }
+        
         private int[,] ParseRoom(string room, int x, int z)
         {
             var roomMatrix = new int[x, z];
