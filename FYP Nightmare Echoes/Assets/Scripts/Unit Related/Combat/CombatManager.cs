@@ -615,7 +615,8 @@ namespace NightmareEchoes.Unit.Combat
             }
 
             obj.SetActive(false); 
-            obj.name = $"{obj.name} {cloneCount++}"; 
+            obj.name = $"{obj.name} {cloneCount++}";
+            obj.layer = LayerMask.NameToLayer("Ignore Raycast");
             clonePool.Add(obj); 
             return obj; 
         }
