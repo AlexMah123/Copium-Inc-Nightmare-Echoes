@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 1961892246}
   - component: {fileID: 964070419}
   - component: {fileID: 503955040074887315}
-  - component: {fileID: 4771270882185813531}
   m_Layer: 6
   m_Name: RangeEnemy
   m_TagString: Inspectable
@@ -143,7 +142,7 @@ MonoBehaviour:
   vertigoToken: 0
   stunToken: 0
   immobilizeToken: 0
-  basicAttack: {fileID: 4771270882185813531}
+  basicAttack: {fileID: 1961892246}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
   skill3: {fileID: 0}
@@ -205,6 +204,8 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 0
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
@@ -259,34 +260,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &4771270882185813531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3376283141138650508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a23b1304d57dda428a183900bf4952f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: Arrow Shot
-  damage: 3
-  heal: 0
-  cooldown: 0
-  range: 4
-  targetType: 0
-  targetArea: 0
-  targetUnitAlignment: 0
-  aoeType: 0
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 0
-  secondaryDamage: 0
-  secondaryRange: 0
-  inflictKnockback: 0
-  placable: 0
-  placableCount: 0
-  placableGameObject: {fileID: 0}
-  skillDescription: 

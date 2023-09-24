@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 165478112691146583}
   - component: {fileID: 5583804447610931213}
   - component: {fileID: 2309720267678754650}
-  - component: {fileID: 1429316040}
   - component: {fileID: 4139838481242840768}
   m_Layer: 6
   m_Name: MeleeEnemy
@@ -228,37 +227,6 @@ PolygonCollider2D:
       - {x: -0.203125, y: 0}
       - {x: 0.203125, y: 0}
       - {x: 0.203125, y: 0.5}
---- !u!114 &1429316040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583804447610931201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a620bb1cc8fa19b4ba3e4345c742ea07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: Slash
-  damage: 6
-  heal: 0
-  cooldown: 0
-  range: 1
-  targetType: 0
-  targetArea: 0
-  targetUnitAlignment: 0
-  aoeType: 0
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 0
-  secondaryDamage: 0
-  secondaryRange: 0
-  inflictKnockback: 0
-  placable: 0
-  placableCount: 0
-  placableGameObject: {fileID: 0}
-  skillDescription: 
 --- !u!114 &4139838481242840768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +254,8 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 0
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}

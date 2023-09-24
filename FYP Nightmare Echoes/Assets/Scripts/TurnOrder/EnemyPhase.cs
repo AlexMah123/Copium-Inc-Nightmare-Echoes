@@ -155,10 +155,10 @@ namespace NightmareEchoes.TurnOrder
             }
             else
             {
-                yield return new WaitUntil(() => enemyAI.hasAttacked == true);
+                yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
             }
 
-
+            
             controller.StartCoroutine(controller.PassTurn());
         }
     }

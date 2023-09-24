@@ -32,17 +32,12 @@ namespace NightmareEchoes.Unit
                 thisUnit.transform.position += direction;
             }
 
-            if (isBackstabbing)
+            
+            if(DealDamage(target))
             {
-                target.TakeDamage(damage + backstabBonus);
+                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
             }
-            else
-            {
-                target.TakeDamage(damage);
-            }
-            isBackstabbing = false;
 
-            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
             return true;
         }
     }

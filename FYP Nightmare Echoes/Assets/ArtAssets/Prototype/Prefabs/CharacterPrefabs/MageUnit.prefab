@@ -3407,6 +3407,8 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 0
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
@@ -3439,6 +3441,8 @@ MonoBehaviour:
   secondaryDamage: 4
   secondaryRange: 0
   inflictKnockback: 1
+  isBackstabbing: 0
+  backstabBonus: 0
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
@@ -3472,6 +3476,8 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 3
   inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 0
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
@@ -3514,6 +3520,8 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 1
   inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 0
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
@@ -3538,16 +3546,18 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 0
-  targetType: 1
+  targetType: 0
   targetArea: 2
   targetUnitAlignment: 2
   aoeType: 2
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 0
+  skillType: 2
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 0
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}

@@ -690,9 +690,8 @@ namespace NightmareEchoes.Unit
                 backAnimator.SetBool("GettingHit", true);
             }
 
-            
 
-            #region Token Checks Before Dmg
+            #region Token Checks Before Taking Dmg
             if (dodgeToken)
             {
                 if (FindModifier(STATUS_EFFECT.DODGE_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
@@ -707,10 +706,32 @@ namespace NightmareEchoes.Unit
                 }
                 else
                 {
-                    stats.Health -= damage;
-
                     ShowPopUpText($"Failed to dodge!");
-                    ShowDmgText($"-{damage}");
+
+                    if (blockToken)
+                    {
+                        int newDamage = Mathf.RoundToInt(damage * 0.5f);
+                        stats.Health -= newDamage;
+
+                        ShowPopUpText($"Damage was reduced!");
+                        ShowDmgText($"-{newDamage}");
+                        UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
+                    }
+                    else if (vulnerableToken)
+                    {
+                        int newDamage = Mathf.RoundToInt(damage * 1.5f);
+                        stats.Health -= newDamage;
+
+                        ShowPopUpText($"Damage was increased!");
+                        ShowDmgText($"-{newDamage}");
+                        UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
+                    }
+                    else
+                    {
+                        stats.Health -= damage;
+
+                        ShowDmgText($"-{damage}");
+                    }
                 }
 
                 UpdateTokenLifeTime(STATUS_EFFECT.DODGE_TOKEN);
@@ -722,20 +743,20 @@ namespace NightmareEchoes.Unit
             }
             else if(blockToken)
             {
-                damage -= Mathf.RoundToInt(damage * 0.5f);
-                stats.Health -= damage;
+                int newDamage = Mathf.RoundToInt(damage * 0.5f);
+                stats.Health -= newDamage;
 
                 ShowPopUpText($"Damage was reduced!");
-                ShowDmgText($"-{damage}");
+                ShowDmgText($"-{newDamage}");
                 UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
             }
             else if(vulnerableToken)
             {
-                damage += Mathf.RoundToInt(damage * 0.5f);
-                stats.Health -= damage;
+                int newDamage = Mathf.RoundToInt(damage * 1.5f);
+                stats.Health -= newDamage;
 
                 ShowPopUpText($"Damage was increased!");
-                ShowDmgText($"-{damage}");
+                ShowDmgText($"-{newDamage}");
                 UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
             }
             else

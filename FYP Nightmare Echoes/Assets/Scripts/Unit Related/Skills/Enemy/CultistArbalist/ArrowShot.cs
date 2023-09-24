@@ -9,19 +9,15 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(Units target)
         {
-            base.Cast(target); 
-            
-            if (isBackstabbing)
-            {
-                target.TakeDamage(damage + backstabBonus);
-            }
-            else
-            {
-                target.TakeDamage(damage);
-            }
-            isBackstabbing = false;
+            base.Cast(target);
 
-            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+            if(DealDamage(target))
+            {
+                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+
+            }
+
+
             return true;
         }
     }

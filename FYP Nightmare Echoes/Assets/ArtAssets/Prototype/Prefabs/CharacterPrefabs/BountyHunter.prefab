@@ -324,6 +324,8 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 0
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
@@ -351,10 +353,12 @@ MonoBehaviour:
   aoeType: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 0
+  skillType: 2
   secondaryDamage: 0
   secondaryRange: 0
   inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 0
   placable: 1
   placableCount: 2
   placableGameObject: {fileID: 5842767986387668200, guid: 0f88a485a85ac2244a18d50f1cc13fd4, type: 3}

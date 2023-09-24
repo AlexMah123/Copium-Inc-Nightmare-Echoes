@@ -11,15 +11,7 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target);
 
-            if (isBackstabbing)
-            {
-                target.TakeDamage(damage + backstabBonus);
-            }
-            else
-            {
-                target.TakeDamage(damage);
-            }
-            isBackstabbing = false;
+            DealDamage(target);
 
             return true;
         }

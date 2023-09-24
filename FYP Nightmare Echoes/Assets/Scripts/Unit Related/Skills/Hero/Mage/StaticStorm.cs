@@ -11,7 +11,9 @@ namespace NightmareEchoes.Unit
         public override bool Cast(Units target)
         {
             base.Cast(target);
-            target.TakeDamage(damage);
+
+            DealDamage(target);
+
             return true;
         }
 
@@ -24,7 +26,7 @@ namespace NightmareEchoes.Unit
                 if (!tile.CheckUnitOnTile()) continue;
   
                 var unit = tile.CheckUnitOnTile().GetComponent<Units>();
-                unit.TakeDamage(damage);
+                DealDamage(unit);
             }
 
             CombatManager.Instance.SetActiveAoe(this, copy);

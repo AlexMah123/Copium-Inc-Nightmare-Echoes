@@ -12,20 +12,15 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target);
 
-            if (isBackstabbing)
+            if(DealDamage(target))
             {
-                target.TakeDamage(damage + backstabBonus);
+                if ((stunChance - target.stats.StunResist) > (Random.Range(0,101)))
+                {
+                    target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
+                }
             }
-            else
-            {
-                target.TakeDamage(damage);
-            }
-            isBackstabbing = false;
 
-            if ((stunChance - target.stats.StunResist) > (Random.Range(0,101)))
-            {
-                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
-            }
+            
 
             return true;
         }

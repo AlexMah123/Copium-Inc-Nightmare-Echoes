@@ -348,16 +348,17 @@ namespace NightmareEchoes.Unit.AI
             if (targetTile.CheckUnitOnTile()?.GetComponent<Units>() != null)
             {
                 targetTile.ShowEnemyTile();
-                CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
-
-                StartCoroutine(Delay());
                 hasAttacked = true;
+
+                StartCoroutine(Delay(thisUnit));
             }
         }
 
-        IEnumerator Delay()
+        IEnumerator Delay(Units thisUnit)
         {
             yield return new WaitForSeconds(attackDelay);
+
+            CombatManager.Instance.EnemyTargetUnit(targetTile.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
             targetTile.HideTile();
         }
 

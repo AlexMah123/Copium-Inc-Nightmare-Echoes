@@ -6429,7 +6429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnOrderList: []
   cycleCount: 0
-  phaseDelay: 1
+  phaseDelay: 2
   enemythinkingDelay: 2
   passTurnDelay: 1
   currentUnit: {fileID: 0}
@@ -7699,6 +7699,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 165478112691146583, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
+      propertyPath: attackDelay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5583804447610931201, guid: bdba3efc29055ab4c9db26a8b9a112cd, type: 3}
       propertyPath: m_Name
       value: MeleeEnemy
@@ -11287,21 +11291,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: tokenList.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: tokenList.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: c54a2cce89c008f468b53009d1b021e6, type: 2}
-    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: tokenList.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 70dcd26159849464aa0c79b61d714e90, type: 2}
     - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_Name
       value: Ranger
+      objectReference: {fileID: 0}
+    - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 601295390074279022, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_RootOrder
@@ -11568,6 +11564,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8121445182508319267, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
+      propertyPath: baseStats._speed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121445182508319267, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
+      propertyPath: tokenList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121445182508319267, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
+      propertyPath: tokenList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c7594b85448ee64c92d2a1d0583350d, type: 2}
     - target: {fileID: 8121445182508319272, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -11615,6 +11623,10 @@ PrefabInstance:
     - target: {fileID: 8121445182508319273, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
       propertyPath: m_Name
       value: MageUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121445182508319273, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}

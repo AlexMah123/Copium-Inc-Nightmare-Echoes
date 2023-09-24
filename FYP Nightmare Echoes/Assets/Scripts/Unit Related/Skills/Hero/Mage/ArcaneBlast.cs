@@ -14,7 +14,7 @@ namespace NightmareEchoes.Unit
             if (target.CheckUnitOnTile())
             {
                 var unit = target.CheckUnitOnTile().GetComponent<Units>();
-                unit.TakeDamage(damage);
+                DealDamage(unit);
             }
 
             aoeTiles.Remove(target);
@@ -24,8 +24,29 @@ namespace NightmareEchoes.Unit
                 if (!tile.CheckUnitOnTile()) continue;
   
                 var unit = tile.CheckUnitOnTile().GetComponent<Units>();
-                unit.TakeDamage(secondaryDamage);
-                
+
+                //manually check for token
+                if (thisUnit.WeakenToken)
+                {
+                    int newDamage = Mathf.RoundToInt(secondaryDamage * 0.5f);
+                    unit.TakeDamage(newDamage);
+
+                    thisUnit.ShowPopUpText($"Attack was weakened!");
+                    thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
+                }
+                else if (thisUnit.StrengthToken)
+                {
+                    int newDamage = Mathf.RoundToInt(secondaryDamage * 1.5f);
+                    unit.TakeDamage(newDamage);
+
+                    thisUnit.ShowPopUpText($"Attack was strengthen!");
+                    thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
+                }
+                else
+                {
+                    unit.TakeDamage(secondaryDamage);
+                }
+
                 var direction = tile.transform.position - target.transform.position;
                 var destination = unit.transform.position + direction;
                 

@@ -5,6 +5,7 @@ using System.Reflection;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Unit.Combat;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 //Created by JH
 namespace NightmareEchoes.Unit
@@ -157,6 +158,8 @@ namespace NightmareEchoes.Unit
             thisUnit = GetComponent<Units>();
         }
 
+        #region Cast Related
+
         //Directly on units
         public virtual bool Cast(Units target)
         {
@@ -278,7 +281,89 @@ namespace NightmareEchoes.Unit
             return false;
         }
 
+        #endregion
 
+
+        //used for attacks that are damage type
+        public bool DealDamage(Units target, int secondaryDmg = 0)
+        {
+            #region Token Checks Before Dealing Dmg
+
+            if (thisUnit.BlindToken && targetType == TargetType.Single)
+            {
+                if (thisUnit.FindModifier(STATUS_EFFECT.BLIND_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
+                {
+                    thisUnit.ShowPopUpText($"Blinded!");
+                    return false;
+                }
+                else
+                {
+                    thisUnit.ShowPopUpText($"Blind did not work!");
+
+                    if (thisUnit.WeakenToken)
+                    {
+                        int newDamage = Mathf.RoundToInt(damage * 0.5f);
+                        CheckForBackstab(target, newDamage);
+
+                        thisUnit.ShowPopUpText($"Attack was weakened!");
+                        thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
+                    }
+                    else if (thisUnit.StrengthToken)
+                    {
+                        int newDamage = Mathf.RoundToInt(damage * 1.5f);
+                        CheckForBackstab(target, newDamage);
+
+                        thisUnit.ShowPopUpText($"Attack was strengthen!");
+                        thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
+                    }
+                    else
+                    {
+                        CheckForBackstab(target, damage);
+                    }
+
+                }
+
+                thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.BLIND_TOKEN);
+            }
+            else if (thisUnit.WeakenToken)
+            {
+                int newDamage = Mathf.RoundToInt(damage * 0.5f);
+                CheckForBackstab(target, newDamage);
+
+                thisUnit.ShowPopUpText($"Attack was weakened!");
+                thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
+            }
+            else if (thisUnit.StrengthToken)
+            {
+                int newDamage = Mathf.RoundToInt(damage * 1.5f);
+                CheckForBackstab(target, newDamage);
+
+                thisUnit.ShowPopUpText($"Attack was strengthen!");
+                thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
+            }
+            else
+            {
+                CheckForBackstab(target, damage);
+            }
+
+            return true;
+            #endregion 
+        }
+
+
+        public void CheckForBackstab(Units target, int damage)
+        {
+            if (isBackstabbing && targetType == TargetType.Single)
+            {
+                target.TakeDamage(damage + backstabBonus);
+            }
+            else
+            {
+                target.TakeDamage(damage);
+            }
+            isBackstabbing = false;
+        }
+        
 
         public virtual void Reset()
         {
