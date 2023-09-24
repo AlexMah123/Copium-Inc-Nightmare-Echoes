@@ -35,13 +35,13 @@ namespace NightmareEchoes.Grid
             string roomType = null;
             List<int[,]> roomList = new();
 
-            var debugTermintate = false;
+            var debugTerminate = false;
             
             while(!streamReader.EndOfStream)
             {
                 var output = streamReader.ReadLine();
                 
-                if (debugTermintate) break;
+                if (debugTerminate) break;
 
                 if (output.Length <= 0) continue;
                 if (output[0] == '[')
@@ -71,7 +71,7 @@ namespace NightmareEchoes.Grid
                         room = null;
                         continue;
                     case "!!!":
-                        debugTermintate = true;
+                        debugTerminate = true;
                         continue;
                 }
 
@@ -92,12 +92,41 @@ namespace NightmareEchoes.Grid
             levels.Clear();
             levelData.Clear();
 
-            var streamReader = new StreamReader(roomsPath);
+            var streamReader = new StreamReader(levelsPath);
 
+            var parseLevel = false;
+            var debugTerminate = false; 
+            string levelString = null;
+            
             while (!streamReader.EndOfStream)
             {
+                var output = streamReader.ReadLine();
                 
+                if (debugTerminate) break;
+
+                if (output.Length <= 0) continue;
+
+                switch (output)
+                {
+                    case "##":
+                        parseLevel = true;
+                        levelString = null;
+                        continue;
+                    case "#!":
+                        parseLevel = false;
+                        ParseLevel(levelString);
+                        continue;
+                    case "!!!":
+                        debugTerminate = true;
+                        continue;
+                }
+
+                if (!parseLevel) continue;
+
+                levelString += $"{output}\n";
             }
+            
+            streamReader.Close();  
         }
         
         private int[,] ParseRoom(string room, int x, int z)
@@ -123,6 +152,11 @@ namespace NightmareEchoes.Grid
             return roomMatrix;
         }
 
+        private void ParseLevel(string level)
+        {
+            Debug.Log(level);
+        }
+        
         public void PickRandomRoom(string category)
         {
             var rand = Random.Range(0, rooms[category].Count);
@@ -166,6 +200,7 @@ namespace NightmareEchoes.Grid
             if (GUILayout.Button("Update Rooms From File"))
             {
                 generator.ReadRoomsFromFile();
+                generator.ReadLevelsFromFile();
             }
             
             GUILayout.Label("PickRandomRoom");
