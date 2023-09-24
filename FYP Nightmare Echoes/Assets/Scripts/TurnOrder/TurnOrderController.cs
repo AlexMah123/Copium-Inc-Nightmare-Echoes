@@ -100,6 +100,8 @@ namespace NightmareEchoes.TurnOrder
             currentPhase.OnEnterPhase(this);
         }
 
+        #region Utility
+
         public IEnumerator PassTurn()
         {
             yield return new WaitForSeconds(passTurnDelay);
@@ -122,6 +124,14 @@ namespace NightmareEchoes.TurnOrder
                 ChangePhase(endPhase);
             }
         }
+
+        [ContextMenu("Skip turn")]
+        public void SkipTurn()
+        {
+            StartCoroutine(PassTurn());
+        }
+
+        #endregion
 
         #region Turn Order Calculations
         public void CalculateTurnOrder()

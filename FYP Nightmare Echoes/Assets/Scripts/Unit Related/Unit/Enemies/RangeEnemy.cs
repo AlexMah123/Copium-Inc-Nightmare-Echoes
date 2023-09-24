@@ -65,8 +65,6 @@ namespace NightmareEchoes.Unit.Enemy
         {
             base.TakeDamage(damage);
 
-            ShowDmgText($"-{damage}");
-            stats.Health -= damage;
         }
 
         [ContextMenu("Take Damage (2)")]

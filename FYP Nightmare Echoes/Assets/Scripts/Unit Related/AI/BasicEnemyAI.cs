@@ -215,7 +215,7 @@ namespace NightmareEchoes.Unit.AI
                                 }
                                 break;
                         }
-                        Debug.Log(currTileUtil);
+                        //Debug.Log(currTileUtil);
                     if (currTileUtil > highestTileUtil)
                         {
                             bestMoveTile = possibleAttackLocations[i];
@@ -276,7 +276,7 @@ namespace NightmareEchoes.Unit.AI
                             }
                             break;
                     }
-                    Debug.Log(currTileUtil);
+                    //Debug.Log(currTileUtil);
                     if (currTileUtil > highestTileUtil)
                     {
                         bestMoveTile = possibleAttackLocations[i];
@@ -325,7 +325,7 @@ namespace NightmareEchoes.Unit.AI
 
             }
 
-            Debug.Log(highestTileUtil);
+            //Debug.Log(highestTileUtil);
             #endregion
         }
 

@@ -7,8 +7,6 @@ using NightmareEchoes.Grid;
 using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Unit.AI;
-using Codice.CM.WorkspaceServer.DataStore;
-using Unity.VisualScripting.Antlr3.Runtime;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.Unit
@@ -692,6 +690,62 @@ namespace NightmareEchoes.Unit
                 backAnimator.SetBool("GettingHit", true);
             }
 
+            
+
+            #region Token Checks Before Dmg
+            if (dodgeToken)
+            {
+                if (FindModifier(STATUS_EFFECT.DODGE_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
+                {
+                    ShowPopUpText($"Dodged!");
+                }
+                else if (barrierToken)
+                {
+                    ShowPopUpText($"Failed to dodge!");
+                    ShowPopUpText($"Damage was negated!");
+                    UpdateTokenLifeTime(STATUS_EFFECT.BARRIER_TOKEN);
+                }
+                else
+                {
+                    stats.Health -= damage;
+
+                    ShowPopUpText($"Failed to dodge!");
+                    ShowDmgText($"-{damage}");
+                }
+
+                UpdateTokenLifeTime(STATUS_EFFECT.DODGE_TOKEN);
+            }
+            else if(barrierToken)
+            {
+                ShowPopUpText($"Damage was negated!");
+                UpdateTokenLifeTime(STATUS_EFFECT.BARRIER_TOKEN);
+            }
+            else if(blockToken)
+            {
+                damage -= Mathf.RoundToInt(damage * 0.5f);
+                stats.Health -= damage;
+
+                ShowPopUpText($"Damage was reduced!");
+                ShowDmgText($"-{damage}");
+                UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
+            }
+            else if(vulnerableToken)
+            {
+                damage += Mathf.RoundToInt(damage * 0.5f);
+                stats.Health -= damage;
+
+                ShowPopUpText($"Damage was increased!");
+                ShowDmgText($"-{damage}");
+                UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
+            }
+            else
+            {
+                stats.Health -= damage;
+
+                ShowDmgText($"-{damage}");
+            }
+
+            #endregion            
         }
 
         public virtual void HealUnit(int healAmount)
@@ -764,6 +818,20 @@ namespace NightmareEchoes.Unit
             OnAddBuffEvent?.Invoke();
         }
 
+        public Modifier FindModifier(STATUS_EFFECT enumIndex)
+        {
+            List<Modifier> tempList = BuffDebuffList.Concat(TokenList).ToList();
+
+            for (int i = tempList.Count - 1; i >= 0; i--)
+            {
+                if (tempList[i].statusEffect == enumIndex)
+                {
+                    return tempList[i];
+                }
+            }
+
+            return null;
+        }
 
         //call to add buff to unit
         public void AddBuff(Modifier buff)

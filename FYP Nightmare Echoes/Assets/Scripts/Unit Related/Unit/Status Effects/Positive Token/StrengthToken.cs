@@ -20,9 +20,9 @@ namespace NightmareEchoes.Unit
         {
             unit.StrengthToken = true;
 
-            if (!unit.WeakenToken)
+            if (!unit.WeakenToken && !unit.StrengthToken)
             {
-                unit.ShowPopUpText("Strength!");
+                unit.ShowPopUpText("Gained Strength!");
             }
             else if (unit.WeakenToken)
             {

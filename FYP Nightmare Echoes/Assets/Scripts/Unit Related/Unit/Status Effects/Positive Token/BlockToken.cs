@@ -20,9 +20,9 @@ namespace NightmareEchoes.Unit
         {
             unit.BlockToken = true;
 
-            if (!unit.VulnerableToken)
+            if (!unit.VulnerableToken && !unit.BlockToken)
             {
-                unit.ShowPopUpText("Block!");
+                unit.ShowPopUpText("Gained Block!");
             }
             else if (unit.VulnerableToken)
             {

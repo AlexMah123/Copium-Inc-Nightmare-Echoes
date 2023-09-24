@@ -11287,6 +11287,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: tokenList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: tokenList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: c54a2cce89c008f468b53009d1b021e6, type: 2}
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: tokenList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 70dcd26159849464aa0c79b61d714e90, type: 2}
     - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_Name
       value: Ranger

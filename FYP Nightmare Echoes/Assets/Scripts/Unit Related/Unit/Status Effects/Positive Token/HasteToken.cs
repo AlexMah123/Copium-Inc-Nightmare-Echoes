@@ -21,9 +21,9 @@ namespace NightmareEchoes.Unit
         {
             unit.HasteToken = true;
 
-            if (!unit.VertigoToken)
+            if (!unit.VertigoToken && !unit.HasteToken)
             {
-                unit.ShowPopUpText("Haste!");
+                unit.ShowPopUpText("Gained Haste!");
             }
             else if (unit.VertigoToken)
             {
