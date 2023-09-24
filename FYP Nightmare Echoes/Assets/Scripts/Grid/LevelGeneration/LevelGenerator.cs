@@ -46,8 +46,7 @@ namespace NightmareEchoes.Grid
                 {
                     if (roomType != null)
                     {
-                        var cloneList = new List<int[,]>();
-                        cloneList = roomList;
+                        var cloneList = new List<int[,]>(roomList);
                         rooms.Add(roomType, cloneList);
                         roomList.Clear();
                     }
@@ -134,7 +133,7 @@ namespace NightmareEchoes.Grid
         {
             foreach (var kvp in rooms)
             {
-                Debug.Log(rooms[category].Capacity);
+                Debug.Log(rooms[category].Count);
             }
         }
         
