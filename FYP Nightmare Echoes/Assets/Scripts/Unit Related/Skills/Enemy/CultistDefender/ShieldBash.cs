@@ -5,13 +5,17 @@ using UnityEngine;
 namespace NightmareEchoes.Unit
 {
     //Written by Ter (stolen from jh)
-    public class ArrowShot : Skill
+    public class ShieldBash : Skill
     {
+        [SerializeField] float stunChance = 80;
         public override bool Cast(Units target)
         {
             base.Cast(target);
             target.TakeDamage(damage);
-            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+            if ((stunChance - target.stats.StunResist) > (Random.Range(0,101)))
+            {
+                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
+            }
             return true;
         }
     }

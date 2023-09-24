@@ -11,6 +11,7 @@ namespace NightmareEchoes.Unit
 
         public override bool Cast(Units unit)
         {
+            base.Cast(unit);
             unit.TakeDamage(damage);
             return true;
         }

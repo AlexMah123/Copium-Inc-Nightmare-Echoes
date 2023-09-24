@@ -9,6 +9,8 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
+            base.Cast(target, aoeTiles);
+
             if (target.CheckUnitOnTile())
             {
                 var unit = target.CheckUnitOnTile().GetComponent<Units>();

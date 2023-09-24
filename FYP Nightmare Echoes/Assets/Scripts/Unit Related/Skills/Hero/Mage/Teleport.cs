@@ -30,6 +30,7 @@ namespace NightmareEchoes.Unit
 
         public override bool Cast(Units target)
         {
+            base.Cast(target);
             if (!enableTargeting)
             {
                 enableTargeting = true;

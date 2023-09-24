@@ -5,13 +5,13 @@ using UnityEngine;
 namespace NightmareEchoes.Unit
 {
     //Written by Ter (stolen from jh)
-    public class ArrowShot : Skill
+    public class Kick : Skill
     {
         public override bool Cast(Units target)
         {
             base.Cast(target);
             target.TakeDamage(damage);
-            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+            //knockback
             return true;
         }
     }

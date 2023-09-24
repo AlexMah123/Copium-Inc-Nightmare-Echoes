@@ -32,6 +32,8 @@ namespace NightmareEchoes.Unit
 
         [Header("Additional Effects")] 
         [SerializeField] protected bool inflictKnockback;
+        [SerializeField] protected bool isBackstabbing;
+        [SerializeField] protected int backstabBonus;
         [SerializeField] protected bool placable;
         [SerializeField] protected int placableCount;
         [SerializeField] protected GameObject placableGameObject;
@@ -166,11 +168,45 @@ namespace NightmareEchoes.Unit
 
             if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
             {
-                //East&West
+                if (xDist < 0)
+                {
+                    //north
+                    thisUnit.Direction = Direction.North;
+                    if (target.Direction == Direction.North) 
+                    {
+                        isBackstabbing = true;
+                    }
+                }
+                else
+                {
+                    //south
+                    thisUnit.Direction = Direction.South;
+                    if (target.Direction == Direction.South)
+                    {
+                        isBackstabbing = true;
+                    }
+                }
             }
             else
             {
-                //North&South
+                if (yDist > 0)
+                {
+                    //east
+                    thisUnit.Direction = Direction.East;
+                    if (target.Direction == Direction.East)
+                    {
+                        isBackstabbing = true;
+                    }
+                }
+                else
+                {
+                    //west
+                    thisUnit.Direction = Direction.West;
+                    if (target.Direction == Direction.West)
+                    {
+                        isBackstabbing = true;
+                    }
+                }
             }
 
             return false;
@@ -179,6 +215,55 @@ namespace NightmareEchoes.Unit
         //For ground
         public virtual bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
+            Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
+            Vector2 CastTo = new Vector2(target.gridLocation.x, target.gridLocation.y);
+
+            float xDist = CastFrom.x - CastTo.y;
+            float yDist = CastFrom.y - CastTo.x;
+
+            if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
+            {
+                if (xDist < 0)
+                {
+                    //north
+                    thisUnit.Direction = Direction.North;
+                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.North)
+                    {
+                        isBackstabbing = true;
+                    }
+                }
+                else
+                {
+                    //south
+                    thisUnit.Direction = Direction.South;
+                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.South)
+                    {
+                        isBackstabbing = true;
+                    }
+                }
+            }
+            else
+            {
+                if (yDist > 0)
+                {
+                    //east
+                    thisUnit.Direction = Direction.East;
+                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.East)
+                    {
+                        isBackstabbing = true;
+                    }
+                }
+                else
+                {
+                    //west
+                    thisUnit.Direction = Direction.West;
+                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.West)
+                    {
+                        isBackstabbing = true;
+                    }
+                }
+            }
+
             return false;
         }
         
