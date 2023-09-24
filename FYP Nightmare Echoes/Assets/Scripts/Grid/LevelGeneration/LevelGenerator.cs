@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -16,8 +17,7 @@ namespace NightmareEchoes.Grid
         private string levelsPath = "Assets\\Scripts\\Grid\\LevelGeneration\\LevelPresets.txt";
         
         public Dictionary<string, List<int[,]>> rooms = new();
-        public Dictionary<string, int[,]> levels = new();
-        public Dictionary<string, Dictionary<string, int[]>> levelData = new();
+        public Dictionary<string, Dictionary<string, int[]>> levels = new();
 
         public TileBase testTile;
         public Tilemap tilemap;
@@ -90,7 +90,7 @@ namespace NightmareEchoes.Grid
         public void ReadLevelsFromFile()
         {
             levels.Clear();
-            levelData.Clear();
+            levels.Clear();
 
             var streamReader = new StreamReader(levelsPath);
 
@@ -154,7 +154,35 @@ namespace NightmareEchoes.Grid
 
         private void ParseLevel(string level)
         {
-            Debug.Log(level);
+            var lines = level.Split("\n");
+            string levelID = null;
+            Dictionary<string, int[]> levelData = new();
+            
+            foreach (var str in lines)
+            {
+                if (str.Length <= 0) continue;
+                
+                if (str[0] == '-')
+                {
+                    levelID = str.Trim('-');
+                    continue;
+                }
+
+                var roomType = str[0] switch
+                {
+                    'L' => "LARGE",
+                    'M' => "MEDIUM",
+                    'S' => "SMALL",
+                    _ => null
+                };
+
+                var values = Regex.Matches(str, "[0-9]+");
+                int[] coords = {int.Parse(values[0].Value), int.Parse(values[1].Value)};
+                
+                levelData.Add(roomType, coords);
+            }
+            
+            levels.Add(levelID, levelData);
         }
         
         public void PickRandomRoom(string category)
