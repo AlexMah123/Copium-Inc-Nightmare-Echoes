@@ -637,6 +637,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BountyHunter
       objectReference: {fileID: 0}
+    - target: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2658365863807529696, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2845,6 +2849,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777476721}
   m_CullTransparentMesh: 1
+--- !u!1 &837001675 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+  m_PrefabInstance: {fileID: 601295391118310419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &837001683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837001675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299a48ed6f452cb4f97dfae71127d1cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Nature Embrace
+  damage: 0
+  heal: 10
+  cooldown: 0
+  range: 2
+  targetType: 0
+  targetArea: 1
+  targetUnitAlignment: 1
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: "Nature\u2019s Embrace (Cannot Affected by Blind & Strength)\r\nSingle
+    target, 2 Tiles Range, Self Heal or Ally for 10 HP\r\n"
 --- !u!1 &883714880
 GameObject:
   m_ObjectHideFlags: 0
@@ -11291,6 +11334,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 601295390074279016, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: skill2
+      value: 
+      objectReference: {fileID: 837001683}
     - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_Name
       value: Ranger
