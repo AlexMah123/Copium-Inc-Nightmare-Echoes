@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using NightmareEchoes.Grid;
+using static UnityEngine.UI.CanvasScaler;
 
 //created by JH, edited by Ter
 namespace NightmareEchoes.Unit.Combat
@@ -434,6 +435,9 @@ namespace NightmareEchoes.Unit.Combat
                 case "FrontalAttack":
                     possibleTileCoords = FrontalRange(unit.ActiveTile, range , unit);
                     break;
+                case "SecondSquare":
+                    possibleTileCoords = SecondSquare(unit.ActiveTile, range ,unit);
+                    break;
                 default:
                     Debug.LogWarning("ERROR");
                     break;
@@ -513,6 +517,51 @@ namespace NightmareEchoes.Unit.Combat
                     possibleTileCoords.Add(frontalTile + new Vector2Int(i, 0));
                     possibleTileCoords.Add(frontalTile - new Vector2Int(i, 0));
                 }
+            }
+            return possibleTileCoords;
+        }
+
+        public List<Vector2Int> SecondSquare(OverlayTile startTile, int range, Units unit)
+        {
+            var possibleTileCoords = new List<Vector2Int>();
+
+            var direction = new Vector2Int();
+
+            switch (unit.Direction)
+            {
+                case Direction.North:
+                    direction = new Vector2Int(1, 0);
+                    break;
+                case Direction.South:
+                    direction = new Vector2Int(-1, 0);
+                    break;
+                case Direction.East:
+                    direction = new Vector2Int(0, -1);
+                    break;
+                case Direction.West:
+                    direction = new Vector2Int(0, 1);
+                    break;
+            }
+
+            var i = 1;
+            var tileLayoutX = new Vector2Int(startTile.gridLocation.x + direction.x, startTile.gridLocation.y);
+            var tileLayoutY = new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y + direction.y);
+            possibleTileCoords.Add(tileLayoutX);
+            possibleTileCoords.Add(tileLayoutY);
+
+            for (; i <= range; i++)
+            {
+                if (unit.Direction == Direction.North || unit.Direction == Direction.South)
+                {
+                    possibleTileCoords.Add(tileLayoutY - new Vector2Int(0, i));
+                    possibleTileCoords.Add(tileLayoutY + new Vector2Int(0, i));
+                }
+                if (unit.Direction == Direction.East || unit.Direction == Direction.West)
+                {
+                    possibleTileCoords.Add(tileLayoutX + new Vector2Int(i, 0));
+                    possibleTileCoords.Add(tileLayoutX - new Vector2Int(i, 0));
+                }
+
             }
             return possibleTileCoords;
         }
