@@ -184,6 +184,52 @@ namespace NightmareEchoes.Grid
             
             levels.Add(levelID, levelData);
         }
+
+        public void GenerateLevel(string levelID)
+        {
+            tilemap.ClearAllTiles();
+            
+            Dictionary<string, int[]> selectedLevel;
+            levels.TryGetValue(levelID, out selectedLevel);
+            
+            if (selectedLevel == null){Debug.LogWarning("ERROR"); return;}
+
+            var map = new int[30, 30];
+            for (var x = 0; x <= map.GetUpperBound(0) ; x++)
+            {
+                for (var z = 0; z <= map.GetUpperBound(1); z++)
+                {
+                    map[x, z] = 0;
+                }
+            }
+            
+            foreach (var kvp in selectedLevel)
+            {
+                var rand = Random.Range(0, rooms[kvp.Key].Count);
+
+                var selectedRoom = rooms[kvp.Key][rand];
+                
+                for (var x = 0; x <= selectedRoom.GetUpperBound(0) ; x++)
+                {
+                    for (var z = 0; z <= selectedRoom.GetUpperBound(1); z++)
+                    {
+                        map[x + kvp.Value[0], z + kvp.Value[1]] = selectedRoom[x, z];
+                    }
+                }
+            }
+            
+            for (var x = 0; x <= map.GetUpperBound(0) ; x++)
+            {
+                for (var z = 0; z <= map.GetUpperBound(1); z++)
+                {
+                    var tilelocation = new Vector3Int(x, z, 0);
+                    if (map[x, z] == 1)
+                    {
+                        tilemap.SetTile(tilelocation, testTile);
+                    }
+                }
+            }
+        }
         
         public void PickRandomRoom(string category)
         {
@@ -231,7 +277,7 @@ namespace NightmareEchoes.Grid
                 generator.ReadLevelsFromFile();
             }
             
-            GUILayout.Label("PickRandomRoom");
+            GUILayout.Label("Pick Random Room");
             if (GUILayout.Button("Large"))
             {
                 generator.PickRandomRoom("LARGE");
@@ -243,6 +289,20 @@ namespace NightmareEchoes.Grid
             if (GUILayout.Button("Small"))
             {
                 generator.PickRandomRoom("SMALL");
+            }
+            
+            GUILayout.Label("Generate Level");
+            if (GUILayout.Button("Level 1"))
+            {
+                generator.GenerateLevel("L1");
+            }
+            if (GUILayout.Button("Level 2"))
+            {
+                generator.GenerateLevel("L2");
+            }
+            if (GUILayout.Button("Level 3"))
+            {
+                generator.GenerateLevel("L3");
             }
             
             GUILayout.Label("Debug");
