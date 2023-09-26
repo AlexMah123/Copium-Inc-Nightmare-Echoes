@@ -112,7 +112,7 @@ namespace NightmareEchoes.TurnOrder
                 //if the second element exist, check hostile and change accordingly, else endPhase
                 if (CurrentUnitQueue.ToArray()[1].IsHostile)
                 {
-                   ChangePhase(enemyPhase);
+                    ChangePhase(enemyPhase);
                 }
                 else
                 {
@@ -136,6 +136,7 @@ namespace NightmareEchoes.TurnOrder
         #region Turn Order Calculations
         public void CalculateTurnOrder()
         {
+            Debug.Log("CalculateTurnOrder() Called");
             turnOrderList = new List<Units>(FindObjectsOfType<Units>());
             turnOrderList.Sort(CompareSpeed); //sorts in ascending order
             turnOrderList.Reverse();

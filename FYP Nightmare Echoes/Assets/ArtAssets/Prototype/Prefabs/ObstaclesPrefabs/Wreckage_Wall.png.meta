@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b24c28b199fc0ea42873a11dafa7a16f
+guid: f40a503ef334196439a719e16cf5af32
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,12 +42,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 512
+  spritePixelsToUnits: 240
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -114,91 +114,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: dirt tile_0
-      rect:
-        serializedVersion: 2
-        x: 1021
-        y: 2261
-        width: 512
-        height: 512
-      alignment: 9
-      pivot: {x: 0.5, y: 0.75}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 15deb104621f7854dbd491acacbcf3d8
-      internalID: -1557391216
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dirt tile_1
-      rect:
-        serializedVersion: 2
-        x: 2392
-        y: 2244
-        width: 512
-        height: 512
-      alignment: 9
-      pivot: {x: 0.5, y: 0.75}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 30c68ef3cf873fe45a7c27123e5d115c
-      internalID: -1755099247
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dirt tile_2
-      rect:
-        serializedVersion: 2
-        x: 1004
-        y: 1209
-        width: 512
-        height: 512
-      alignment: 9
-      pivot: {x: 0.5, y: 0.75}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b144bc053ad4dbf4fb951394da3d2666
-      internalID: -1130185094
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dirt tile_3
-      rect:
-        serializedVersion: 2
-        x: 2392
-        y: 1176
-        width: 512
-        height: 512
-      alignment: 9
-      pivot: {x: 0.5, y: 0.75}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e05ac51248603d54a839094252928408
-      internalID: -1600831707
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -209,12 +125,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      dirt tile_2: -1130185094
-      dirt tile_3: -1600831707
-      dirt tile_4: 1974392494
-      dirt tile_1: -1755099247
-      dirt tile_0: -1557391216
+    nameFileIdTable: {}
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

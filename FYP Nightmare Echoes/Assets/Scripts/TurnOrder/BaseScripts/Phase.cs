@@ -20,6 +20,7 @@ namespace NightmareEchoes.TurnOrder
             //only run once to calculate the turn order and enqueue till the endPhase
             if (!controller.runOnce)
             {
+                Debug.Log("Run Once");
                 controller.runOnce = true;
                 controller.CalculateTurnOrder();
             }
@@ -44,7 +45,9 @@ namespace NightmareEchoes.TurnOrder
 
             if(controller.currentPhase == controller.playerPhase || controller.currentPhase == controller.enemyPhase)
             {
-                if(controller.CurrentUnit.gameObject != null)
+                CameraControl.Instance.isPanning = false;
+
+                if (controller.CurrentUnit.gameObject != null)
                 {
                     CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
                 }
@@ -77,6 +80,7 @@ namespace NightmareEchoes.TurnOrder
         {
 
             OnExit();
+            controller.StopAllCoroutines();
         }
 
         //overrides

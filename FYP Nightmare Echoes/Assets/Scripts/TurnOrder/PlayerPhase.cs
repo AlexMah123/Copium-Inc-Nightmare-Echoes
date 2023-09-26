@@ -121,7 +121,7 @@ namespace NightmareEchoes.TurnOrder
                 controller.CurrentUnitQueue.Dequeue();
             }
         }
-        
+
         IEnumerator WaitForTurnEnd()
         {
             yield return new WaitUntil(() => CombatManager.Instance.turnEnded);

@@ -21,23 +21,26 @@ namespace NightmareEchoes.Unit.AI
 
         [Space(20), Header("Enemy Specifics")]
         public float attackDelay = 1f;
+        Units thisUnit;
 
+        //used for decision making
         Units targetHero, closestHero;
         float rangeToTarget, rangeToClosest;
+
+        //checking if this unit can attk, move & attk and has attacked.
         public bool inAtkRange, inMoveAndAttackRange, hasAttacked;
-        int rangePlaceholder;
+        int selectedAttackRange;
         int rngHelper;
         float currTileUtil, highestTileUtil;
-        List<OverlayTile> tilesInRange;
+
+        //this unit's specific variables
+        List<OverlayTile> tilesInRange = new List<OverlayTile>();
         List<OverlayTile> possibleAttackLocations = new List<OverlayTile>();
         Skill currSelectedSkill;
         int skillAmount;
 
         OverlayTile unitCurrentTile, targetTile;
         OverlayTile moveToTile, bestMoveTile;
-
-        Color pathClr = Color.yellow;
-        Color moveableClr = new Color(1, 0.8f, 0.8f);
 
         Dictionary<Units, int> distancesDictionary = new Dictionary<Units, int>();
         Dictionary<string, float> utilityDictionary = new Dictionary<string, float>();
@@ -61,7 +64,7 @@ namespace NightmareEchoes.Unit.AI
 
         private void Awake()
         {
-            
+            thisUnit = GetComponent<Units>();
         }
 
         public void MakeDecision(Units thisUnit)
@@ -101,6 +104,10 @@ namespace NightmareEchoes.Unit.AI
                         break;
                 }
             }
+            else
+            {
+
+            }
 
         }
 
@@ -136,7 +143,7 @@ namespace NightmareEchoes.Unit.AI
                     currSelectedSkill = thisUnit.BasicAttackSkill;
                     break;
             }
-            rangePlaceholder = currSelectedSkill.Range;
+            selectedAttackRange = currSelectedSkill.Range;
 
             targetHero = closestHero;
             rangeToTarget = rangeToClosest;
@@ -148,7 +155,7 @@ namespace NightmareEchoes.Unit.AI
             inMoveAndAttackRange = false;
 
             #region checks if unit is inAtkRange/inMoveAndAttackRagne
-            if (IsTileAttackableFrom(unitCurrentTile, targetTile, rangePlaceholder))
+            if (IsTileAttackableFrom(unitCurrentTile, targetTile, selectedAttackRange))
             {
                 inAtkRange = true;
             }
@@ -156,7 +163,7 @@ namespace NightmareEchoes.Unit.AI
             //Checks tiles in range for possibleAttackableLocations if they do not have a unit on it
             for (int i = 0; i < tilesInRange.Count; i++)
             {
-                if (IsTileAttackableFrom(tilesInRange[i], targetTile, rangePlaceholder))
+                if (IsTileAttackableFrom(tilesInRange[i], targetTile, selectedAttackRange))
                 {
                     if (!tilesInRange[i].CheckUnitOnTile())
                     {
@@ -399,14 +406,46 @@ namespace NightmareEchoes.Unit.AI
             totalUnitList = FindObjectsOfType<Units>().ToList();
 
             //filter by heroes
-            foreach (var Unit in totalUnitList)
+            foreach (var unit in totalUnitList)
             {
-                if (!Unit.IsHostile)
+                if (!unit.IsHostile && !unit.StealthToken)
                 {
-                    totalHeroList.Add(Unit);
+                    totalHeroList.Add(unit);
                 }
             }
         }
+
+        bool IsUnitInViewRange(Units stealthUnit)
+        {
+            bool result = false;
+            Vector3 thisUnitPos = thisUnit.ActiveTile.gridLocation;
+            Vector3 targetUnit = stealthUnit.ActiveTile.gridLocation;
+
+            
+
+            switch(thisUnit.Direction)
+            {
+                case Direction.North:
+                    //result = 
+                    break;
+
+                case Direction.South:
+
+                    break;
+
+                case Direction.East:
+
+                    break;
+
+                case Direction.West:
+
+                    break;
+            }
+
+            return result;
+        }
+
+        public 
 
         float FindDistanceBetweenUnit(Units target1, Units target2)
         {
@@ -439,7 +478,7 @@ namespace NightmareEchoes.Unit.AI
             if (target1.gridLocation.x == target2.gridLocation.x)
             {
                 //same row/x
-                if ((target1.gridLocation.y + rangePlaceholder >= target2.gridLocation.y) && (target1.gridLocation.y - rangePlaceholder <= target2.gridLocation.y))
+                if ((target1.gridLocation.y + selectedAttackRange >= target2.gridLocation.y) && (target1.gridLocation.y - selectedAttackRange <= target2.gridLocation.y))
                 {
                     return true;
                 } 
@@ -448,7 +487,7 @@ namespace NightmareEchoes.Unit.AI
             else if (target1.gridLocation.y == target2.gridLocation.y)
             {
                 //same column/y
-                if ((target1.gridLocation.x + rangePlaceholder >= target2.gridLocation.x) && (target1.gridLocation.x - rangePlaceholder <= target2.gridLocation.x))
+                if ((target1.gridLocation.x + selectedAttackRange >= target2.gridLocation.x) && (target1.gridLocation.x - selectedAttackRange <= target2.gridLocation.x))
                 {
                     return true;
                 }

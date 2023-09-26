@@ -105,7 +105,7 @@ namespace NightmareEchoes.TurnOrder
                 #region Mandatory Checks
 
                 //Hide tiles only on exit
-                if (enemyAI.TilesInRange.Count > 0)
+                if (enemyAI.TilesInRange?.Count > 0)
                 {
                     PathfindingManager.Instance.HideTilesInRange(enemyAI.TilesInRange);
                 }
@@ -152,14 +152,15 @@ namespace NightmareEchoes.TurnOrder
             if(!enemyAI.inAtkRange && !enemyAI.inMoveAndAttackRange)
             {
                 yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
+                controller.StartCoroutine(controller.PassTurn());
             }
             else
             {
                 yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
+                controller.StartCoroutine(controller.PassTurn());
             }
 
-            
-            controller.StartCoroutine(controller.PassTurn());
+
         }
     }
 }

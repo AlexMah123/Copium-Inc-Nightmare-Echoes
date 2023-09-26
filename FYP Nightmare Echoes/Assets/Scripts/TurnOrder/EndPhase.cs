@@ -49,6 +49,7 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator newTurn()
         {
+            Debug.Log("New Turn");
             yield return new WaitForSeconds(controller.phaseDelay);
 
             //resets
