@@ -15,9 +15,9 @@ namespace NightmareEchoes.Unit
             DealDamage(target);
 
             //knockback
-            var direction = thisUnit.transform.position - target.transform.position;
+            var direction = target.transform.position - thisUnit.transform.position;
             var destination = target.transform.position + direction;
-
+                
             var tileOccupied = false;
             var hit = Physics2D.Raycast(destination, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
             if (hit)

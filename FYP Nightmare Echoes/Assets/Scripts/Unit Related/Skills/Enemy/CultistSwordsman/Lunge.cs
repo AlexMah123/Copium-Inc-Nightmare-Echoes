@@ -29,7 +29,7 @@ namespace NightmareEchoes.Unit
             }
             if (!tileOccupied)
             {
-                thisUnit.transform.position += direction;
+                thisUnit.transform.position += direction/2;
             }
 
             
