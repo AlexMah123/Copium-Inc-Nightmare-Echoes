@@ -256,7 +256,6 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             #endregion
 
-
             //When unit is moving
             if (isMoving)
             {
@@ -367,10 +366,6 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
             }
             #endregion
-
-
-            
-
 
             if (pathList.Count <= 0 )
             {

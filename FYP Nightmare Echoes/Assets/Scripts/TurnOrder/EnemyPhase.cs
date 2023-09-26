@@ -149,9 +149,10 @@ namespace NightmareEchoes.TurnOrder
                 enemyAI.MakeDecision(controller.CurrentUnit);
             }
 
-            if(!enemyAI.inAtkRange && !enemyAI.inMoveAndAttackRange)
+            yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
+
+            if (!enemyAI.inAtkRange && !enemyAI.inMoveAndAttackRange)
             {
-                yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
                 controller.StartCoroutine(controller.PassTurn());
             }
             else

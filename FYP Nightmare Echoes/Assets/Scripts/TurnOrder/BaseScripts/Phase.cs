@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.Unit;
+using NightmareEchoes.Unit.Combat;
 
 
 //created by Alex
@@ -20,7 +21,6 @@ namespace NightmareEchoes.TurnOrder
             //only run once to calculate the turn order and enqueue till the endPhase
             if (!controller.runOnce)
             {
-                Debug.Log("Run Once");
                 controller.runOnce = true;
                 controller.CalculateTurnOrder();
             }
@@ -57,6 +57,7 @@ namespace NightmareEchoes.TurnOrder
             UIManager.Instance.UpdateTurnOrderUI();
             UIManager.Instance.UpdateStatusEffectUI();
 
+            controller.StartCoroutine(CombatManager.Instance.UpdateUnitPositionsAtStart());
             OnEnter();
         }
 

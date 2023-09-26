@@ -568,8 +568,78 @@ namespace NightmareEchoes.Unit.Combat
 
         #endregion
 
+        #region Additional Mechanics
+        public List<Units> IsStealthUnitInViewRange(Units thisUnit, int range)
+        {
+            //declare variables and reset
+            List<Vector2Int> tilesPosInFront = new List<Vector2Int>();
+            List<Units> herosInStealth = new List<Units>();
+            Vector3Int thisUnitPos = thisUnit.ActiveTile.gridLocation;
+
+            #region adding tiles to check
+            for (int i = 1; i <= range; ++i)
+            {
+                switch (thisUnit.Direction)
+                {
+                    case Direction.North:
+                        //add the front
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y));
+
+                        //add the side
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y + range));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y - range));
+                        break;
+
+                    case Direction.South:
+                        //add the front
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y));
+
+                        //add the side
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y + range));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y - range));
+                        break;
+
+                    case Direction.East:
+                        //add the front
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y - range));
+
+                        //add the side
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y));
+                        break;
+
+                    case Direction.West:
+                        //add the front
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y + range));
+
+                        //add the side
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y));
+                        break;
+                }
+            }
+            #endregion
+
+            List<OverlayTile> overlayTileInFront = new List<OverlayTile>(OverlayTileManager.Instance.TrimOutOfBounds(tilesPosInFront));
+
+            for (int i = 0; i < overlayTileInFront.Count; i++)
+            {
+                //for each overlayTile in front, check if the tiles have units that are not hostile (hero)
+                if (overlayTileInFront[i].CheckUnitOnTile()?.GetComponent<Units>())
+                {
+                    if(!overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>().IsHostile)
+                    {
+                        herosInStealth.Add(overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>());
+                    }
+                }
+            }
+
+            return herosInStealth;
+        }
+        #endregion
+
         //==Coroutines==
-        IEnumerator UpdateUnitPositionsAtStart()
+        public IEnumerator UpdateUnitPositionsAtStart()
         {
             yield return new WaitForSeconds(1f);
             foreach (var unit in unitsInvolved)

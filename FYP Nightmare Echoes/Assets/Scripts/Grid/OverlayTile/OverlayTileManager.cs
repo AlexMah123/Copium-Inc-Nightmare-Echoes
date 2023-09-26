@@ -1,3 +1,4 @@
+using Codice.CM.Client.Differences.Graphic;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -153,6 +154,18 @@ namespace NightmareEchoes.Grid
             if (!hit) return null;
             var target = hit.collider.gameObject.GetComponent<OverlayTile>();
             return !target ? null : target;
+        }
+
+        public OverlayTile GetOverlayTile(Vector2Int pos)
+        {
+            if(gridDictionary.ContainsKey(pos))
+            {
+                return gridDictionary[pos];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
