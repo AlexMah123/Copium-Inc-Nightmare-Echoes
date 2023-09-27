@@ -9,6 +9,8 @@ using NightmareEchoes.Inputs;
 using NightmareEchoes.Unit.Combat;
 using Unity.Android.Types;
 using Codice.Client.BaseCommands;
+using static UnityEngine.GraphicsBuffer;
+using Unity.VisualScripting.Antlr3.Runtime.Collections;
 
 //by Terrence, editted by alex
 namespace NightmareEchoes.Unit.AI
@@ -22,6 +24,7 @@ namespace NightmareEchoes.Unit.AI
         public List<OverlayTile> totalPathList = new List<OverlayTile>();
 
         [Space(20), Header("Enemy Specifics")]
+        Coroutine redirect;
         public float attackDelay = 1f;
         Units thisUnit;
 
@@ -30,7 +33,7 @@ namespace NightmareEchoes.Unit.AI
         float rangeToTarget, rangeToClosest;
 
         //checking if this unit can attk, move & attk and has attacked.
-        public bool inAtkRange, inMoveAndAttackRange, hasAttacked, foundStealthHero;
+        public bool inAtkRange, inMoveAndAttackRange, hasAttacked, detectedStealthHero;
         int selectedAttackRange;
         int rngHelper;
         float currTileUtil, highestTileUtil;
@@ -74,7 +77,7 @@ namespace NightmareEchoes.Unit.AI
         {
             //reset values
             hasAttacked = false;
-            foundStealthHero = false;
+            detectedStealthHero = false;
 
             //sort heros by distance and find tiles in range
             SortHeroesByDistance(thisUnit);
@@ -342,24 +345,33 @@ namespace NightmareEchoes.Unit.AI
         {
             if (totalPathList.Count > 0)
             {
-                PathfindingManager.Instance.MoveAlongPath(thisUnit, totalPathList, tilesInRange);
+                //render arrow, pan camera
+                PathfindingManager.Instance.RenderArrow(tilesInRange, totalPathList, thisUnit);
                 CameraControl.Instance.UpdateCameraPan(thisUnit.gameObject);
 
-                
+                //only if you havent detected hero
+                if (!detectedStealthHero)
+                {
+                    PathfindingManager.Instance.MoveAlongPath(thisUnit, totalPathList, tilesInRange);
+                }
             }
 
             //if you find a stealth unit in view, and you havent attack
-            if (CombatManager.Instance.IsStealthUnitInViewRange(thisUnit, 1).Count > 0 && !hasAttacked)
+            if (CombatManager.Instance.IsStealthUnitInViewRange(thisUnit, 1).Count > 0 && !hasAttacked && !detectedStealthHero)
             {
+                //resetting values
+                detectedStealthHero = true;
+                OverlayTile redirectTile = null;
+                PathfindingManager.Instance.ClearArrow(totalPathList);
+
                 //set the targets based on the range (defaulted to 1)
                 List<Units> targets = CombatManager.Instance.IsStealthUnitInViewRange(thisUnit, 1);
-                
-                //WORKING PROGRESS HAS THE TARGET BUT DOES NOT CHOOSE BEST TILE TO MOVE YET
 
-                //based on the amount, randomize the targets
-                /*if (targets.Count > 0)
+
+                if (targets.Count > 0)
                 {
-                    switch (UnityEngine.Random.Range(0, targets.Count))
+                    //based on the amount, randomize the targets
+                    switch (Random.Range(0, targets.Count))
                     {
                         case 0:
                             targetTileToMove = targets[0].ActiveTile;
@@ -374,11 +386,32 @@ namespace NightmareEchoes.Unit.AI
                             break;
                     }
 
+                    //then based on the units direction, move infront of the target
+                    switch (thisUnit.Direction)
+                    {
+                        case Direction.North:
+                            redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation - new Vector3Int(1, 0, 0)));
+                            break;
+
+                        case Direction.South:
+                            redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation + new Vector3Int(1, 0, 0)));
+                            break;
+
+                        case Direction.East:
+                            redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation + new Vector3Int(0, 1, 0)));
+                            break;
+
+                        case Direction.West:
+                            redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation - new Vector3Int(0, 1, 0)));
+                            break;
+                    }
                 }
-                AttackProcess(thisUnit, targetTileToMove);*/
+
+                thisUnit.ShowPopUpText("Detected Stealth Hero!!");
+                StartCoroutine(DetectedStealthUnit(redirectTile));
             }
             //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.
-            else if (totalPathList.Count == 0 && (inAtkRange || inMoveAndAttackRange) && !hasAttacked && !foundStealthHero && totalHeroList.Count > 0)
+            else if (totalPathList.Count == 0 && (inAtkRange || inMoveAndAttackRange) && !hasAttacked && !detectedStealthHero && totalHeroList.Count > 0)
             {
                 AttackProcess(thisUnit, targetTileToMove);
             }
@@ -395,6 +428,18 @@ namespace NightmareEchoes.Unit.AI
             }
         }
 
+        public IEnumerator DetectedStealthUnit(OverlayTile redirectTile)
+        {
+            yield return new WaitForSeconds(1f);
+
+            StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, redirectTile, 0.25f));
+
+            yield return new WaitUntil(() => Vector2.Distance(thisUnit.transform.position, redirectTile.transform.position) < 0.01f);
+            targetTileToMove.CheckUnitOnTile()?.GetComponent<Units>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
+            AttackProcess(thisUnit, targetTileToMove);
+
+        }
+
         #endregion
 
         #region Calculations/Utility
@@ -405,6 +450,7 @@ namespace NightmareEchoes.Unit.AI
 
             CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
             targetTileToMove.HideTile();
+            totalPathList.Clear();
         }
 
         void SortHeroesByDistance(Units thisUnit)

@@ -177,6 +177,7 @@ MonoBehaviour:
   inAtkRange: 0
   inMoveAndAttackRange: 0
   hasAttacked: 0
+  foundStealthHero: 0
 --- !u!114 &1961892246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +206,7 @@ MonoBehaviour:
   secondaryRange: 0
   inflictKnockback: 0
   isBackstabbing: 0
-  backstabBonus: 0
+  backstabBonus: 3
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}

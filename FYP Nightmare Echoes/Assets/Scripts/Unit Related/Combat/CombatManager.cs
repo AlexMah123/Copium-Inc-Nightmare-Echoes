@@ -586,8 +586,8 @@ namespace NightmareEchoes.Unit.Combat
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y));
 
                         //add the side
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y + range));
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y - range));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y + range));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y - range));
                         break;
 
                     case Direction.South:
@@ -595,8 +595,8 @@ namespace NightmareEchoes.Unit.Combat
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y));
 
                         //add the side
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y + range));
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y - range));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y + range));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y - range));
                         break;
 
                     case Direction.East:
@@ -604,8 +604,8 @@ namespace NightmareEchoes.Unit.Combat
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y - range));
 
                         //add the side
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y));
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y - range));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y - range));
                         break;
 
                     case Direction.West:
@@ -613,8 +613,8 @@ namespace NightmareEchoes.Unit.Combat
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y + range));
 
                         //add the side
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y));
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y + range));
+                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y + range));
                         break;
                 }
             }

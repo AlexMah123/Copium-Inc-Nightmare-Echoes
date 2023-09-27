@@ -18,6 +18,7 @@ namespace NightmareEchoes.Unit
         #region Effects Related
         public override void ApplyEffect(Units unit)
         {
+            unit.ShowPopUpText("Stealth!");
             unit.StealthToken = true;
         }
 

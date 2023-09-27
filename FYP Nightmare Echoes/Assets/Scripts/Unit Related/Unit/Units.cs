@@ -147,7 +147,47 @@ namespace NightmareEchoes.Unit
         public bool StealthToken
         {
             get => stealthToken;
-            set => stealthToken = value;
+            set
+            {
+                stealthToken = value;
+
+                if(sprites.Count > 0) 
+                {
+                    if (value == true)
+                    {
+                        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.75f);
+                    }
+                    else
+                    {
+                        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1.0f);
+                    }
+                }
+                else
+                {
+                    if (value == true)
+                    {
+                        var modelSprite = GetComponentsInChildren<SpriteRenderer>();
+                        foreach (var spriteRenderer in modelSprite)
+                        {
+                            if (spriteRenderer.color.a != 0.5f)
+                            {
+                                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var modelSprite = GetComponentsInChildren<SpriteRenderer>();
+                        foreach (var spriteRenderer in modelSprite)
+                        {
+                            if (spriteRenderer.color.a != 1.0f)
+                            {
+                                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
+                            }
+                        }
+                    }
+                }
+            }
         }
         #endregion 
 
@@ -539,6 +579,8 @@ namespace NightmareEchoes.Unit
                 //AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.IMMOBILIZE_TOKEN, 1, 1));
             }
 
+            
+
             if (stats.Health == 0)
             {
                 if (!IsHostile)
@@ -571,7 +613,6 @@ namespace NightmareEchoes.Unit
                         if (SpriteRenderer != null)
                         {
                             SpriteRenderer.sprite = sprites[(int)Direction.South];
-
                         }
                         break;
 
@@ -579,7 +620,6 @@ namespace NightmareEchoes.Unit
                         if (SpriteRenderer != null)
                         {
                             SpriteRenderer.sprite = sprites[(int)Direction.East];
-
                         }
                         break;
 
@@ -587,10 +627,8 @@ namespace NightmareEchoes.Unit
                         if (SpriteRenderer != null)
                         {
                             SpriteRenderer.sprite = sprites[(int)Direction.West];
-
                         }
                         break;
-
                 }
             }
             else

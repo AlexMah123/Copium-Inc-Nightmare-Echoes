@@ -177,6 +177,7 @@ MonoBehaviour:
   inAtkRange: 0
   inMoveAndAttackRange: 0
   hasAttacked: 0
+  foundStealthHero: 0
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4
@@ -255,7 +256,7 @@ MonoBehaviour:
   secondaryRange: 0
   inflictKnockback: 0
   isBackstabbing: 0
-  backstabBonus: 0
+  backstabBonus: 3
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}

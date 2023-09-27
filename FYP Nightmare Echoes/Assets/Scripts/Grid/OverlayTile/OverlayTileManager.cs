@@ -135,6 +135,7 @@ namespace NightmareEchoes.Grid
             return neighbours;
         }
 
+        #region Utility for Getting Specific Tiles based on pos
         public List<OverlayTile> TrimOutOfBounds(List<Vector2Int> list)
         {
             var tileRange = new List<OverlayTile>();
@@ -167,6 +168,8 @@ namespace NightmareEchoes.Grid
                 return null;
             }
         }
+
+        #endregion
     }
 }
 

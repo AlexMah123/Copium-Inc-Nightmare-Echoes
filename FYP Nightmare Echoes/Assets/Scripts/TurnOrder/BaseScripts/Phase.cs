@@ -81,6 +81,7 @@ namespace NightmareEchoes.TurnOrder
         {
 
             OnExit();
+            CameraControl.Instance.isPanning = false;
             controller.StopAllCoroutines();
         }
 

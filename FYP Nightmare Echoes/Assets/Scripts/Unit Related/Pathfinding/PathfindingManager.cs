@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Inputs;
+using TMPro;
+using UnityEngine.UIElements;
+using UnityEditor.Overlays;
 
 //created by Vinn, editted by Alex and Ter
 namespace NightmareEchoes.Unit.Pathfinding
@@ -82,7 +85,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                     isDragging = false;
                     lastAddedTile = null;
 
-                    ClearArrow();
+                    ClearArrow(tempPathList);
+
                 }
             }
 
@@ -188,7 +192,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                     lastAddedTile = null;
                     isMoving = true;
 
-                    RenderArrow();
+                    RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
                 }
             }
             // if player dragged move, isnt moving + selected a unit, or if they move to their activetile/starting point
@@ -226,21 +230,21 @@ namespace NightmareEchoes.Unit.Pathfinding
                 //if there is no unit on tile
                 if (!currentHoveredOverlayTile.CheckUnitOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
                 {
-                    RenderArrow();
+                    RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
                 }
                 else if (currentHoveredOverlayTile == currentSelectedUnit.ActiveTile)
                 {
                     //if the currenthovered tile is the active tile, resets not dragging 
                     isDragging = false;
-                    RenderArrow();
-                    ClearArrow();
+                    RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
+                    ClearArrow(tempPathList);
                 }
                 else if (currentHoveredOverlayTile == revertUnitPosition)
                 {
                     //if the currenthovered tile is the active, resets not dragging
                     isDragging = false;
-                    RenderArrow();
-                    ClearArrow();
+                    RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
+                    ClearArrow(tempPathList);
                 }
 
                 if (Input.GetMouseButtonUp(0))
@@ -265,37 +269,99 @@ namespace NightmareEchoes.Unit.Pathfinding
         }
 
         #region Movement along Tile
-        public void MoveAlongPath(Units unit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
+        public IEnumerator MoveTowardsTile(Units thisUnit, OverlayTile targetTile, float duration)
+        {
+            #region Trigger Movement Related Status Effect Before Movement
+            for (int i = thisUnit.TokenList.Count - 1; i >= 0; i--)
+            {
+                switch (thisUnit.TokenList[i].statusEffect)
+                {
+                    case STATUS_EFFECT.IMMOBILIZE_TOKEN:
+                        thisUnit.TokenList[i].TriggerEffect(thisUnit);
+                        isMoving = false;
+
+                        ClearArrow(tempPathList);
+                        yield return null;
+                        break;
+                }
+            }
+            #endregion
+
+            float counter = 0;
+
+            //Get the current position of the object to be moved
+            Vector3 startPos = thisUnit.transform.position;
+            Vector3 direction = targetTile.gridLocation - thisUnit.ActiveTile.gridLocation;
+
+            ChangeDirection(direction, thisUnit);
+
+            while (counter < duration)
+            {
+                counter += Time.deltaTime;
+                thisUnit.transform.position = Vector3.Lerp(startPos, targetTile.transform.position, counter / duration);
+                yield return null;
+            }
+
+            #region Triggering Movement Related Status Effect During Movement
+            for (int i = thisUnit.BuffDebuffList.Count - 1; i >= 0; i--)
+            {
+                switch (thisUnit.BuffDebuffList[i].statusEffect)
+                {
+                    case STATUS_EFFECT.CRIPPLED_DEBUFF:
+                        thisUnit.BuffDebuffList[i].TriggerEffect(thisUnit);
+                        break;
+                }
+            }
+
+            #endregion
+
+            SetUnitPositionOnTile(targetTile, thisUnit);
+        }
+
+        public void MoveAlongPath(Units thisUnit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
         {
             //units movement
-            if (pathList.Count > 0 && unit != null) 
+            if (pathList.Count > 0 && thisUnit != null) 
             {
                 #region Trigger Movement Related Status Effect Before Movement
-                for (int i = unit.TokenList.Count - 1; i >= 0; i--)
+                for (int i = thisUnit.TokenList.Count - 1; i >= 0; i--)
                 {
-                    switch (unit.TokenList[i].statusEffect)
+                    switch (thisUnit.TokenList[i].statusEffect)
                     {
                         case STATUS_EFFECT.IMMOBILIZE_TOKEN:
-                            unit.TokenList[i].TriggerEffect(unit);
+                            thisUnit.TokenList[i].TriggerEffect(thisUnit);
                             isMoving = false;
 
-                            ClearArrow();
+                            ClearArrow(tempPathList);
                             pathList.Clear();
                             return;
                     }
                 }
                 #endregion
 
+                #region Setting Unit Direction
+                Vector3Int direction = pathList[0].gridLocation - thisUnit.ActiveTile.gridLocation;
+
+                //setting directions as well as the moving boolean
+                ChangeDirection(direction, thisUnit);
+
+                //set the units direction facing based on the vector between player and the next tile
+                if (pathList.Count > 0 && thisUnit != null)
+                {
+
+                }
+                #endregion
+
                 var step = movingSpeed * Time.deltaTime;
                 var zIndex = pathList[0].transform.position.z;
 
-                unit.transform.position = Vector2.MoveTowards(unit.transform.position, pathList[0].transform.position, step);
-                unit.transform.position = new Vector3(unit.transform.position.x, unit.transform.position.y, zIndex);
+                thisUnit.transform.position = Vector2.MoveTowards(thisUnit.transform.position, pathList[0].transform.position, step);
+                thisUnit.transform.position = new Vector3(thisUnit.transform.position.x, thisUnit.transform.position.y, zIndex);
 
                 //as you reach the tile, set the units position and the arrow, remove the pathlist[0] to move to the next tile
-                if (Vector2.Distance(unit.transform.position, pathList[0].transform.position) < 0.01f)
+                if (Vector2.Distance(thisUnit.transform.position, pathList[0].transform.position) < 0.01f)
                 {
-                    SetUnitPositionOnTile(pathList[0], unit);
+                    SetUnitPositionOnTile(pathList[0], thisUnit);
 
                     pathList[0].SetArrowSprite(ArrowDirections.None);
 
@@ -303,12 +369,12 @@ namespace NightmareEchoes.Unit.Pathfinding
 
 
                     #region Triggering Movement Related Status Effect During Movement
-                    for (int i = unit.BuffDebuffList.Count - 1; i >= 0; i--) 
+                    for (int i = thisUnit.BuffDebuffList.Count - 1; i >= 0; i--) 
                     {
-                        switch(unit.BuffDebuffList[i].statusEffect)
+                        switch(thisUnit.BuffDebuffList[i].statusEffect)
                         {
                             case STATUS_EFFECT.CRIPPLED_DEBUFF:
-                                unit.BuffDebuffList[i].TriggerEffect(unit);
+                                thisUnit.BuffDebuffList[i].TriggerEffect(thisUnit);
                                 break;
                         }
                     }
@@ -317,62 +383,12 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
             }
 
-            #region Setting Unit Direction
-            //set the units direction facing based on the vector between player and the next tile
-            if (pathList.Count > 0 && unit != null)
-            {
-                Vector3Int direction = pathList[0].gridLocation - unit.ActiveTile.gridLocation;
-
-                //setting directions as well as the moving boolean
-                if (direction == new Vector3Int(1, 0, 0)) //back facing
-                {
-                    unit.Direction = Direction.North;
-
-                    if (unit.BackModel != null && unit.FrontAnimator != null && unit.BackAnimator != null)
-                    {
-                        unit.BackAnimator.SetBool("Moving", true);
-                        unit.FrontAnimator.SetBool("Moving", false);
-                    }
-                }
-                else if (direction == new Vector3Int(0, 1, 0)) //back facing
-                {
-                    unit.Direction = Direction.West;
-
-                    if (unit.BackModel != null && unit.FrontAnimator != null && unit.BackAnimator != null)
-                    {
-                        unit.BackAnimator.SetBool("Moving", true);
-                        unit.FrontAnimator.SetBool("Moving", false);
-                    }
-                }
-                else if (direction == new Vector3Int(-1, 0, 0)) //front facing
-                {
-                    unit.Direction = Direction.South;
-
-                    if (unit.FrontModel != null && unit.FrontAnimator != null && unit.BackAnimator != null)
-                    {
-                        unit.FrontAnimator.SetBool("Moving", true);
-                        unit.BackAnimator.SetBool("Moving", false);
-                    }
-                }
-                else if (direction == new Vector3Int(0, -1, 0)) //front facing
-                {
-                    unit.Direction = Direction.East;
-
-                    if (unit.FrontModel != null && unit.FrontAnimator != null && unit.BackAnimator != null)
-                    {
-                        unit.FrontAnimator.SetBool("Moving", true);
-                        unit.BackAnimator.SetBool("Moving", false);
-                    }
-                }
-            }
-            #endregion
-
             if (pathList.Count <= 0 )
             {
-                if(unit.FrontAnimator != null && unit.BackAnimator != null)
+                if(thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
                 {
-                    unit.BackAnimator.SetBool("Moving", false);
-                    unit.FrontAnimator.SetBool("Moving", false);
+                    thisUnit.BackAnimator.SetBool("Moving", false);
+                    thisUnit.FrontAnimator.SetBool("Moving", false);
                 }
                 
                 //remove comment out later if we want to hide tile and reset selectedUnit when we stop moving
@@ -385,6 +401,53 @@ namespace NightmareEchoes.Unit.Pathfinding
         }
         #endregion
 
+        #region Utility for unit direction
+        public void ChangeDirection(Vector3 direction, Units thisUnit)
+        {
+            //setting directions as well as the moving boolean
+            if (direction == new Vector3Int(1, 0, 0)) //back facing
+            {
+                thisUnit.Direction = Direction.North;
+
+                if (thisUnit.BackModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
+                {
+                    thisUnit.BackAnimator.SetBool("Moving", true);
+                    thisUnit.FrontAnimator.SetBool("Moving", false);
+                }
+            }
+            else if (direction == new Vector3Int(0, 1, 0)) //back facing
+            {
+                thisUnit.Direction = Direction.West;
+
+                if (thisUnit.BackModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
+                {
+                    thisUnit.BackAnimator.SetBool("Moving", true);
+                    thisUnit.FrontAnimator.SetBool("Moving", false);
+                }
+            }
+            else if (direction == new Vector3Int(-1, 0, 0)) //front facing
+            {
+                thisUnit.Direction = Direction.South;
+
+                if (thisUnit.FrontModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
+                {
+                    thisUnit.FrontAnimator.SetBool("Moving", true);
+                    thisUnit.BackAnimator.SetBool("Moving", false);
+                }
+            }
+            else if (direction == new Vector3Int(0, -1, 0)) //front facing
+            {
+                thisUnit.Direction = Direction.East;
+
+                if (thisUnit.FrontModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
+                {
+                    thisUnit.FrontAnimator.SetBool("Moving", true);
+                    thisUnit.BackAnimator.SetBool("Moving", false);
+                }
+            }
+        }
+
+        #endregion
 
         #region Overlay Tile Related
         bool AreTilesAdjacent(OverlayTile tile1, OverlayTile tile2)
@@ -394,16 +457,16 @@ namespace NightmareEchoes.Unit.Pathfinding
                    (Mathf.Abs(tile2.gridLocation.y - tile1.gridLocation.y) == 1 && tile1.gridLocation.x == tile2.gridLocation.x);
         }
 
-        void RenderArrow()
+        public void RenderArrow(List<OverlayTile> tilesInRange, List<OverlayTile> pathList, Units thisUnit)
         {
-            foreach (var item in playerTilesInRange)
+            foreach (var item in tilesInRange)
             {
                 item.SetArrowSprite(ArrowDirections.None);
             }
 
             for (int i = 0; i < pathList.Count; i++)
             {
-                var prevTile = i > 0 ? pathList[i - 1] : currentSelectedUnit.ActiveTile;
+                var prevTile = i > 0 ? pathList[i - 1] : thisUnit.ActiveTile;
                 var futTile = i < pathList.Count - 1 ? pathList[i + 1] : null;
 
                 var arrowDir = ArrowRenderer.TranslateDirection(prevTile, pathList[i], futTile);
@@ -424,7 +487,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             return null;
         }
 
-        private void SetUnitPositionOnTile(OverlayTile tile, Units unit)
+        public void SetUnitPositionOnTile(OverlayTile tile, Units unit)
         {
             unit.gameObject.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
             unit.gameObject.GetComponent<Units>().ActiveTile = tile;
@@ -457,7 +520,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         public void ClearUnitPosition()
         {
             //called in unit attack (UIManager button), clears all existing arrows, resets selected unit, reset revertsunitPosition
-            ClearArrow();
+            ClearArrow(tempPathList);
             revertUnitPosition = null;
             revertUnitHealth = 0;
 
@@ -468,14 +531,14 @@ namespace NightmareEchoes.Unit.Pathfinding
             lastAddedTile = null;
         }
 
-        public void ClearArrow()
+        public void ClearArrow(List<OverlayTile> pathList)
         {
-            foreach (var tile in tempPathList)
+            foreach (var tile in pathList)
             {
                 tile.SetArrowSprite(ArrowDirections.None);
             }
 
-            tempPathList.Clear();
+            pathList.Clear();
             pathList.Clear();
         }
         #endregion
