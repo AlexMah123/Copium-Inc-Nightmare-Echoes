@@ -2887,6 +2887,46 @@ MonoBehaviour:
   placableCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: 
+--- !u!114 &817498681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817498674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5873f1f54dad57b40a270d4ce8d41351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Charge
+  damage: 4
+  heal: 0
+  cooldown: 0
+  range: 2
+  targetType: 0
+  targetArea: 2
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 1
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: 'Charge
+
+    4 Direction, Charge up to 2 tiles forward
+
+    Deal
+    4 Damage, Knockback Target 1 Tiles and Stun (100%)
+
+    Cooldown: 2 Turns'
 --- !u!1 &883714880
 GameObject:
   m_ObjectHideFlags: 0
@@ -6861,6 +6901,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstacles
       objectReference: {fileID: 0}
+    - target: {fileID: 7281053455649699296, guid: a1c9bebf7d127c543b8c252b9ad59a63, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1c9bebf7d127c543b8c252b9ad59a63, type: 3}
 --- !u!1 &1335788093
@@ -9971,11 +10015,11 @@ MonoBehaviour:
   damage: 3
   heal: 0
   cooldown: 0
-  range: 2
-  targetType: 0
+  range: 1
+  targetType: 1
   targetArea: 0
   targetUnitAlignment: 0
-  aoeType: 0
+  aoeType: 1
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 0
@@ -11473,6 +11517,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: skill1
+      value: 
+      objectReference: {fileID: 817498681}
+    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
       propertyPath: basicAttack
       value: 
       objectReference: {fileID: 817498675}
@@ -11499,6 +11547,10 @@ PrefabInstance:
     - target: {fileID: 9088455817183482634, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
       propertyPath: m_Name
       value: Defender
+      objectReference: {fileID: 0}
+    - target: {fileID: 9088455817183482634, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
