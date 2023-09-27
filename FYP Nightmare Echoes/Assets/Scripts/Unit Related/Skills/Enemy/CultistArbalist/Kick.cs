@@ -16,7 +16,7 @@ namespace NightmareEchoes.Unit
 
 
             //knockback
-            var direction = thisUnit.transform.position - target.transform.position;
+            var direction = target.transform.position - thisUnit.transform.position;
             var destination = target.transform.position + direction;
 
             var tileOccupied = false;
