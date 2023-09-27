@@ -57,7 +57,7 @@ namespace NightmareEchoes.Unit
         private IEnumerator CastTeleport(Units targetUnit)
         {
             var cm = CombatManager.Instance;
-            var range = cm.SquareRange(targetUnit.ActiveTile, secondaryRange);
+            var range = cm.SquareRange(targetUnit.ActiveTile , secondaryRange);
             tileRanges = OverlayTileManager.Instance.TrimOutOfBounds(range);
             cm.SetCustomRange(tileRanges);
 
