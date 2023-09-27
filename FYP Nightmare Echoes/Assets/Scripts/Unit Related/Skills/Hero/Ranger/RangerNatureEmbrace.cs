@@ -10,6 +10,8 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target);
 
+            if (target.tag = "")
+
             target.stats.Health += heal;
 
             return true;
