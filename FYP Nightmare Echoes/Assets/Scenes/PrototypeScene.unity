@@ -2849,6 +2849,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777476721}
   m_CullTransparentMesh: 1
+--- !u!1 &817498674 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9088455817183482634, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+  m_PrefabInstance: {fileID: 1076161257085603870}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &817498675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817498674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2370b25d1385d004b9749fe0f523cd0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Strike
+  damage: 4
+  heal: 0
+  cooldown: 0
+  range: 1
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 1
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: 
 --- !u!1 &883714880
 GameObject:
   m_ObjectHideFlags: 0
@@ -9912,6 +9950,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1843387934}
   m_CullTransparentMesh: 1
+--- !u!1 &1863292054 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+  m_PrefabInstance: {fileID: 601295391118310419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1863292055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863292054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2658f1127ccfb4409f643ebc3df8d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Hunter Instinct
+  damage: 3
+  heal: 0
+  cooldown: 0
+  range: 2
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: 
 --- !u!1 &1871147926
 GameObject:
   m_ObjectHideFlags: 0
@@ -11295,6 +11371,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ranger
       objectReference: {fileID: 0}
+    - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 601295390074279022, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -11341,6 +11421,87 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
+--- !u!1001 &1076161257085603870
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: basicAttack
+      value: 
+      objectReference: {fileID: 817498675}
+    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: baseStats._speed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: baseStats._resist
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: baseStats._maxHealth
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: baseStats._moveRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: baseStats._stunResist
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 9088455817183482634, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
+      propertyPath: m_Name
+      value: Defender
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
 --- !u!1 &7835678771237685685
 GameObject:
   m_ObjectHideFlags: 0
@@ -11607,6 +11768,10 @@ PrefabInstance:
     - target: {fileID: 8121445182508319273, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
       propertyPath: m_Name
       value: MageUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121445182508319273, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e528109349acc6342adfb3a3ae49de3f, type: 3}
