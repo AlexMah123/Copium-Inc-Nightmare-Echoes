@@ -158,6 +158,8 @@ namespace NightmareEchoes.Grid
             string levelID = null;
             Dictionary<string, int[]> levelData = new();
             
+            var roomCount = 0;
+            
             foreach (var str in lines)
             {
                 if (str.Length <= 0) continue;
@@ -175,6 +177,8 @@ namespace NightmareEchoes.Grid
                     'S' => "SMALL",
                     _ => null
                 };
+
+                roomType += ++roomCount;
 
                 var values = Regex.Matches(str, "[0-9]+");
                 int[] coords = {int.Parse(values[0].Value), int.Parse(values[1].Value)};
@@ -205,9 +209,11 @@ namespace NightmareEchoes.Grid
             
             foreach (var kvp in selectedLevel)
             {
-                var rand = Random.Range(0, rooms[kvp.Key].Count);
+                var roomType = Regex.Replace(kvp.Key, @"[\d-]", string.Empty);
+                
+                var rand = Random.Range(0, rooms[roomType].Count);
 
-                var selectedRoom = rooms[kvp.Key][rand];
+                var selectedRoom = rooms[roomType][rand];
                 
                 for (var x = 0; x <= selectedRoom.GetUpperBound(0) ; x++)
                 {
