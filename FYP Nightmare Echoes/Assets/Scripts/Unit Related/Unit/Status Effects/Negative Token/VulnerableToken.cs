@@ -22,11 +22,11 @@ namespace NightmareEchoes.Unit
 
             if (!unit.BlockToken)
             {
-                unit.ShowPopUpText("Vulnerable!");
+                unit.ShowPopUpText("Vulnerable!", Color.red);
             }
             else if (unit.BlockToken)
             {
-                unit.ShowPopUpText("Negated Block!");
+                unit.ShowPopUpText("Negated Block!", Color.red);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
             }

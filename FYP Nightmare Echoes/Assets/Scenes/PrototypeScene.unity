@@ -637,10 +637,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BountyHunter
       objectReference: {fileID: 0}
-    - target: {fileID: 726962122940716085, guid: db783668a420270479acb37d5a8b55f2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2658365863807529696, guid: db783668a420270479acb37d5a8b55f2, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -856,9 +852,9 @@ RectTransform:
   m_Father: {fileID: 704776108}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -685, y: 140}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 275, y: -69}
   m_SizeDelta: {x: 205, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &223581093
@@ -2289,15 +2285,15 @@ RectTransform:
   m_Children:
   - {fileID: 1177980510}
   - {fileID: 223581092}
-  - {fileID: 1409854711}
   - {fileID: 2130938371}
+  - {fileID: 1409854711}
   m_Father: {fileID: 1132889301}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -480, y: 0}
-  m_SizeDelta: {x: 960, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1724.2, y: -105}
+  m_SizeDelta: {x: 391.6709, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &704776110
 MonoBehaviour:
@@ -2849,130 +2845,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777476721}
   m_CullTransparentMesh: 1
---- !u!1 &817498674 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9088455817183482634, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
-  m_PrefabInstance: {fileID: 1076161257085603870}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &817498675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817498674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2370b25d1385d004b9749fe0f523cd0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: Strike
-  damage: 4
-  heal: 0
-  cooldown: 0
-  range: 1
-  targetType: 0
-  targetArea: 0
-  targetUnitAlignment: 0
-  aoeType: 0
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 0
-  secondaryDamage: 0
-  secondaryRange: 0
-  inflictKnockback: 1
-  isBackstabbing: 0
-  backstabBonus: 3
-  placable: 0
-  placableCount: 0
-  placableGameObject: {fileID: 0}
-  skillDescription: 'Strike
-
-    Single Target, Deal 4 Damage and Knockback Target
-    1 Tile
-
-'
---- !u!114 &817498681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817498674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5873f1f54dad57b40a270d4ce8d41351, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: Charge
-  damage: 4
-  heal: 0
-  cooldown: 0
-  range: 2
-  targetType: 0
-  targetArea: 2
-  targetUnitAlignment: 0
-  aoeType: 0
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 0
-  secondaryDamage: 0
-  secondaryRange: 0
-  inflictKnockback: 1
-  isBackstabbing: 0
-  backstabBonus: 3
-  placable: 0
-  placableCount: 0
-  placableGameObject: {fileID: 0}
-  skillDescription: 'Charge
-
-    4 Direction, Charge up to 2 tiles forward
-
-    Deal
-    4 Damage, Knockback Target 1 Tiles and Stun (100%)
-
-    Cooldown: 2 Turns'
---- !u!114 &817498682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817498674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09fc4ea2b42aa5f499c655d7a17d3549, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: WarCry
-  damage: 0
-  heal: 0
-  cooldown: 1
-  range: 2
-  targetType: 1
-  targetArea: 1
-  targetUnitAlignment: 2
-  aoeType: 1
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 2
-  secondaryDamage: 0
-  secondaryRange: 0
-  inflictKnockback: 0
-  isBackstabbing: 0
-  backstabBonus: 3
-  placable: 0
-  placableCount: 0
-  placableGameObject: {fileID: 0}
-  skillDescription: 'War Cry (Cannot Affected by Blind & Strength)
-
-    AOE Buff
-    & Debuff
-
-    Apply 1 Strength to Ally and Apply 1 Weaken (100%) to Enemy
-
-    Cooldown:
-    1 Turns'
 --- !u!1 &883714880
 GameObject:
   m_ObjectHideFlags: 0
@@ -6265,9 +6137,9 @@ RectTransform:
   m_Father: {fileID: 704776108}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -870, y: 115}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 87, y: -97}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1177980511
@@ -6557,7 +6429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnOrderList: []
   cycleCount: 0
-  phaseDelay: 2
+  phaseDelay: 1.5
   enemythinkingDelay: 2
   passTurnDelay: 1
   currentUnit: {fileID: 0}
@@ -6901,7 +6773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6926647721565910650, guid: a1c9bebf7d127c543b8c252b9ad59a63, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6926647721565910650, guid: a1c9bebf7d127c543b8c252b9ad59a63, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7593,11 +7465,11 @@ RectTransform:
   - {fileID: 953239745}
   - {fileID: 1368350781}
   m_Father: {fileID: 704776108}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -685, y: 190}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 275, y: -24}
   m_SizeDelta: {x: 190, y: 18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1409854712
@@ -7712,6 +7584,7 @@ MonoBehaviour:
   - {fileID: 484320849}
   - {fileID: 85066880}
   - {fileID: 1597697571}
+  currentUnitPanel: {fileID: 1765086403}
   currentUnitProfile: {fileID: 1547541198}
   BasicAttackText: {fileID: 556637476}
   Skill1Text: {fileID: 1615233627}
@@ -8011,10 +7884,10 @@ RectTransform:
   m_Father: {fileID: 1765086404}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -288.78748, y: 0}
-  m_SizeDelta: {x: 577.57495, y: 0}
+  m_AnchoredPosition: {x: -288.78748, y: -105}
+  m_SizeDelta: {x: 577.57495, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1481047563
 MonoBehaviour:
@@ -8191,9 +8064,9 @@ RectTransform:
   m_Father: {fileID: 1765086404}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 90, y: 115}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 87, y: -97}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1547541198
@@ -8834,9 +8707,9 @@ RectTransform:
   m_Father: {fileID: 1765086404}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 275, y: 140}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 275, y: -69}
   m_SizeDelta: {x: 205, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1662970387
@@ -9505,10 +9378,10 @@ RectTransform:
   m_Father: {fileID: 1132889301}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: 0}
-  m_SizeDelta: {x: 960, y: 0}
+  m_AnchoredPosition: {x: 484.95764, y: -105}
+  m_SizeDelta: {x: 969.9153, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1765086406
 MonoBehaviour:
@@ -10040,44 +9913,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1843387934}
   m_CullTransparentMesh: 1
---- !u!1 &1863292054 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-  m_PrefabInstance: {fileID: 601295391118310419}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1863292055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863292054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2658f1127ccfb4409f643ebc3df8d6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: Hunter Instinct
-  damage: 3
-  heal: 0
-  cooldown: 0
-  range: 1
-  targetType: 1
-  targetArea: 0
-  targetUnitAlignment: 0
-  aoeType: 1
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 0
-  secondaryDamage: 0
-  secondaryRange: 0
-  inflictKnockback: 0
-  isBackstabbing: 0
-  backstabBonus: 3
-  placable: 0
-  placableCount: 0
-  placableGameObject: {fileID: 0}
-  skillDescription: 
 --- !u!1 &1871147926
 GameObject:
   m_ObjectHideFlags: 0
@@ -10621,9 +10456,9 @@ RectTransform:
   m_Father: {fileID: 1765086404}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 275, y: 55}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 275, y: -155}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2048560575
@@ -11222,11 +11057,11 @@ RectTransform:
   - {fileID: 2061147914}
   - {fileID: 1996681856}
   m_Father: {fileID: 704776108}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -685, y: 55}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 275, y: -155}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2130938372
@@ -11290,9 +11125,9 @@ RectTransform:
   m_Father: {fileID: 1765086404}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 275, y: 190}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 275, y: -24}
   m_SizeDelta: {x: 190, y: 18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2145582705
@@ -11461,10 +11296,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ranger
       objectReference: {fileID: 0}
-    - target: {fileID: 601295390074279018, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 601295390074279022, guid: dec7fe3912b46f74cb881172179e385f, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -11520,7 +11351,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5803087067753149257, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11562,45 +11393,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
-      propertyPath: skill1
-      value: 
-      objectReference: {fileID: 817498681}
-    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
-      propertyPath: skill2
-      value: 
-      objectReference: {fileID: 817498682}
-    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
-      propertyPath: basicAttack
-      value: 
-      objectReference: {fileID: 817498675}
-    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
-      propertyPath: baseStats._speed
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
-      propertyPath: baseStats._resist
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
-      propertyPath: baseStats._maxHealth
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
-      propertyPath: baseStats._moveRange
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
-      propertyPath: baseStats._stunResist
-      value: 70
-      objectReference: {fileID: 0}
     - target: {fileID: 9088455817183482634, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
       propertyPath: m_Name
       value: Defender
-      objectReference: {fileID: 0}
-    - target: {fileID: 9088455817183482634, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c1d191d30260e340bf82a649293d577, type: 3}

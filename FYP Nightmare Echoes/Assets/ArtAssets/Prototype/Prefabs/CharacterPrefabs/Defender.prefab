@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 1640256430824122786}
   - component: {fileID: 2905729128967353104}
   - component: {fileID: 7904244744492314586}
+  - component: {fileID: 817498675}
+  - component: {fileID: 817498681}
+  - component: {fileID: 817498682}
   m_Layer: 6
   m_Name: Defender
   m_TagString: Inspectable
@@ -153,19 +156,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Defender
-  sprite: {fileID: 0}
-  popupTextPrefab: {fileID: 0}
-  dmgTextPrefab: {fileID: 0}
+  sprite: {fileID: -112463209, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  dmgTextPrefab: {fileID: 6045939641622712432, guid: c60069fdc9d03ec48bc7125c0e61dae6, type: 3}
   isHostile: 0
   direction: 0
   typeOfUnit: 0
   baseStats:
     _health: 0
-    _maxHealth: 0
-    _speed: 0
-    _moveRange: 0
-    _stunResist: 0
-    _resist: 0
+    _maxHealth: 40
+    _speed: 6
+    _moveRange: 3
+    _stunResist: 70
+    _resist: 20
   stats:
     _health: 0
     _maxHealth: 0
@@ -193,9 +196,9 @@ MonoBehaviour:
   vertigoToken: 0
   stunToken: 0
   immobilizeToken: 0
-  basicAttack: {fileID: 0}
-  skill1: {fileID: 0}
-  skill2: {fileID: 0}
+  basicAttack: {fileID: 817498675}
+  skill1: {fileID: 817498681}
+  skill2: {fileID: 817498682}
   skill3: {fileID: 0}
   passive: {fileID: 0}
   sprites: []
@@ -204,3 +207,122 @@ MonoBehaviour:
   frontAnimator: {fileID: 0}
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
+--- !u!114 &817498675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088455817183482634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2370b25d1385d004b9749fe0f523cd0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Strike
+  damage: 4
+  heal: 0
+  cooldown: 0
+  range: 1
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 1
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: 'Strike
+
+    Single Target, Deal 4 Damage and Knockback Target
+    1 Tile
+
+'
+--- !u!114 &817498681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088455817183482634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5873f1f54dad57b40a270d4ce8d41351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Charge
+  damage: 4
+  heal: 0
+  cooldown: 0
+  range: 2
+  targetType: 0
+  targetArea: 2
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 1
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: 'Charge
+
+    4 Direction, Charge up to 2 tiles forward
+
+    Deal
+    4 Damage, Knockback Target 1 Tiles and Stun (100%)
+
+    Cooldown: 2 Turns'
+--- !u!114 &817498682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088455817183482634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09fc4ea2b42aa5f499c655d7a17d3549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: WarCry
+  damage: 0
+  heal: 0
+  cooldown: 1
+  range: 2
+  targetType: 1
+  targetArea: 1
+  targetUnitAlignment: 2
+  aoeType: 1
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 2
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: 'War Cry (Cannot Affected by Blind & Strength)
+
+    AOE Buff
+    & Debuff
+
+    Apply 1 Strength to Ally and Apply 1 Weaken (100%) to Enemy
+
+    Cooldown:
+    1 Turns'

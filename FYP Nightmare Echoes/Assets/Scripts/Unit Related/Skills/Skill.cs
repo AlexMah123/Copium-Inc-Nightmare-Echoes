@@ -174,8 +174,8 @@ namespace NightmareEchoes.Unit
                 if (xDist < 0)
                 {
                     //north
-                    thisUnit.Direction = Direction.North;
-                    if (target.Direction == Direction.North) 
+                    thisUnit.Direction = Direction.NORTH;
+                    if (target.Direction == Direction.NORTH) 
                     {
                         isBackstabbing = true;
                     }
@@ -183,8 +183,8 @@ namespace NightmareEchoes.Unit
                 else
                 {
                     //south
-                    thisUnit.Direction = Direction.South;
-                    if (target.Direction == Direction.South)
+                    thisUnit.Direction = Direction.SOUTH;
+                    if (target.Direction == Direction.SOUTH)
                     {
                         isBackstabbing = true;
                     }
@@ -195,8 +195,8 @@ namespace NightmareEchoes.Unit
                 if (yDist > 0)
                 {
                     //east
-                    thisUnit.Direction = Direction.East;
-                    if (target.Direction == Direction.East)
+                    thisUnit.Direction = Direction.EAST;
+                    if (target.Direction == Direction.EAST)
                     {
                         isBackstabbing = true;
                     }
@@ -204,8 +204,8 @@ namespace NightmareEchoes.Unit
                 else
                 {
                     //west
-                    thisUnit.Direction = Direction.West;
-                    if (target.Direction == Direction.West)
+                    thisUnit.Direction = Direction.WEST;
+                    if (target.Direction == Direction.WEST)
                     {
                         isBackstabbing = true;
                     }
@@ -229,8 +229,8 @@ namespace NightmareEchoes.Unit
                 if (xDist < 0)
                 {
                     //north
-                    thisUnit.Direction = Direction.North;
-                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.North)
+                    thisUnit.Direction = Direction.NORTH;
+                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.NORTH)
                     {
                         isBackstabbing = true;
                     }
@@ -238,8 +238,8 @@ namespace NightmareEchoes.Unit
                 else
                 {
                     //south
-                    thisUnit.Direction = Direction.South;
-                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.South)
+                    thisUnit.Direction = Direction.SOUTH;
+                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.SOUTH)
                     {
                         isBackstabbing = true;
                     }
@@ -250,8 +250,8 @@ namespace NightmareEchoes.Unit
                 if (yDist > 0)
                 {
                     //east
-                    thisUnit.Direction = Direction.East;
-                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.East)
+                    thisUnit.Direction = Direction.EAST;
+                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.EAST)
                     {
                         isBackstabbing = true;
                     }
@@ -259,8 +259,8 @@ namespace NightmareEchoes.Unit
                 else
                 {
                     //west
-                    thisUnit.Direction = Direction.West;
-                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.West)
+                    thisUnit.Direction = Direction.WEST;
+                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.WEST)
                     {
                         isBackstabbing = true;
                     }
@@ -293,19 +293,19 @@ namespace NightmareEchoes.Unit
             {
                 if (thisUnit.FindModifier(STATUS_EFFECT.BLIND_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
                 {
-                    thisUnit.ShowPopUpText($"Blinded!");
+                    thisUnit.ShowPopUpText($"Blinded!", Color.red);
                     return false;
                 }
                 else
                 {
-                    thisUnit.ShowPopUpText($"Blind did not work!");
+                    thisUnit.ShowPopUpText($"Blind did not work!", Color.red);
 
                     if (thisUnit.WeakenToken)
                     {
                         int newDamage = Mathf.RoundToInt(damage * 0.5f);
                         CheckForBackstab(target, newDamage);
 
-                        thisUnit.ShowPopUpText($"Attack was weakened!");
+                        thisUnit.ShowPopUpText($"Attack was weakened!", Color.red);
                         thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
                     }
                     else if (thisUnit.StrengthToken)
@@ -313,7 +313,7 @@ namespace NightmareEchoes.Unit
                         int newDamage = Mathf.RoundToInt(damage * 1.5f);
                         CheckForBackstab(target, newDamage);
 
-                        thisUnit.ShowPopUpText($"Attack was strengthen!");
+                        thisUnit.ShowPopUpText($"Attack was strengthen!", Color.red);
                         thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
                     }
                     else
@@ -330,7 +330,7 @@ namespace NightmareEchoes.Unit
                 int newDamage = Mathf.RoundToInt(damage * 0.5f);
                 CheckForBackstab(target, newDamage);
 
-                thisUnit.ShowPopUpText($"Attack was weakened!");
+                thisUnit.ShowPopUpText($"Attack was weakened!", Color.red);
                 thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
             }
             else if (thisUnit.StrengthToken)
@@ -338,7 +338,7 @@ namespace NightmareEchoes.Unit
                 int newDamage = Mathf.RoundToInt(damage * 1.5f);
                 CheckForBackstab(target, newDamage);
 
-                thisUnit.ShowPopUpText($"Attack was strengthen!");
+                thisUnit.ShowPopUpText($"Attack was strengthen!", Color.red);
                 thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
             }
             else

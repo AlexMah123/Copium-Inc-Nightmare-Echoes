@@ -407,7 +407,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             //setting directions as well as the moving boolean
             if (direction == new Vector3Int(1, 0, 0)) //back facing
             {
-                thisUnit.Direction = Direction.North;
+                thisUnit.Direction = Direction.NORTH;
 
                 if (thisUnit.BackModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
                 {
@@ -417,7 +417,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
             else if (direction == new Vector3Int(0, 1, 0)) //back facing
             {
-                thisUnit.Direction = Direction.West;
+                thisUnit.Direction = Direction.WEST;
 
                 if (thisUnit.BackModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
                 {
@@ -427,7 +427,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
             else if (direction == new Vector3Int(-1, 0, 0)) //front facing
             {
-                thisUnit.Direction = Direction.South;
+                thisUnit.Direction = Direction.SOUTH;
 
                 if (thisUnit.FrontModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
                 {
@@ -437,7 +437,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
             else if (direction == new Vector3Int(0, -1, 0)) //front facing
             {
-                thisUnit.Direction = Direction.East;
+                thisUnit.Direction = Direction.EAST;
 
                 if (thisUnit.FrontModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
                 {

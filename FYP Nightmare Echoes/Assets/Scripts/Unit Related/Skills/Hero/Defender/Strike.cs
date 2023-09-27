@@ -1,10 +1,7 @@
 using NightmareEchoes.Grid;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.UI.CanvasScaler;
 
 namespace NightmareEchoes.Unit
 {

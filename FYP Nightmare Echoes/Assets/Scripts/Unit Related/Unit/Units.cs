@@ -7,6 +7,7 @@ using NightmareEchoes.Grid;
 using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Unit.AI;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.Unit
@@ -21,13 +22,14 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected string _name;
         [SerializeField] protected Sprite sprite;
         protected SpriteRenderer spriteRenderer;
-        [SerializeField] protected GameObject popupTextPrefab;
-        [SerializeField] protected GameObject dmgTextPrefab;
-
         [SerializeField] protected bool isHostile;
         [SerializeField] protected Direction direction;
         [SerializeField] protected TypeOfUnit typeOfUnit;
 
+        [Space(15), Header("Units Popup text")]
+        [SerializeField] protected GameObject popupTextPrefab;        
+
+        [Space(15), Header("Stats For Units")]
         public BaseStats baseStats = new BaseStats();
         public BaseStats stats = new BaseStats();
         public ModifiersStruct modifiedStats = new();
@@ -569,18 +571,10 @@ namespace NightmareEchoes.Unit
         protected virtual void Start()
         {
             stats.Health = stats.MaxHealth;
-            //AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.MOVERANGE_BUFF, 2, 1));
         }
 
         protected virtual void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                //AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.IMMOBILIZE_TOKEN, 1, 1));
-            }
-
-            
-
             if (stats.Health == 0)
             {
                 if (!IsHostile)
@@ -601,32 +595,32 @@ namespace NightmareEchoes.Unit
             {
                 switch (Direction)
                 {
-                    case Direction.North: //back facing
+                    case Direction.NORTH: //back facing
 
                         if (SpriteRenderer != null)
                         {
-                            SpriteRenderer.sprite = sprites[(int)Direction.North];
+                            SpriteRenderer.sprite = sprites[(int)Direction.NORTH];
                         }
                         break;
 
-                    case Direction.South: //front facing
+                    case Direction.SOUTH: //front facing
                         if (SpriteRenderer != null)
                         {
-                            SpriteRenderer.sprite = sprites[(int)Direction.South];
+                            SpriteRenderer.sprite = sprites[(int)Direction.SOUTH];
                         }
                         break;
 
-                    case Direction.East: //front facing
+                    case Direction.EAST: //front facing
                         if (SpriteRenderer != null)
                         {
-                            SpriteRenderer.sprite = sprites[(int)Direction.East];
+                            SpriteRenderer.sprite = sprites[(int)Direction.EAST];
                         }
                         break;
 
-                    case Direction.West: //back facing
+                    case Direction.WEST: //back facing
                         if (SpriteRenderer != null)
                         {
-                            SpriteRenderer.sprite = sprites[(int)Direction.West];
+                            SpriteRenderer.sprite = sprites[(int)Direction.WEST];
                         }
                         break;
                 }
@@ -635,7 +629,7 @@ namespace NightmareEchoes.Unit
             {
                 switch (Direction)
                 {
-                    case Direction.North: //back facing
+                    case Direction.NORTH: //back facing
                         if (frontModel != null && backModel != null)
                         {
                             frontModel.SetActive(false);
@@ -645,7 +639,7 @@ namespace NightmareEchoes.Unit
                         transform.localRotation = Quaternion.Euler(0, 0, 0);
                         break;
 
-                    case Direction.South: //front facing
+                    case Direction.SOUTH: //front facing
                         if (frontModel != null && backModel != null)
                         {
                             frontModel.SetActive(true);
@@ -655,7 +649,7 @@ namespace NightmareEchoes.Unit
                         transform.localRotation = Quaternion.Euler(0, 0, 0);
                         break;
 
-                    case Direction.East: //front facing
+                    case Direction.EAST: //front facing
                         if (frontModel != null && backModel != null)
                         {
                             frontModel.SetActive(true);
@@ -665,7 +659,7 @@ namespace NightmareEchoes.Unit
                         transform.localRotation = Quaternion.Euler(0, 180, 0);
                         break;
 
-                    case Direction.West: //back facing
+                    case Direction.WEST: //back facing
                         if (frontModel != null && backModel != null)
                         {
                             frontModel.SetActive(false);
@@ -734,25 +728,25 @@ namespace NightmareEchoes.Unit
             {
                 if (FindModifier(STATUS_EFFECT.DODGE_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
                 {
-                    ShowPopUpText($"Dodged!");
+                    ShowPopUpText($"Dodged!", Color.red);
                 }
                 else if (barrierToken)
                 {
-                    ShowPopUpText($"Failed to dodge!");
-                    ShowPopUpText($"Damage was negated!");
+                    ShowPopUpText($"Failed to dodge!", Color.red);
+                    ShowPopUpText($"Damage was negated!", Color.red);
                     UpdateTokenLifeTime(STATUS_EFFECT.BARRIER_TOKEN);
                 }
                 else
                 {
-                    ShowPopUpText($"Failed to dodge!");
+                    ShowPopUpText($"Failed to dodge!", Color.red);
 
                     if (blockToken)
                     {
                         int newDamage = Mathf.RoundToInt(damage * 0.5f);
                         stats.Health -= newDamage;
 
-                        ShowPopUpText($"Damage was reduced!");
-                        ShowDmgText($"-{newDamage}");
+                        ShowPopUpText($"Damage was reduced!", Color.red);
+                        ShowPopUpText($"-{newDamage}", Color.yellow);
                         UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
                     }
                     else if (vulnerableToken)
@@ -760,15 +754,15 @@ namespace NightmareEchoes.Unit
                         int newDamage = Mathf.RoundToInt(damage * 1.5f);
                         stats.Health -= newDamage;
 
-                        ShowPopUpText($"Damage was increased!");
-                        ShowDmgText($"-{newDamage}");
+                        ShowPopUpText($"Damage was increased!", Color.red);
+                        ShowPopUpText($"-{newDamage}", Color.yellow);
                         UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
                     }
                     else
                     {
                         stats.Health -= damage;
 
-                        ShowDmgText($"-{damage}");
+                        ShowPopUpText($"-{damage}", Color.yellow);
                     }
                 }
 
@@ -776,7 +770,7 @@ namespace NightmareEchoes.Unit
             }
             else if(barrierToken)
             {
-                ShowPopUpText($"Damage was negated!");
+                ShowPopUpText($"Damage was negated!", Color.red);
                 UpdateTokenLifeTime(STATUS_EFFECT.BARRIER_TOKEN);
             }
             else if(blockToken)
@@ -784,8 +778,8 @@ namespace NightmareEchoes.Unit
                 int newDamage = Mathf.RoundToInt(damage * 0.5f);
                 stats.Health -= newDamage;
 
-                ShowPopUpText($"Damage was reduced!");
-                ShowDmgText($"-{newDamage}");
+                ShowPopUpText($"Damage was reduced!", Color.red);
+                ShowPopUpText($"-{newDamage}", Color.yellow);
                 UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
             }
             else if(vulnerableToken)
@@ -793,15 +787,15 @@ namespace NightmareEchoes.Unit
                 int newDamage = Mathf.RoundToInt(damage * 1.5f);
                 stats.Health -= newDamage;
 
-                ShowPopUpText($"Damage was increased!");
-                ShowDmgText($"-{newDamage}");
+                ShowPopUpText($"Damage was increased!", Color.red);
+                ShowPopUpText($"-{newDamage}", Color.yellow);
                 UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
             }
             else
             {
                 stats.Health -= damage;
 
-                ShowDmgText($"-{damage}");
+                ShowPopUpText($"-{damage}", Color.yellow);
             }
 
             #endregion            
@@ -830,11 +824,10 @@ namespace NightmareEchoes.Unit
 
 
         #region Utility
-
         public Vector3 RandomVector()
         {
-            Vector2 minRange = new Vector3(-0.5f, 0f);
-            Vector2 maxRange = new Vector3(0.5f, 1f);
+            Vector2 minRange = new Vector3(-1f, 0f);
+            Vector2 maxRange = new Vector3(1f, 1.5f);
 
             float randomX = UnityEngine.Random.Range(minRange.x, maxRange.x);
             float randomY = UnityEngine.Random.Range(minRange.y, maxRange.y);
@@ -842,23 +835,15 @@ namespace NightmareEchoes.Unit
             return new Vector3(randomX, randomY, 0);
         }
 
-        public void ShowPopUpText(string text)
+        public void ShowPopUpText(string text, Color color)
         {
-            if(popupTextPrefab)
+            if (popupTextPrefab)
             {
                 GameObject prefab = Instantiate(popupTextPrefab, transform.localPosition + RandomVector(), Quaternion.identity);
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = text;
-            }
-        }
 
-        public void ShowDmgText(string text)
-        {
-            if (dmgTextPrefab)
-            {
-                GameObject prefab = Instantiate(dmgTextPrefab, transform.localPosition + RandomVector(), Quaternion.identity);
-                TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
-                textMeshPro.text = text;
+                textMeshPro.color = color;
             }
         }
 
@@ -1049,10 +1034,10 @@ namespace NightmareEchoes.Unit
 
     public enum Direction
     {
-        North = 0,
-        South = 1,
-        East = 2,
-        West = 3,
+        NORTH = 0,
+        SOUTH = 1,
+        EAST = 2,
+        WEST = 3,
     }
 
 

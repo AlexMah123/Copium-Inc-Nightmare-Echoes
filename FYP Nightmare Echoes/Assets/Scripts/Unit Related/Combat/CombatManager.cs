@@ -165,7 +165,7 @@ namespace NightmareEchoes.Unit.Combat
         
         private void EndTurn()
         {
-            activeSkill.GetComponent<Units>().ShowPopUpText(activeSkill.SkillName);
+            activeSkill.GetComponent<Units>().ShowPopUpText(activeSkill.SkillName, Color.red);
             activeSkill.Reset();
             activeSkill = null;
 
@@ -487,16 +487,16 @@ namespace NightmareEchoes.Unit.Combat
 
             switch (unit.Direction)
             {
-                case Direction.North:
+                case Direction.NORTH:
                     direction = new Vector2Int(1, 0);
                     break;
-                case Direction.South:
+                case Direction.SOUTH:
                     direction = new Vector2Int(-1,0);
                     break;
-                case Direction.East:
+                case Direction.EAST:
                     direction = new Vector2Int(0,-1);
                     break;
-                case Direction.West:
+                case Direction.WEST:
                     direction = new Vector2Int(0,1);
                     break;  
             }
@@ -507,12 +507,12 @@ namespace NightmareEchoes.Unit.Combat
 
             for (var i = 1; i < range; i++)
             {
-                if (unit.Direction == Direction.North || unit.Direction == Direction.South)
+                if (unit.Direction == Direction.NORTH || unit.Direction == Direction.SOUTH)
                 {
                     possibleTileCoords.Add(frontalTile + new Vector2Int(0, i));
                     possibleTileCoords.Add(frontalTile - new Vector2Int(0, i));
                 }
-                if (unit.Direction == Direction.East || unit.Direction == Direction.West)
+                if (unit.Direction == Direction.EAST || unit.Direction == Direction.WEST)
                 {
                     possibleTileCoords.Add(frontalTile + new Vector2Int(i, 0));
                     possibleTileCoords.Add(frontalTile - new Vector2Int(i, 0));
@@ -529,16 +529,16 @@ namespace NightmareEchoes.Unit.Combat
 
             switch (unit.Direction)
             {
-                case Direction.North:
+                case Direction.NORTH:
                     direction = new Vector2Int(1, 0);
                     break;
-                case Direction.South:
+                case Direction.SOUTH:
                     direction = new Vector2Int(-1, 0);
                     break;
-                case Direction.East:
+                case Direction.EAST:
                     direction = new Vector2Int(0, -1);
                     break;
-                case Direction.West:
+                case Direction.WEST:
                     direction = new Vector2Int(0, 1);
                     break;
             }
@@ -551,12 +551,12 @@ namespace NightmareEchoes.Unit.Combat
 
             for (; i <= range; i++)
             {
-                if (unit.Direction == Direction.North || unit.Direction == Direction.South)
+                if (unit.Direction == Direction.NORTH || unit.Direction == Direction.SOUTH)
                 {
                     possibleTileCoords.Add(tileLayoutY - new Vector2Int(0, i));
                     possibleTileCoords.Add(tileLayoutY + new Vector2Int(0, i));
                 }
-                if (unit.Direction == Direction.East || unit.Direction == Direction.West)
+                if (unit.Direction == Direction.EAST || unit.Direction == Direction.WEST)
                 {
                     possibleTileCoords.Add(tileLayoutX + new Vector2Int(i, 0));
                     possibleTileCoords.Add(tileLayoutX - new Vector2Int(i, 0));
@@ -581,7 +581,7 @@ namespace NightmareEchoes.Unit.Combat
             {
                 switch (thisUnit.Direction)
                 {
-                    case Direction.North:
+                    case Direction.NORTH:
                         //add the front
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y));
 
@@ -590,7 +590,7 @@ namespace NightmareEchoes.Unit.Combat
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y - range));
                         break;
 
-                    case Direction.South:
+                    case Direction.SOUTH:
                         //add the front
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y));
 
@@ -599,7 +599,7 @@ namespace NightmareEchoes.Unit.Combat
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y - range));
                         break;
 
-                    case Direction.East:
+                    case Direction.EAST:
                         //add the front
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y - range));
 
@@ -608,7 +608,7 @@ namespace NightmareEchoes.Unit.Combat
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y - range));
                         break;
 
-                    case Direction.West:
+                    case Direction.WEST:
                         //add the front
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y + range));
 

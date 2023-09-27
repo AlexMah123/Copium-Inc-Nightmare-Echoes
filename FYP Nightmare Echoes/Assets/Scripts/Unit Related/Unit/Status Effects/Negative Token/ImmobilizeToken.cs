@@ -18,13 +18,13 @@ namespace NightmareEchoes.Unit
         #region Effect Related
         public override void ApplyEffect(Units unit)
         {
-            unit.ShowPopUpText("Immobilized!");
+            unit.ShowPopUpText("Immobilized!", Color.red);
             unit.ImmobilizeToken = true;
         }
 
         public override void TriggerEffect(Units unit)
         {
-            unit.ShowPopUpText("Cannot Move");
+            unit.ShowPopUpText("Cannot Move", Color.red);
         }
         #endregion
 

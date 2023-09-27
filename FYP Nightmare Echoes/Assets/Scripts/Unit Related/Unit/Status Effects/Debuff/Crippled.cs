@@ -24,8 +24,8 @@ namespace NightmareEchoes.Unit
 
         public override void TriggerEffect(Units unit)
         {
-            unit.ShowPopUpText("Crippled!");
-            unit.ShowDmgText($"-{crippledDmg}");
+            unit.ShowPopUpText("Crippled!", Color.red);
+            unit.ShowPopUpText($"-{crippledDmg}", Color.yellow);
             unit.stats.Health -= crippledDmg;
         }
 

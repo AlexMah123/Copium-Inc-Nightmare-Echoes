@@ -23,11 +23,11 @@ namespace NightmareEchoes.Unit
 
             if (!unit.VertigoToken && !unit.HasteToken)
             {
-                unit.ShowPopUpText("Gained Haste!");
+                unit.ShowPopUpText("Gained Haste!", Color.red);
             }
             else if (unit.VertigoToken)
             {
-                unit.ShowPopUpText("Negated Vertigo!");
+                unit.ShowPopUpText("Negated Vertigo!", Color.red);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
             }

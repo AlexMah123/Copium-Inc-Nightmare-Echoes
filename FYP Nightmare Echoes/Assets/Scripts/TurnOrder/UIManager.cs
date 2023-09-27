@@ -32,6 +32,7 @@ namespace NightmareEchoes.TurnOrder
 
         [Space(20), Header("Current Unit Info")]
         [SerializeField] List<Button> currentUnitButtonList;
+        [SerializeField] GameObject currentUnitPanel;
         [SerializeField] Button currentUnitProfile;
         [SerializeField] TextMeshProUGUI BasicAttackText;
         [SerializeField] TextMeshProUGUI Skill1Text;
@@ -127,6 +128,7 @@ namespace NightmareEchoes.TurnOrder
         private void Start()
         {
             inspectedUnitPanel.SetActive(false);
+            currentUnitPanel.SetActive(false);
             glossaryPanel.SetActive(false);
         }
 
@@ -136,6 +138,7 @@ namespace NightmareEchoes.TurnOrder
             #region Current Unit text
             if (CurrentUnit != null)
             {
+                currentUnitPanel.SetActive(true);
                 currentUnitProfile.image.sprite = CurrentUnit.Sprite;
 
                 //slowly remove this as animations come out
@@ -171,6 +174,10 @@ namespace NightmareEchoes.TurnOrder
             }
             else
             {
+                if(currentUnitPanel.activeSelf)
+                {
+                    currentUnitPanel.SetActive(false);
+                }
                 EnableCurrentUI(false);
             }
             #endregion

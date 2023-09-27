@@ -22,11 +22,11 @@ namespace NightmareEchoes.Unit
 
             if (!unit.StrengthToken)
             {
-                unit.ShowPopUpText("Weaken!");
+                unit.ShowPopUpText("Weaken!", Color.red);
             }
             else if (unit.StrengthToken)
             {
-                unit.ShowPopUpText("Negated Strength!");
+                unit.ShowPopUpText("Negated Strength!", Color.red);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
             }

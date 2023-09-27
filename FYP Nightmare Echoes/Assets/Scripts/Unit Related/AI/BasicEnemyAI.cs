@@ -199,28 +199,28 @@ namespace NightmareEchoes.Unit.AI
                         currTileUtil = FindDistanceBetweenTile(targetTileToMove, possibleAttackLocations[i]);
                         switch (targetHero.Direction)
                         {
-                            case Direction.North:
+                            case Direction.NORTH:
                                 if ((possibleAttackLocations[i].gridLocation.x < targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
                                 {
                                     currTileUtil = currTileUtil + 20;
                                     Debug.Log("North ATK");
                                 }
                                 break;
-                            case Direction.South:
+                            case Direction.SOUTH:
                                 if ((possibleAttackLocations[i].gridLocation.x > targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
                                 {
                                     currTileUtil = currTileUtil + 20;
                                     Debug.Log("South ATK");
                                 }
                                 break;
-                            case Direction.East:
+                            case Direction.EAST:
                                 if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < targetTileToMove.gridLocation.y))
                                 {
                                     currTileUtil = currTileUtil + 20;
                                     Debug.Log("East ATK");
                                 }
                                 break;
-                            case Direction.West:
+                            case Direction.WEST:
                                 if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > targetTileToMove.gridLocation.y))
                                 {
                                     currTileUtil = currTileUtil + 20;
@@ -258,28 +258,28 @@ namespace NightmareEchoes.Unit.AI
 
                     switch (targetHero.Direction)
                     {
-                        case Direction.North:
+                        case Direction.NORTH:
                             if ((possibleAttackLocations[i].gridLocation.x < targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
                             {
                                 currTileUtil = currTileUtil + 20;
                                 Debug.Log("North MoveATK");
                             }
                             break;
-                        case Direction.South:
+                        case Direction.SOUTH:
                             if ((possibleAttackLocations[i].gridLocation.x > targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
                             {
                                 currTileUtil = currTileUtil + 20;
                                 Debug.Log("South MoveATK");
                             }
                             break;
-                        case Direction.East:
+                        case Direction.EAST:
                             if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < targetTileToMove.gridLocation.y))
                             {
                                 currTileUtil = currTileUtil + 20;
                                 Debug.Log("East MoveATK");
                             }
                             break;
-                        case Direction.West:
+                        case Direction.WEST:
                             if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > targetTileToMove.gridLocation.y))
                             {
                                 currTileUtil = currTileUtil + 20;
@@ -389,25 +389,25 @@ namespace NightmareEchoes.Unit.AI
                     //then based on the units direction, move infront of the target
                     switch (thisUnit.Direction)
                     {
-                        case Direction.North:
+                        case Direction.NORTH:
                             redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation - new Vector3Int(1, 0, 0)));
                             break;
 
-                        case Direction.South:
+                        case Direction.SOUTH:
                             redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation + new Vector3Int(1, 0, 0)));
                             break;
 
-                        case Direction.East:
+                        case Direction.EAST:
                             redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation + new Vector3Int(0, 1, 0)));
                             break;
 
-                        case Direction.West:
+                        case Direction.WEST:
                             redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation - new Vector3Int(0, 1, 0)));
                             break;
                     }
                 }
 
-                thisUnit.ShowPopUpText("Detected Stealth Hero!!");
+                thisUnit.ShowPopUpText("Detected Stealth Hero!!", Color.red);
                 StartCoroutine(DetectedStealthUnit(redirectTile));
             }
             //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.

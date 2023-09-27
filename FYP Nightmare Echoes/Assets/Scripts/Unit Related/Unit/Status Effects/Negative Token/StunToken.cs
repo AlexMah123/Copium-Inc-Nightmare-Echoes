@@ -20,7 +20,7 @@ namespace NightmareEchoes.Unit
         #region Effect Related
         public override void ApplyEffect(Units unit)
         {
-            unit.ShowPopUpText("Stunned!");
+            unit.ShowPopUpText("Stunned!", Color.red);
             unit.StunToken = true;
         }
 

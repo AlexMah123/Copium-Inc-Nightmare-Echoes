@@ -16,13 +16,14 @@ GameObject:
   - component: {fileID: 601295391118310421}
   - component: {fileID: 601295391118310427}
   - component: {fileID: 837001683}
+  - component: {fileID: 1863292055}
   m_Layer: 6
   m_Name: Ranger
   m_TagString: Inspectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &601295390074279022
 Transform:
   m_ObjectHideFlags: 0
@@ -146,7 +147,7 @@ MonoBehaviour:
   basicAttack: {fileID: 601295391118310421}
   skill1: {fileID: 601295391118310427}
   skill2: {fileID: 837001683}
-  skill3: {fileID: 0}
+  skill3: {fileID: 1863292055}
   passive: {fileID: 0}
   sprites:
   - {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
@@ -310,3 +311,36 @@ MonoBehaviour:
   placableGameObject: {fileID: 0}
   skillDescription: "Nature\u2019s Embrace (Cannot Affected by Blind & Strength)\r\nSingle
     target, 2 Tiles Range, Self Heal or Ally for 10 HP\r\n"
+--- !u!114 &1863292055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2658f1127ccfb4409f643ebc3df8d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Hunter Instinct
+  damage: 3
+  heal: 0
+  cooldown: 0
+  range: 1
+  targetType: 1
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 1
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: 
