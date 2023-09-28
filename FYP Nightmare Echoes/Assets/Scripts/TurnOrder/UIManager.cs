@@ -73,7 +73,7 @@ namespace NightmareEchoes.TurnOrder
         List<GameObject> currentUnitStatusEffectPool = new List<GameObject>();
 
 
-        [Space(20), Header("Character Glossary")]
+        [Space(20), Header("Character Glossary Related")]
         [SerializeField] GameObject glossaryPanel;
         [SerializeField] GameObject glossaryContainer;
         [SerializeField] Image glossaryImage;
@@ -83,7 +83,22 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI glossarySpeedText;
         [SerializeField] TextMeshProUGUI glossaryStunResistText;
         [SerializeField] TextMeshProUGUI glossaryResistText;
+
+        [Space(20), Header("Character Glossary Skills")]
+        Units glossaryUnit;
+        [SerializeField] List<Button> glossarySkills;
+        [SerializeField] TextMeshProUGUI glossarySkillText;
+        [SerializeField] List<Image> glossarySkillsImage;
         [SerializeField] Slider glossaryHealth;
+        [SerializeField] TextMeshProUGUI glossaryBasicAttackButtonText;
+        [SerializeField] TextMeshProUGUI glossarySkill1ButtonText;
+        [SerializeField] TextMeshProUGUI glossarySkill2ButtonText;
+        [SerializeField] TextMeshProUGUI glossarySkill3ButtonText;
+        [SerializeField] TextMeshProUGUI glossaryPassiveButtonText;
+
+        [SerializeField] TextMeshProUGUI glossarySkillDescText;
+        [SerializeField] Image glossarySkillImage;
+
         [Space(10)]
         [SerializeField] GameObject glossaryPrefab;
         [SerializeField] int initGlossaryPool = 5;
@@ -138,7 +153,10 @@ namespace NightmareEchoes.TurnOrder
             #region Current Unit text
             if (CurrentUnit != null)
             {
-                currentUnitPanel.SetActive(true);
+                if(!currentUnitPanel.activeSelf)
+                {
+                    currentUnitPanel.SetActive(true);
+                }
                 currentUnitProfile.image.sprite = CurrentUnit.Sprite;
 
                 //slowly remove this as animations come out
@@ -177,8 +195,8 @@ namespace NightmareEchoes.TurnOrder
                 if(currentUnitPanel.activeSelf)
                 {
                     currentUnitPanel.SetActive(false);
+                    EnableCurrentUI(false);
                 }
-                EnableCurrentUI(false);
             }
             #endregion
 
@@ -210,7 +228,10 @@ namespace NightmareEchoes.TurnOrder
             }
             else
             {
-                EnableInspectedUI(false);
+                if(inspectedUnitPanel.activeSelf)
+                {
+                    EnableInspectedUI(false);
+                }
             }
 
             if (Input.GetMouseButtonDown(1)) // rightclick on an inspectable unit
@@ -615,6 +636,10 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
         }
+        #endregion
+
+
+        #region Update Character Glossary UI
 
         public void UpdateGlossaryUI(string text)
         {
@@ -626,6 +651,8 @@ namespace NightmareEchoes.TurnOrder
 
             if (text == "Current" && CurrentUnit != null)
             {
+                glossaryUnit = CurrentUnit;
+                EnableGlossary(true, CurrentUnit);
                 glossaryImage.sprite = CurrentUnit.Sprite;
 
                 //slowly remove as animations come out
@@ -699,6 +726,8 @@ namespace NightmareEchoes.TurnOrder
             }
             else if (text == "Inspected" && inspectedUnit != null)
             {
+                glossaryUnit = inspectedUnit;
+                EnableGlossary(true, inspectedUnit);
                 glossaryImage.sprite = inspectedUnit.Sprite;
 
                 //slowly remove as animations come out
@@ -770,7 +799,104 @@ namespace NightmareEchoes.TurnOrder
             }
 
         }
+
+        public void EnableGlossary(bool enable, Units unit)
+        {
+            int index = 0;
+            if (unit.BasicAttackSkill != null)
+            {
+                index++;
+            }
+            if (unit.Skill1Skill != null)
+            {
+                index++;
+            }
+            if(unit.Skill2Skill != null)
+            {
+                index++;
+            }
+            if(unit.Skill3Skill != null)
+            { 
+                index++;
+            }
+            if (unit.PassiveSkill != null)
+            {
+                index++;
+            }
+
+            //reset all the buttons
+            for(int i = 0; i < glossarySkills.Count; i++) 
+            {
+                glossarySkills[i].gameObject.SetActive(false);
+                glossarySkills[i].interactable = true;
+            }
+
+            for (int i = 0; i < index; i++)
+            {
+                glossarySkills[i].interactable = enable;
+
+                if(CurrentUnit != null)
+                {
+                    switch(i)
+                    {
+                        case 0:
+                            glossaryBasicAttackButtonText.text = unit.BasicAttackName;
+                            break;
+
+                        case 1:
+                            glossarySkill1ButtonText.text = unit.Skill1Name;
+                            break;
+
+                        case 2:
+                            glossarySkill2ButtonText.text = unit.Skill2Name;
+                            break;
+
+                        case 3:
+                            glossarySkill3ButtonText.text = unit.Skill3Name;
+                            break;
+
+                        case 4:
+                            glossaryPassiveButtonText.text = unit.PassiveName;
+                            break;
+                    }
+
+                    glossarySkills[i].gameObject.SetActive(true);
+                }
+            }
+
+            glossarySkillDescText.text = glossaryUnit.BasicAttackDesc;
+        }
+
+        public void ShowSkillText(int num)
+        {
+            switch(num)
+            {
+                case 0:
+                    glossarySkillDescText.text = glossaryUnit.BasicAttackDesc;
+                    break;
+
+                case 1:
+                    glossarySkillDescText.text = glossaryUnit.Skill1Desc;
+                    break;
+
+                case 2:
+                    glossarySkillDescText.text = glossaryUnit.Skill2Desc;
+                    break;
+
+                case 3:
+                    glossarySkillDescText.text = glossaryUnit.Skill3Desc;
+                    break;
+
+                case 4:
+                    glossarySkillDescText.text = glossaryUnit.PassiveDesc;
+                    break;
+            }
+        }
+
         #endregion
+
+
+
 
 
         #region Hotbar UI
