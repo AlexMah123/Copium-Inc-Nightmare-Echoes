@@ -48,7 +48,7 @@ namespace NightmareEchoes.Unit
 
         public override void Skill2()
         {
-
+            CombatManager.Instance.SelectSkill(this, skill2);
         }
 
         public override void Skill3()
