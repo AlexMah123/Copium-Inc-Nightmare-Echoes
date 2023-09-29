@@ -547,10 +547,10 @@ namespace NightmareEchoes.Unit
 
             //collider presets
             Vector2[] points = new Vector2[4];
-            points[0] = new Vector2(-0.85f, 0f);
-            points[1] = new Vector2(0f, -0.45f);
-            points[2] = new Vector2(0.85f, 0f);
-            points[3] = new Vector2(0, 0.45f);
+            points[0] = new Vector2(-1f, 0f);
+            points[1] = new Vector2(0f, -0.5f);
+            points[2] = new Vector2(1f, 0f);
+            points[3] = new Vector2(0, 0.5f);
 
             PolygonCollider2D polyCollider = GetComponent<PolygonCollider2D>();
             polyCollider.points = points;

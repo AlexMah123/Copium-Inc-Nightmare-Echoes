@@ -198,7 +198,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             else if (isDragging && !isMoving && ifSelectedUnit &&
                 (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentSelectedUnit.ActiveTile || currentHoveredOverlayTile == revertUnitPosition))
             {
-                //if the first tile is diagonal, just return and ignore it
+                //if the first tile is diagonal or is the same tile on the player, just return and ignore it
                 if (pathList.Count == 0 && !AreTilesAdjacent(currentSelectedUnit.ActiveTile, currentHoveredOverlayTile) && currentHoveredOverlayTile != revertUnitPosition)
                 {
                     return;
@@ -236,6 +236,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                     //if the currenthovered tile is the active tile, resets not dragging 
                     isDragging = false;
                     RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
+                    pathList.Clear();
                     ClearArrow(tempPathList);
                 }
                 else if (currentHoveredOverlayTile == revertUnitPosition)
@@ -243,6 +244,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                     //if the currenthovered tile is the active, resets not dragging
                     isDragging = false;
                     RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
+                    pathList.Clear();
                     ClearArrow(tempPathList);
                 }
 
@@ -542,7 +544,6 @@ namespace NightmareEchoes.Unit.Pathfinding
                 tile.SetArrowSprite(ArrowDirections.None);
             }
 
-            pathList.Clear();
             pathList.Clear();
         }
         #endregion
