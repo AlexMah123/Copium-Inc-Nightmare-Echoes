@@ -242,6 +242,11 @@ namespace NightmareEchoes.Unit.Combat
             //Check if the enemy selected is in range
             //Originally it was a ForEach loop but Rider recommended this LINQ expression instead lmao
             if (skillRangeTiles.All(tile => tile != target.ActiveTile)) return;
+            
+            if (activeSkill.InflictKnockback)
+            {
+                PreviewKnockback();
+            }
 
             StartCoroutine(WaitForSkill(target));
         }
@@ -435,9 +440,6 @@ namespace NightmareEchoes.Unit.Combat
                 case "FrontalAttack":
                     possibleTileCoords = FrontalRange(unit.ActiveTile, range , unit);
                     break;
-                case "SecondSquare":
-                    possibleTileCoords = SecondSquare(unit.ActiveTile, range ,unit);
-                    break;
                 default:
                     Debug.LogWarning("ERROR");
                     break;
@@ -521,50 +523,6 @@ namespace NightmareEchoes.Unit.Combat
             return possibleTileCoords;
         }
 
-        public List<Vector2Int> SecondSquare(OverlayTile startTile, int range, Units unit)
-        {
-            var possibleTileCoords = new List<Vector2Int>();
-
-            var direction = new Vector2Int();
-
-            switch (unit.Direction)
-            {
-                case Direction.NORTH:
-                    direction = new Vector2Int(1, 0);
-                    break;
-                case Direction.SOUTH:
-                    direction = new Vector2Int(-1, 0);
-                    break;
-                case Direction.EAST:
-                    direction = new Vector2Int(0, -1);
-                    break;
-                case Direction.WEST:
-                    direction = new Vector2Int(0, 1);
-                    break;
-            }
-
-            var i = 1;
-            var tileLayoutX = new Vector2Int(startTile.gridLocation.x + direction.x, startTile.gridLocation.y);
-            var tileLayoutY = new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y + direction.y);
-            possibleTileCoords.Add(tileLayoutX);
-            possibleTileCoords.Add(tileLayoutY);
-
-            for (; i <= range; i++)
-            {
-                if (unit.Direction == Direction.NORTH || unit.Direction == Direction.SOUTH)
-                {
-                    possibleTileCoords.Add(tileLayoutY - new Vector2Int(0, i));
-                    possibleTileCoords.Add(tileLayoutY + new Vector2Int(0, i));
-                }
-                if (unit.Direction == Direction.EAST || unit.Direction == Direction.WEST)
-                {
-                    possibleTileCoords.Add(tileLayoutX + new Vector2Int(i, 0));
-                    possibleTileCoords.Add(tileLayoutX - new Vector2Int(i, 0));
-                }
-
-            }
-            return possibleTileCoords;
-        }
 
         #endregion
 

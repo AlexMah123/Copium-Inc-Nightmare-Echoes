@@ -84,23 +84,5 @@ namespace NightmareEchoes.Grid
             }
         }
     }
-    
-    [CustomEditor(typeof(CellularAutomata))]
-    public class CellularAutomataEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            DrawDefaultInspector();
-
-            var generator = (CellularAutomata)target;
-
-            if (GUILayout.Button("CreateMap"))
-            {
-                var map = generator.GenerateNoiseGrid();
-                map = generator.ApplyCellularAutomata(map);
-                generator.GenerateMap(map);
-            }
-        }
-    }
 }
 
