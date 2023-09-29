@@ -1,5 +1,6 @@
 using System.Collections;
 using NightmareEchoes.Grid;
+using NightmareEchoes.Unit;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace NightmareEchoes.Unit
             //knockback
             var direction = target.transform.position - thisUnit.transform.position;
             var destination = target.transform.position + direction;
+            var prevDir = target.Direction;
                 
             var tileOccupied = false;
             var hit = Physics2D.Raycast(destination, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
@@ -27,14 +29,18 @@ namespace NightmareEchoes.Unit
                 {
                     if (tileDestination.CheckUnitOnTile())
                         tileOccupied = true;
+                    
+                    if (!tileOccupied)
+                    { 
+                        StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
+                    }
                 }
             }
-            if (!tileOccupied)
-            {
-                target.transform.position += direction;
-            }
+            
 
             return true;
         }
+
+
     }
 }

@@ -28,12 +28,14 @@ namespace NightmareEchoes.Unit
                 {
                     if (tileDestination.CheckUnitOnTile())
                         tileOccupied = true;
+
+                    if (!tileOccupied)
+                    {
+                        StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
+                    }
                 }
             }
-            if (!tileOccupied)
-            {
-                target.transform.position += direction;
-            }
+            
             
             return true;
         }
