@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7305331337648946353
 Transform:
   m_ObjectHideFlags: 0
@@ -103,11 +103,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Range Enemy
   sprite: {fileID: 489163364, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
-  dmgTextPrefab: {fileID: 6045939641622712432, guid: c60069fdc9d03ec48bc7125c0e61dae6, type: 3}
   isHostile: 1
   direction: 0
   typeOfUnit: 0
+  popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _health: 0
     _maxHealth: 15
@@ -177,7 +176,7 @@ MonoBehaviour:
   inAtkRange: 0
   inMoveAndAttackRange: 0
   hasAttacked: 0
-  foundStealthHero: 0
+  detectedStealthHero: 0
 --- !u!114 &1961892246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,10 +235,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.8, y: 0}
-      - {x: 0, y: -0.4}
-      - {x: 0.8, y: 0}
-      - {x: 0, y: 0.4}
+    - - {x: -1, y: 0}
+      - {x: 0, y: -0.5}
+      - {x: 1, y: 0}
+      - {x: 0, y: 0.5}
 --- !u!50 &503955040074887315
 Rigidbody2D:
   serializedVersion: 4

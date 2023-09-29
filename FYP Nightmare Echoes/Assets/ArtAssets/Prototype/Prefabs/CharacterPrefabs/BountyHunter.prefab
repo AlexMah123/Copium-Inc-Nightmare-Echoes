@@ -293,10 +293,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.1875, y: 0.53125}
-      - {x: -0.1875, y: 0}
-      - {x: 0.1875, y: 0}
-      - {x: 0.1875, y: 0.53125}
+    - - {x: -1, y: 0}
+      - {x: 0, y: -0.5}
+      - {x: 1, y: 0}
+      - {x: 0, y: 0.5}
 --- !u!114 &1063299835
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,10 +7,6 @@ using UnityEngine.Tilemaps;
 using System.Linq;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.Unit.Combat;
-using Unity.Android.Types;
-using Codice.Client.BaseCommands;
-using static UnityEngine.GraphicsBuffer;
-using Unity.VisualScripting.Antlr3.Runtime.Collections;
 
 //by Terrence, editted by alex
 namespace NightmareEchoes.Unit.AI

@@ -105,7 +105,8 @@ namespace NightmareEchoes.TurnOrder
         List<GameObject> glossaryPrefabPool = new List<GameObject>();
 
 
-        [Space(20), Header("Settings")]
+        [Space(20), Header("Settings + Utility")]
+        [SerializeField] Button passTurnButton;
         [SerializeField] Button settingButton;
         [SerializeField] GameObject settingsPanel;
         [NonSerialized] public bool gameIsPaused = false;
@@ -179,6 +180,51 @@ namespace NightmareEchoes.TurnOrder
 
                 if (!CurrentUnit.IsHostile)
                 {
+                    /*if(CurrentUnit.BasicAttackSkill == null) 
+                    {
+                        if (currentUnitButtonList[1])
+                        {
+                            currentUnitButtonList[1]
+
+                        }
+                    }
+                    if (CurrentUnit.Skill1Skill == null)
+                    {
+                        if (currentUnitButtonList[2])
+                        {
+                            currentUnitButtonList[2]
+
+                        }
+
+                    }
+                    if (CurrentUnit.Skill2Skill == null)
+                    {
+                        if (currentUnitButtonList[2])
+                        {
+                            currentUnitButtonList[2]
+
+                        }
+
+                    }
+                    if (CurrentUnit.Skill3Skill == null)
+                    {
+                        if (currentUnitButtonList[2])
+                        {
+                            currentUnitButtonList[1]
+
+                        }
+
+                    }
+                    if (CurrentUnit.PassiveSkill == null)
+                    {
+                        if (currentUnitButtonList[1])
+                        {
+                            currentUnitButtonList[1]
+
+                        }
+
+                    }*/
+
                     BasicAttackText.text = CurrentUnit.BasicAttackName;
                     Skill1Text.text = CurrentUnit.Skill1Name;
                     Skill2Text.text = CurrentUnit.Skill2Name;
@@ -896,16 +942,42 @@ namespace NightmareEchoes.TurnOrder
         #endregion
 
 
-
-
-
         #region Hotbar UI
         public void EnableCurrentUI(bool enable)
         {
-            //first button is profile
+            int index = 1;
+            if (CurrentUnit.BasicAttackSkill != null)
+            {
+                index++;
+            }
+            if (CurrentUnit.Skill1Skill != null)
+            {
+                index++;
+            }
+            if (CurrentUnit.Skill2Skill != null)
+            {
+                index++;
+            }
+            if (CurrentUnit.Skill3Skill != null)
+            {
+                index++;
+            }
+            if (CurrentUnit.PassiveSkill != null)
+            {
+                index++;
+            }
+
+            //reset all the buttons
             for (int i = 1; i < currentUnitButtonList.Count; i++)
             {
+                //currentUnitButtonList[i].gameObject.SetActive(false);
+                currentUnitButtonList[i].interactable = false;
+            }
+
+            for (int i = 1; i < index; i++)
+            {
                 currentUnitButtonList[i].interactable = enable;
+
 
                 if (CurrentUnit != null)
                 {
@@ -916,13 +988,34 @@ namespace NightmareEchoes.TurnOrder
                     else
                     {
                         currentUnitButtonList[i].gameObject.SetActive(true);
+
                     }
                 }
                 else
                 {
                     currentUnitButtonList[i].gameObject.SetActive(false);
                 }
+            }
 
+
+            //setting the pass turn button as well
+            if (CurrentUnit != null)
+            {
+                if (CurrentUnit.IsHostile)
+                {
+                    passTurnButton.interactable = false;
+                    passTurnButton.gameObject.SetActive(false);
+                }
+                else
+                {
+                    passTurnButton.interactable = true;
+                    passTurnButton.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                passTurnButton.interactable = false;
+                passTurnButton.gameObject.SetActive(false);
             }
 
             UpdateStatusEffectUI();

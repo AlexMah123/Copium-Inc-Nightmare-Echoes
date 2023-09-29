@@ -103,11 +103,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Melee Enemy
   sprite: {fileID: -331225865, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
-  dmgTextPrefab: {fileID: 6045939641622712432, guid: c60069fdc9d03ec48bc7125c0e61dae6, type: 3}
   isHostile: 1
   direction: 0
   typeOfUnit: 0
+  popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _health: 0
     _maxHealth: 20
@@ -177,7 +176,7 @@ MonoBehaviour:
   inAtkRange: 0
   inMoveAndAttackRange: 0
   hasAttacked: 0
-  foundStealthHero: 0
+  detectedStealthHero: 0
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4
@@ -224,10 +223,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.203125, y: 0.5}
-      - {x: -0.203125, y: 0}
-      - {x: 0.203125, y: 0}
-      - {x: 0.203125, y: 0.5}
+    - - {x: -1, y: 0}
+      - {x: 0, y: -0.5}
+      - {x: 1, y: 0}
+      - {x: 0, y: 0.5}
 --- !u!114 &4139838481242840768
 MonoBehaviour:
   m_ObjectHideFlags: 0

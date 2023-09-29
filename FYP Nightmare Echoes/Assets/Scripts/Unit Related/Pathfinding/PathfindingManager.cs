@@ -7,8 +7,7 @@ using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Inputs;
 using TMPro;
-using UnityEngine.UIElements;
-using UnityEditor.Overlays;
+
 
 //created by Vinn, editted by Alex and Ter
 namespace NightmareEchoes.Unit.Pathfinding
@@ -255,6 +254,11 @@ namespace NightmareEchoes.Unit.Pathfinding
                     //Resets not dragging and lastAddedTile to null
                     isDragging = false;
                     lastAddedTile = null;
+
+                    if(pathList.Count <= 0)
+                    {
+                        ClearArrow(tempPathList);
+                    }
                 }
             }
 

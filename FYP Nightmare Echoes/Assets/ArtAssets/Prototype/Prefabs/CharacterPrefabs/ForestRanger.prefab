@@ -1,0 +1,345 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &601295390074279018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 601295390074279022}
+  - component: {fileID: 601295390074279023}
+  - component: {fileID: 601295390074279016}
+  - component: {fileID: 6249669551677435555}
+  - component: {fileID: 136229569}
+  - component: {fileID: 601295391118310421}
+  - component: {fileID: 601295391118310427}
+  - component: {fileID: 837001683}
+  - component: {fileID: 1863292055}
+  m_Layer: 6
+  m_Name: ForestRanger
+  m_TagString: Inspectable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &601295390074279022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: -0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &601295390074279023
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.34375, y: 0.53125}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &601295390074279016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d3b9f39b9fb31d41ac2e498d8e534c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Ranger
+  sprite: {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  isHostile: 0
+  direction: 0
+  typeOfUnit: 0
+  popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
+  baseStats:
+    _health: 0
+    _maxHealth: 25
+    _speed: 6
+    _moveRange: 3
+    _stunResist: 30
+    _resist: 70
+  stats:
+    _health: 0
+    _maxHealth: 0
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  modifiedStats:
+    healthModifier: 0
+    speedModifier: 0
+    moveRangeModifier: 0
+    stunResistModifier: 0
+    resistModifier: 0
+  buffDebuffList: []
+  tokenList: []
+  dodgeToken: 0
+  blockToken: 0
+  strengthToken: 0
+  hasteToken: 0
+  barrierToken: 0
+  stealthToken: 0
+  blindToken: 0
+  vulnerableToken: 0
+  weakenToken: 0
+  vertigoToken: 0
+  stunToken: 0
+  immobilizeToken: 0
+  basicAttack: {fileID: 601295391118310421}
+  skill1: {fileID: 601295391118310427}
+  skill2: {fileID: 837001683}
+  skill3: {fileID: 1863292055}
+  passive: {fileID: 0}
+  sprites:
+  - {fileID: -1568128131, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: 542052453, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: -6517823, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  frontModel: {fileID: 0}
+  backModel: {fileID: 0}
+  frontAnimator: {fileID: 0}
+  backAnimator: {fileID: 0}
+  activeTile: {fileID: 0}
+--- !u!50 &6249669551677435555
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!60 &136229569
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.34375, y: 0.53125}
+    newSize: {x: 0.34375, y: 0.53125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1, y: 0}
+      - {x: 0, y: -0.5}
+      - {x: 1, y: 0}
+      - {x: 0, y: 0.5}
+--- !u!114 &601295391118310421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3854a3de90ccc54409a7ea5f1cc14686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: ArrowShot
+  damage: 4
+  heal: 0
+  cooldown: 0
+  range: 4
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: Single Target, Deal 4 Damage and 3 Wound, Stop at first enemy
+    hit
+--- !u!114 &601295391118310427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87f152b07ce2ca429961ef886259aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Suppressing Shot
+  damage: 4
+  heal: 0
+  cooldown: 0
+  range: 2
+  targetType: 0
+  targetArea: 1
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 1
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: Single Target, 3 Tiles Range, Deal 4 Damage and Stun (80%)
+  stunChance: 80
+--- !u!114 &837001683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299a48ed6f452cb4f97dfae71127d1cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Nature Embrace
+  damage: 0
+  heal: 10
+  cooldown: 0
+  range: 2
+  targetType: 0
+  targetArea: 1
+  targetUnitAlignment: 1
+  aoeType: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: "Nature\u2019s Embrace (Cannot Affected by Blind & Strength)\r\nSingle
+    target, 2 Tiles Range, Self Heal or Ally for 10 HP\r\n"
+--- !u!114 &1863292055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2658f1127ccfb4409f643ebc3df8d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Hunter Instinct
+  damage: 3
+  heal: 0
+  cooldown: 0
+  range: 1
+  targetType: 1
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 1
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: 
