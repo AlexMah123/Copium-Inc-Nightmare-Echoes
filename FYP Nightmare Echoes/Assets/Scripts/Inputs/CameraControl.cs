@@ -64,7 +64,7 @@ namespace NightmareEchoes.Inputs
                 gameCamera.transform.position = Vector3.SmoothDamp(
                     gameCamera.transform.position, targetPosition, ref velocity, smoothTime);
 
-                if (Vector3.Distance(gameCamera.transform.position, targetPosition) < 0.05f)
+                if (Vector3.Distance(gameCamera.transform.position, targetPosition) <= 0.1f)
                 {
                     isPanning = false;
                 }

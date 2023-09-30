@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1961892246}
   - component: {fileID: 964070419}
   - component: {fileID: 503955040074887315}
+  - component: {fileID: 6603126608767782748}
   m_Layer: 6
   m_Name: RangeEnemy
   m_TagString: Inspectable
@@ -57,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -261,3 +262,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &6603126608767782748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3376283141138650508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 000000002bd54a01
+  m_ShapePath:
+  - {x: -0.203125, y: 0, z: 0}
+  - {x: -0.055257425, y: 0.16568854, z: 0}
+  - {x: 0.20723245, y: 0.12872168, z: 0}
+  - {x: 0.203125, y: 0, z: 0}
+  - {x: -0.008214869, y: -0.04598648, z: 0}
+  m_ShapePathHash: -1766056635
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -510258

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 601295391118310427}
   - component: {fileID: 837001683}
   - component: {fileID: 1863292055}
+  - component: {fileID: -7115739878205201126}
   m_Layer: 6
   m_Name: ForestRanger
   m_TagString: Inspectable
@@ -59,7 +60,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -344,3 +345,31 @@ MonoBehaviour:
   placableCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: 
+--- !u!114 &-7115739878205201126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 000000002bd54a01
+  m_ShapePath:
+  - {x: -0.171875, y: 0, z: 0}
+  - {x: -0.08151144, y: 0.11639941, z: 0}
+  - {x: 0.20473444, y: 0.07943252, z: 0}
+  - {x: 0.171875, y: 0, z: 0}
+  - {x: 0.020537138, y: -0.037771642, z: 0.00000011920929}
+  m_ShapePathHash: -1537655057
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -510268

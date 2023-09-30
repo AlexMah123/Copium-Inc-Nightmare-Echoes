@@ -76,6 +76,7 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
+            PathfindingManager.Instance.ifSelectedUnit = false;
             CombatManager.Instance.turnEnded = false;
 
             if (controller.CurrentUnit != null)

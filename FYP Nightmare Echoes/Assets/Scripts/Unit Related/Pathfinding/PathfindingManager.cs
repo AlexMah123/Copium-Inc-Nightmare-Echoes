@@ -22,7 +22,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         [Header("Current Unit")]
         Units currentSelectedUnit;
         [SerializeField] float movingSpeed;
-        [SerializeField] bool ifSelectedUnit = false;
+        public bool ifSelectedUnit = false;
 
         [Header("Path list + Tiles in Range")]
         [SerializeField] List<OverlayTile> pathList = new List<OverlayTile>();

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8734419837270885916}
   - component: {fileID: 5182274477180494581}
   - component: {fileID: 2380185597739719038}
+  - component: {fileID: -2151292474564162685}
   m_Layer: 8
   m_Name: BreakableObstacle
   m_TagString: Inspectable
@@ -53,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -116,3 +117,30 @@ PolygonCollider2D:
       - {x: -0.048849, y: -0.1994223}
       - {x: 0.22999999, y: -0.099999994}
       - {x: 0.23115537, y: 0.14050382}
+--- !u!114 &-2151292474564162685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8943584249080776070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 000000002bd54a01cdf89598
+  m_ShapePath:
+  - {x: -0.07085284, y: -0.20576623, z: 0}
+  - {x: -0.21616112, y: -0.065245256, z: 0}
+  - {x: 0.17695093, y: 0.025860708, z: 0}
+  - {x: 0.22308056, y: -0.040852845, z: 0}
+  m_ShapePathHash: -1970105056
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -661726
