@@ -24,9 +24,11 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected TargetUnitAlignment targetUnitAlignment;
         
         [SerializeField] protected AOEType aoeType;
+        [SerializeField] protected int aoeSize = 1;
+        [SerializeField] protected int aoeOffset = 0;
         [SerializeField] protected int aoeDuration;
         [SerializeField] protected Color aoeColor;
-        
+
         [SerializeField] protected SkillType skillType;
         
         [SerializeField] protected int secondaryDamage;
@@ -96,6 +98,18 @@ namespace NightmareEchoes.Unit
         {
             get => aoeType;
             set => aoeType = value;
+        }
+
+        public int AoeSize
+        {
+            get => aoeSize;
+            set => aoeSize = value;
+        }
+
+        public int AoeOffset
+        {
+            get => aoeOffset;
+            set => aoeOffset = value;
         }
 
         public int AoeDuration

@@ -21,14 +21,6 @@ namespace NightmareEchoes.Unit
         {
             var copy = new List<OverlayTile>(aoeTiles);
 
-            foreach (var tile in aoeTiles)
-            {
-                if (!tile.CheckUnitOnTile()) continue;
-
-                var unit = tile.CheckUnitOnTile().GetComponent<Units>();
-                DealDamage(unit);
-            }
-
             CombatManager.Instance.SetActiveAoe(this, copy);
             return true;
         }

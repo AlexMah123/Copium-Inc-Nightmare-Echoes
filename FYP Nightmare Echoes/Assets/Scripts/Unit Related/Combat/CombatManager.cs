@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using NightmareEchoes.Grid;
+using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 using static UnityEngine.UI.CanvasScaler;
 
 //created by JH, edited by Ter
@@ -30,7 +32,10 @@ namespace NightmareEchoes.Unit.Combat
         private List<OverlayTile> skillRangeTiles;
         private List<OverlayTile> aoePreviewTiles = new();
         private OverlayTile mainTile;
+        
+        //Ghosts
         private List<GameObject> ghostSprites = new();
+        private List<OverlayTile> ghostTiles = new();
 
         //Active AOEs
         private Dictionary<Skill, List<OverlayTile>> activeAoes = new();
@@ -261,11 +266,25 @@ namespace NightmareEchoes.Unit.Combat
             
             mainTile = target;
             if (skillRangeTiles.All(tile => tile != target)) return;
+
+            if (activeSkill.AoeOffset > 0)
+            {
+                var parent = activeSkill.GetComponentInParent<Units>();
+                var offsetVector = parent.ActiveTile.gridLocation + (target.gridLocation - parent.ActiveTile.gridLocation) * activeSkill.AoeOffset;
+                target = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(offsetVector.x, offsetVector.y));
+                if (target == null)
+                {
+                    target = GetOverlayTileClone();
+                    var cellWorldPos = OverlayTileManager.Instance.GetComponentInChildren<Tilemap>().GetCellCenterWorld(offsetVector);
+                    target.transform.position = new Vector3(cellWorldPos.x, cellWorldPos.y, cellWorldPos.z);
+                    target.gridLocation = offsetVector;
+                }
+            }
             
             var aoeArea = activeSkill.AoeType switch
             {
-                AOEType.Square => SquareRange(target, 1),
-                AOEType.Cross => LineRange(target, 1, false),
+                AOEType.Square => SquareRange(target, activeSkill.AoeSize),
+                AOEType.Cross => LineRange(target, activeSkill.AoeSize, false),
                 AOEType.NonAOE => SquareRange(target, 0)
             };
             
@@ -384,11 +403,17 @@ namespace NightmareEchoes.Unit.Combat
         //Previews
         private void ClearPreviews()
         {
-            foreach (var unit in ghostSprites)
+            foreach (var go in ghostSprites)
             {
-                unit.SetActive(false);
+                go.SetActive(false);
+            }
+
+            foreach (var tile in ghostTiles)
+            {
+                tile.gameObject.SetActive(false);
             }
             ghostSprites.Clear();
+            ghostTiles.Clear();
         }
         
         private void PreviewKnockback()
@@ -697,7 +722,28 @@ namespace NightmareEchoes.Unit.Combat
             return obj; 
         }
 
+        private List<OverlayTile> overlayTileClonePool = new();
+        private int overlayTileCloneCount = 0;
+        
+        OverlayTile GetOverlayTileClone()
+        {
+            foreach (var clone in overlayTileClonePool)
+            {
+                if (!clone.gameObject.activeInHierarchy) 
+                { 
+                    clone.gameObject.SetActive(true);
+                    ghostTiles.Add(clone);
+                    return clone; 
+                }
+            }
+            
+            var tile = Instantiate(OverlayTileManager.Instance.overlaytilePrefab, OverlayTileManager.Instance.overlayContainer.transform);
+            tile.gameObject.SetActive(false);
+            tile.name = "Ghost Tile";
+            overlayTileClonePool.Add(tile);
 
+            return tile; 
+        }
         #endregion
     }
 }

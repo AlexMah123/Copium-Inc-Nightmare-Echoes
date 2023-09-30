@@ -227,10 +227,13 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 4
+  minRange: 0
   targetType: 0
   targetArea: 0
   targetUnitAlignment: 0
   aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 0
@@ -261,10 +264,13 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 2
+  minRange: 0
   targetType: 0
   targetArea: 1
   targetUnitAlignment: 0
   aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 1
@@ -295,10 +301,13 @@ MonoBehaviour:
   heal: 10
   cooldown: 0
   range: 2
+  minRange: 0
   targetType: 0
   targetArea: 1
   targetUnitAlignment: 1
   aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 0
@@ -329,12 +338,15 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 1
+  minRange: 0
   targetType: 1
   targetArea: 0
   targetUnitAlignment: 0
   aoeType: 1
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  aoeSize: 2
+  aoeOffset: 3
+  aoeDuration: 1
+  aoeColor: {r: 0.4958483, g: 1, b: 0, a: 0.3137255}
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
@@ -372,4 +384,4 @@ MonoBehaviour:
   - {x: 0.020537138, y: -0.037771642, z: 0.00000011920929}
   m_ShapePathHash: -1537655057
   m_Mesh: {fileID: 0}
-  m_InstanceId: -510268
+  m_InstanceId: -3328
