@@ -1744,6 +1744,7 @@ GameObject:
   - component: {fileID: 817498681}
   - component: {fileID: 817498682}
   - component: {fileID: -3187154731525986911}
+  - component: {fileID: 1076161257085603872}
   m_Layer: 6
   m_Name: DefenderHero
   m_TagString: Inspectable
@@ -1935,7 +1936,7 @@ MonoBehaviour:
   basicAttack: {fileID: 817498675}
   skill1: {fileID: 817498681}
   skill2: {fileID: 817498682}
-  skill3: {fileID: 0}
+  skill3: {fileID: 1076161257085603872}
   passive: {fileID: 0}
   sprites:
   - {fileID: 536578034, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
@@ -2104,4 +2105,46 @@ MonoBehaviour:
   - {x: -0.012322299, y: -0.058308773, z: 0}
   m_ShapePathHash: 45762548
   m_Mesh: {fileID: 0}
-  m_InstanceId: -140482
+  m_InstanceId: -980106
+--- !u!114 &1076161257085603872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088455817183482634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec3f08f9808dd248a3646c0c4f92dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Restructure
+  damage: 0
+  heal: 15
+  cooldown: 0
+  range: 1
+  minRange: 0
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 2
+  aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 2
+  secondaryDamage: 0
+  secondaryRange: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: 'Restructure (Cannot Affected by Blind & Strength)
+
+    Self
+    Heal for 15, Get 3 Restoration and Remove all negative token
+
+    Cooldown: 3
+    Turns'
