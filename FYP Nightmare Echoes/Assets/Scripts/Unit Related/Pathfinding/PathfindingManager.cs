@@ -77,6 +77,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                     currentSelectedUnit.Direction = revertUnitDirection;
                     currentSelectedUnit.stats.Health = revertUnitHealth;
 
+                    CameraControl.Instance.UpdateCameraPan(currentSelectedUnit.gameObject);
+
                     //Add Section to have reverts if they hit a trap.
 
                     //Resets everything, not moving, not dragging, and lastaddedtile is null
@@ -114,6 +116,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                     //display tiles in range
                     ShowTilesInRange(playerTilesInRange);
+                    CameraControl.Instance.UpdateCameraPan(currentSelectedUnit.gameObject);
                 }
             }
         }
@@ -165,7 +168,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             #endregion
 
             #region selecting a player to move
-            //MANUAL CLICKS
+            //UNCOMMENT IF YOU WANT MANUAL MOVEMENT
             //if player clicked and has not previously selected a unit, raycast and check
             if (Input.GetMouseButtonDown(0) && !ifSelectedUnit)
             {
@@ -197,6 +200,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                         //display tiles in range
                         ShowTilesInRange(playerTilesInRange);
+                        CameraControl.Instance.UpdateCameraPan(currentSelectedUnit.gameObject);
 
                     }
                 }
@@ -433,6 +437,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                     thisUnit.BackAnimator.SetBool("Moving", false);
                     thisUnit.FrontAnimator.SetBool("Moving", false);
                 }
+
+                CameraControl.Instance.isPanning = false;
                 
                 //remove comment out later if we want to hide tile and reset selectedUnit when we stop moving
                 //HideTilesInRange(tilesInRange);

@@ -110,11 +110,11 @@ MonoBehaviour:
   popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _health: 0
-    _maxHealth: 20
-    _speed: 5
+    _maxHealth: 18
+    _speed: 3
     _moveRange: 3
-    _stunResist: 20
-    _resist: 20
+    _stunResist: 30
+    _resist: 30
   stats:
     _health: 0
     _maxHealth: 0
@@ -179,6 +179,7 @@ MonoBehaviour:
   inMoveAndAttackRange: 0
   hasAttacked: 0
   detectedStealthHero: 0
+  hasMoved: 0
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4
@@ -246,10 +247,13 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 1
+  minRange: 0
   targetType: 0
   targetArea: 0
   targetUnitAlignment: 0
   aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 0
@@ -289,4 +293,4 @@ MonoBehaviour:
   - {x: -0.012245424, y: -0.04489989, z: 0}
   m_ShapePathHash: 554176341
   m_Mesh: {fileID: 0}
-  m_InstanceId: 394016
+  m_InstanceId: -140346

@@ -113,8 +113,8 @@ MonoBehaviour:
     _maxHealth: 15
     _speed: 4
     _moveRange: 2
-    _stunResist: 35
-    _resist: 35
+    _stunResist: 20
+    _resist: 20
   stats:
     _health: 0
     _maxHealth: 0
@@ -179,6 +179,7 @@ MonoBehaviour:
   inMoveAndAttackRange: 0
   hasAttacked: 0
   detectedStealthHero: 0
+  hasMoved: 0
 --- !u!114 &1961892246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,10 +197,13 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 4
+  minRange: 0
   targetType: 0
   targetArea: 0
   targetUnitAlignment: 0
   aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 0
@@ -289,4 +293,4 @@ MonoBehaviour:
   - {x: -0.008214869, y: -0.04598648, z: 0}
   m_ShapePathHash: -1766056635
   m_Mesh: {fileID: 0}
-  m_InstanceId: -510258
+  m_InstanceId: -140434

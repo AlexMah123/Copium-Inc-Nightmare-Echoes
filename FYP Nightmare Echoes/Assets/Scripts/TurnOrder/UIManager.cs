@@ -41,10 +41,6 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI PassiveText;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
         [SerializeField] TextMeshProUGUI currentUnitHealthText;
-        [SerializeField] TextMeshProUGUI currentUnitMoveRangeText;
-        [SerializeField] TextMeshProUGUI currentUnitSpeedText;
-        [SerializeField] TextMeshProUGUI currentUnitStunResistText;
-        [SerializeField] TextMeshProUGUI currentUnitResistText;
         [SerializeField] Slider currentUnitHealth;
         [SerializeField] GameObject currentUnitStatusEffectsPanel;
         public List<Modifier> currentUnitTotalStatusEffectList = new List<Modifier>();
@@ -58,10 +54,6 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] Button inspectedUnitProfile;
         [SerializeField] TextMeshProUGUI inspectedUnitNameText;
         [SerializeField] TextMeshProUGUI inspectedUnitHealthText;
-        [SerializeField] TextMeshProUGUI inspectedUnitMoveRangeText;
-        [SerializeField] TextMeshProUGUI inspectedUnitSpeedText;
-        [SerializeField] TextMeshProUGUI inspectedUnitStunResistText;
-        [SerializeField] TextMeshProUGUI inspectedUnitResistText;
         [SerializeField] Slider inspectedUnitHealth;
         [SerializeField] GameObject inspectedUnitStatusEffectsPanel;
         public List<Modifier> inspectedUnitTotalStatusEffectList = new List<Modifier>();
@@ -173,58 +165,10 @@ namespace NightmareEchoes.TurnOrder
 
                 currentUnitNameText.text = $"{CurrentUnit.Name}";
                 currentUnitHealthText.text = $"{CurrentUnit.stats.Health}/{CurrentUnit.stats.MaxHealth}";
-                currentUnitSpeedText.text = $"Speed: {CurrentUnit.stats.Speed}";
-                currentUnitMoveRangeText.text = $"Move Range: {CurrentUnit.stats.MoveRange}";
-                currentUnitStunResistText.text = $"Stun Resist: {CurrentUnit.stats.StunResist}%";
-                currentUnitResistText.text = $"Resist: {CurrentUnit.stats.Resist}%";
+
 
                 if (!CurrentUnit.IsHostile)
                 {
-                    /*if(CurrentUnit.BasicAttackSkill == null) 
-                    {
-                        if (currentUnitButtonList[1])
-                        {
-                            currentUnitButtonList[1]
-
-                        }
-                    }
-                    if (CurrentUnit.Skill1Skill == null)
-                    {
-                        if (currentUnitButtonList[2])
-                        {
-                            currentUnitButtonList[2]
-
-                        }
-
-                    }
-                    if (CurrentUnit.Skill2Skill == null)
-                    {
-                        if (currentUnitButtonList[2])
-                        {
-                            currentUnitButtonList[2]
-
-                        }
-
-                    }
-                    if (CurrentUnit.Skill3Skill == null)
-                    {
-                        if (currentUnitButtonList[2])
-                        {
-                            currentUnitButtonList[1]
-
-                        }
-
-                    }
-                    if (CurrentUnit.PassiveSkill == null)
-                    {
-                        if (currentUnitButtonList[1])
-                        {
-                            currentUnitButtonList[1]
-
-                        }
-
-                    }*/
-
                     BasicAttackText.text = CurrentUnit.BasicAttackName;
                     Skill1Text.text = CurrentUnit.Skill1Name;
                     Skill2Text.text = CurrentUnit.Skill2Name;
@@ -264,10 +208,6 @@ namespace NightmareEchoes.TurnOrder
 
                 inspectedUnitNameText.text = $"{inspectedUnit.Name}";
                 inspectedUnitHealthText.text = $"{inspectedUnit.stats.Health}/{inspectedUnit.stats.MaxHealth}";
-                inspectedUnitSpeedText.text = $"Speed: {inspectedUnit.stats.Speed}";
-                inspectedUnitMoveRangeText.text = $"Move Range: {inspectedUnit.stats.MoveRange}";
-                inspectedUnitStunResistText.text = $"Stun Resist: {inspectedUnit.stats.StunResist}%";
-                inspectedUnitResistText.text = $"Resist: {inspectedUnit.stats.Resist}%";
 
                 inspectedUnitHealth.maxValue = inspectedUnit.stats.MaxHealth;
                 inspectedUnitHealth.value = inspectedUnit.stats.Health;

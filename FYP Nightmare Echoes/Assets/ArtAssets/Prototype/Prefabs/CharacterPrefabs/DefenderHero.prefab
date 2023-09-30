@@ -1901,7 +1901,7 @@ MonoBehaviour:
   baseStats:
     _health: 0
     _maxHealth: 40
-    _speed: 6
+    _speed: 3
     _moveRange: 3
     _stunResist: 70
     _resist: 20
@@ -1937,7 +1937,11 @@ MonoBehaviour:
   skill2: {fileID: 817498682}
   skill3: {fileID: 0}
   passive: {fileID: 0}
-  sprites: []
+  sprites:
+  - {fileID: 536578034, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: -112463209, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: 706767098, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  - {fileID: 1357633693, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   frontModel: {fileID: 0}
   backModel: {fileID: 0}
   frontAnimator: {fileID: 0}
@@ -1961,10 +1965,13 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 1
+  minRange: 0
   targetType: 0
   targetArea: 0
   targetUnitAlignment: 0
   aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 0
@@ -1999,10 +2006,13 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 2
+  minRange: 0
   targetType: 0
   targetArea: 2
   targetUnitAlignment: 0
   aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 0
@@ -2039,10 +2049,13 @@ MonoBehaviour:
   heal: 0
   cooldown: 1
   range: 2
+  minRange: 0
   targetType: 1
   targetArea: 1
   targetUnitAlignment: 2
   aoeType: 1
+  aoeSize: 1
+  aoeOffset: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 2
@@ -2091,4 +2104,4 @@ MonoBehaviour:
   - {x: -0.012322299, y: -0.058308773, z: 0}
   m_ShapePathHash: 45762548
   m_Mesh: {fileID: 0}
-  m_InstanceId: -550576
+  m_InstanceId: -140482

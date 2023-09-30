@@ -69,6 +69,10 @@ namespace NightmareEchoes.Inputs
                     isPanning = false;
                 }
             }
+            else
+            {
+                velocity = Vector3.zero;
+            }
         }
 
         public void UpdateCameraPan(GameObject currentUnit)
