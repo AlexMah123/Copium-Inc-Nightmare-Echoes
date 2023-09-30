@@ -9,6 +9,7 @@ namespace NightmareEchoes.Unit
     //Written by Ter (stolen from jh)
     public class Bash : Skill
     {
+        Direction prevDir;
         public override bool Cast(Units target)
         {
             base.Cast(target);
@@ -18,7 +19,7 @@ namespace NightmareEchoes.Unit
             //knockback
             var direction = target.transform.position - thisUnit.transform.position;
             var destination = target.transform.position + direction;
-            var prevDir = target.Direction;
+            prevDir = target.Direction;
                 
             var tileOccupied = false;
             var hit = Physics2D.Raycast(destination, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
@@ -31,8 +32,10 @@ namespace NightmareEchoes.Unit
                         tileOccupied = true;
                     
                     if (!tileOccupied)
-                    { 
+                    {
+                        prevDir = target.Direction;
                         StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
+                        StartCoroutine(DelayTurn(target));
                     }
                 }
             }
@@ -40,7 +43,13 @@ namespace NightmareEchoes.Unit
 
             return true;
         }
+        IEnumerator DelayTurn(Units target)
+        {
+            yield return new WaitForSeconds(0.16f);
+            Debug.Log(prevDir);
+            target.Direction = prevDir;
 
+        }
 
     }
 }
