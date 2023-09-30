@@ -5,7 +5,6 @@ using System.Reflection;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Unit.Combat;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 //Created by JH
 namespace NightmareEchoes.Unit

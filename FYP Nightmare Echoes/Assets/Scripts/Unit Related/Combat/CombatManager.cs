@@ -5,7 +5,6 @@ using UnityEngine;
 using NightmareEchoes.Grid;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
-using static UnityEngine.UI.CanvasScaler;
 
 //created by JH, edited by Ter
 namespace NightmareEchoes.Unit.Combat
