@@ -48,6 +48,14 @@ namespace NightmareEchoes.Unit.Combat
 
         private bool secondaryTargeting;
 
+        #region Properties
+        public Skill ActiveSkill
+        {
+            get => activeSkill;
+            private set => activeSkill = value;
+        }
+        #endregion
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -622,7 +630,11 @@ namespace NightmareEchoes.Unit.Combat
                 {
                     if(!overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>().IsHostile)
                     {
-                        herosInStealth.Add(overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>());
+                        if (overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>().FindModifier(STATUS_EFFECT.STEALTH_TOKEN))
+                        {
+                            herosInStealth.Add(overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>());
+
+                        }
                     }
                 }
             }

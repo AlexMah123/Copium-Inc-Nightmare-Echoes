@@ -8,6 +8,7 @@ using NightmareEchoes.TurnOrder;
 using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine.SceneManagement;
+using NightmareEchoes.Unit.Combat;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -46,10 +47,10 @@ namespace NightmareEchoes.TurnOrder
         public List<Modifier> currentUnitTotalStatusEffectList = new List<Modifier>();
 
         [SerializeField] GameObject skillInfoPanel;
-        [SerializeField] TextMeshProUGUI skillDamage;
-        [SerializeField] TextMeshProUGUI skillHitChance;
-        [SerializeField] TextMeshProUGUI skillStunChance;
-        [SerializeField] TextMeshProUGUI skillDebuffChance;
+        [SerializeField] TextMeshProUGUI skillDamageText;
+        [SerializeField] TextMeshProUGUI skillHitChanceText;
+        [SerializeField] TextMeshProUGUI skillStunChanceText;
+        [SerializeField] TextMeshProUGUI skillDebuffChanceText;
 
         Units CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
 
@@ -148,6 +149,47 @@ namespace NightmareEchoes.TurnOrder
 
         private void Update()
         {
+
+            #region Skill Info
+            if(skillInfoPanel.activeSelf) 
+            {
+                if(CombatManager.Instance.ActiveSkill != null) 
+                {
+                    skillDamageText.text = $"Damage: {CombatManager.Instance.ActiveSkill.Damage}";
+
+                    if(PathfindingManager.Instance.currentHoveredOverlayTile != null && PathfindingManager.Instance.currentHoveredOverlayTile.CheckUnitOnTile())
+                    {
+                        var hoveredUnit = PathfindingManager.Instance.currentHoveredOverlayTile.CheckUnitOnTile().GetComponent<Units>();
+
+                        if (hoveredUnit.FindModifier(STATUS_EFFECT.DODGE_TOKEN) && CurrentUnit.FindModifier(STATUS_EFFECT.BLIND_TOKEN))
+                        {
+                            skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance - 75}%";
+                        }
+                        else if(hoveredUnit.FindModifier(STATUS_EFFECT.DODGE_TOKEN) || CurrentUnit.FindModifier(STATUS_EFFECT.BLIND_TOKEN))
+                        {
+                            skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance - 50}%";
+                        }
+
+                        if(CombatManager.Instance.ActiveSkill.StunChance - hoveredUnit.stats.StunResist > 0)
+                        {
+                            skillStunChanceText.text = $"Stun Chance: {CombatManager.Instance.ActiveSkill.StunChance - hoveredUnit.stats.StunResist}%";
+                        }
+
+                        if(CombatManager.Instance.ActiveSkill.DebuffChance - hoveredUnit.stats.Resist > 0)
+                        {
+                            skillDebuffChanceText.text = $"Debuff Chance: {CombatManager.Instance.ActiveSkill.DebuffChance - hoveredUnit.stats.Resist}%";
+                        }
+                    }
+                    else
+                    {
+                        skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance}%";
+                        skillStunChanceText.text = $"Stun Chance: {CombatManager.Instance.ActiveSkill.StunChance}%";    
+                        skillDebuffChanceText.text = $"Debuff Chance: {CombatManager.Instance.ActiveSkill.DebuffChance}%";
+                    }
+                    
+                }
+            }
+            #endregion
 
             #region Current Unit text
             if (CurrentUnit != null)
@@ -340,6 +382,7 @@ namespace NightmareEchoes.TurnOrder
             CurrentUnit.BasicAttack();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.ClearUnitPosition();
+            EnableSkillInfo(true);
         }
 
         public void Skill1Button()
@@ -347,7 +390,7 @@ namespace NightmareEchoes.TurnOrder
             CurrentUnit.Skill1();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.ClearUnitPosition();
-
+            EnableSkillInfo(true);
         }
 
         public void Skill2Button()
@@ -355,7 +398,7 @@ namespace NightmareEchoes.TurnOrder
             CurrentUnit.Skill2();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.ClearUnitPosition();
-
+            EnableSkillInfo(true);
         }
 
         public void Skill3Button()
@@ -363,7 +406,7 @@ namespace NightmareEchoes.TurnOrder
             CurrentUnit.Skill3();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.ClearUnitPosition();
-
+            EnableSkillInfo(true);
         }
 
         #endregion
@@ -632,6 +675,22 @@ namespace NightmareEchoes.TurnOrder
 
 
         #region Update Character Glossary UI
+        public void CharacterGlossary(string text)
+        {
+            if (!glossaryPanel.activeSelf)
+            {
+                PauseGame(true);
+                settingButton.gameObject.SetActive(false);
+                glossaryPanel.SetActive(true);
+                UpdateGlossaryUI(text);
+            }
+            else
+            {
+                PauseGame(false);
+                settingButton.gameObject.SetActive(true);
+                glossaryPanel.SetActive(false);
+            }
+        }
 
         public void UpdateGlossaryUI(string text)
         {
@@ -889,6 +948,11 @@ namespace NightmareEchoes.TurnOrder
 
 
         #region Hotbar UI
+        public void EnableSkillInfo(bool enable)
+        {
+            skillInfoPanel.gameObject.SetActive(enable);
+        }
+
         public void EnableCurrentUI(bool enable)
         {
             int index = 1;
@@ -978,22 +1042,7 @@ namespace NightmareEchoes.TurnOrder
             UpdateStatusEffectUI();
         }
 
-        public void CharacterGlossary(string text)
-        {
-            if (!glossaryPanel.activeSelf)
-            {
-                PauseGame(true);
-                settingButton.gameObject.SetActive(false);
-                glossaryPanel.SetActive(true);
-                UpdateGlossaryUI(text);
-            }
-            else
-            {
-                PauseGame(false);
-                settingButton.gameObject.SetActive(true);
-                glossaryPanel.SetActive(false);
-            }
-        }
+        
 
         public void SettingsButton()
         {

@@ -13,6 +13,7 @@ namespace NightmareEchoes.Unit
     public abstract class Skill : MonoBehaviour
     {
         protected Units thisUnit;
+        [Header("Skill Details")]
         [SerializeField] protected string skillName;
         [SerializeField] protected int damage;
         [SerializeField] protected int heal;
@@ -22,19 +23,26 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected TargetType targetType;
         [SerializeField] protected TargetArea targetArea;
         [SerializeField] protected TargetUnitAlignment targetUnitAlignment;
-        
+
+        [Header("Skill AOE")]
         [SerializeField] protected AOEType aoeType;
         [SerializeField] protected int aoeSize = 1;
         [SerializeField] protected int aoeOffset = 0;
         [SerializeField] protected int aoeDuration;
         [SerializeField] protected Color aoeColor;
 
+        [Header("Skill Type")]
         [SerializeField] protected SkillType skillType;
         
         [SerializeField] protected int secondaryDamage;
         [SerializeField] protected int secondaryRange;
 
-        [Header("Additional Effects")] 
+        [Header("Skill Effects")]
+        [SerializeField] protected int debuffChance;
+        [SerializeField] protected int hitChance = 100;
+        [SerializeField] protected int stunChance;
+
+        [Header("Additional Effects")]
         [SerializeField] protected bool inflictKnockback;
         [SerializeField] protected bool isBackstabbing;
         [SerializeField] protected int backstabBonus = 3;
@@ -170,6 +178,24 @@ namespace NightmareEchoes.Unit
         {
             get => placableGameObject;
             set => placableGameObject = value;
+        }
+
+        public int HitChance
+        {
+            get => hitChance;
+            private set => hitChance = value;
+        }
+
+        public int StunChance
+        {
+            get => stunChance;
+            private set => stunChance = value;
+        }
+
+        public int DebuffChance
+        {
+            get => debuffChance;
+            private set => debuffChance = value;
         }
 
         #endregion

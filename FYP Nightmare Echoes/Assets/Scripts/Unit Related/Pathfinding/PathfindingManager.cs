@@ -45,7 +45,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         //hovered tile related
         RaycastHit2D? hoveredTile;
-        OverlayTile currentHoveredOverlayTile;
+        public OverlayTile currentHoveredOverlayTile;
         OverlayTile lastAddedTile = null;
 
         private void Awake()

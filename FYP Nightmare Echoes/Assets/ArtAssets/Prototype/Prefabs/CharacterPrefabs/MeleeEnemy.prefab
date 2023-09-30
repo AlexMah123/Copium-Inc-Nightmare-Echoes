@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2309720267678754650}
   - component: {fileID: 4139838481242840768}
   - component: {fileID: -1549489166166137186}
+  - component: {fileID: 1429316040}
   m_Layer: 6
   m_Name: MeleeEnemy
   m_TagString: Inspectable
@@ -142,7 +143,7 @@ MonoBehaviour:
   vertigoToken: 0
   stunToken: 0
   immobilizeToken: 0
-  basicAttack: {fileID: 4139838481242840768}
+  basicAttack: {fileID: 1429316040}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
   skill3: {fileID: 0}
@@ -259,6 +260,9 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
+  debuffChance: 0
+  hitChance: 0
+  stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
   backstabBonus: 3
@@ -293,4 +297,43 @@ MonoBehaviour:
   - {x: -0.012245424, y: -0.04489989, z: 0}
   m_ShapePathHash: 554176341
   m_Mesh: {fileID: 0}
-  m_InstanceId: -140346
+  m_InstanceId: -329554
+--- !u!114 &1429316040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583804447610931201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ea8151309e2ae4fb54b7851f50c194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Bash
+  damage: 4
+  heal: 0
+  cooldown: 0
+  range: 1
+  minRange: 0
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  debuffChance: 0
+  hitChance: 0
+  stunChance: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: 

@@ -6,7 +6,6 @@ namespace NightmareEchoes.Unit
 {
     public class SuppressingShot : Skill
     {
-        [SerializeField] float stunChance = 80;
         public override bool Cast(Units target)
         {
             base.Cast(target);

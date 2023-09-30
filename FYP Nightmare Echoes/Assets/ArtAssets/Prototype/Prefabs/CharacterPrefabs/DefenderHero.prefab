@@ -1978,6 +1978,9 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
+  debuffChance: 0
+  hitChance: 0
+  stunChance: 0
   inflictKnockback: 1
   isBackstabbing: 0
   backstabBonus: 3
@@ -2019,6 +2022,9 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
+  debuffChance: 0
+  hitChance: 0
+  stunChance: 0
   inflictKnockback: 1
   isBackstabbing: 0
   backstabBonus: 3
@@ -2062,6 +2068,9 @@ MonoBehaviour:
   skillType: 2
   secondaryDamage: 0
   secondaryRange: 0
+  debuffChance: 0
+  hitChance: 0
+  stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
   backstabBonus: 3
@@ -2105,7 +2114,7 @@ MonoBehaviour:
   - {x: -0.012322299, y: -0.058308773, z: 0}
   m_ShapePathHash: 45762548
   m_Mesh: {fileID: 0}
-  m_InstanceId: -980106
+  m_InstanceId: -329616
 --- !u!114 &1076161257085603872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2135,6 +2144,9 @@ MonoBehaviour:
   skillType: 2
   secondaryDamage: 0
   secondaryRange: 0
+  debuffChance: 0
+  hitChance: 0
+  stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
   backstabBonus: 3
