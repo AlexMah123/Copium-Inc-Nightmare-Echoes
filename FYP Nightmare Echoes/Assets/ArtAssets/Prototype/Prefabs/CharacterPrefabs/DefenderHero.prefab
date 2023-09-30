@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5803087067753149257
 Transform:
   m_ObjectHideFlags: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1735001907
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -112463209, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -203,6 +203,7 @@ MonoBehaviour:
   frontAnimator: {fileID: 0}
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
+  tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
 --- !u!114 &817498675
 MonoBehaviour:
   m_ObjectHideFlags: 0

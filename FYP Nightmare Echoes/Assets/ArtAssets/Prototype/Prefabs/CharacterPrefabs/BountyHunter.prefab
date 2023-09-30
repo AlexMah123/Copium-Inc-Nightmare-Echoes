@@ -167,7 +167,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1735001907
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 1830408377, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -247,6 +247,7 @@ MonoBehaviour:
   frontAnimator: {fileID: 0}
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
+  tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
 --- !u!50 &128770042
 Rigidbody2D:
   serializedVersion: 4

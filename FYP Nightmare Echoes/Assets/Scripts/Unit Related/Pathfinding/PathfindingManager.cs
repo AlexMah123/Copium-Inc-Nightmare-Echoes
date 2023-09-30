@@ -89,7 +89,33 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
             }
 
+            //UNCOMMENT IF YOU WANT MANUAL MOVEMENT
             PlayerInputPathfinding();
+        }
+
+        //Called in Player Phase
+        public void StartPlayerPathfinding(Units hero = null)
+        {
+            if (!ifSelectedUnit)
+            {
+                if (hero && !hero.IsHostile)
+                {
+                    //set currentSelected to the raycasted unit
+                    currentSelectedUnit = hero;
+                    ifSelectedUnit = true;
+
+                    //Gets the value of the start pos and the maximum range is the amount you can set
+                    playerTilesInRange = Pathfinding.FindTilesInRange(hero.ActiveTile, hero.stats.MoveRange);
+
+                    //store values for players when they cancel their action
+                    revertUnitPosition = hero.ActiveTile;
+                    revertUnitDirection = hero.Direction;
+                    revertUnitHealth = hero.stats.Health;
+
+                    //display tiles in range
+                    ShowTilesInRange(playerTilesInRange);
+                }
+            }
         }
 
         public void PlayerInputPathfinding()
@@ -139,6 +165,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             #endregion
 
             #region selecting a player to move
+            //MANUAL CLICKS
             //if player clicked and has not previously selected a unit, raycast and check
             if (Input.GetMouseButtonDown(0) && !ifSelectedUnit)
             {
@@ -226,30 +253,29 @@ namespace NightmareEchoes.Unit.Pathfinding
                     lastAddedTile = pathList.Count > 0 ? pathList[pathList.Count - 1] : null;
                 }
 
-                //if there is no unit on tile
-                if (!currentHoveredOverlayTile.CheckUnitOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
+                if (currentHoveredOverlayTile == currentSelectedUnit.ActiveTile || currentHoveredOverlayTile == revertUnitPosition)
                 {
-                    RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
-                }
-                else if (currentHoveredOverlayTile == currentSelectedUnit.ActiveTile)
-                {
-                    //if the currenthovered tile is the active tile, resets not dragging 
+                    //if the currenthovered tile is the active tile or the reverted position or if you drag out of range resets not dragging 
                     isDragging = false;
-                    RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
                     pathList.Clear();
-                    ClearArrow(tempPathList);
-                }
-                else if (currentHoveredOverlayTile == revertUnitPosition)
-                {
-                    //if the currenthovered tile is the active, resets not dragging
-                    isDragging = false;
                     RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
-                    pathList.Clear();
                     ClearArrow(tempPathList);
                 }
 
+                RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
+
+
                 if (Input.GetMouseButtonUp(0))
                 {
+                    if(pathList.Count > 0)
+                    {
+                        if (pathList[pathList.Count - 1].CheckUnitOnTile())
+                        {
+                            pathList.RemoveAt(pathList.Count - 1);
+                        }
+                    }
+
+                    RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
                     tempPathList = new List<OverlayTile>(pathList);
                     isMoving = true;
 
@@ -257,11 +283,20 @@ namespace NightmareEchoes.Unit.Pathfinding
                     isDragging = false;
                     lastAddedTile = null;
 
-                    if(pathList.Count <= 0)
+                    if (pathList.Count <= 0)
                     {
                         ClearArrow(tempPathList);
                     }
                 }
+
+            }
+            else if(isDragging && !isMoving && ifSelectedUnit && !playerTilesInRange.Contains(currentHoveredOverlayTile))
+            {
+                //if the currenthovered tile is the active tile or the reverted position or if you drag out of range resets not dragging 
+                isDragging = false;
+                pathList.Clear();
+                RenderArrow(playerTilesInRange, pathList, currentSelectedUnit);
+                ClearArrow(tempPathList);
             }
 
             #endregion
@@ -285,6 +320,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                     case STATUS_EFFECT.IMMOBILIZE_TOKEN:
                         thisUnit.TokenList[i].TriggerEffect(thisUnit);
                         isMoving = false;
+                        revertUnitPosition = null;
 
                         ClearArrow(tempPathList);
                         yield return null;
@@ -337,6 +373,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                         case STATUS_EFFECT.IMMOBILIZE_TOKEN:
                             thisUnit.TokenList[i].TriggerEffect(thisUnit);
                             isMoving = false;
+                            revertUnitPosition = null;
 
                             ClearArrow(tempPathList);
                             pathList.Clear();
@@ -496,7 +533,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         public void SetUnitPositionOnTile(OverlayTile tile, Units unit)
         {
             unit.gameObject.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
-            unit.gameObject.GetComponent<Units>().ActiveTile = tile;
+            unit.ActiveTile = tile;
         }
 
         public void ShowTilesInRange(List<OverlayTile> overlayTileList)

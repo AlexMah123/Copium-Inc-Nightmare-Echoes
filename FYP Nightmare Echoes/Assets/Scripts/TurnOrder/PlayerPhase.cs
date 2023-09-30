@@ -65,12 +65,13 @@ namespace NightmareEchoes.TurnOrder
             #endregion
 
             //Start Turn
+            //PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
             controller.StartCoroutine(WaitForTurnEnd());
         }
 
         protected override void OnUpdate()
         {
-
+            //PathfindingManager.Instance.PlayerInputPathfinding();
         }
 
         protected override void OnExit()

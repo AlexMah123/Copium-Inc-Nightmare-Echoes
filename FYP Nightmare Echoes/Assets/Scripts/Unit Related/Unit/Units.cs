@@ -71,6 +71,7 @@ namespace NightmareEchoes.Unit
 
         [Space(15), Header("Tile Related")]
         [SerializeField] protected OverlayTile activeTile;
+        [SerializeField] protected PolygonCollider2D tileSize;
 
         #region Class Properties
 
@@ -546,14 +547,8 @@ namespace NightmareEchoes.Unit
             spriteRenderer = GetComponent<SpriteRenderer>();
 
             //collider presets
-            Vector2[] points = new Vector2[4];
-            points[0] = new Vector2(-1f, 0f);
-            points[1] = new Vector2(0f, -0.5f);
-            points[2] = new Vector2(1f, 0f);
-            points[3] = new Vector2(0, 0.5f);
-
             PolygonCollider2D polyCollider = GetComponent<PolygonCollider2D>();
-            polyCollider.points = points;
+            polyCollider.points = tileSize.points;
             polyCollider.isTrigger = true;
 
             //rb2d presets
@@ -574,7 +569,7 @@ namespace NightmareEchoes.Unit
 
         protected virtual void Update()
         {
-            if (stats.Health == 0)
+            if (stats.Health <= 0)
             {
                 if (!IsHostile)
                 {
@@ -816,7 +811,7 @@ namespace NightmareEchoes.Unit
         [ContextMenu("Destroy Object")]
         public void DestroyObject()
         {
-            Destroy(gameObject);
+            stats.Health = 0;
         }
 
         #endregion
@@ -850,7 +845,10 @@ namespace NightmareEchoes.Unit
         {
             var hitTile = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
             if (hitTile)
+            {
                 activeTile = hitTile.collider.gameObject.GetComponent<OverlayTile>();
+                PathfindingManager.Instance.SetUnitPositionOnTile(activeTile, this);
+            }
         }
         #endregion
 
