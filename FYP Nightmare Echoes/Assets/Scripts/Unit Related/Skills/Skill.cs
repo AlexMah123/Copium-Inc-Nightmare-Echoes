@@ -18,6 +18,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected int heal;
         [SerializeField] protected int cooldown;
         [SerializeField] protected int range;
+        [SerializeField] protected int minRange;
         [SerializeField] protected TargetType targetType;
         [SerializeField] protected TargetArea targetArea;
         [SerializeField] protected TargetUnitAlignment targetUnitAlignment;
@@ -65,6 +66,12 @@ namespace NightmareEchoes.Unit
         {
             get => range;
             set => range = value;
+        }
+
+        public int MinRange
+        {
+            get => minRange;
+            set => minRange = value;
         }
 
         public TargetType TargetType

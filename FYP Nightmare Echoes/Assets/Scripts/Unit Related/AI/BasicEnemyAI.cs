@@ -31,6 +31,7 @@ namespace NightmareEchoes.Unit.AI
         //checking if this unit can attk, move & attk and has attacked.
         public bool inAtkRange, inMoveAndAttackRange, hasAttacked, detectedStealthHero;
         int selectedAttackRange;
+        int selectedAttackMinRange;
         int rngHelper;
         float currTileUtil, highestTileUtil;
 
@@ -146,6 +147,7 @@ namespace NightmareEchoes.Unit.AI
             }
 
             selectedAttackRange = currSelectedSkill.Range;
+            selectedAttackMinRange = currSelectedSkill.MinRange;
 
             //setting the values based on the closest hero
             targetHero = closestHero;
@@ -158,7 +160,7 @@ namespace NightmareEchoes.Unit.AI
             inMoveAndAttackRange = false;
 
             #region checks if unit is inAtkRange/inMoveAndAttackRange
-            if (IsTileAttackableFrom(thisUnitTile, targetTileToMove, selectedAttackRange))
+            if (IsTileAttackableFrom(thisUnitTile, targetTileToMove))
             {
                 inAtkRange = true;
             }
@@ -166,7 +168,7 @@ namespace NightmareEchoes.Unit.AI
             //Checks tiles in range for possibleAttackableLocations if they do not have a unit on it
             for (int i = 0; i < tilesInRange.Count; i++)
             {
-                if (IsTileAttackableFrom(tilesInRange[i], targetTileToMove, selectedAttackRange))
+                if (IsTileAttackableFrom(tilesInRange[i], targetTileToMove))
                 {
                     if (!tilesInRange[i].CheckUnitOnTile())
                     {
@@ -518,14 +520,22 @@ namespace NightmareEchoes.Unit.AI
             return dist;
         }
 
-        bool IsTileAttackableFrom(OverlayTile target1, OverlayTile target2, int range)
+        bool IsTileAttackableFrom(OverlayTile target1, OverlayTile target2)
         {
             if (target1.gridLocation.x == target2.gridLocation.x)
             {
                 //same row/x
                 if ((target1.gridLocation.y + selectedAttackRange >= target2.gridLocation.y) && (target1.gridLocation.y - selectedAttackRange <= target2.gridLocation.y))
                 {
-                    return true;
+                    if (selectedAttackMinRange != 0)
+                    {
+                        if ((target1.gridLocation.y + selectedAttackMinRange > target2.gridLocation.y) && (target1.gridLocation.y - selectedAttackMinRange < target2.gridLocation.y))
+                        {
+                            return false;
+                        }
+                        else return true;
+                    }
+                    else return true;
                 } 
                 else return false;
             }
@@ -534,7 +544,15 @@ namespace NightmareEchoes.Unit.AI
                 //same column/y
                 if ((target1.gridLocation.x + selectedAttackRange >= target2.gridLocation.x) && (target1.gridLocation.x - selectedAttackRange <= target2.gridLocation.x))
                 {
-                    return true;
+                    if (selectedAttackMinRange != 0)
+                    {
+                        if ((target1.gridLocation.x + selectedAttackMinRange > target2.gridLocation.x) && (target1.gridLocation.x - selectedAttackMinRange < target2.gridLocation.x))
+                        {
+                            return false;
+                        }
+                        else return true;
+                    }
+                    else return true;
                 }
                 else return false;
             }
