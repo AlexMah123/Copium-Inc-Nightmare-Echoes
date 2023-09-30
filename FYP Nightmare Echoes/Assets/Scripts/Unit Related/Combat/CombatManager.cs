@@ -94,6 +94,13 @@ namespace NightmareEchoes.Unit.Combat
         void OnBattleStart()
         {
             unitsInvolved = FindObjectsOfType<Units>().ToList();
+
+            var iterator = new List<Units>(unitsInvolved);
+            foreach (var unit in iterator.Where(unit => unit.IsProp))
+            {
+                unitsInvolved.Remove(unit);
+            }
+            
             aliveUnits = unitsInvolved;
             
             foreach (var unit in unitsInvolved)

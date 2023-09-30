@@ -21,13 +21,14 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected string _name;
         [SerializeField] protected Sprite sprite;
         protected SpriteRenderer spriteRenderer;
+        [SerializeField] protected bool isProp;
         [SerializeField] protected bool isHostile;
         [SerializeField] protected Direction direction;
         [SerializeField] protected TypeOfUnit typeOfUnit;
 
         [Space(15), Header("Units Popup text")]
-        [SerializeField] protected GameObject popupTextPrefab;        
-
+        [SerializeField] protected GameObject popupTextPrefab;
+        
         [Space(15), Header("Stats For Units")]
         public BaseStats baseStats = new BaseStats();
         public BaseStats stats = new BaseStats();
@@ -92,6 +93,12 @@ namespace NightmareEchoes.Unit
         {
             get => _name;
             private set => _name = value;
+        }
+
+        public bool IsProp
+        {
+            get => isProp;
+            set => isProp = value;
         }
 
         public bool IsHostile

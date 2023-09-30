@@ -78,8 +78,6 @@ namespace NightmareEchoes.Unit.Enemy
         public override void TakeDamage(int damage)
         {
             base.TakeDamage(damage);
-
-            
         }
 
         [ContextMenu("Take Damage (2)")]

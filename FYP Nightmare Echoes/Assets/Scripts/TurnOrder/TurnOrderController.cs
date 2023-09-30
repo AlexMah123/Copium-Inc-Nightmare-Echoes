@@ -137,6 +137,13 @@ namespace NightmareEchoes.TurnOrder
         public void CalculateTurnOrder()
         {
             turnOrderList = new List<Units>(FindObjectsOfType<Units>());
+            
+            var iterator = new List<Units>(turnOrderList);
+            foreach (var unit in iterator.Where(unit => unit.IsProp))
+            {
+                turnOrderList.Remove(unit);
+            }
+            
             turnOrderList.Sort(CompareSpeed); //sorts in ascending order
             turnOrderList.Reverse();
 
@@ -196,7 +203,7 @@ namespace NightmareEchoes.TurnOrder
             //filter by heroes
             foreach (var unit in totalUnitList)
             {
-                if (!unit.IsHostile)
+                if (!unit.IsHostile && !unit.IsProp)
                 {
                     totalHeroList.Add(unit);
                 }
