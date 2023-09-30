@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6844806065246622355}
   - component: {fileID: 4043845194542131480}
   - component: {fileID: 7825905777832078394}
+  - component: {fileID: 1041318026}
+  - component: {fileID: 1041318025}
   m_Layer: 8
   m_Name: Obstacles
   m_TagString: Inspectable
@@ -143,4 +145,90 @@ MonoBehaviour:
   - {x: 0.19309631, y: -0.055844974, z: 0}
   m_ShapePathHash: -1233882758
   m_Mesh: {fileID: 0}
-  m_InstanceId: -661742
+  m_InstanceId: -4720
+--- !u!50 &1041318026
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7281053455649699296}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1041318025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7281053455649699296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0808d9304beaab4a8f3b4a3b75b927b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Prop
+  sprite: {fileID: 0}
+  isProp: 0
+  isHostile: 0
+  direction: 0
+  typeOfUnit: 0
+  popupTextPrefab: {fileID: 0}
+  baseStats:
+    _health: 10
+    _maxHealth: 10
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  stats:
+    _health: 10
+    _maxHealth: 10
+    _speed: 0
+    _moveRange: 0
+    _stunResist: 0
+    _resist: 0
+  modifiedStats:
+    healthModifier: 0
+    speedModifier: 0
+    moveRangeModifier: 0
+    stunResistModifier: 0
+    resistModifier: 0
+  buffDebuffList: []
+  tokenList: []
+  dodgeToken: 0
+  blockToken: 0
+  strengthToken: 0
+  hasteToken: 0
+  barrierToken: 0
+  stealthToken: 0
+  blindToken: 0
+  vulnerableToken: 0
+  weakenToken: 0
+  vertigoToken: 0
+  stunToken: 0
+  immobilizeToken: 0
+  basicAttack: {fileID: 0}
+  skill1: {fileID: 0}
+  skill2: {fileID: 0}
+  skill3: {fileID: 0}
+  passive: {fileID: 0}
+  sprites: []
+  frontModel: {fileID: 0}
+  backModel: {fileID: 0}
+  frontAnimator: {fileID: 0}
+  backAnimator: {fileID: 0}
+  activeTile: {fileID: 0}
+  tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}

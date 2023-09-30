@@ -582,7 +582,7 @@ namespace NightmareEchoes.Unit
                 {
                     PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
                 }
-                else
+                else if (!isProp)
                 {
                     PathfindingManager.Instance.HideTilesInRange(GetComponent<BasicEnemyAI>().TilesInRange);
                 }
@@ -592,6 +592,7 @@ namespace NightmareEchoes.Unit
             }
 
             #region Sprite/Animation Updates
+            if (isProp) return;
             if (sprites.Count > 0)
             {
                 switch (Direction)
