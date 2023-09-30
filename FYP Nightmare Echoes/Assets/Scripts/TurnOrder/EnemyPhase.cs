@@ -14,6 +14,7 @@ namespace NightmareEchoes.TurnOrder
     public class EnemyPhase : Phase
     {
         bool tempStun = false;
+        private bool madeDecision;
         BasicEnemyAI enemyAI;
 
         private List<Skill> aoeSkillsPassed = new();
@@ -22,6 +23,7 @@ namespace NightmareEchoes.TurnOrder
         {
             //Reseting Values
             tempStun = false;
+            madeDecision = false;
 
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
@@ -73,13 +75,13 @@ namespace NightmareEchoes.TurnOrder
             {
                 enemyAI.MoveProcess(controller.CurrentUnit);
             }
-
+            if (!madeDecision) return;
+            
             var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
             if (aoeDmg)
             {
                 if (aoeSkillsPassed.Contains(aoeDmg)) return;
-                aoeDmg.Cast(controller.CurrentUnit);
-                aoeSkillsPassed.Add(aoeDmg);
+                if (aoeDmg.Cast(controller.CurrentUnit)) aoeSkillsPassed.Add(aoeDmg);
             }
             
             var trapDmg = CombatManager.Instance.CheckTrap(controller.CurrentUnit);
@@ -149,6 +151,7 @@ namespace NightmareEchoes.TurnOrder
                 enemyAI.MakeDecision(controller.CurrentUnit);
             }
 
+            madeDecision = true;
             yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
 
             if (!enemyAI.inAtkRange && !enemyAI.inMoveAndAttackRange)

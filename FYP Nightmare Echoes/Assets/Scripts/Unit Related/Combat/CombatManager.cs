@@ -232,6 +232,16 @@ namespace NightmareEchoes.Unit.Combat
             }
         }
 
+        public void ClearActiveAoe(Skill skill)
+        {
+            if (activeAoes.TryGetValue(skill, out var list))
+            {
+                RenderOverlayTile.Instance.ClearCustomRenders(list);
+                activeAoes.Remove(skill);
+                activeAoesCD.Remove(skill);
+            }
+        }
+
         #endregion
 
         #region Targeting

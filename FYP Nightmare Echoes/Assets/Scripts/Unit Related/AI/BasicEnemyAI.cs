@@ -49,6 +49,8 @@ namespace NightmareEchoes.Unit.AI
         Dictionary<Units, float> aggroDictionary = new Dictionary<Units, float>();
         float healthPercent;
 
+        public bool hasMoved;
+
         #region Class Attributes
         public List<OverlayTile> TilesInRange
         {
@@ -74,6 +76,7 @@ namespace NightmareEchoes.Unit.AI
         {
             //reset values
             hasAttacked = false;
+            hasMoved = false;
             detectedStealthHero = false;
 
             //sort heros by distance and find tiles in range
@@ -350,6 +353,7 @@ namespace NightmareEchoes.Unit.AI
                 //only if you havent detected hero
                 if (!detectedStealthHero)
                 {
+                    hasMoved = true;
                     PathfindingManager.Instance.MoveAlongPath(thisUnit, totalPathList, tilesInRange);
                 }
             }

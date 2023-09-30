@@ -308,6 +308,9 @@ namespace NightmareEchoes.Unit
         //used for attacks that are damage type
         public bool DealDamage(Units target, int secondaryDmg = 0)
         {
+            var damage = this.damage;
+            if (secondaryDmg > 0) damage = secondaryDmg;
+            
             #region Token Checks Before Dealing Dmg
 
             if (thisUnit.BlindToken && targetType == TargetType.Single)
