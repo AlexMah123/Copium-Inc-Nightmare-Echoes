@@ -35,7 +35,7 @@ namespace NightmareEchoes.TurnOrder
                 controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));*/
 
                 #region Tokens
-                //controller.CurrentUnit.ApplyAllTokenEffects();
+                controller.CurrentUnit.ApplyAllTokenEffects();
 
                 if (controller.CurrentUnit.StunToken)
                 {

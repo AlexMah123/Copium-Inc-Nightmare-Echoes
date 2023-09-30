@@ -45,6 +45,12 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] GameObject currentUnitStatusEffectsPanel;
         public List<Modifier> currentUnitTotalStatusEffectList = new List<Modifier>();
 
+        [SerializeField] GameObject skillInfoPanel;
+        [SerializeField] TextMeshProUGUI skillDamage;
+        [SerializeField] TextMeshProUGUI skillHitChance;
+        [SerializeField] TextMeshProUGUI skillStunChance;
+        [SerializeField] TextMeshProUGUI skillDebuffChance;
+
         Units CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
 
         [Space(20), Header("Inspectable Info")]

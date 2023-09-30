@@ -672,7 +672,7 @@ namespace NightmareEchoes.Unit
         #region Override Functions
         public virtual void Move()
         {
-
+            
         }
 
         public virtual void BasicAttack()
@@ -873,6 +873,49 @@ namespace NightmareEchoes.Unit
 
             return null;
         }
+
+        public void ClearAllStatusEffect(List<Modifier> statusEffectList, ModifierType modifierEnum)
+        {
+            switch(modifierEnum)
+            {
+                case ModifierType.BUFF:
+                case ModifierType.DEBUFF:
+                    buffDebuffList.Clear();
+                    break;
+
+                case ModifierType.POSITIVETOKEN:
+                    foreach(var statusEffect in statusEffectList)
+                    {
+                        if(statusEffect.modifierType == ModifierType.POSITIVETOKEN)
+                        {
+                            while (statusEffect.ReturnLifeTime() > 0)
+                            {
+                                UpdateTokenLifeTime(statusEffect.statusEffect);
+                            }
+                        }
+                        
+                    }
+                    break;
+
+                case ModifierType.NEGATIVETOKEN:
+                    foreach (var statusEffect in statusEffectList)
+                    {
+                        if (statusEffect.modifierType == ModifierType.NEGATIVETOKEN)
+                        {
+                            while (statusEffect.ReturnLifeTime() > 0)
+                            {
+                                UpdateTokenLifeTime(statusEffect.statusEffect);
+                            }
+                        }
+                        
+                    }
+                    break;
+            }
+
+            UpdateStatusEffectEvent();
+            UpdateStatsWithoutEndCycleEffect();
+        }
+
 
         //call to add buff to unit
         public void AddBuff(Modifier buff)
