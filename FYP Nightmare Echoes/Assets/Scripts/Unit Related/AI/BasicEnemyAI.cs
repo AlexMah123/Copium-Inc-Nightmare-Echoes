@@ -227,18 +227,21 @@ namespace NightmareEchoes.Unit.AI
                     }
 
                     //Debug.Log(currTileUtil);
-                    if (currTileUtil > highestTileUtil)
+                    if (!possibleAttackLocations[i].CheckUnitOnTile())
                     {
-                        bestMoveTile = possibleAttackLocations[i];
-                        highestTileUtil = currTileUtil;
-                    }
-                    else if (currTileUtil == highestTileUtil)
-                    {
-                        rngHelper++;
-                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                        if (currTileUtil > highestTileUtil)
                         {
                             bestMoveTile = possibleAttackLocations[i];
                             highestTileUtil = currTileUtil;
+                        }
+                        else if (currTileUtil == highestTileUtil)
+                        {
+                            rngHelper++;
+                            if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                            {
+                                bestMoveTile = possibleAttackLocations[i];
+                                highestTileUtil = currTileUtil;
+                            }
                         }
                     }
                 }
@@ -296,18 +299,21 @@ namespace NightmareEchoes.Unit.AI
                             break;
                     }
                     //Debug.Log(currTileUtil);
-                    if (currTileUtil > highestTileUtil)
+                    if (!possibleAttackLocations[i].CheckUnitOnTile())
                     {
-                        bestMoveTile = possibleAttackLocations[i];
-                        highestTileUtil = currTileUtil;
-                    }
-                    else if (currTileUtil == highestTileUtil)
-                    {
-                        rngHelper++;
-                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                        if (currTileUtil > highestTileUtil)
                         {
                             bestMoveTile = possibleAttackLocations[i];
                             highestTileUtil = currTileUtil;
+                        }
+                        else if (currTileUtil == highestTileUtil)
+                        {
+                            rngHelper++;
+                            if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                            {
+                                bestMoveTile = possibleAttackLocations[i];
+                                highestTileUtil = currTileUtil;
+                            }
                         }
                     }
                 }
