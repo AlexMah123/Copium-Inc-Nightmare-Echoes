@@ -71,7 +71,7 @@ namespace NightmareEchoes.TurnOrder
             //start a couroutine to move
             if (enemyAI == null || controller.CurrentUnit == null) return;
 
-            if (enemyAI.TotalHeroList.Count > 0)
+            if (enemyAI.totalPathList.Count > 0)
             {
                 enemyAI.MoveProcess(controller.CurrentUnit);
             }

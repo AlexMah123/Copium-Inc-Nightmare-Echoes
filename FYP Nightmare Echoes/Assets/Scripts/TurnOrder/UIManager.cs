@@ -155,17 +155,29 @@ namespace NightmareEchoes.TurnOrder
             {
                 if(CombatManager.Instance.ActiveSkill != null) 
                 {
-                    skillDamageText.text = $"Damage: {CombatManager.Instance.ActiveSkill.Damage}";
 
-                    if(PathfindingManager.Instance.currentHoveredOverlayTile != null && PathfindingManager.Instance.currentHoveredOverlayTile.CheckUnitOnTile())
+                    if(CurrentUnit.StrengthToken && !CurrentUnit.WeakenToken)
+                    {
+                        skillDamageText.text = $"Damage: {CombatManager.Instance.ActiveSkill.Damage * 1.5}";
+                    }
+                    else if(CurrentUnit.WeakenToken && !CurrentUnit.StrengthToken)
+                    {
+                        skillDamageText.text = $"Damage: {CombatManager.Instance.ActiveSkill.Damage * 0.5}";
+                    }
+                    else
+                    {
+                        skillDamageText.text = $"Damage: {CombatManager.Instance.ActiveSkill.Damage}";
+                    }
+
+                    if (PathfindingManager.Instance.currentHoveredOverlayTile != null && PathfindingManager.Instance.currentHoveredOverlayTile.CheckUnitOnTile())
                     {
                         var hoveredUnit = PathfindingManager.Instance.currentHoveredOverlayTile.CheckUnitOnTile().GetComponent<Units>();
 
-                        if (hoveredUnit.FindModifier(STATUS_EFFECT.DODGE_TOKEN) && CurrentUnit.FindModifier(STATUS_EFFECT.BLIND_TOKEN))
+                        if (hoveredUnit.DodgeToken && CurrentUnit.BlindToken)
                         {
                             skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance - 75}%";
                         }
-                        else if(hoveredUnit.FindModifier(STATUS_EFFECT.DODGE_TOKEN) || CurrentUnit.FindModifier(STATUS_EFFECT.BLIND_TOKEN))
+                        else if(hoveredUnit.DodgeToken || CurrentUnit.BlindToken)
                         {
                             skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance - 50}%";
                         }
@@ -182,9 +194,10 @@ namespace NightmareEchoes.TurnOrder
                     }
                     else
                     {
-                        skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance}%";
-                        skillStunChanceText.text = $"Stun Chance: {CombatManager.Instance.ActiveSkill.StunChance}%";    
-                        skillDebuffChanceText.text = $"Debuff Chance: {CombatManager.Instance.ActiveSkill.DebuffChance}%";
+                        if (skillInfoPanel.activeSelf)
+                        {
+                            EnableSkillInfo(false);
+                        }
                     }
                     
                 }
@@ -382,7 +395,15 @@ namespace NightmareEchoes.TurnOrder
             CurrentUnit.BasicAttack();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.ClearUnitPosition();
-            EnableSkillInfo(true);
+
+            if (skillInfoPanel.activeSelf)
+            {
+                EnableSkillInfo(false);
+            }
+            else
+            {
+                EnableSkillInfo(true);
+            }
         }
 
         public void Skill1Button()
@@ -390,7 +411,15 @@ namespace NightmareEchoes.TurnOrder
             CurrentUnit.Skill1();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.ClearUnitPosition();
-            EnableSkillInfo(true);
+
+            if (skillInfoPanel.activeSelf)
+            {
+                EnableSkillInfo(false);
+            }
+            else
+            {
+                EnableSkillInfo(true);
+            }
         }
 
         public void Skill2Button()
@@ -398,7 +427,15 @@ namespace NightmareEchoes.TurnOrder
             CurrentUnit.Skill2();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.ClearUnitPosition();
-            EnableSkillInfo(true);
+
+            if (skillInfoPanel.activeSelf)
+            {
+                EnableSkillInfo(false);
+            }
+            else
+            {
+                EnableSkillInfo(true);
+            }
         }
 
         public void Skill3Button()
@@ -406,7 +443,15 @@ namespace NightmareEchoes.TurnOrder
             CurrentUnit.Skill3();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.ClearUnitPosition();
-            EnableSkillInfo(true);
+
+            if (skillInfoPanel.activeSelf)
+            {
+                EnableSkillInfo(false);
+            }
+            else
+            {
+                EnableSkillInfo(true);
+            }
         }
 
         #endregion

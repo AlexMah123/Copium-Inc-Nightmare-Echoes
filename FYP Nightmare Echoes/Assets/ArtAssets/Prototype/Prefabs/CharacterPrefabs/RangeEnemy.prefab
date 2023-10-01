@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8143709165264484512}
   - component: {fileID: 9039162952523036802}
   - component: {fileID: 1961892246}
+  - component: {fileID: 1076513885083324510}
   - component: {fileID: 964070419}
   - component: {fileID: 503955040074887315}
   - component: {fileID: 6603126608767782748}
@@ -144,7 +145,7 @@ MonoBehaviour:
   stunToken: 0
   immobilizeToken: 0
   basicAttack: {fileID: 1961892246}
-  skill1: {fileID: 0}
+  skill1: {fileID: 1076513885083324510}
   skill2: {fileID: 0}
   skill3: {fileID: 0}
   passive: {fileID: 0}
@@ -220,6 +221,45 @@ MonoBehaviour:
   placableCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: Single Target, Deal 3 Damage and 2 Wound
+--- !u!114 &1076513885083324510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3376283141138650508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84c54df35059b5948b098087cbecf9a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Kick
+  damage: 2
+  heal: 0
+  cooldown: 0
+  range: 0
+  minRange: 0
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  debuffChance: 0
+  hitChance: 100
+  stunChance: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: Deal 2 Damage and Knockback target 1 tile
 --- !u!60 &964070419
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -297,4 +337,4 @@ MonoBehaviour:
   - {x: -0.008214869, y: -0.04598648, z: 0}
   m_ShapePathHash: -1766056635
   m_Mesh: {fileID: 0}
-  m_InstanceId: -10280
+  m_InstanceId: -1548
