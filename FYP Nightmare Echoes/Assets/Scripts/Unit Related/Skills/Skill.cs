@@ -423,7 +423,8 @@ namespace NightmareEchoes.Unit
     public enum TargetType
     {
         Single = 0,
-        AOE = 1
+        AOE = 1,
+        Self = 2
     }
 
     public enum TargetArea

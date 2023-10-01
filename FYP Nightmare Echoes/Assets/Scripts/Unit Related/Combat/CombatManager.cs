@@ -46,6 +46,9 @@ namespace NightmareEchoes.Unit.Combat
         private Camera cam;
 
         private bool secondaryTargeting;
+        
+        //To prevent update() from casting multiple times
+        private bool castGate = false;
 
         #region Properties
         public Skill ActiveSkill
@@ -72,6 +75,8 @@ namespace NightmareEchoes.Unit.Combat
 
         private void Update()
         {
+            if (castGate) return;
+            
             if (activeSkill && !secondaryTargeting)
             {
                 if (!activeSkill.Placable)
@@ -83,6 +88,13 @@ namespace NightmareEchoes.Unit.Combat
                             break;
                         case TargetType.AOE:
                             TargetGround();
+                            break;
+                        case TargetType.Self:
+                            castGate = true;
+                            if (activeSkill.Cast())
+                                EndTurn();
+                            else
+                                castGate = false;
                             break;
                     }
                 }
@@ -198,6 +210,7 @@ namespace NightmareEchoes.Unit.Combat
             ClearPreviews();
 
             turnEnded = true;
+            castGate = false;
         }
         #endregion
 
