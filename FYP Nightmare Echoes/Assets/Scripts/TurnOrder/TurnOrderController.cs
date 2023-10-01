@@ -34,6 +34,7 @@ namespace NightmareEchoes.TurnOrder
         [Header("Hero List")]
         List<Units> totalUnitList = new List<Units>();
         List<Units> totalHeroList = new List<Units>();
+        List<Units> totalEnemiesList = new List<Units>();
 
 
         #region Class Properties
@@ -218,5 +219,33 @@ namespace NightmareEchoes.TurnOrder
                 return null;
             }
         }
+
+        public List<Units> FindAllEnemies()
+        {
+            //check if any hero exist
+            totalEnemiesList.Clear();
+            totalUnitList = FindObjectsOfType<Units>().ToList();
+
+            //filter by heroes
+            foreach (var unit in totalUnitList)
+            {
+                if (unit.IsHostile && !unit.IsProp)
+                {
+                    totalEnemiesList.Add(unit);
+                }
+            }
+
+            if (totalEnemiesList.Count > 0)
+            {
+                return totalEnemiesList;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+
     }
 }

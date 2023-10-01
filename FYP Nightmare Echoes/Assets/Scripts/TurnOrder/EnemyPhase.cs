@@ -7,6 +7,7 @@ using NightmareEchoes.Unit.AI;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using Unity.VisualScripting.Antlr3.Runtime.Collections;
+using NightmareEchoes.Inputs;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -71,7 +72,7 @@ namespace NightmareEchoes.TurnOrder
             //start a couroutine to move
             if (enemyAI == null || controller.CurrentUnit == null) return;
 
-            if (enemyAI.totalPathList.Count > 0)
+            if (enemyAI.TotalHeroList.Count > 0)
             {
                 enemyAI.MoveProcess(controller.CurrentUnit);
             }
@@ -93,8 +94,6 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-            CombatManager.Instance.turnEnded = false;
-
             if (controller.CurrentUnit != null && enemyAI != null)
             {
                 #region End of Turn Effects

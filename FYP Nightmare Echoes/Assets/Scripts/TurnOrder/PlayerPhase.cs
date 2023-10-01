@@ -79,11 +79,6 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnExit()
         {
-            UIManager.Instance.EnableSkillInfo(false);
-            PathfindingManager.Instance.ifSelectedUnit = false;
-            CombatManager.Instance.turnEnded = false;
-            CameraControl.Instance.isPanning = false;
-
             if (controller.CurrentUnit != null)
             {
                 #region End of Turn Effects

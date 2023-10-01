@@ -189,68 +189,75 @@ namespace NightmareEchoes.Unit.AI
 
             if (inAtkRange)
             {
-                bestMoveTile = possibleAttackLocations[0];
-                rngHelper = 1;
-                //if (thisUnit.TypeOfUnit == TypeOfUnit.RANGED_UNIT)
-                //{
+                if(possibleAttackLocations.Count > 0) 
+                {
                     bestMoveTile = possibleAttackLocations[0];
+                }
+                rngHelper = 1;
                     
-                    for (int i = 0; i < possibleAttackLocations.Count; i++)
+                for (int i = 0; i < possibleAttackLocations.Count; i++)
+                {
+                    currTileUtil = FindDistanceBetweenTile(targetTileToMove, possibleAttackLocations[i]);
+                    switch (targetHero.Direction)
                     {
-                        currTileUtil = FindDistanceBetweenTile(targetTileToMove, possibleAttackLocations[i]);
-                        switch (targetHero.Direction)
-                        {
-                            case Direction.NORTH:
-                                if ((possibleAttackLocations[i].gridLocation.x < targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
-                                {
-                                    currTileUtil = currTileUtil + 20;
-                                    Debug.Log("North ATK");
-                                }
-                                break;
-                            case Direction.SOUTH:
-                                if ((possibleAttackLocations[i].gridLocation.x > targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
-                                {
-                                    currTileUtil = currTileUtil + 20;
-                                    Debug.Log("South ATK");
-                                }
-                                break;
-                            case Direction.EAST:
-                                if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < targetTileToMove.gridLocation.y))
-                                {
-                                    currTileUtil = currTileUtil + 20;
-                                    Debug.Log("East ATK");
-                                }
-                                break;
-                            case Direction.WEST:
-                                if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > targetTileToMove.gridLocation.y))
-                                {
-                                    currTileUtil = currTileUtil + 20;
-                                    Debug.Log("West ATK");
-                                }
-                                break;
-                        }
-                        //Debug.Log(currTileUtil);
+                        case Direction.NORTH:
+                            if ((possibleAttackLocations[i].gridLocation.x < targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
+                            {
+                                currTileUtil = currTileUtil + 20;
+                            }
+                            break;
+                        case Direction.SOUTH:
+                            if ((possibleAttackLocations[i].gridLocation.x > targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
+                            {
+                                currTileUtil = currTileUtil + 20;
+                            }
+                            break;
+                        case Direction.EAST:
+                            if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < targetTileToMove.gridLocation.y))
+                            {
+                                currTileUtil = currTileUtil + 20;
+                            }
+                            break;
+                        case Direction.WEST:
+                            if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > targetTileToMove.gridLocation.y))
+                            {
+                                currTileUtil = currTileUtil + 20;
+                            }
+                            break;
+                    }
+
+                    //Debug.Log(currTileUtil);
                     if (currTileUtil > highestTileUtil)
+                    {
+                        bestMoveTile = possibleAttackLocations[i];
+                        highestTileUtil = currTileUtil;
+                    }
+                    else if (currTileUtil == highestTileUtil)
+                    {
+                        rngHelper++;
+                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
                         {
                             bestMoveTile = possibleAttackLocations[i];
                             highestTileUtil = currTileUtil;
                         }
-                        else if (currTileUtil == highestTileUtil)
-                        {
-                            rngHelper++;
-                            if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
-                            {
-                                bestMoveTile = possibleAttackLocations[i];
-                                highestTileUtil = currTileUtil;
-                            }
-                        }
                     }
-                    
+                }
+                
+                if(bestMoveTile == null)
+                {
+                    totalPathList.Clear();
+                }
+                else
+                {
                     totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
+                }
             }
             else if (inMoveAndAttackRange)
             {
-                bestMoveTile = possibleAttackLocations[0];
+                if (possibleAttackLocations.Count > 0)
+                {
+                    bestMoveTile = possibleAttackLocations[0];
+                }
                 rngHelper = 1;
 
                 for (int i = 0; i < possibleAttackLocations.Count; i++)
@@ -304,11 +311,22 @@ namespace NightmareEchoes.Unit.AI
                         }
                     }
                 }
-                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
+
+                if (bestMoveTile == null)
+                {
+                    totalPathList.Clear();
+                }
+                else
+                {
+                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
+                }
             }
             else
             {
-                bestMoveTile = tilesInRange[0];
+                if (tilesInRange.Count > 0)
+                {
+                    bestMoveTile = tilesInRange[0];
+                }
                 rngHelper = 1;
 
                 for (int i = 0; i < tilesInRange.Count; i++)
@@ -330,7 +348,14 @@ namespace NightmareEchoes.Unit.AI
                     }
                 }
 
-                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
+                if (bestMoveTile == null)
+                {
+                    totalPathList.Clear();
+                }
+                else
+                {
+                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
+                }
 
             }
 

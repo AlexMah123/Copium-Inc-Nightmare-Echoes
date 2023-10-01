@@ -184,7 +184,11 @@ namespace NightmareEchoes.Unit.Combat
         
         private void EndTurn()
         {
-            activeSkill.GetComponent<Units>().ShowPopUpText(activeSkill.SkillName, Color.red);
+            if(activeSkill.GetComponent<Units>() != null)
+            {
+                activeSkill.GetComponent<Units>().ShowPopUpText(activeSkill.SkillName, Color.red);
+            }
+
             activeSkill.Reset();
             activeSkill = null;
 
@@ -653,10 +657,16 @@ namespace NightmareEchoes.Unit.Combat
         public IEnumerator UpdateUnitPositionsAtStart()
         {
             yield return new WaitForSeconds(1f);
-            foreach (var unit in unitsInvolved)
+
+            for(int i = unitsInvolved.Count - 1; i >= 0; i--)
+            {
+                unitsInvolved[i].UpdateLocation();
+            }
+
+            /*foreach (var unit in unitsInvolved)
             {
                 unit.UpdateLocation();
-            }
+            }*/
         }
         
         IEnumerator PlaceTraps()

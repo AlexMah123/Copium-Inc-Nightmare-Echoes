@@ -1917,7 +1917,7 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 1
-  minRange: 0
+  minRange: 1
   targetType: 0
   targetArea: 0
   targetUnitAlignment: 0
@@ -1958,7 +1958,7 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 2
-  minRange: 0
+  minRange: 1
   targetType: 0
   targetArea: 2
   targetUnitAlignment: 0
@@ -2002,7 +2002,7 @@ MonoBehaviour:
   heal: 0
   cooldown: 1
   range: 2
-  minRange: 0
+  minRange: 1
   targetType: 1
   targetArea: 1
   targetUnitAlignment: 2
@@ -2045,8 +2045,8 @@ MonoBehaviour:
   damage: 0
   heal: 15
   cooldown: 0
-  range: 0
-  minRange: 0
+  range: 1
+  minRange: 1
   targetType: 0
   targetArea: 1
   targetUnitAlignment: 1
@@ -2151,4 +2151,4 @@ MonoBehaviour:
   - {x: -0.012322299, y: -0.058308773, z: 0}
   m_ShapePathHash: 45762548
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1598
+  m_InstanceId: -517514

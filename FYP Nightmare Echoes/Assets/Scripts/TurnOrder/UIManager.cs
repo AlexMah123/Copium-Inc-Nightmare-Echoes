@@ -150,8 +150,12 @@ namespace NightmareEchoes.TurnOrder
         private void Update()
         {
 
+            #region Passturn Button
+           
+            #endregion
+
             #region Skill Info
-            if(skillInfoPanel.activeSelf) 
+            if (skillInfoPanel.activeSelf) 
             {
                 if(CombatManager.Instance.ActiveSkill != null && CurrentUnit != null) 
                 {
@@ -1041,8 +1045,8 @@ namespace NightmareEchoes.TurnOrder
             //reset all the buttons
             for (int i = 1; i < currentUnitButtonList.Count; i++)
             {
-                //currentUnitButtonList[i].gameObject.SetActive(false);
-                currentUnitButtonList[i].interactable = false;
+                currentUnitButtonList[i].gameObject.SetActive(false);
+                currentUnitButtonList[i].interactable = true;
             }
 
             for (int i = 1; i < index; i++)
@@ -1052,14 +1056,9 @@ namespace NightmareEchoes.TurnOrder
 
                 if (CurrentUnit != null)
                 {
-                    if (CurrentUnit.IsHostile)
-                    {
-                        currentUnitButtonList[i].gameObject.SetActive(false);
-                    }
-                    else
+                    if (!CurrentUnit.IsHostile)
                     {
                         currentUnitButtonList[i].gameObject.SetActive(true);
-
                     }
                 }
                 else
@@ -1068,26 +1067,10 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 
-
             //setting the pass turn button as well
-            if (CurrentUnit != null)
-            {
-                if (CurrentUnit.IsHostile)
-                {
-                    passTurnButton.interactable = false;
-                    passTurnButton.gameObject.SetActive(false);
-                }
-                else
-                {
-                    passTurnButton.interactable = true;
-                    passTurnButton.gameObject.SetActive(true);
-                }
-            }
-            else
-            {
-                passTurnButton.interactable = false;
-                passTurnButton.gameObject.SetActive(false);
-            }
+            passTurnButton.interactable = enable;
+            passTurnButton.gameObject.SetActive(enable);
+
 
             UpdateStatusEffectUI();
         }

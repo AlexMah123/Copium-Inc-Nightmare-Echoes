@@ -30,7 +30,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         public List<OverlayTile> playerTilesInRange = new List<OverlayTile>();
 
         //ArrowBool Detection Stuff
-        bool isMoving = false;
+        public bool isMoving = false;
         bool isDragging = false;
         bool isDraggingFromPlayer = false;
 

@@ -1,3 +1,4 @@
+using NightmareEchoes.Unit.Combat;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
+            controller.StartCoroutine(CombatManager.Instance.UpdateUnitPositionsAtStart());
             controller.StartCoroutine(Planning());
             //insert planning faze, placing heros
         }

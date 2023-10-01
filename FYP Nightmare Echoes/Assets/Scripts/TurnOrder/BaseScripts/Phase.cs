@@ -4,6 +4,8 @@ using UnityEngine;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.Unit;
 using NightmareEchoes.Unit.Combat;
+using NightmareEchoes.Unit.Pathfinding;
+using UnityEngine.SceneManagement;
 
 
 //created by Alex
@@ -32,7 +34,7 @@ namespace NightmareEchoes.TurnOrder
             }
 
             #region UI
-            if ((controller.currentPhase == controller.playerPhase) && !controller.CurrentUnit.StunToken)
+            if ((controller.currentPhase == controller.playerPhase) && !controller.CurrentUnit.StunToken && !controller.CurrentUnit.IsHostile)
             {
                 UIManager.Instance.EnableCurrentUI(true);
             }
@@ -57,7 +59,6 @@ namespace NightmareEchoes.TurnOrder
             UIManager.Instance.UpdateTurnOrderUI();
             UIManager.Instance.UpdateStatusEffectUI();
 
-            controller.StartCoroutine(CombatManager.Instance.UpdateUnitPositionsAtStart());
             OnEnter();
         }
 
@@ -70,7 +71,13 @@ namespace NightmareEchoes.TurnOrder
                     //Game Over
                     controller.gameOver = true;
                     UIManager.Instance.GameOver();
-                } 
+                }
+
+                if (controller.FindAllEnemies() == null)
+                {
+                    SceneManager.LoadScene(0);
+                }
+
             }
 
 
@@ -79,9 +86,14 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnExitPhase()
         {
-
             OnExit();
+
+            UIManager.Instance.EnableSkillInfo(false);
+            PathfindingManager.Instance.ifSelectedUnit = false;
+            CombatManager.Instance.turnEnded = false;
             CameraControl.Instance.isPanning = false;
+            PathfindingManager.Instance.isMoving = false;
+
             controller.StopAllCoroutines();
         }
 
