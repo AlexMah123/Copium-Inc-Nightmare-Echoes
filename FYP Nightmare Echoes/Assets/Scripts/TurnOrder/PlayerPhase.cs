@@ -36,7 +36,7 @@ namespace NightmareEchoes.TurnOrder
                 controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));*/
 
                 #region Tokens
-                controller.CurrentUnit.ApplyAllTokenEffects();
+                //controller.CurrentUnit.ApplyAllTokenEffects();
 
                 if (controller.CurrentUnit.StunToken)
                 {
@@ -67,14 +67,14 @@ namespace NightmareEchoes.TurnOrder
 
             //Start Turn
             //COMMENT IF YOU WANT MANUAL MOVEMENT
-            //PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
+            PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
             controller.StartCoroutine(WaitForTurnEnd());
         }
 
         protected override void OnUpdate()
         {
             //COMMENT IF YOU WANT MANUAL MOVEMENT
-            //PathfindingManager.Instance.PlayerInputPathfinding();
+            PathfindingManager.Instance.PlayerInputPathfinding();
         }
 
         protected override void OnExit()

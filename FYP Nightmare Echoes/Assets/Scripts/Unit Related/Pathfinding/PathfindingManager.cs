@@ -92,7 +92,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             //UNCOMMENT IF YOU WANT MANUAL MOVEMENT
-            PlayerInputPathfinding();
+            //PlayerInputPathfinding();
         }
 
         //Called in Player Phase
@@ -100,7 +100,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             if (!ifSelectedUnit)
             {
-                if (hero && !hero.IsHostile)
+                if (hero && !hero.IsHostile && !hero.IsProp)
                 {
                     //set currentSelected to the raycasted unit
                     currentSelectedUnit = hero;
@@ -170,7 +170,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             #region selecting a player to move
             //UNCOMMENT IF YOU WANT MANUAL MOVEMENT
             //if player clicked and has not previously selected a unit, raycast and check
-            if (Input.GetMouseButtonDown(0) && !ifSelectedUnit)
+            /*if (Input.GetMouseButtonDown(0) && !ifSelectedUnit)
             {
                 //Mouse Position to select unit
                 var hitUnit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
@@ -204,7 +204,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                     }
                 }
-            }
+            }*/
             #endregion
 
             #region selecting tile to move on

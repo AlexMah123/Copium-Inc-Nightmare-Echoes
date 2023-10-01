@@ -153,7 +153,7 @@ namespace NightmareEchoes.TurnOrder
             #region Skill Info
             if(skillInfoPanel.activeSelf) 
             {
-                if(CombatManager.Instance.ActiveSkill != null) 
+                if(CombatManager.Instance.ActiveSkill != null && CurrentUnit != null) 
                 {
 
                     if(CurrentUnit.StrengthToken && !CurrentUnit.WeakenToken)
@@ -173,33 +173,49 @@ namespace NightmareEchoes.TurnOrder
                     {
                         var hoveredUnit = PathfindingManager.Instance.currentHoveredOverlayTile.CheckUnitOnTile().GetComponent<Units>();
 
-                        if (hoveredUnit.DodgeToken && CurrentUnit.BlindToken)
+                        if (hoveredUnit != null)
                         {
-                            skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance - 75}%";
-                        }
-                        else if(hoveredUnit.DodgeToken || CurrentUnit.BlindToken)
-                        {
-                            skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance - 50}%";
-                        }
+                            if (hoveredUnit.DodgeToken && CurrentUnit.BlindToken)
+                            {
+                                skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance - 75}%";
+                            }
+                            else if (hoveredUnit.DodgeToken || CurrentUnit.BlindToken)
+                            {
+                                skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance - 50}%";
+                            }
+                            else
+                            {
+                                skillHitChanceText.text = $"Hit Chance: {CombatManager.Instance.ActiveSkill.HitChance}%";
+                            }
 
-                        if(CombatManager.Instance.ActiveSkill.StunChance - hoveredUnit.stats.StunResist > 0)
-                        {
-                            skillStunChanceText.text = $"Stun Chance: {CombatManager.Instance.ActiveSkill.StunChance - hoveredUnit.stats.StunResist}%";
-                        }
+                            if (CombatManager.Instance.ActiveSkill.StunChance - hoveredUnit.stats.StunResist > 0)
+                            {
+                                skillStunChanceText.text = $"Stun Chance: {CombatManager.Instance.ActiveSkill.StunChance - hoveredUnit.stats.StunResist}%";
+                            }
+                            else
+                            {
+                                skillStunChanceText.text = $"Stun Chance: {CombatManager.Instance.ActiveSkill.StunChance}%";
 
-                        if(CombatManager.Instance.ActiveSkill.DebuffChance - hoveredUnit.stats.Resist > 0)
-                        {
-                            skillDebuffChanceText.text = $"Debuff Chance: {CombatManager.Instance.ActiveSkill.DebuffChance - hoveredUnit.stats.Resist}%";
+                            }
+
+                            if (CombatManager.Instance.ActiveSkill.DebuffChance - hoveredUnit.stats.Resist > 0)
+                            {
+                                skillDebuffChanceText.text = $"Debuff Chance: {CombatManager.Instance.ActiveSkill.DebuffChance - hoveredUnit.stats.Resist}%";
+                            }
+                            else
+                            {
+                                skillDebuffChanceText.text = $"Debuff Chance: {CombatManager.Instance.ActiveSkill.DebuffChance}%";
+                            }
                         }
+                        
                     }
-                    else
+                }
+                else
+                {
+                    if (skillInfoPanel.activeSelf)
                     {
-                        if (skillInfoPanel.activeSelf)
-                        {
-                            EnableSkillInfo(false);
-                        }
+                        EnableSkillInfo(false);
                     }
-                    
                 }
             }
             #endregion
