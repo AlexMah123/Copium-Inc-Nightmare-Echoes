@@ -1737,12 +1737,12 @@ GameObject:
   - component: {fileID: 5803087067753149257}
   - component: {fileID: 2796059642358341972}
   - component: {fileID: 220144071747845715}
-  - component: {fileID: 1640256430824122786}
-  - component: {fileID: 2905729128967353104}
   - component: {fileID: 7904244744492314586}
   - component: {fileID: 817498675}
   - component: {fileID: 817498681}
   - component: {fileID: 817498682}
+  - component: {fileID: 1640256430824122786}
+  - component: {fileID: 2905729128967353104}
   - component: {fileID: -3187154731525986911}
   - component: {fileID: 1076161257085603872}
   m_Layer: 6
@@ -1831,56 +1831,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &1640256430824122786
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9088455817183482634}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
---- !u!60 &2905729128967353104
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9088455817183482634}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.40625, y: 0.53125}
-    newSize: {x: 0.40625, y: 0.53125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -1, y: 0}
-      - {x: 0, y: -0.5}
-      - {x: 1, y: 0}
-      - {x: 0, y: 0.5}
 --- !u!114 &7904244744492314586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1895,6 +1845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Defender
   sprite: {fileID: -112463209, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  isProp: 0
   isHostile: 0
   direction: 0
   typeOfUnit: 0
@@ -1979,7 +1930,7 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   debuffChance: 0
-  hitChance: 0
+  hitChance: 100
   stunChance: 0
   inflictKnockback: 1
   isBackstabbing: 0
@@ -1987,10 +1938,7 @@ MonoBehaviour:
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: 'Strike
-
-    Single Target, Deal 4 Damage and Knockback Target
-    1 Tile
+  skillDescription: 'Single Target, Deal 4 Damage and Knockback Target 1 Tile
 
 '
 --- !u!114 &817498681
@@ -2023,20 +1971,18 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   debuffChance: 0
-  hitChance: 0
-  stunChance: 0
+  hitChance: 100
+  stunChance: 100
   inflictKnockback: 1
   isBackstabbing: 0
   backstabBonus: 3
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: 'Charge
+  skillDescription: '4 Direction, Charge up to 2 tiles forward
 
-    4 Direction, Charge up to 2 tiles forward
-
-    Deal
-    4 Damage, Knockback Target 1 Tiles and Stun (100%)
+    Deal 4 Damage,
+    Knockback Target 1 Tiles and Stun (100%)
 
     Cooldown: 2 Turns'
 --- !u!114 &817498682
@@ -2068,8 +2014,8 @@ MonoBehaviour:
   skillType: 2
   secondaryDamage: 0
   secondaryRange: 0
-  debuffChance: 0
-  hitChance: 0
+  debuffChance: 100
+  hitChance: 100
   stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
@@ -2077,15 +2023,62 @@ MonoBehaviour:
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: 'War Cry (Cannot Affected by Blind & Strength)
+  skillDescription: '(Cannot Affected by Blind & Strength)
 
-    AOE Buff
-    & Debuff
+    Apply 1 Strength
+    to Ally and Apply 1 Weaken (100%) to Enemy
 
-    Apply 1 Strength to Ally and Apply 1 Weaken (100%) to Enemy
-
-    Cooldown:
-    1 Turns'
+    Cooldown: 1 Turns'
+--- !u!50 &1640256430824122786
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088455817183482634}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!60 &2905729128967353104
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088455817183482634}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.40625, y: 0.53125}
+    newSize: {x: 0.40625, y: 0.53125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1, y: 0}
+      - {x: 0, y: -0.5}
+      - {x: 1, y: 0}
+      - {x: 0, y: 0.5}
 --- !u!114 &-3187154731525986911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2114,7 +2107,7 @@ MonoBehaviour:
   - {x: -0.012322299, y: -0.058308773, z: 0}
   m_ShapePathHash: 45762548
   m_Mesh: {fileID: 0}
-  m_InstanceId: -329616
+  m_InstanceId: 42118
 --- !u!114 &1076161257085603872
 MonoBehaviour:
   m_ObjectHideFlags: 0

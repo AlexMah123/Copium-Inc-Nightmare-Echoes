@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 601295390074279022}
   - component: {fileID: 601295390074279023}
   - component: {fileID: 601295390074279016}
-  - component: {fileID: 6249669551677435555}
-  - component: {fileID: 136229569}
   - component: {fileID: 601295391118310421}
   - component: {fileID: 601295391118310427}
   - component: {fileID: 837001683}
   - component: {fileID: 1863292055}
+  - component: {fileID: 136229569}
+  - component: {fileID: 6249669551677435555}
   - component: {fileID: -7115739878205201126}
   m_Layer: 6
   m_Name: ForestRanger
@@ -106,6 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Ranger
   sprite: {fileID: -574102314, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  isProp: 0
   isHostile: 0
   direction: 0
   typeOfUnit: 0
@@ -160,56 +161,6 @@ MonoBehaviour:
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
   tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
---- !u!50 &6249669551677435555
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 601295390074279018}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
---- !u!60 &136229569
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 601295390074279018}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.34375, y: 0.53125}
-    newSize: {x: 0.34375, y: 0.53125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -1, y: 0}
-      - {x: 0, y: -0.5}
-      - {x: 1, y: 0}
-      - {x: 0, y: 0.5}
 --- !u!114 &601295391118310421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,8 +190,8 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
-  debuffChance: 0
-  hitChance: 0
+  debuffChance: 100
+  hitChance: 100
   stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
@@ -248,8 +199,7 @@ MonoBehaviour:
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: Single Target, Deal 4 Damage and 3 Wound, Stop at first enemy
-    hit
+  skillDescription: Single Target, Deal 4 Damage and 3 Wound
 --- !u!114 &601295391118310427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,7 +230,7 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   debuffChance: 0
-  hitChance: 0
+  hitChance: 100
   stunChance: 80
   inflictKnockback: 0
   isBackstabbing: 0
@@ -319,7 +269,7 @@ MonoBehaviour:
   secondaryDamage: 0
   secondaryRange: 0
   debuffChance: 0
-  hitChance: 0
+  hitChance: 100
   stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
@@ -367,7 +317,59 @@ MonoBehaviour:
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: 
+  skillDescription: "Enter A Stance that oversees a region.\nAttack Enemy that \u2018Move\u2019
+    in range for 3 Damage\r\nAttack Enemy that \u2018Attack\u2019 in range for 5
+    Damage\r\n*Only Trigger once\r\n*Enemy that move by Ally trigger attack"
+--- !u!60 &136229569
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.34375, y: 0.53125}
+    newSize: {x: 0.34375, y: 0.53125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1, y: 0}
+      - {x: 0, y: -0.5}
+      - {x: 1, y: 0}
+      - {x: 0, y: 0.5}
+--- !u!50 &6249669551677435555
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601295390074279018}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!114 &-7115739878205201126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,4 +397,4 @@ MonoBehaviour:
   - {x: 0.020537138, y: -0.037771642, z: 0.00000011920929}
   m_ShapePathHash: -1537655057
   m_Mesh: {fileID: 0}
-  m_InstanceId: -381058
+  m_InstanceId: -10312

@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 1237727407}
   - component: {fileID: 2048295167523587102}
   - component: {fileID: 8747826421340837878}
-  - component: {fileID: 128770042}
-  - component: {fileID: 5105758200137203564}
   - component: {fileID: 1063299835}
   - component: {fileID: 223763885}
   - component: {fileID: 247799077}
+  - component: {fileID: 5105758200137203564}
+  - component: {fileID: 128770042}
   - component: {fileID: -299813580901063140}
   m_Layer: 6
   m_Name: BHPlaceHolder
@@ -117,6 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Bounty Hunter
   sprite: {fileID: 1830408377, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  isProp: 0
   isHostile: 0
   direction: 0
   typeOfUnit: 1
@@ -171,56 +172,6 @@ MonoBehaviour:
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
   tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
---- !u!50 &128770042
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726962122940716085}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
---- !u!60 &5105758200137203564
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726962122940716085}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.375, y: 0.53125}
-    newSize: {x: 0.13, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -1, y: 0}
-      - {x: 0, y: -0.5}
-      - {x: 1, y: 0}
-      - {x: 0, y: 0.5}
 --- !u!114 &1063299835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,8 +201,8 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
-  debuffChance: 0
-  hitChance: 0
+  debuffChance: 100
+  hitChance: 100
   stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
@@ -289,8 +240,8 @@ MonoBehaviour:
   skillType: 2
   secondaryDamage: 0
   secondaryRange: 0
-  debuffChance: 0
-  hitChance: 0
+  debuffChance: 100
+  hitChance: 100
   stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
@@ -329,8 +280,8 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
-  debuffChance: 0
-  hitChance: 0
+  debuffChance: 100
+  hitChance: 100
   stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
@@ -345,6 +296,56 @@ MonoBehaviour:
 
     Cooldown:
     3 Turns'
+--- !u!60 &5105758200137203564
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726962122940716085}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.375, y: 0.53125}
+    newSize: {x: 0.13, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1, y: 0}
+      - {x: 0, y: -0.5}
+      - {x: 1, y: 0}
+      - {x: 0, y: 0.5}
+--- !u!50 &128770042
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726962122940716085}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!114 &-299813580901063140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,4 +372,4 @@ MonoBehaviour:
   - {x: 0.1875, y: 0, z: 0}
   m_ShapePathHash: -2004012350
   m_Mesh: {fileID: 0}
-  m_InstanceId: -380754
+  m_InstanceId: -9960

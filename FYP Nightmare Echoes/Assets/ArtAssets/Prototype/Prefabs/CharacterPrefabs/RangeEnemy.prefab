@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 489163364, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
-  m_Color: {r: 0.7254901, g: 0, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.100676015, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Range Enemy
   sprite: {fileID: 489163364, guid: 65283e2070411c247ab3564fbbd37c41, type: 3}
+  isProp: 0
   isHostile: 1
   direction: 0
   typeOfUnit: 0
@@ -218,7 +219,7 @@ MonoBehaviour:
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: 
+  skillDescription: Single Target, Deal 3 Damage and 2 Wound
 --- !u!60 &964070419
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -296,4 +297,4 @@ MonoBehaviour:
   - {x: -0.008214869, y: -0.04598648, z: 0}
   m_ShapePathHash: -1766056635
   m_Mesh: {fileID: 0}
-  m_InstanceId: -381030
+  m_InstanceId: -10280
