@@ -12,13 +12,11 @@ namespace NightmareEchoes.Unit
             base.Cast(target);
 
             target.stats.Health += heal;
-            Debug.Log("Target" + target + "has been healed +" + heal);
 
             target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.RESTORATION_BUFF, 3, 1));
-            Debug.Log("Applying 3 restore");
 
 
-            //target.ClearAllStatusEffect(List <ModifierType.DEBUFF>, ModifierType.NEGATIVETOKEN);
+            target.ClearAllStatusEffect(target.TokenList, ModifierType.NEGATIVETOKEN);
 
             return true;
         }

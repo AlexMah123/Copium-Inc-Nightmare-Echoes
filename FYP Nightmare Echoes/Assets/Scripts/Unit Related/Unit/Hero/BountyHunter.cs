@@ -2,6 +2,7 @@ using NightmareEchoes.Unit.Combat;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 //created by Alex
 namespace NightmareEchoes.Unit
@@ -59,7 +60,6 @@ namespace NightmareEchoes.Unit
         public override void TakeDamage(int damage)
         {
             base.TakeDamage(damage);
-
         }
 
         [ContextMenu("Take Damage (2)")]

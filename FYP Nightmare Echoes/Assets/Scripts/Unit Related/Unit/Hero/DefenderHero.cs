@@ -60,6 +60,10 @@ namespace NightmareEchoes.Unit
         {
             base.TakeDamage(damage);
 
+            if (FindModifier(STATUS_EFFECT.WOUND_DEBUFF))
+            {
+                buffDebuffList.Remove(FindModifier(STATUS_EFFECT.WOUND_DEBUFF));
+            }
         }
 
         [ContextMenu("Take Damage (2)")]
@@ -67,8 +71,6 @@ namespace NightmareEchoes.Unit
         {
             TakeDamage(2);
         }
-
-
 
         #endregion
 
