@@ -490,7 +490,7 @@ namespace NightmareEchoes.Unit.AI
             //filter by heroes
             foreach (var unit in totalUnitList)
             {
-                if (!unit.IsHostile && !unit.StealthToken)
+                if (!unit.IsHostile && !unit.StealthToken && !unit.IsProp)
                 {
                     totalHeroList.Add(unit);
                 }

@@ -181,7 +181,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                     var unit = hitUnit.collider.gameObject.GetComponent<Units>();
 
                     //if unit exist and is a player
-                    if (unit && !unit.IsHostile)
+                    if (unit && !unit.IsHostile && !unit.IsProp)
                     {
                         //set currentSelected to the raycasted unit
                         currentSelectedUnit = unit;

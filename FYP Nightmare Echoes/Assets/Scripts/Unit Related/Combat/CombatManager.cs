@@ -634,7 +634,7 @@ namespace NightmareEchoes.Unit.Combat
                 //for each overlayTile in front, check if the tiles have units that are not hostile (hero)
                 if (overlayTileInFront[i].CheckUnitOnTile()?.GetComponent<Units>())
                 {
-                    if(!overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>().IsHostile)
+                    if(!overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>().IsHostile && !overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>().IsProp)
                     {
                         if (overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>().FindModifier(STATUS_EFFECT.STEALTH_TOKEN))
                         {
