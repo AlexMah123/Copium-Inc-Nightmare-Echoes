@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8734419837270885916}
   - component: {fileID: 5182274477180494581}
-  - component: {fileID: 2380185597739719038}
-  - component: {fileID: -2151292474564162685}
-  - component: {fileID: 1328281518130919318}
   - component: {fileID: 1545015518383780851}
+  - component: {fileID: 2380185597739719038}
+  - component: {fileID: 1328281518130919318}
   m_Layer: 8
   m_Name: BreakableObstacle
   m_TagString: Inspectable
@@ -88,85 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &2380185597739719038
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8943584249080776070}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.46, y: 0.4}
-    newSize: {x: 0.46, y: 0.4}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.08653825, y: 0.21213025}
-      - {x: -0.23115537, y: 0.15617372}
-      - {x: -0.23115513, y: -0.20115525}
-      - {x: -0.048849, y: -0.1994223}
-      - {x: 0.22999999, y: -0.099999994}
-      - {x: 0.23115537, y: 0.14050382}
---- !u!114 &-2151292474564162685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8943584249080776070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 0
-  m_SelfShadows: 1
-  m_ApplyToSortingLayers: 000000002bd54a01cdf89598
-  m_ShapePath:
-  - {x: -0.07085284, y: -0.20576623, z: 0}
-  - {x: -0.21616112, y: -0.065245256, z: 0}
-  - {x: 0.17695093, y: 0.025860708, z: 0}
-  - {x: 0.22308056, y: -0.040852845, z: 0}
-  m_ShapePathHash: -1970105056
-  m_Mesh: {fileID: 0}
-  m_InstanceId: -1492
---- !u!50 &1328281518130919318
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8943584249080776070}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &1545015518383780851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,3 +152,55 @@ MonoBehaviour:
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
   tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
+--- !u!60 &2380185597739719038
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8943584249080776070}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.46, y: 0.4}
+    newSize: {x: 0.46, y: 0.4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.08653825, y: 0.21213025}
+      - {x: -0.23115537, y: 0.15617372}
+      - {x: -0.23115513, y: -0.20115525}
+      - {x: -0.048849, y: -0.1994223}
+      - {x: 0.22999999, y: -0.099999994}
+      - {x: 0.23115537, y: 0.14050382}
+--- !u!50 &1328281518130919318
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8943584249080776070}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
