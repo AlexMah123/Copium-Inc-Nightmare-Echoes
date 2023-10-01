@@ -102,7 +102,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 else if (tiles.CheckUnitOnTile() != null)
                 {
                     //check if that unit is the same type as the UnitAlignment, if so, add it.
-                    if (tiles.CheckUnitOnTile().GetComponent<Units>().IsHostile == UnitAlignment && !tiles.CheckUnitOnTile().GetComponent<Units>().StealthToken)
+                    if (tiles.CheckUnitOnTile().GetComponent<Units>().IsHostile == UnitAlignment && !tiles.CheckUnitOnTile().GetComponent<Units>().StealthToken && !tiles.CheckUnitOnTile().GetComponent<Units>().IsProp)
                         RemovedTileWithObstacles.Add(tiles);
                 }
             }
