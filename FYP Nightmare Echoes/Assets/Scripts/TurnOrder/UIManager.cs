@@ -391,7 +391,7 @@ namespace NightmareEchoes.TurnOrder
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.playerPhase)
             {
                 phaseText.text = $"Player's Phase";
-                phaseText.color = new Color(playerTurn.r, playerTurn.g, playerTurn.b);
+                phaseText.color = Color.black;
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.enemyPhase)
             {
