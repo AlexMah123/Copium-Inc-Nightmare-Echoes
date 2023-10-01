@@ -381,12 +381,12 @@ namespace NightmareEchoes.TurnOrder
             if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.startPhase)
             {
                 phaseText.text = $"Start Phase";
-                phaseText.color = Color.white;
+                phaseText.color = Color.black;
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.planPhase)
             {
                 phaseText.text = $"Plan Phase";
-                phaseText.color = Color.white;
+                phaseText.color = Color.black;
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.playerPhase)
             {
@@ -401,7 +401,7 @@ namespace NightmareEchoes.TurnOrder
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.endPhase)
             {
                 phaseText.text = $"End's Phase";
-                phaseText.color = Color.white;
+                phaseText.color = Color.black;
             }
 
 
