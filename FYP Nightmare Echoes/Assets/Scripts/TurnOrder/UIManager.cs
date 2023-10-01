@@ -86,7 +86,6 @@ namespace NightmareEchoes.TurnOrder
         [Space(20), Header("Character Glossary Skills")]
         Units glossaryUnit;
         [SerializeField] List<Button> glossarySkills;
-        [SerializeField] TextMeshProUGUI glossarySkillText;
         [SerializeField] List<Image> glossarySkillsImage;
         [SerializeField] Slider glossaryHealth;
         [SerializeField] TextMeshProUGUI glossaryBasicAttackButtonText;
@@ -103,6 +102,9 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] int initGlossaryPool = 5;
         List<GameObject> glossaryPrefabPool = new List<GameObject>();
 
+        [Space(20), Header("Guide")]
+        [SerializeField] GameObject guidePanel;
+        [SerializeField] Button guideButton;
 
         [Space(20), Header("Settings + Utility")]
         [SerializeField] Button passTurnButton;
@@ -115,7 +117,6 @@ namespace NightmareEchoes.TurnOrder
 
 
         [Space(20), Header("Current Unit Indicator")]
-        //[SerializeField] TextMeshProUGUI unitAction;
         [SerializeField] GameObject unitIndicator;
         [SerializeField] private float frequency = 2.0f;
         [SerializeField] private float magnitude = 0.05f;
@@ -1085,8 +1086,26 @@ namespace NightmareEchoes.TurnOrder
             inspectedUnitPanel.SetActive(enable);
             UpdateStatusEffectUI();
         }
+        #endregion
 
-        
+        #region Buttons
+        public void GuideButton()
+        {
+            if (!guidePanel.activeSelf)
+            {
+                PauseGame(true);
+                settingButton.gameObject.SetActive(false);
+                guideButton.gameObject.SetActive(false);
+                guidePanel.SetActive(true);
+            }
+            else
+            {
+                PauseGame(false);
+                settingButton.gameObject.SetActive(true);
+                guideButton.gameObject.SetActive(true);
+                guidePanel.SetActive(false);
+            }
+        }
 
         public void SettingsButton()
         {
@@ -1130,6 +1149,7 @@ namespace NightmareEchoes.TurnOrder
                 Time.timeScale = 1;
             }
         }
+
         #endregion
 
     }

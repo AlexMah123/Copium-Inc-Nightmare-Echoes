@@ -11,6 +11,9 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnEnter()
         {
             controller.StartCoroutine(CombatManager.Instance.UpdateUnitPositionsAtStart());
+
+            UIManager.Instance.GuideButton();
+
             controller.StartCoroutine(Planning());
             //insert planning faze, placing heros
         }
