@@ -12,9 +12,9 @@ using NightmareEchoes.Unit.AI;
 namespace NightmareEchoes.Unit
 {
     [RequireComponent(typeof(PolygonCollider2D), typeof(Rigidbody2D)), Serializable]
-    public class Units : MonoBehaviour
+    public class Entity : MonoBehaviour
     {
-        public event Action<Units> OnDestroyedEvent;
+        public event Action<Entity> OnDestroyedEvent;
         public event Action OnAddBuffEvent;
 
         [Header("Unit Info")]

@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 //created by Alex
 namespace NightmareEchoes.Unit
 {
-    public class BountyHunter : Units
+    public class BountyHunter : Entity
     {
 
         protected override void Awake()

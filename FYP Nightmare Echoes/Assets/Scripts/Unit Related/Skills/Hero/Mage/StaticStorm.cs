@@ -8,7 +8,7 @@ namespace NightmareEchoes.Unit
 {
     public class StaticStorm : Skill
     {
-        public override bool Cast(Units target)
+        public override bool Cast(Entity target)
         {
             base.Cast(target);
 
@@ -25,7 +25,7 @@ namespace NightmareEchoes.Unit
             {
                 if (!tile.CheckUnitOnTile()) continue;
   
-                var unit = tile.CheckUnitOnTile().GetComponent<Units>();
+                var unit = tile.CheckUnitOnTile().GetComponent<Entity>();
                 DealDamage(unit);
             }
 

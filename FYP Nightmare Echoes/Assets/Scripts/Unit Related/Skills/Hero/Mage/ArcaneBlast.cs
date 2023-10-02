@@ -13,7 +13,7 @@ namespace NightmareEchoes.Unit
 
             if (target.CheckUnitOnTile())
             {
-                var unit = target.CheckUnitOnTile().GetComponent<Units>();
+                var unit = target.CheckUnitOnTile().GetComponent<Entity>();
                 DealDamage(unit);
             }
 
@@ -23,7 +23,7 @@ namespace NightmareEchoes.Unit
             {
                 if (!tile.CheckUnitOnTile()) continue;
   
-                var unit = tile.CheckUnitOnTile().GetComponent<Units>();
+                var unit = tile.CheckUnitOnTile().GetComponent<Entity>();
 
                 //manually check for token
                 if (thisUnit.WeakenToken)
@@ -57,7 +57,7 @@ namespace NightmareEchoes.Unit
                     var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
                     if (tileDestination)
                     {
-                        if (tileDestination.CheckUnitOnTile())
+                        if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile())
                             tileOccupied = true;
                     }
                 }

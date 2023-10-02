@@ -17,12 +17,12 @@ namespace NightmareEchoes.Unit
             crippledStack = modifierDuration;
         }
 
-        public override void ApplyEffect(Units unit)
+        public override void ApplyEffect(Entity unit)
         {
             
         }
 
-        public override void TriggerEffect(Units unit)
+        public override void TriggerEffect(Entity unit)
         {
             unit.ShowPopUpText("Crippled!", Color.red);
             unit.ShowPopUpText($"-{crippledDmg}", Color.yellow);

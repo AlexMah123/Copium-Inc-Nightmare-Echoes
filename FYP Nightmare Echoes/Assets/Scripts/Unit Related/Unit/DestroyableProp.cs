@@ -5,7 +5,7 @@ using UnityEngine.PlayerLoop;
 
 namespace NightmareEchoes.Unit
 {
-    public class DestroyableProp : Units
+    public class DestroyableProp : Entity
     {
         protected override void Awake()
         {

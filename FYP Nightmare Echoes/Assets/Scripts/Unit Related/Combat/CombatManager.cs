@@ -13,17 +13,17 @@ namespace NightmareEchoes.Unit.Combat
     {
         public static CombatManager Instance;
 
-        public List<Units> unitsInvolved;
-        public List<Units> aliveUnits;
-        public List<Units> deadUnits;
+        public List<Entity> unitsInvolved;
+        public List<Entity> aliveUnits;
+        public List<Entity> deadUnits;
         
-        public List<Units> friendlyUnits;
-        public List<Units> aliveFriendlyUnits;
-        public List<Units> deadFriendlyUnits;
+        public List<Entity> friendlyUnits;
+        public List<Entity> aliveFriendlyUnits;
+        public List<Entity> deadFriendlyUnits;
         
-        public List<Units> hostileUnits;
-        public List<Units> aliveHostileUnits;
-        public List<Units> deadHostileUnits;
+        public List<Entity> hostileUnits;
+        public List<Entity> aliveHostileUnits;
+        public List<Entity> deadHostileUnits;
 
         public bool turnEnded;
         
@@ -105,9 +105,9 @@ namespace NightmareEchoes.Unit.Combat
         //Init
         void OnBattleStart()
         {
-            unitsInvolved = FindObjectsOfType<Units>().ToList();
+            unitsInvolved = FindObjectsOfType<Entity>().ToList();
 
-            var iterator = new List<Units>(unitsInvolved);
+            var iterator = new List<Entity>(unitsInvolved);
             foreach (var unit in iterator.Where(unit => unit.IsProp))
             {
                 unitsInvolved.Remove(unit);
@@ -147,7 +147,7 @@ namespace NightmareEchoes.Unit.Combat
                 {
                     foreach (var tile in list.Where(tile => tile.CheckUnitOnTile()))
                     {
-                        kvp.Key.Cast(tile.CheckUnitOnTile().GetComponent<Units>());
+                        kvp.Key.Cast(tile.CheckUnitOnTile().GetComponent<Entity>());
                     }
                 }
             }
@@ -155,7 +155,7 @@ namespace NightmareEchoes.Unit.Combat
 
         //Check which tiles the unit passes
         //If the tile is an AOE tile, return the skill it is associated with
-        public Skill CheckAoe(Units unit)
+        public Skill CheckAoe(Entity unit)
         {
             var hit = Physics2D.Raycast(unit.transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
             if (!hit) return null;
@@ -175,7 +175,7 @@ namespace NightmareEchoes.Unit.Combat
             return null;
         }
 
-        public Skill CheckTrap(Units unit)
+        public Skill CheckTrap(Entity unit)
         {
             var hit = Physics2D.Raycast(unit.transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
             if (!hit) return null;
@@ -196,9 +196,9 @@ namespace NightmareEchoes.Unit.Combat
         
         private void EndTurn()
         {
-            if(activeSkill.GetComponent<Units>() != null)
+            if(activeSkill.GetComponent<Entity>() != null)
             {
-                activeSkill.GetComponent<Units>().ShowPopUpText(activeSkill.SkillName, Color.red);
+                activeSkill.GetComponent<Entity>().ShowPopUpText(activeSkill.SkillName, Color.red);
             }
 
             activeSkill.Reset();
@@ -216,7 +216,7 @@ namespace NightmareEchoes.Unit.Combat
 
         #region Public Calls
 
-        public void SelectSkill(Units unit, Skill skill)
+        public void SelectSkill(Entity unit, Skill skill)
         {
             //Clear Active Renders 
             RenderOverlayTile.Instance.ClearTargetingRenders();
@@ -282,7 +282,7 @@ namespace NightmareEchoes.Unit.Combat
             
             var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
             if (!hit) return;
-            var target = hit.collider.gameObject.GetComponent<Units>();
+            var target = hit.collider.gameObject.GetComponent<Entity>();
             if (!target) return;
             
             //Check if the enemy selected is in range
@@ -310,7 +310,7 @@ namespace NightmareEchoes.Unit.Combat
 
             if (activeSkill.AoeOffset > 0)
             {
-                var parent = activeSkill.GetComponentInParent<Units>();
+                var parent = activeSkill.GetComponentInParent<Entity>();
                 var offsetVector = parent.ActiveTile.gridLocation + (target.gridLocation - parent.ActiveTile.gridLocation) * activeSkill.AoeOffset;
                 target = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(offsetVector.x, offsetVector.y));
                 if (target == null)
@@ -352,7 +352,7 @@ namespace NightmareEchoes.Unit.Combat
         #endregion
 
         #region Enemy Targeting
-        public void EnemyTargetUnit(Units target, Skill skill)
+        public void EnemyTargetUnit(Entity target, Skill skill)
         {
             activeSkill = skill;
             StartCoroutine(WaitForSkill(target));
@@ -442,7 +442,7 @@ namespace NightmareEchoes.Unit.Combat
         }
         
         //Previews
-        private void ClearPreviews()
+        public void ClearPreviews()
         {
             foreach (var go in ghostSprites)
             {
@@ -484,7 +484,7 @@ namespace NightmareEchoes.Unit.Combat
         
         #region Casting Range Calculation
 
-        private List<OverlayTile> CalculateRange(Units unit, Skill skill)
+        private List<OverlayTile> CalculateRange(Entity unit, Skill skill)
         {
             var tileRange = new List<OverlayTile>();
             var possibleTileCoords = new List<Vector2Int>();
@@ -547,7 +547,7 @@ namespace NightmareEchoes.Unit.Combat
             return possibleTileCoords;
         }
 
-        public List<Vector2Int> FrontalRange(OverlayTile startTile, int range , Units unit)
+        public List<Vector2Int> FrontalRange(OverlayTile startTile, int range , Entity unit)
         {
             var possibleTileCoords = new List<Vector2Int>();
 
@@ -593,11 +593,11 @@ namespace NightmareEchoes.Unit.Combat
         #endregion
 
         #region Additional Mechanics
-        public List<Units> IsStealthUnitInViewRange(Units thisUnit, int range)
+        public List<Entity> IsStealthUnitInViewRange(Entity thisUnit, int range)
         {
             //declare variables and reset
             List<Vector2Int> tilesPosInFront = new List<Vector2Int>();
-            List<Units> herosInStealth = new List<Units>();
+            List<Entity> herosInStealth = new List<Entity>();
             Vector3Int thisUnitPos = thisUnit.ActiveTile.gridLocation;
 
             #region adding tiles to check
@@ -649,13 +649,13 @@ namespace NightmareEchoes.Unit.Combat
             for (int i = 0; i < overlayTileInFront.Count; i++)
             {
                 //for each overlayTile in front, check if the tiles have units that are not hostile (hero)
-                if (overlayTileInFront[i].CheckUnitOnTile()?.GetComponent<Units>())
+                if (overlayTileInFront[i].CheckUnitOnTile()?.GetComponent<Entity>())
                 {
-                    if(!overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>().IsHostile && !overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>().IsProp)
+                    if(!overlayTileInFront[i].CheckUnitOnTile().GetComponent<Entity>().IsHostile && !overlayTileInFront[i].CheckUnitOnTile().GetComponent<Entity>().IsProp)
                     {
-                        if (overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>().FindModifier(STATUS_EFFECT.STEALTH_TOKEN))
+                        if (overlayTileInFront[i].CheckUnitOnTile().GetComponent<Entity>().FindModifier(STATUS_EFFECT.STEALTH_TOKEN))
                         {
-                            herosInStealth.Add(overlayTileInFront[i].CheckUnitOnTile().GetComponent<Units>());
+                            herosInStealth.Add(overlayTileInFront[i].CheckUnitOnTile().GetComponent<Entity>());
 
                         }
                     }
@@ -732,7 +732,7 @@ namespace NightmareEchoes.Unit.Combat
             EndTurn();
         }
 
-        IEnumerator WaitForSkill(Units target)
+        IEnumerator WaitForSkill(Entity target)
         {
             yield return new WaitUntil(() => activeSkill.Cast(target));
             EndTurn();

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    public class DefenderHero : Units
+    public class DefenderHero : Entity
     {
 
         protected override void Awake()

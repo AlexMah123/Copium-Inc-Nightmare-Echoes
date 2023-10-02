@@ -6,11 +6,9 @@ namespace NightmareEchoes.Unit
 {
     public class RangerNatureEmbrace : Skill
     {
-        public override bool Cast(Units target)
+        public override bool Cast(Entity target)
         {
             base.Cast(target);
-
-            //if (target.tag = "")
 
             target.stats.Health += heal;
 

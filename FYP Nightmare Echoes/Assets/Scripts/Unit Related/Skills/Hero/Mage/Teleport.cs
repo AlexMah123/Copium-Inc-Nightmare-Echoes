@@ -28,7 +28,7 @@ namespace NightmareEchoes.Unit
             targetTile = target;
         }
 
-        public override bool Cast(Units target)
+        public override bool Cast(Entity target)
         {
             base.Cast(target);
 
@@ -54,7 +54,7 @@ namespace NightmareEchoes.Unit
             targetTile = null;
         }
 
-        private IEnumerator CastTeleport(Units targetUnit)
+        private IEnumerator CastTeleport(Entity targetUnit)
         {
             var cm = CombatManager.Instance;
             var range = cm.SquareRange(targetUnit.ActiveTile , secondaryRange);

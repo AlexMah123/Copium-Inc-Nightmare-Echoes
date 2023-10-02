@@ -17,12 +17,12 @@ namespace NightmareEchoes.Unit
         }
 
         #region Effects Related
-        public override void ApplyEffect(Units unit)
+        public override void ApplyEffect(Entity unit)
         {
             unit.DodgeToken = true;
         }
 
-        public override void TriggerEffect(Units unit)
+        public override void TriggerEffect(Entity unit)
         {
 
         }
@@ -39,7 +39,7 @@ namespace NightmareEchoes.Unit
             tokenStack++;
         }
 
-        public override void UpdateLifeTime(Units unit)
+        public override void UpdateLifeTime(Entity unit)
         {
             tokenStack--;
 

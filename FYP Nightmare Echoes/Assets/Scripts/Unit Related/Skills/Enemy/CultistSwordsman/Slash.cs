@@ -7,7 +7,7 @@ namespace NightmareEchoes.Unit
     //Written by Ter (stolen from jh)
     public class Slash : Skill
     {
-        public override bool Cast(Units target)
+        public override bool Cast(Entity target)
         {
             base.Cast(target);
 

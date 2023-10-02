@@ -17,12 +17,12 @@ namespace NightmareEchoes.Unit
             woundStack = modifierDuration;
         }
 
-        public override void ApplyEffect(Units unit)
+        public override void ApplyEffect(Entity unit)
         {
             
         }
 
-        public override void TriggerEffect(Units unit)
+        public override void TriggerEffect(Entity unit)
         {
             unit.ShowPopUpText("Wound!", Color.red);
             unit.ShowPopUpText($"-{woundDmg * woundStack}", Color.yellow);

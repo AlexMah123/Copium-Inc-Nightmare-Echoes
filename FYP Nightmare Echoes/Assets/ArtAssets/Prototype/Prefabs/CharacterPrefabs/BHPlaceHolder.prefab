@@ -309,12 +309,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee1ad54339e29141ac8e2ccfa26155e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: Shadow Step
   damage: 0
   heal: 0
   cooldown: 0
   range: 0
-  minRange: 0
+  minRange: 1
   targetType: 0
   targetArea: 0
   targetUnitAlignment: 0
@@ -335,7 +335,7 @@ MonoBehaviour:
   placable: 0
   placableCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: 
+  skillDescription: Goes Into Stealth and Gain 1 Strength
 --- !u!60 &5105758200137203564
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -412,4 +412,4 @@ MonoBehaviour:
   - {x: 0.1875, y: 0, z: 0}
   m_ShapePathHash: -2004012350
   m_Mesh: {fileID: 0}
-  m_InstanceId: 56954
+  m_InstanceId: -1428

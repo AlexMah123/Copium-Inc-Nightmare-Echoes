@@ -52,10 +52,10 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI skillStunChanceText;
         [SerializeField] TextMeshProUGUI skillDebuffChanceText;
 
-        Units CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
+        Entity CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
 
         [Space(20), Header("Inspectable Info")]
-        public Units inspectedUnit;
+        public Entity inspectedUnit;
         [SerializeField] List<Button> inspectedUnitButtonList;
         [SerializeField] GameObject inspectedUnitPanel;
         [SerializeField] Button inspectedUnitProfile;
@@ -84,7 +84,7 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI glossaryResistText;
 
         [Space(20), Header("Character Glossary Skills")]
-        Units glossaryUnit;
+        Entity glossaryUnit;
         [SerializeField] List<Button> glossarySkills;
         [SerializeField] List<Image> glossarySkillsImage;
         [SerializeField] Slider glossaryHealth;
@@ -176,7 +176,7 @@ namespace NightmareEchoes.TurnOrder
 
                     if (PathfindingManager.Instance.currentHoveredOverlayTile != null && PathfindingManager.Instance.currentHoveredOverlayTile.CheckUnitOnTile())
                     {
-                        var hoveredUnit = PathfindingManager.Instance.currentHoveredOverlayTile.CheckUnitOnTile().GetComponent<Units>();
+                        var hoveredUnit = PathfindingManager.Instance.currentHoveredOverlayTile.CheckUnitOnTile().GetComponent<Entity>();
 
                         if (hoveredUnit != null)
                         {
@@ -313,7 +313,7 @@ namespace NightmareEchoes.TurnOrder
                 {
                     if (hit.collider.gameObject.CompareTag("Inspectable"))
                     {
-                        inspectedUnit = hit.collider.gameObject.GetComponent<Units>();
+                        inspectedUnit = hit.collider.gameObject.GetComponent<Entity>();
                         selected = true;
                         EnableInspectedUI(true);
                     }
@@ -917,7 +917,7 @@ namespace NightmareEchoes.TurnOrder
 
         }
 
-        public void EnableGlossary(bool enable, Units unit)
+        public void EnableGlossary(bool enable, Entity unit)
         {
             int index = 0;
             if (unit.BasicAttackSkill != null)

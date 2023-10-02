@@ -9,7 +9,7 @@ namespace NightmareEchoes.Unit
     {
         private bool trapsSet = false;
 
-        public override bool Cast(Units unit)
+        public override bool Cast(Entity unit)
         {
             base.Cast(unit);
 

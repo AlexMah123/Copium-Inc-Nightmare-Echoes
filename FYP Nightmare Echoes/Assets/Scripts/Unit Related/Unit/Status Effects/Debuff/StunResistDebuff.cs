@@ -20,7 +20,7 @@ namespace NightmareEchoes.Unit
 
         }
 
-        public override void ApplyEffect(Units unit)
+        public override void ApplyEffect(Entity unit)
         {
 
         }

@@ -18,7 +18,7 @@ namespace NightmareEchoes.Unit
             buffDuration = modifierDuration;
         }
 
-        public override void ApplyEffect(Units unit)
+        public override void ApplyEffect(Entity unit)
         {
 
         }

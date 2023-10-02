@@ -14,7 +14,7 @@ namespace NightmareEchoes.Unit.AI
     public class BasicEnemyAI : MonoBehaviour
     {
         [Header("Hero List + Unit List")]
-        [SerializeField] List<Units> totalHeroList, totalUnitList;
+        [SerializeField] List<Entity> totalHeroList, totalUnitList;
 
         [Space(20), Header("Path List to hero")]
         public List<OverlayTile> totalPathList = new List<OverlayTile>();
@@ -22,10 +22,10 @@ namespace NightmareEchoes.Unit.AI
         [Space(20), Header("Enemy Specifics")]
         Coroutine redirect;
         public float attackDelay = 1f;
-        Units thisUnit;
+        Entity thisUnit;
 
         //used for decision making
-        Units targetHero, closestHero;
+        Entity targetHero, closestHero;
         float rangeToTarget, rangeToClosest;
 
         //checking if this unit can attk, move & attk and has attacked.
@@ -44,9 +44,9 @@ namespace NightmareEchoes.Unit.AI
         OverlayTile thisUnitTile, targetTileToMove;
         OverlayTile bestMoveTile;
 
-        Dictionary<Units, int> distancesDictionary = new Dictionary<Units, int>();
+        Dictionary<Entity, int> distancesDictionary = new Dictionary<Entity, int>();
         Dictionary<string, float> utilityDictionary = new Dictionary<string, float>();
-        Dictionary<Units, float> aggroDictionary = new Dictionary<Units, float>();
+        Dictionary<Entity, float> aggroDictionary = new Dictionary<Entity, float>();
         float healthPercent;
 
         public bool hasMoved;
@@ -58,7 +58,7 @@ namespace NightmareEchoes.Unit.AI
             set => tilesInRange = value;
         }
 
-        public List<Units> TotalHeroList
+        public List<Entity> TotalHeroList
         {
             get => totalHeroList;
             set => totalHeroList = value;
@@ -68,11 +68,11 @@ namespace NightmareEchoes.Unit.AI
 
         private void Awake()
         {
-            thisUnit = GetComponent<Units>();
+            thisUnit = GetComponent<Entity>();
         }
 
         //Main Action
-        public void MakeDecision(Units thisUnit)
+        public void MakeDecision(Entity thisUnit)
         {
             //reset values
             hasAttacked = false;
@@ -114,7 +114,7 @@ namespace NightmareEchoes.Unit.AI
         }
 
         #region Types of Actions
-        void AggressiveAction(Units thisUnit)
+        void AggressiveAction(Entity thisUnit)
         {
             //setting the amount of skills that is attached to the unit
             skillAmount = 1;
@@ -373,7 +373,7 @@ namespace NightmareEchoes.Unit.AI
 
 
         #region Public Calls for Enemy Phase
-        public void MoveProcess(Units thisUnit)
+        public void MoveProcess(Entity thisUnit)
         {
             if (totalPathList.Count > 0)
             {
@@ -398,7 +398,7 @@ namespace NightmareEchoes.Unit.AI
                 PathfindingManager.Instance.ClearArrow(totalPathList);
 
                 //set the targets based on the range (defaulted to 1)
-                List<Units> targets = CombatManager.Instance.IsStealthUnitInViewRange(thisUnit, 1);
+                List<Entity> targets = CombatManager.Instance.IsStealthUnitInViewRange(thisUnit, 1);
 
 
                 if (targets.Count > 0)
@@ -450,9 +450,9 @@ namespace NightmareEchoes.Unit.AI
             }
         }
 
-        public void AttackProcess(Units thisUnit, OverlayTile targetTile)
+        public void AttackProcess(Entity thisUnit, OverlayTile targetTile)
         {
-            if (targetTile.CheckUnitOnTile()?.GetComponent<Units>() != null)
+            if (targetTile.CheckUnitOnTile()?.GetComponent<Entity>() != null)
             {
                 targetTile.ShowEnemyTile();
                 hasAttacked = true;
@@ -468,7 +468,7 @@ namespace NightmareEchoes.Unit.AI
             StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, redirectTile, 0.25f));
 
             yield return new WaitUntil(() => Vector2.Distance(thisUnit.transform.position, redirectTile.transform.position) < 0.01f);
-            targetTileToMove.CheckUnitOnTile()?.GetComponent<Units>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
+            targetTileToMove.CheckUnitOnTile()?.GetComponent<Entity>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
             AttackProcess(thisUnit, targetTileToMove);
 
         }
@@ -477,16 +477,16 @@ namespace NightmareEchoes.Unit.AI
 
         #region Calculations/Utility
         //delay used for attacks
-        IEnumerator Delay(Units thisUnit)
+        IEnumerator Delay(Entity thisUnit)
         {
             yield return new WaitForSeconds(attackDelay);
 
-            CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckUnitOnTile().GetComponent<Units>(), thisUnit.BasicAttackSkill);
+            CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckUnitOnTile().GetComponent<Entity>(), thisUnit.BasicAttackSkill);
             targetTileToMove.HideTile();
             totalPathList.Clear();
         }
 
-        void SortHeroesByDistance(Units thisUnit)
+        void SortHeroesByDistance(Entity thisUnit)
         {
             UpdateHeroList();
 
@@ -516,7 +516,7 @@ namespace NightmareEchoes.Unit.AI
         {
             //populating unitList
             totalHeroList.Clear();
-            totalUnitList = FindObjectsOfType<Units>().ToList();
+            totalUnitList = FindObjectsOfType<Entity>().ToList();
 
             //filter by heroes
             foreach (var unit in totalUnitList)
@@ -529,7 +529,7 @@ namespace NightmareEchoes.Unit.AI
         }
 
 
-        float FindDistanceBetweenUnit(Units target1, Units target2)
+        float FindDistanceBetweenUnit(Entity target1, Entity target2)
         {
             float dist;
             Vector3Int t1v, t2v;

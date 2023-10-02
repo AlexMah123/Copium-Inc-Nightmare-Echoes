@@ -7,7 +7,7 @@ namespace NightmareEchoes.Unit
 {
     public class ArcaneIntellect : Skill
     {
-        public override bool Cast(Units target)
+        public override bool Cast(Entity target)
         {
             throw new System.NotImplementedException();
         }

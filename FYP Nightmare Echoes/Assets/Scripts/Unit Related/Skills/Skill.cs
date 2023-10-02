@@ -11,7 +11,7 @@ namespace NightmareEchoes.Unit
 {
     public abstract class Skill : MonoBehaviour
     {
-        protected Units thisUnit;
+        protected Entity thisUnit;
         [Header("Skill Details")]
         [SerializeField] protected string skillName;
         [SerializeField] protected int damage;
@@ -201,13 +201,13 @@ namespace NightmareEchoes.Unit
 
         private void Awake()
         {
-            thisUnit = GetComponent<Units>();
+            thisUnit = GetComponent<Entity>();
         }
 
         #region Cast Related
 
         //Directly on units
-        public virtual bool Cast(Units target)
+        public virtual bool Cast(Entity target)
         {
             Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
             Vector2 CastTo = new Vector2(target.ActiveTile.gridLocation.x, target.ActiveTile.gridLocation.y);
@@ -276,7 +276,7 @@ namespace NightmareEchoes.Unit
                 {
                     //north
                     thisUnit.Direction = Direction.NORTH;
-                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.NORTH)
+                    if (target.CheckUnitOnTile()?.GetComponent<Entity>().Direction == Direction.NORTH)
                     {
                         isBackstabbing = true;
                     }
@@ -285,7 +285,7 @@ namespace NightmareEchoes.Unit
                 {
                     //south
                     thisUnit.Direction = Direction.SOUTH;
-                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.SOUTH)
+                    if (target.CheckUnitOnTile()?.GetComponent<Entity>().Direction == Direction.SOUTH)
                     {
                         isBackstabbing = true;
                     }
@@ -297,7 +297,7 @@ namespace NightmareEchoes.Unit
                 {
                     //east
                     thisUnit.Direction = Direction.EAST;
-                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.EAST)
+                    if (target.CheckUnitOnTile()?.GetComponent<Entity>().Direction == Direction.EAST)
                     {
                         isBackstabbing = true;
                     }
@@ -306,7 +306,7 @@ namespace NightmareEchoes.Unit
                 {
                     //west
                     thisUnit.Direction = Direction.WEST;
-                    if (target.CheckUnitOnTile()?.GetComponent<Units>().Direction == Direction.WEST)
+                    if (target.CheckUnitOnTile()?.GetComponent<Entity>().Direction == Direction.WEST)
                     {
                         isBackstabbing = true;
                     }
@@ -331,7 +331,7 @@ namespace NightmareEchoes.Unit
 
 
         //used for attacks that are damage type
-        public bool DealDamage(Units target, int secondaryDmg = 0)
+        public bool DealDamage(Entity target, int secondaryDmg = 0)
         {
             var damage = this.damage;
             if (secondaryDmg > 0) damage = secondaryDmg;
@@ -400,7 +400,7 @@ namespace NightmareEchoes.Unit
         }
 
 
-        public void CheckForBackstab(Units target, int damage)
+        public void CheckForBackstab(Entity target, int damage)
         {
             if (isBackstabbing && targetType == TargetType.Single)
             {

@@ -19,32 +19,32 @@ namespace NightmareEchoes.TurnOrder
         public EndPhase endPhase = new EndPhase();
 
         [Header("Turn Order")]
-        public List<Units> turnOrderList = new List<Units>();
-        Queue<Units> currentUnitQueue = new Queue<Units>();
+        public List<Entity> turnOrderList = new List<Entity>();
+        Queue<Entity> currentUnitQueue = new Queue<Entity>();
         //Queue<Units> nextUnitQueue = new Queue<Units>();
         public int cycleCount;
         public float phaseDelay;
         public float enemythinkingDelay;
         public float passTurnDelay;
 
-        [SerializeField] Units currentUnit;
+        [SerializeField] Entity currentUnit;
         public bool runOnce = false;
         public bool gameOver = false;
 
         [Header("Hero List")]
-        List<Units> totalUnitList = new List<Units>();
-        List<Units> totalHeroList = new List<Units>();
-        List<Units> totalEnemiesList = new List<Units>();
+        List<Entity> totalUnitList = new List<Entity>();
+        List<Entity> totalHeroList = new List<Entity>();
+        List<Entity> totalEnemiesList = new List<Entity>();
 
 
         #region Class Properties
-        public Units CurrentUnit
+        public Entity CurrentUnit
         {
             get { return currentUnit; }
             set { currentUnit = value; }
         }
 
-        public Queue<Units> CurrentUnitQueue
+        public Queue<Entity> CurrentUnitQueue
         {
             get { return currentUnitQueue; }
             private set { currentUnitQueue = value; }
@@ -137,9 +137,9 @@ namespace NightmareEchoes.TurnOrder
         #region Turn Order Calculations
         public void CalculateTurnOrder()
         {
-            turnOrderList = new List<Units>(FindObjectsOfType<Units>());
+            turnOrderList = new List<Entity>(FindObjectsOfType<Entity>());
             
-            var iterator = new List<Units>(turnOrderList);
+            var iterator = new List<Entity>(turnOrderList);
             foreach (var unit in iterator.Where(unit => unit.IsProp))
             {
                 turnOrderList.Remove(unit);
@@ -158,12 +158,12 @@ namespace NightmareEchoes.TurnOrder
             }
         }
 
-        private void OnUnitDestroy(Units destroyedUnit)
+        private void OnUnitDestroy(Entity destroyedUnit)
         {
             destroyedUnit.OnDestroyedEvent -= OnUnitDestroy;
             destroyedUnit.OnAddBuffEvent -= UIManager.Instance.UpdateStatusEffectUI;
 
-            CurrentUnitQueue = new Queue<Units>(CurrentUnitQueue.Where(x => x != destroyedUnit));
+            CurrentUnitQueue = new Queue<Entity>(CurrentUnitQueue.Where(x => x != destroyedUnit));
 
             if (UIManager.Instance != null) 
             {
@@ -175,7 +175,7 @@ namespace NightmareEchoes.TurnOrder
         }
 
         //delegate for sort()
-        int CompareSpeed(Units _a, Units _b)
+        int CompareSpeed(Entity _a, Entity _b)
         {
             if (_a.stats.Speed == _b.stats.Speed)
             {
@@ -195,11 +195,11 @@ namespace NightmareEchoes.TurnOrder
         #endregion
 
 
-        public List<Units> FindAllHeros()
+        public List<Entity> FindAllHeros()
         {
             //check if any hero exist
             totalHeroList.Clear();
-            totalUnitList = FindObjectsOfType<Units>().ToList();
+            totalUnitList = FindObjectsOfType<Entity>().ToList();
 
             //filter by heroes
             foreach (var unit in totalUnitList)
@@ -220,11 +220,11 @@ namespace NightmareEchoes.TurnOrder
             }
         }
 
-        public List<Units> FindAllEnemies()
+        public List<Entity> FindAllEnemies()
         {
             //check if any hero exist
             totalEnemiesList.Clear();
-            totalUnitList = FindObjectsOfType<Units>().ToList();
+            totalUnitList = FindObjectsOfType<Entity>().ToList();
 
             //filter by heroes
             foreach (var unit in totalUnitList)

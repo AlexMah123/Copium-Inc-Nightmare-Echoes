@@ -6,7 +6,7 @@ namespace NightmareEchoes.Unit
 {
     public class RangerArrowShot : Skill
     {
-       public override bool Cast(Units target)
+       public override bool Cast(Entity target)
         {
             base.Cast(target);
 

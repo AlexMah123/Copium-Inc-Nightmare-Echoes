@@ -9,7 +9,7 @@ namespace NightmareEchoes.Unit
     public class Kick : Skill
     {
         Direction prevDir;
-        public override bool Cast(Units target)
+        public override bool Cast(Entity target)
         {
             base.Cast(target);
 
@@ -27,7 +27,7 @@ namespace NightmareEchoes.Unit
                 var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
                 if (tileDestination)
                 {
-                    if (tileDestination.CheckUnitOnTile())
+                    if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile())
                         tileOccupied = true;
 
                     if (!tileOccupied)
@@ -42,7 +42,7 @@ namespace NightmareEchoes.Unit
             
             return true;
         }
-        IEnumerator DelayTurn(Units target)
+        IEnumerator DelayTurn(Entity target)
         {
             yield return new WaitForSeconds(0.16f);
             Debug.Log(prevDir);

@@ -8,7 +8,7 @@ namespace NightmareEchoes.Unit
     //Written by Ter (stolen from jh)
     public class Lunge : Skill
     {
-        public override bool Cast(Units target)
+        public override bool Cast(Entity target)
         {
             base.Cast(target);
 
@@ -23,7 +23,7 @@ namespace NightmareEchoes.Unit
                 var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
                 if (tileDestination)
                 {
-                    if (tileDestination.CheckUnitOnTile())
+                    if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile())
                         tileOccupied = true;
                     
                     if (!tileOccupied)

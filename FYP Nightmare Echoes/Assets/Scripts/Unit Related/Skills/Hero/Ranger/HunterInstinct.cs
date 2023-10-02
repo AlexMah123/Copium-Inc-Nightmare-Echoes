@@ -9,7 +9,7 @@ namespace NightmareEchoes.Unit
 {
     public class HunterInstinct : Skill
     {
-        public override bool Cast(Units target)
+        public override bool Cast(Entity target)
         {
             if (target.GetComponent<BasicEnemyAI>().hasMoved)
             {

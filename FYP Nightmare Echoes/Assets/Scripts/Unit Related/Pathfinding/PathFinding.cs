@@ -86,7 +86,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
 
             //cache the unit's type based on the start tile's unit
-            var UnitAlignment = startTile.CheckUnitOnTile().GetComponent<Units>().IsHostile;
+            var UnitAlignment = startTile.CheckUnitOnTile().GetComponent<Entity>().IsHostile;
 
             var RemovedTileWithObstacles = new List<OverlayTile>();
 
@@ -99,10 +99,10 @@ namespace NightmareEchoes.Unit.Pathfinding
                     RemovedTileWithObstacles.Add(tiles);
                 }
                 //else if there is a unit
-                else if (tiles.CheckUnitOnTile() != null && tiles.CheckUnitOnTile().GetComponent<Units>() != null)
+                else if (tiles.CheckUnitOnTile() != null && tiles.CheckUnitOnTile().GetComponent<Entity>() != null)
                 {
                     //check if that unit is the same type as the UnitAlignment, if so, add it.
-                    if (tiles.CheckUnitOnTile().GetComponent<Units>().IsHostile == UnitAlignment && !tiles.CheckUnitOnTile().GetComponent<Units>().StealthToken && !tiles.CheckUnitOnTile().GetComponent<Units>().IsProp)
+                    if (tiles.CheckUnitOnTile().GetComponent<Entity>().IsHostile == UnitAlignment && !tiles.CheckUnitOnTile().GetComponent<Entity>().StealthToken && !tiles.CheckUnitOnTile().GetComponent<Entity>().IsProp)
                         RemovedTileWithObstacles.Add(tiles);
                 }
             }

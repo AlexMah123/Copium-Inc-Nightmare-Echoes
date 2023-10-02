@@ -17,7 +17,7 @@ namespace NightmareEchoes.Unit
             restorationStack = modifierDuration;
         }
 
-        public override void ApplyEffect(Units unit)
+        public override void ApplyEffect(Entity unit)
         {
             unit.ShowPopUpText("Restoration!", Color.red);
             unit.ShowPopUpText($"+{restorationHeal * restorationStack}", Color.yellow);

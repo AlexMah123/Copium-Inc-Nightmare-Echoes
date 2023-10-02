@@ -11,7 +11,7 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target, aoeTiles);
 
-            var targetType = target.CheckUnitOnTile().GetComponent<Units>();
+            var targetType = target.CheckUnitOnTile().GetComponent<Entity>();
 
             if (targetType.IsHostile == false)
             {

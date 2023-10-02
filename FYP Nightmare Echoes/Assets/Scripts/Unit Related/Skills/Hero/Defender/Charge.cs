@@ -7,7 +7,7 @@ namespace NightmareEchoes.Unit
 {
     public class Charge : Skill
     {
-        public override bool Cast(Units unit)
+        public override bool Cast(Entity unit)
         {
             base.Cast(unit);
             DealDamage(unit);
@@ -22,7 +22,7 @@ namespace NightmareEchoes.Unit
                 var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
                 if (tileDestination)
                 {
-                    if (tileDestination.CheckUnitOnTile())
+                    if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile())
                         tileOccupied = true;
                 }
             }

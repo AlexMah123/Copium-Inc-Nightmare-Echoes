@@ -6,6 +6,7 @@ using NightmareEchoes.Unit;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine.SceneManagement;
+using NightmareEchoes.Grid;
 
 
 //created by Alex
@@ -88,11 +89,20 @@ namespace NightmareEchoes.TurnOrder
         {
             OnExit();
 
+            //disable skill info
             UIManager.Instance.EnableSkillInfo(false);
+
+            //reset pathfinding
             PathfindingManager.Instance.ifSelectedUnit = false;
-            CombatManager.Instance.turnEnded = false;
-            CameraControl.Instance.isPanning = false;
             PathfindingManager.Instance.isMoving = false;
+
+            //clear all rendering 
+            RenderOverlayTile.Instance.ClearTargetingRenders();
+            CombatManager.Instance.ClearPreviews();
+            CombatManager.Instance.turnEnded = false;
+
+            //reset camera panning
+            CameraControl.Instance.isPanning = false;
 
             controller.StopAllCoroutines();
         }

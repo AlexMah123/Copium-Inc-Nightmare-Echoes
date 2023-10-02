@@ -16,13 +16,13 @@ namespace NightmareEchoes.Unit
         }
 
         #region Effect Related
-        public override void ApplyEffect(Units unit)
+        public override void ApplyEffect(Entity unit)
         {
             unit.ShowPopUpText("Immobilized!", Color.red);
             unit.ImmobilizeToken = true;
         }
 
-        public override void TriggerEffect(Units unit)
+        public override void TriggerEffect(Entity unit)
         {
             unit.ShowPopUpText("Cannot Move", Color.red);
         }
@@ -40,7 +40,7 @@ namespace NightmareEchoes.Unit
             tokenStack++;
         }
 
-        public override void UpdateLifeTime(Units unit)
+        public override void UpdateLifeTime(Entity unit)
         {
             tokenStack--;
 

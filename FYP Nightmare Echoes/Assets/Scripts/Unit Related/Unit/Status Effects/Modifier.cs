@@ -21,9 +21,9 @@ namespace NightmareEchoes.Unit
         [SerializeField] public int modifierDuration;
 
         public abstract void AwakeStatusEffect();
-        public abstract void ApplyEffect(Units unit);
+        public abstract void ApplyEffect(Entity unit);
 
-        public virtual void TriggerEffect(Units unit)
+        public virtual void TriggerEffect(Entity unit)
         {
 
         }
@@ -36,7 +36,7 @@ namespace NightmareEchoes.Unit
 
         }
 
-        public virtual void UpdateLifeTime(Units unit)
+        public virtual void UpdateLifeTime(Entity unit)
         {
 
         }

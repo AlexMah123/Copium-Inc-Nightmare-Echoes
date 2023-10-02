@@ -20,7 +20,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] GameObject overlayTileContainer; 
 
         [Header("Current Unit")]
-        Units currentSelectedUnit;
+        Entity currentSelectedUnit;
         [SerializeField] float movingSpeed;
         public bool ifSelectedUnit = false;
 
@@ -96,7 +96,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         }
 
         //Called in Player Phase
-        public void StartPlayerPathfinding(Units hero = null)
+        public void StartPlayerPathfinding(Entity hero = null)
         {
             if (!ifSelectedUnit)
             {
@@ -314,7 +314,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         }
 
         #region Movement along Tile
-        public IEnumerator MoveTowardsTile(Units thisUnit, OverlayTile targetTile, float duration)
+        public IEnumerator MoveTowardsTile(Entity thisUnit, OverlayTile targetTile, float duration)
         {
             #region Trigger Movement Related Status Effect Before Movement
             for (int i = thisUnit.TokenList.Count - 1; i >= 0; i--)
@@ -364,7 +364,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             SetUnitPositionOnTile(targetTile, thisUnit);
         }
 
-        public void MoveAlongPath(Units thisUnit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
+        public void MoveAlongPath(Entity thisUnit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
         {
             //units movement
             if (pathList.Count > 0 && thisUnit != null) 
@@ -451,7 +451,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         #endregion
 
         #region Utility for unit direction
-        public void ChangeDirection(Vector3 direction, Units thisUnit)
+        public void ChangeDirection(Vector3 direction, Entity thisUnit)
         {
             //setting directions as well as the moving boolean
             if (direction == new Vector3Int(1, 0, 0)) //back facing
@@ -506,7 +506,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                    (Mathf.Abs(tile2.gridLocation.y - tile1.gridLocation.y) == 1 && tile1.gridLocation.x == tile2.gridLocation.x);
         }
 
-        public void RenderArrow(List<OverlayTile> tilesInRange, List<OverlayTile> pathList, Units thisUnit)
+        public void RenderArrow(List<OverlayTile> tilesInRange, List<OverlayTile> pathList, Entity thisUnit)
         {
             foreach (var item in tilesInRange)
             {
@@ -536,7 +536,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             return null;
         }
 
-        public void SetUnitPositionOnTile(OverlayTile tile, Units unit)
+        public void SetUnitPositionOnTile(OverlayTile tile, Entity unit)
         {
             unit.gameObject.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
             unit.ActiveTile = tile;
