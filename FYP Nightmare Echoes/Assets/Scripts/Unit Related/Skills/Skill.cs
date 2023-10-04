@@ -415,6 +415,7 @@ namespace NightmareEchoes.Unit
         {
             var position = target.transform.position;
             var direction = position - originTile.transform.position;
+            direction = Vector3.Normalize(direction);
             var destination = position + direction;
             
             var tileDestination = OverlayTileManager.Instance.GetOverlayTileOnWorldPosition(destination);

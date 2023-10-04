@@ -7,29 +7,12 @@ namespace NightmareEchoes.Unit
 {
     public class Charge : Skill
     {
-        public override bool Cast(Entity unit)
+        public override bool Cast(Entity target)
         {
-            base.Cast(unit);
-            DealDamage(unit);
+            base.Cast(target);
+            DealDamage(target);
 
-            var direction = unit.transform.position - transform.position;
-            var destination = unit.transform.position + direction;
-
-            var tileOccupied = false;
-            var hit = Physics2D.Raycast(destination, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
-            if (hit)
-            {
-                var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
-                if (tileDestination)
-                {
-                    if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile())
-                        tileOccupied = true;
-                }
-            }
-
-            if (tileOccupied) return true;
-            unit.transform.position += direction;
-            unit.UpdateLocation();
+            Knockback(thisUnit.ActiveTile, target);
 
             return true;
         }
