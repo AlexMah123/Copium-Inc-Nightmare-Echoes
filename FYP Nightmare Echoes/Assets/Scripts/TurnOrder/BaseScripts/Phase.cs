@@ -93,7 +93,6 @@ namespace NightmareEchoes.TurnOrder
             UIManager.Instance.EnableSkillInfo(false);
 
             //reset pathfinding
-            PathfindingManager.Instance.ifSelectedUnit = false;
             PathfindingManager.Instance.isMoving = false;
 
             //clear all rendering 

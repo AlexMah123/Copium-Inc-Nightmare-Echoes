@@ -64,7 +64,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             var inRangeTiles = new List<OverlayTile>();
             int stepCount = 0;
-
+            bool UnitAlignment = false;
             inRangeTiles.Add(startTile);
 
             var TileForPreviousStep = new List<OverlayTile>();
@@ -86,7 +86,11 @@ namespace NightmareEchoes.Unit.Pathfinding
 
 
             //cache the unit's type based on the start tile's unit
-            var UnitAlignment = startTile.CheckUnitOnTile().GetComponent<Entity>().IsHostile;
+            if(startTile.CheckUnitOnTile())
+            {
+                UnitAlignment = startTile.CheckUnitOnTile().GetComponent<Entity>().IsHostile;
+
+            }
 
             var RemovedTileWithObstacles = new List<OverlayTile>();
 

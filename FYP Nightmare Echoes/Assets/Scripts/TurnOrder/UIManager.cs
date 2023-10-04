@@ -122,6 +122,7 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] private float magnitude = 0.05f;
         [SerializeField] private float offset = 0.75f;
 
+        int unitMask;
 
         private void Awake()
         {
@@ -139,6 +140,8 @@ namespace NightmareEchoes.TurnOrder
             InitStatusEffectPool(currentUnitStatusEffectsPanel);
             InitStatusEffectPool(inspectedUnitStatusEffectsPanel);
             InitGlossaryPool(glossaryContainer);
+
+            unitMask = LayerMask.GetMask("Unit");
         }
 
         private void Start()
@@ -150,11 +153,6 @@ namespace NightmareEchoes.TurnOrder
 
         private void Update()
         {
-
-            #region Passturn Button
-           
-            #endregion
-
             #region Skill Info
             if (skillInfoPanel.activeSelf) 
             {
@@ -302,29 +300,19 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 
-            if (Input.GetMouseButtonDown(1)) // rightclick on an inspectable unit
-            {
-                bool selected = false;
-                int unitMask = LayerMask.GetMask("Unit");
 
+            if(Input.GetMouseButtonDown(1))
+            {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, unitMask);
 
-                if (hit)
+                if (hit && hit.collider.gameObject.CompareTag("Inspectable"))
                 {
-                    if (hit.collider.gameObject.CompareTag("Inspectable"))
+                    if (inspectedUnit != hit.collider.gameObject.GetComponent<Entity>())
                     {
                         inspectedUnit = hit.collider.gameObject.GetComponent<Entity>();
-                        selected = true;
                         EnableInspectedUI(true);
                     }
                 }
-
-                //UNCOMMENT IF WE WANT TO HIDE WHEN PLAYERS DRAG
-                /*if (!selected)
-                {
-                    EnableInspectedUI(false);
-                }*/
-
             }
             #endregion
 
@@ -415,7 +403,7 @@ namespace NightmareEchoes.TurnOrder
         {
             CurrentUnit.BasicAttack();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.ClearUnitPosition();
+            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
@@ -431,7 +419,7 @@ namespace NightmareEchoes.TurnOrder
         {
             CurrentUnit.Skill1();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.ClearUnitPosition();
+            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
@@ -447,7 +435,7 @@ namespace NightmareEchoes.TurnOrder
         {
             CurrentUnit.Skill2();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.ClearUnitPosition();
+            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
@@ -463,7 +451,7 @@ namespace NightmareEchoes.TurnOrder
         {
             CurrentUnit.Skill3();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.ClearUnitPosition();
+            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
@@ -769,7 +757,7 @@ namespace NightmareEchoes.TurnOrder
             if (text == "Current" && CurrentUnit != null)
             {
                 glossaryUnit = CurrentUnit;
-                EnableGlossary(true, CurrentUnit);
+                EnableGlossary(true, glossaryUnit);
                 glossaryImage.sprite = CurrentUnit.Sprite;
 
                 //slowly remove as animations come out
@@ -801,6 +789,7 @@ namespace NightmareEchoes.TurnOrder
 
                     if (glossaryObj != null)
                     {
+                        Debug.Log("here");
                         glossaryObj.transform.GetChild(0).GetComponentInChildren<Image>().sprite =
                             currentUnitTotalStatusEffectList[i].icon;
 
@@ -844,7 +833,7 @@ namespace NightmareEchoes.TurnOrder
             else if (text == "Inspected" && inspectedUnit != null)
             {
                 glossaryUnit = inspectedUnit;
-                EnableGlossary(true, inspectedUnit);
+                EnableGlossary(true, glossaryUnit);
                 glossaryImage.sprite = inspectedUnit.Sprite;
 
                 //slowly remove as animations come out
@@ -1087,6 +1076,7 @@ namespace NightmareEchoes.TurnOrder
             UpdateStatusEffectUI();
         }
         #endregion
+
 
         #region Buttons
         public void GuideButton()

@@ -160,10 +160,19 @@ namespace NightmareEchoes.TurnOrder
 
         private void OnUnitDestroy(Entity destroyedUnit)
         {
+            if(destroyedUnit == currentUnit)
+            {
+                StartCoroutine(PassTurn());
+            }
+            else
+            {
+                CurrentUnitQueue = new Queue<Entity>(CurrentUnitQueue.Where(x => x != destroyedUnit));
+            }
+
+            //unsub the destroyed unit's events
             destroyedUnit.OnDestroyedEvent -= OnUnitDestroy;
             destroyedUnit.OnAddBuffEvent -= UIManager.Instance.UpdateStatusEffectUI;
 
-            CurrentUnitQueue = new Queue<Entity>(CurrentUnitQueue.Where(x => x != destroyedUnit));
 
             if (UIManager.Instance != null) 
             {

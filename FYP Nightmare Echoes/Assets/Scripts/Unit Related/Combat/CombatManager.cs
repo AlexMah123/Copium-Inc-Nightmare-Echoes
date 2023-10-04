@@ -27,7 +27,7 @@ namespace NightmareEchoes.Unit.Combat
 
         public bool turnEnded;
         
-        private Skill activeSkill;
+        [SerializeField] private Skill activeSkill;
         private List<OverlayTile> skillRangeTiles;
         private List<OverlayTile> aoePreviewTiles = new();
         private OverlayTile mainTile;

@@ -16,6 +16,7 @@ namespace NightmareEchoes.TurnOrder
     {
         bool tempStun = false;
         private bool madeDecision;
+
         BasicEnemyAI enemyAI;
 
         private List<Skill> aoeSkillsPassed = new();

@@ -12,7 +12,6 @@ namespace NightmareEchoes.TurnOrder
     public class PlayerPhase : Phase
     {
         bool tempStun = false;
-
         protected override void OnEnter()
         {
             //Reseting Values
@@ -21,20 +20,6 @@ namespace NightmareEchoes.TurnOrder
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
             {
-                //TESTING
-                /*controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.BLOCK_TOKEN, 99, 1));
-                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.VULNERABLE_TOKEN, 99, 1));
-
-                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 99, 1));
-                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 99, 1));
-
-                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.HASTE_TOKEN, 99, 1));
-                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.VERTIGO_TOKEN, 99, 1));
-
-
-                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.IMMOBILIZE_TOKEN, 1, 1));
-                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));*/
-
                 #region Tokens
                 //controller.CurrentUnit.ApplyAllTokenEffects();
 
@@ -75,6 +60,37 @@ namespace NightmareEchoes.TurnOrder
         {
             //COMMENT IF YOU WANT MANUAL MOVEMENT
             PathfindingManager.Instance.PlayerInputPathfinding();
+
+            //if you cancel movement
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (PathfindingManager.Instance.CurrentPathfindingUnit != null && PathfindingManager.Instance.RevertUnitPosition != null)
+                {
+                    PathfindingManager.Instance.SetUnitPositionOnTile(PathfindingManager.Instance.RevertUnitPosition, controller.CurrentUnit);
+                    PathfindingManager.Instance.CurrentPathfindingUnit.Direction = PathfindingManager.Instance.RevertUnitDirection;
+                    controller.CurrentUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
+
+                    //Add Section to have reverts if they hit a trap.
+
+                    //Resets everything, not moving, not dragging, and lastaddedtile is null
+                    PathfindingManager.Instance.isMoving = false;
+                    PathfindingManager.Instance.isDragging = false;
+                    PathfindingManager.Instance.lastAddedTile = null;
+
+                    PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
+
+                    //cancels the selected skill
+                    if (CombatManager.Instance.ActiveSkill != null)
+                    {
+                        CombatManager.Instance.SelectSkill(controller.CurrentUnit, CombatManager.Instance.ActiveSkill);
+                    }
+
+                    //shows back the tiles in range
+                    PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
+                    CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
+
+                }
+            }
         }
 
         protected override void OnExit()
