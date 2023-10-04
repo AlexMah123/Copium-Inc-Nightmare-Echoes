@@ -146,16 +146,255 @@ namespace NightmareEchoes.Unit.AI
                     break;
                 default:
                     currSelectedSkill = thisUnit.BasicAttackSkill;
+                    //currSelectedSkill = thisUnit.Skill1Skill;
+                    //uncomment above to force unit to try Skill1 first 
                     break;
             }
-
-            selectedAttackRange = currSelectedSkill.Range;
-            selectedAttackMinRange = currSelectedSkill.MinRange;
 
             //setting the values based on the closest hero
             targetHero = closestHero;
             rangeToTarget = rangeToClosest;
             targetTileToMove = targetHero.ActiveTile;
+
+            InMoveAtkRangeCheck();
+
+            #region Flowchart
+            //resetting util values
+            currTileUtil = 0;
+            highestTileUtil = 0;
+
+            if (inAtkRange)
+            {
+                IfInAtkRange();
+            }
+            else if (inMoveAndAttackRange)
+            {
+                IfInMoveAtkRange();
+            }
+            else
+            {
+                IfOutMoveAtkRange();
+            }
+
+            //Debug.Log(highestTileUtil);
+            #endregion
+        }
+
+        #region Destination Calculation Methods
+        void IfInAtkRange()
+        {
+            if (possibleAttackLocations.Count > 0)
+            {
+                bestMoveTile = possibleAttackLocations[0];
+            }
+            rngHelper = 1;
+
+            for (int i = 0; i < possibleAttackLocations.Count; i++)
+            {
+                currTileUtil = FindDistanceBetweenTile(targetTileToMove, possibleAttackLocations[i]);
+                switch (targetHero.Direction)
+                {
+                    case Direction.NORTH:
+                        if ((possibleAttackLocations[i].gridLocation.x < targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
+                        {
+                            currTileUtil = currTileUtil + 20;
+                        }
+                        break;
+                    case Direction.SOUTH:
+                        if ((possibleAttackLocations[i].gridLocation.x > targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
+                        {
+                            currTileUtil = currTileUtil + 20;
+                        }
+                        break;
+                    case Direction.EAST:
+                        if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < targetTileToMove.gridLocation.y))
+                        {
+                            currTileUtil = currTileUtil + 20;
+                        }
+                        break;
+                    case Direction.WEST:
+                        if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > targetTileToMove.gridLocation.y))
+                        {
+                            currTileUtil = currTileUtil + 20;
+                        }
+                        break;
+                }
+
+                //Debug.Log(currTileUtil);
+                if (!possibleAttackLocations[i].CheckUnitOnTile())
+                {
+                    if (currTileUtil > highestTileUtil)
+                    {
+                        bestMoveTile = possibleAttackLocations[i];
+                        highestTileUtil = currTileUtil;
+                    }
+                    else if (currTileUtil == highestTileUtil)
+                    {
+                        rngHelper++;
+                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                        {
+                            bestMoveTile = possibleAttackLocations[i];
+                            highestTileUtil = currTileUtil;
+                        }
+                    }
+                }
+            }
+
+            if (bestMoveTile == null)
+            {
+                totalPathList.Clear();
+            }
+            else
+            {
+                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
+            }
+        }
+        
+        void IfInMoveAtkRange()
+        {
+            if (possibleAttackLocations.Count > 0)
+            {
+                bestMoveTile = possibleAttackLocations[0];
+            }
+            rngHelper = 1;
+
+            for (int i = 0; i < possibleAttackLocations.Count; i++)
+            {
+                currTileUtil = FindDistanceBetweenTile(targetTileToMove, possibleAttackLocations[i]);
+
+                switch (targetHero.Direction)
+                {
+                    case Direction.NORTH:
+                        if ((possibleAttackLocations[i].gridLocation.x < targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
+                        {
+                            currTileUtil = currTileUtil + 20;
+                            Debug.Log("North MoveATK");
+                        }
+                        break;
+                    case Direction.SOUTH:
+                        if ((possibleAttackLocations[i].gridLocation.x > targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
+                        {
+                            currTileUtil = currTileUtil + 20;
+                            Debug.Log("South MoveATK");
+                        }
+                        break;
+                    case Direction.EAST:
+                        if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < targetTileToMove.gridLocation.y))
+                        {
+                            currTileUtil = currTileUtil + 20;
+                            Debug.Log("East MoveATK");
+                        }
+                        break;
+                    case Direction.WEST:
+                        if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > targetTileToMove.gridLocation.y))
+                        {
+                            currTileUtil = currTileUtil + 20;
+                            Debug.Log("West MoveATK");
+                        }
+                        break;
+                }
+                //Debug.Log(currTileUtil);
+                if (!possibleAttackLocations[i].CheckUnitOnTile())
+                {
+                    if (currTileUtil > highestTileUtil)
+                    {
+                        bestMoveTile = possibleAttackLocations[i];
+                        highestTileUtil = currTileUtil;
+                    }
+                    else if (currTileUtil == highestTileUtil)
+                    {
+                        rngHelper++;
+                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                        {
+                            bestMoveTile = possibleAttackLocations[i];
+                            highestTileUtil = currTileUtil;
+                        }
+                    }
+                }
+            }
+
+            if (bestMoveTile == null)
+            {
+                totalPathList.Clear();
+            }
+            else
+            {
+                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
+            }
+        }
+
+        void IfOutMoveAtkRange()
+        {
+
+            Debug.Log("trying to redo with basic");
+            if (currSelectedSkill != thisUnit.BasicAttackSkill)
+            {
+                //reinitializing skill
+                currSelectedSkill = thisUnit.BasicAttackSkill;
+
+                InMoveAtkRangeCheck();
+
+                if (inAtkRange)
+                {
+                    IfInAtkRange();
+                }
+                else if (inMoveAndAttackRange)
+                {
+                    IfInMoveAtkRange();
+                }
+                else
+                {
+                    IfOutMoveAtkRange();
+                }
+                return;
+            }
+
+            else if (tilesInRange.Count > 0)
+            {
+                bestMoveTile = tilesInRange[0];
+            }
+            else
+            {
+                bestMoveTile = thisUnitTile;
+            }
+            rngHelper = 1;
+
+            for (int i = 0; i < tilesInRange.Count; i++)
+            {
+                if (!tilesInRange[i].CheckUnitOnTile())
+                {
+                    if (FindDistanceBetweenTile(targetTileToMove, tilesInRange[i]) < FindDistanceBetweenTile(targetTileToMove, bestMoveTile))
+                    {
+                        bestMoveTile = tilesInRange[i];
+                    }
+                    else if (FindDistanceBetweenTile(targetTileToMove, tilesInRange[i]) == FindDistanceBetweenTile(targetTileToMove, bestMoveTile))
+                    {
+                        rngHelper++;
+                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                        {
+                            bestMoveTile = tilesInRange[i];
+                        }
+                    }
+                }
+            }
+
+            if (bestMoveTile == null)
+            {
+                totalPathList.Clear();
+            }
+            else
+            {
+                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
+            }
+
+        }
+
+        #endregion
+
+        void InMoveAtkRangeCheck()
+        {
+            selectedAttackRange = currSelectedSkill.Range;
+            selectedAttackMinRange = currSelectedSkill.MinRange;
 
             //RESETS BOOLS
             possibleAttackLocations.Clear();
@@ -167,7 +406,7 @@ namespace NightmareEchoes.Unit.AI
             {
                 inAtkRange = true;
             }
-          
+
             //Checks tiles in range for possibleAttackableLocations if they do not have a unit on it
             for (int i = 0; i < tilesInRange.Count; i++)
             {
@@ -180,192 +419,6 @@ namespace NightmareEchoes.Unit.AI
                     }
                 }
             }
-            #endregion
-
-            #region Flowchart
-            //resetting util values
-            currTileUtil = 0;
-            highestTileUtil = 0;
-
-            if (inAtkRange)
-            {
-                if(possibleAttackLocations.Count > 0) 
-                {
-                    bestMoveTile = possibleAttackLocations[0];
-                }
-                rngHelper = 1;
-                    
-                for (int i = 0; i < possibleAttackLocations.Count; i++)
-                {
-                    currTileUtil = FindDistanceBetweenTile(targetTileToMove, possibleAttackLocations[i]);
-                    switch (targetHero.Direction)
-                    {
-                        case Direction.NORTH:
-                            if ((possibleAttackLocations[i].gridLocation.x < targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
-                            {
-                                currTileUtil = currTileUtil + 20;
-                            }
-                            break;
-                        case Direction.SOUTH:
-                            if ((possibleAttackLocations[i].gridLocation.x > targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
-                            {
-                                currTileUtil = currTileUtil + 20;
-                            }
-                            break;
-                        case Direction.EAST:
-                            if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < targetTileToMove.gridLocation.y))
-                            {
-                                currTileUtil = currTileUtil + 20;
-                            }
-                            break;
-                        case Direction.WEST:
-                            if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > targetTileToMove.gridLocation.y))
-                            {
-                                currTileUtil = currTileUtil + 20;
-                            }
-                            break;
-                    }
-
-                    //Debug.Log(currTileUtil);
-                    if (!possibleAttackLocations[i].CheckUnitOnTile())
-                    {
-                        if (currTileUtil > highestTileUtil)
-                        {
-                            bestMoveTile = possibleAttackLocations[i];
-                            highestTileUtil = currTileUtil;
-                        }
-                        else if (currTileUtil == highestTileUtil)
-                        {
-                            rngHelper++;
-                            if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
-                            {
-                                bestMoveTile = possibleAttackLocations[i];
-                                highestTileUtil = currTileUtil;
-                            }
-                        }
-                    }
-                }
-                
-                if(bestMoveTile == null)
-                {
-                    totalPathList.Clear();
-                }
-                else
-                {
-                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
-                }
-            }
-            else if (inMoveAndAttackRange)
-            {
-                if (possibleAttackLocations.Count > 0)
-                {
-                    bestMoveTile = possibleAttackLocations[0];
-                }
-                rngHelper = 1;
-
-                for (int i = 0; i < possibleAttackLocations.Count; i++)
-                {
-                    currTileUtil = FindDistanceBetweenTile(targetTileToMove, possibleAttackLocations[i]);
-
-                    switch (targetHero.Direction)
-                    {
-                        case Direction.NORTH:
-                            if ((possibleAttackLocations[i].gridLocation.x < targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
-                            {
-                                currTileUtil = currTileUtil + 20;
-                                Debug.Log("North MoveATK");
-                            }
-                            break;
-                        case Direction.SOUTH:
-                            if ((possibleAttackLocations[i].gridLocation.x > targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
-                            {
-                                currTileUtil = currTileUtil + 20;
-                                Debug.Log("South MoveATK");
-                            }
-                            break;
-                        case Direction.EAST:
-                            if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < targetTileToMove.gridLocation.y))
-                            {
-                                currTileUtil = currTileUtil + 20;
-                                Debug.Log("East MoveATK");
-                            }
-                            break;
-                        case Direction.WEST:
-                            if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > targetTileToMove.gridLocation.y))
-                            {
-                                currTileUtil = currTileUtil + 20;
-                                Debug.Log("West MoveATK");
-                            }
-                            break;
-                    }
-                    //Debug.Log(currTileUtil);
-                    if (!possibleAttackLocations[i].CheckUnitOnTile())
-                    {
-                        if (currTileUtil > highestTileUtil)
-                        {
-                            bestMoveTile = possibleAttackLocations[i];
-                            highestTileUtil = currTileUtil;
-                        }
-                        else if (currTileUtil == highestTileUtil)
-                        {
-                            rngHelper++;
-                            if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
-                            {
-                                bestMoveTile = possibleAttackLocations[i];
-                                highestTileUtil = currTileUtil;
-                            }
-                        }
-                    }
-                }
-
-                if (bestMoveTile == null)
-                {
-                    totalPathList.Clear();
-                }
-                else
-                {
-                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
-                }
-            }
-            else
-            {
-                if (tilesInRange.Count > 0)
-                {
-                    bestMoveTile = tilesInRange[0];
-                }
-                rngHelper = 1;
-
-                for (int i = 0; i < tilesInRange.Count; i++)
-                {
-                    if (!tilesInRange[i].CheckUnitOnTile())
-                    {
-                        if (FindDistanceBetweenTile(targetTileToMove, tilesInRange[i]) < FindDistanceBetweenTile(targetTileToMove, bestMoveTile))
-                        {
-                            bestMoveTile = tilesInRange[i];
-                        }
-                        else if (FindDistanceBetweenTile(targetTileToMove, tilesInRange[i]) == FindDistanceBetweenTile(targetTileToMove, bestMoveTile))
-                        {
-                            rngHelper++;
-                            if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
-                            {
-                                bestMoveTile = tilesInRange[i];
-                            }
-                        }
-                    }
-                }
-
-                if (bestMoveTile == null)
-                {
-                    totalPathList.Clear();
-                }
-                else
-                {
-                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
-                }
-
-            }
-
-            //Debug.Log(highestTileUtil);
             #endregion
         }
 
