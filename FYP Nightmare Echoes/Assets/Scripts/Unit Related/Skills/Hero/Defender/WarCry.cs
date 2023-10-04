@@ -1,6 +1,7 @@
 using NightmareEchoes.Grid;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace NightmareEchoes.Unit
@@ -9,19 +10,11 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
-            base.Cast(target, aoeTiles);
-
-            var targetType = target.CheckUnitOnTile().GetComponent<Entity>();
-
-            if (targetType.IsHostile == false)
+            foreach (var entity in from tile in aoeTiles where tile.CheckUnitOnTile() select tile.CheckUnitOnTile().GetComponent<Entity>() into entity where !entity.IsProp select entity)
             {
-                targetType.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
-                Debug.Log("Applying Strength");
-            }
-            if (targetType.IsHostile == true)
-            {
-                targetType.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1));
-                Debug.Log("Applying Weaken");
+                entity.AddBuff(entity.IsHostile
+                    ? GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1)
+                    : GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
             }
 
             return true;
