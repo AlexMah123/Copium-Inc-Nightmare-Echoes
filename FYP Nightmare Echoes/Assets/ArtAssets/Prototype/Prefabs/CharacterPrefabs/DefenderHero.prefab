@@ -2001,13 +2001,13 @@ MonoBehaviour:
   damage: 0
   heal: 0
   cooldown: 1
-  range: 2
+  range: 0
   minRange: 1
   targetType: 1
   targetArea: 1
   targetUnitAlignment: 2
   aoeType: 1
-  aoeSize: 1
+  aoeSize: 2
   aoeOffset: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
@@ -2151,4 +2151,4 @@ MonoBehaviour:
   - {x: -0.012322299, y: -0.058308773, z: 0}
   m_ShapePathHash: 45762548
   m_Mesh: {fileID: 0}
-  m_InstanceId: -35888
+  m_InstanceId: -3566
