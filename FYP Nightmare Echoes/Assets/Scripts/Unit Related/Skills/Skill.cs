@@ -328,10 +328,9 @@ namespace NightmareEchoes.Unit
         }
 
         #endregion
-
-
+        
         //used for attacks that are damage type
-        public bool DealDamage(Entity target, int secondaryDmg = 0)
+        protected bool DealDamage(Entity target, int secondaryDmg = 0)
         {
             var damage = this.damage;
             if (secondaryDmg > 0) damage = secondaryDmg;
@@ -399,8 +398,7 @@ namespace NightmareEchoes.Unit
             #endregion 
         }
 
-
-        public void CheckForBackstab(Entity target, int damage)
+        private void CheckForBackstab(Entity target, int damage)
         {
             if (isBackstabbing && targetType == TargetType.Single)
             {
@@ -412,28 +410,43 @@ namespace NightmareEchoes.Unit
             }
             isBackstabbing = false;
         }
-        
+
+        protected void Knockback(OverlayTile originTile, Entity target)
+        {
+            var position = target.transform.position;
+            var direction = position - originTile.transform.position;
+            var destination = position + direction;
+            
+            var tileDestination = OverlayTileManager.Instance.GetOverlayTileOnWorldPosition(destination);
+            if (!tileDestination) return;
+
+            if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile()) return;
+            
+            target.transform.position = tileDestination.transform.position;
+            target.UpdateLocation();
+        }
 
         public virtual void Reset()
         {
             
         }
     }
-
+    
+    
+    #region Enums
     public enum TargetType
     {
         Single = 0,
         AOE = 1,
         Self = 2
     }
-
+    
     public enum TargetArea
     {
         Line = 0,
         Square = 1,
         Crosshair = 2,
-        FrontalAttack = 3,
-        SecondSquare = 4
+        FrontalAttack = 3
     }
 
     public enum TargetUnitAlignment
@@ -456,5 +469,7 @@ namespace NightmareEchoes.Unit
         Heal = 1,
         Others = 2
     }
+
+    #endregion
     
 }

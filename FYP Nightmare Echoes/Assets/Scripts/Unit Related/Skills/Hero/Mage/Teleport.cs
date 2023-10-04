@@ -30,7 +30,7 @@ namespace NightmareEchoes.Unit
 
         public override bool Cast(Entity target)
         {
-            base.Cast(target);
+            if (target.IsProp || target == thisUnit) return false;
 
             if (!enableTargeting)
             {

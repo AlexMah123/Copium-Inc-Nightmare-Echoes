@@ -46,25 +46,8 @@ namespace NightmareEchoes.Unit
                 {
                     unit.TakeDamage(secondaryDamage);
                 }
-
-                var direction = tile.transform.position - target.transform.position;
-                var destination = unit.transform.position + direction;
                 
-                var tileOccupied = false;
-                var hit = Physics2D.Raycast(destination, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
-                if (hit)
-                {
-                    var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
-                    if (tileDestination)
-                    {
-                        if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile())
-                            tileOccupied = true;
-                    }
-                }
-
-                if (tileOccupied) continue;
-                unit.transform.position += direction;
-                unit.UpdateLocation();
+                Knockback(target, unit);
             }
             
             return true;

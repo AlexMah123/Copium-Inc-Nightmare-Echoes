@@ -156,16 +156,17 @@ namespace NightmareEchoes.Grid
             return !target ? null : target;
         }
 
+        public OverlayTile GetOverlayTileOnWorldPosition(Vector3 pos)
+        {
+            var hit = Physics2D.Raycast(pos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            if (!hit) return null;
+            var target = hit.collider.gameObject.GetComponent<OverlayTile>();
+            return !target ? null : target;
+        }
+        
         public OverlayTile GetOverlayTile(Vector2Int pos)
         {
-            if(gridDictionary.ContainsKey(pos))
-            {
-                return gridDictionary[pos];
-            }
-            else
-            {
-                return null;
-            }
+            return gridDictionary.ContainsKey(pos) ? gridDictionary[pos] : null;
         }
 
         #endregion

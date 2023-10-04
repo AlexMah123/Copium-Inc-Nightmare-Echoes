@@ -471,7 +471,7 @@ namespace NightmareEchoes.Unit.Combat
                 var clone = GetClone(tile.CheckUnitOnTile());
                 var cloneSr = clone.GetComponent<SpriteRenderer>();
                 cloneSr.sprite = unitSprite;
-                cloneSr.sortingLayerID = SortingLayer.NameToID("Unit");
+                cloneSr.sortingLayerID = SortingLayer.NameToID("Entity");
                 ghostSprites.Add(clone);
                 
                 clone.SetActive(true);
