@@ -423,8 +423,7 @@ namespace NightmareEchoes.Unit
 
             if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile()) return;
             
-            target.transform.position = tileDestination.transform.position;
-            target.UpdateLocation();
+            StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
         }
 
         public virtual void Reset()
