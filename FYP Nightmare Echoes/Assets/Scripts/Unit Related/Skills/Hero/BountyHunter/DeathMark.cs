@@ -8,6 +8,8 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(Entity target)
         {
+            if (!target.IsHostile) return false;
+            
             base.Cast(target);
 
             target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.BLIND_TOKEN, 1, 1));
