@@ -141,7 +141,7 @@ namespace NightmareEchoes.TurnOrder
             InitStatusEffectPool(inspectedUnitStatusEffectsPanel);
             InitGlossaryPool(glossaryContainer);
 
-            unitMask = LayerMask.GetMask("Unit");
+            unitMask = LayerMask.GetMask("Entity");
         }
 
         private void Start()

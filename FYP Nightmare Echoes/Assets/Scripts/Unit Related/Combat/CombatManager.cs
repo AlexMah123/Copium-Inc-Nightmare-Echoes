@@ -280,7 +280,7 @@ namespace NightmareEchoes.Unit.Combat
         {
             if (!Input.GetMouseButtonDown(0)) return;
             
-            var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
+            var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Entity"));
             if (!hit) return;
             var target = hit.collider.gameObject.GetComponent<Entity>();
             if (!target) return;

@@ -102,7 +102,7 @@ namespace NightmareEchoes.Grid
 
         public GameObject CheckUnitOnTile()
         {
-            var hit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Unit"));
+            var hit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Entity"));
             
             if (!hit) return null;
             var target = hit.collider.gameObject;
