@@ -11,7 +11,7 @@ namespace NightmareEchoes.Unit
         {
             isProp = true;
             isHostile = true;
-            gameObject.layer = LayerMask.NameToLayer("Unit");
+            gameObject.layer = LayerMask.NameToLayer("Entity");
             base.Awake();
             StartCoroutine(UpdateTileLocation());
         }

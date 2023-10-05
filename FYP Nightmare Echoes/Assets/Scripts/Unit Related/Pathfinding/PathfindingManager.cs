@@ -266,6 +266,25 @@ namespace NightmareEchoes.Unit.Pathfinding
         #region Movement along Tile
         public IEnumerator MoveTowardsTile(Entity thisUnit, OverlayTile targetTile, float duration)
         {
+            
+
+            float counter = 0;
+
+            //Get the current position of the object to be moved
+            Vector3 startPos = thisUnit.transform.position;
+            Vector3 direction = targetTile.gridLocation - thisUnit.ActiveTile.gridLocation;
+
+            ChangeDirection(direction, thisUnit);
+
+            while (counter < duration)
+            {
+                counter += Time.deltaTime;
+                thisUnit.transform.position = Vector3.Lerp(startPos, targetTile.transform.position, counter / duration);
+                yield return null;
+            }
+
+            SetUnitPositionOnTile(targetTile, thisUnit);
+
             #region Trigger Movement Related Status Effect Before Movement
             for (int i = thisUnit.TokenList.Count - 1; i >= 0; i--)
             {
@@ -283,21 +302,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
             #endregion
 
-            float counter = 0;
-
-            //Get the current position of the object to be moved
-            Vector3 startPos = thisUnit.transform.position;
-            Vector3 direction = targetTile.gridLocation - thisUnit.ActiveTile.gridLocation;
-
-            ChangeDirection(direction, thisUnit);
-
-            while (counter < duration)
-            {
-                counter += Time.deltaTime;
-                thisUnit.transform.position = Vector3.Lerp(startPos, targetTile.transform.position, counter / duration);
-                yield return null;
-            }
-
             #region Triggering Movement Related Status Effect During Movement
             for (int i = thisUnit.BuffDebuffList.Count - 1; i >= 0; i--)
             {
@@ -311,7 +315,6 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             #endregion
 
-            SetUnitPositionOnTile(targetTile, thisUnit);
         }
 
         public void MoveAlongPath(Entity thisUnit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
@@ -319,34 +322,13 @@ namespace NightmareEchoes.Unit.Pathfinding
             //units movement
             if (pathList.Count > 0 && thisUnit != null) 
             {
-                #region Trigger Movement Related Status Effect Before Movement
-                for (int i = thisUnit.TokenList.Count - 1; i >= 0; i--)
-                {
-                    switch (thisUnit.TokenList[i].statusEffect)
-                    {
-                        case STATUS_EFFECT.IMMOBILIZE_TOKEN:
-                            thisUnit.TokenList[i].TriggerEffect(thisUnit);
-                            isMoving = false;
-                            revertUnitPosition = null;
-
-                            ClearArrow(tempPathList);
-                            pathList.Clear();
-                            return;
-                    }
-                }
-                #endregion
+                
 
                 #region Setting Unit Direction
                 Vector3Int direction = pathList[0].gridLocation - thisUnit.ActiveTile.gridLocation;
 
                 //setting directions as well as the moving boolean
                 ChangeDirection(direction, thisUnit);
-
-                //set the units direction facing based on the vector between player and the next tile
-                if (pathList.Count > 0 && thisUnit != null)
-                {
-
-                }
                 #endregion
 
                 var step = movingSpeed * Time.deltaTime;
@@ -364,8 +346,24 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                     pathList.RemoveAt(0);
 
+                    #region Trigger Movement Related Token Effect Before Movement
+                    for (int i = thisUnit.TokenList.Count - 1; i >= 0; i--)
+                    {
+                        switch (thisUnit.TokenList[i].statusEffect)
+                        {
+                            case STATUS_EFFECT.IMMOBILIZE_TOKEN:
+                                thisUnit.TokenList[i].TriggerEffect(thisUnit);
+                                isMoving = false;
+                                revertUnitPosition = null;
 
-                    #region Triggering Movement Related Status Effect During Movement
+                                ClearArrow(tempPathList);
+                                pathList.Clear();
+                                return;
+                        }
+                    }
+                    #endregion
+
+                    #region Triggering Movement Related BuffDebuff Effect During Movement
                     for (int i = thisUnit.BuffDebuffList.Count - 1; i >= 0; i--) 
                     {
                         switch(thisUnit.BuffDebuffList[i].statusEffect)
