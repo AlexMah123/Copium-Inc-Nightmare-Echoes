@@ -165,14 +165,17 @@ namespace NightmareEchoes.Unit.AI
 
             if (inAtkRange)
             {
+                //Debug.Log("A");
                 IfInAtkRange();
             }
             else if (inMoveAndAttackRange)
             {
+                //Debug.Log("B");
                 IfInMoveAtkRange();
             }
             else
             {
+                //Debug.Log("C");
                 IfOutMoveAtkRange();
             }
 
@@ -325,8 +328,6 @@ namespace NightmareEchoes.Unit.AI
 
         void IfOutMoveAtkRange()
         {
-
-            Debug.Log("trying to redo with basic");
             if (currSelectedSkill != thisUnit.BasicAttackSkill)
             {
                 //reinitializing skill
@@ -349,14 +350,8 @@ namespace NightmareEchoes.Unit.AI
                 return;
             }
 
-            else if (tilesInRange.Count > 0)
-            {
-                bestMoveTile = tilesInRange[0];
-            }
-            else
-            {
-                bestMoveTile = thisUnitTile;
-            }
+            bestMoveTile = thisUnitTile;
+
             rngHelper = 1;
 
             for (int i = 0; i < tilesInRange.Count; i++)
@@ -378,7 +373,7 @@ namespace NightmareEchoes.Unit.AI
                 }
             }
 
-            if (bestMoveTile == null)
+            if (bestMoveTile == thisUnitTile)
             {
                 totalPathList.Clear();
             }
@@ -610,7 +605,11 @@ namespace NightmareEchoes.Unit.AI
 
         bool IsTileAttackableFrom(OverlayTile target1, OverlayTile target2)
         {
-            if (target1.gridLocation.x == target2.gridLocation.x)
+            if (target1.CheckUnitOnTile())
+            {
+                return false;
+            }
+            else if (target1.gridLocation.x == target2.gridLocation.x)
             {
                 //same row/x
                 if ((target1.gridLocation.y + selectedAttackRange >= target2.gridLocation.y) && (target1.gridLocation.y - selectedAttackRange <= target2.gridLocation.y))
