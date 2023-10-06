@@ -1,3 +1,4 @@
+using System;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Unit.Combat;
 using System.Collections;
@@ -9,8 +10,32 @@ namespace NightmareEchoes.Unit
 {
     public class HunterInstinct : Skill
     {
+        private bool isActive;
+        private OverlayTile currentPos;
+        private Entity unit;
+
+        private void Start()
+        {
+            unit = gameObject.GetComponent<Entity>();
+        }
+
+        private void Update()
+        {
+            isActive = CombatManager.Instance.ActiveAoes.ContainsKey(this);
+
+            if (isActive)
+            {
+                if (unit.ActiveTile != currentPos)
+                {
+                    CombatManager.Instance.ClearActiveAoe(this);
+                }
+            }
+        }
+
         public override bool Cast(Entity target)
         {
+            if (!target.IsHostile || target.IsProp) return false;
+            
             if (target.GetComponent<BasicEnemyAI>().hasMoved)
             {
                 DealDamage(target);
@@ -33,6 +58,7 @@ namespace NightmareEchoes.Unit
             var copy = new List<OverlayTile>(aoeTiles);
             CombatManager.Instance.SetActiveAoe(this, copy);
             base.Cast(target, aoeTiles);
+            currentPos = unit.ActiveTile;
             return true;
         }
     }

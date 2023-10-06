@@ -65,15 +65,6 @@ namespace NightmareEchoes.Unit
             
             targetUnit.transform.position = targetTile.transform.position;
             targetUnit.UpdateLocation();
-
-            if (targetUnit.name == "Ranger")
-            {
-                var skills = targetUnit.gameObject.GetComponents<Skill>();
-                foreach (var skill in skills)
-                {
-                    CombatManager.Instance.ClearActiveAoe(skill);
-                }
-            }
         }
     }
 }

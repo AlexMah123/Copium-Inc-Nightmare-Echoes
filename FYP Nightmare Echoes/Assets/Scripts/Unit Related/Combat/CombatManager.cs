@@ -56,6 +56,12 @@ namespace NightmareEchoes.Unit.Combat
             get => activeSkill;
             private set => activeSkill = value;
         }
+
+        public Dictionary<Skill, List<OverlayTile>> ActiveAoes
+        {
+            get => activeAoes;
+            set => activeAoes = value;
+        }
         #endregion
 
         private void Awake()
@@ -132,7 +138,7 @@ namespace NightmareEchoes.Unit.Combat
         #region Logic Checks
         public void OnTurnStart()
         {
-            foreach (var kvp in activeAoesCD)
+            foreach (var kvp in activeAoesCD.ToList())
             {
                 activeAoesCD[kvp.Key]--;
                 if (kvp.Value <= 0)
