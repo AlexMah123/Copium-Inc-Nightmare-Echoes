@@ -1077,6 +1077,26 @@ namespace NightmareEchoes.Unit
             return modifiers;
         }
 
+        public bool CheckImmobilize()
+        {
+            foreach (var mod in tokenList.Where(mod => mod.statusEffect == STATUS_EFFECT.IMMOBILIZE_TOKEN))
+            {
+                mod.TriggerEffect(this);
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckCrippled()
+        {
+            foreach (var mod in buffDebuffList.Where(mod => mod.statusEffect == STATUS_EFFECT.CRIPPLED_DEBUFF))
+            {
+                mod.TriggerEffect(this);
+                return true;
+            }
+            return false;
+        }
+
         #endregion
     }
 

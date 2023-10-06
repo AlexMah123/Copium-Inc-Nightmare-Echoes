@@ -424,6 +424,7 @@ namespace NightmareEchoes.Unit
             if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile()) return;
             
             StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
+            target.CheckCrippled();
         }
 
         public virtual void Reset()

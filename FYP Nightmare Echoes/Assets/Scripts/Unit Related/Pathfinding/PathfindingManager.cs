@@ -285,36 +285,15 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             SetUnitPositionOnTile(targetTile, thisUnit);
 
-            #region Trigger Movement Related Status Effect Before Movement
-            for (int i = thisUnit.TokenList.Count - 1; i >= 0; i--)
+            if (thisUnit.CheckImmobilize())
             {
-                switch (thisUnit.TokenList[i].statusEffect)
-                {
-                    case STATUS_EFFECT.IMMOBILIZE_TOKEN:
-                        thisUnit.TokenList[i].TriggerEffect(thisUnit);
-                        isMoving = false;
-                        revertUnitPosition = null;
-
-                        ClearArrow(tempPathList);
-                        yield return null;
-                        break;
-                }
-            }
-            #endregion
-
-            #region Triggering Movement Related Status Effect During Movement
-            for (int i = thisUnit.BuffDebuffList.Count - 1; i >= 0; i--)
-            {
-                switch (thisUnit.BuffDebuffList[i].statusEffect)
-                {
-                    case STATUS_EFFECT.CRIPPLED_DEBUFF:
-                        thisUnit.BuffDebuffList[i].TriggerEffect(thisUnit);
-                        break;
-                }
+                isMoving = false;
+                revertUnitPosition = null;
+                ClearArrow(tempPathList);
+                yield return null;
             }
 
-            #endregion
-
+            thisUnit.CheckCrippled();
         }
 
         public void MoveAlongPath(Entity thisUnit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
