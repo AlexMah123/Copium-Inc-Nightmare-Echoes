@@ -447,7 +447,8 @@ namespace NightmareEchoes.Unit
         Line = 0,
         Square = 1,
         Crosshair = 2,
-        FrontalAttack = 3
+        FrontalAttack = 3,
+        Diamond = 4
     }
 
     public enum TargetUnitAlignment

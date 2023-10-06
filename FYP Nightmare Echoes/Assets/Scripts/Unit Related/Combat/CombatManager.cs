@@ -512,6 +512,9 @@ namespace NightmareEchoes.Unit.Combat
                 case "FrontalAttack":
                     possibleTileCoords = FrontalRange(unit.ActiveTile, range , unit);
                     break;
+                case "Diamond":
+                    possibleTileCoords = DiamondRange(unit.ActiveTile, range);
+                    break;
                 default:
                     Debug.LogWarning("ERROR");
                     break;
@@ -595,6 +598,31 @@ namespace NightmareEchoes.Unit.Combat
             return possibleTileCoords;
         }
 
+        public List<Vector2Int> DiamondRange(OverlayTile startTile, int range)
+        {
+            var possibleTileCoords = new List<Vector2Int>();
+            possibleTileCoords.Add(new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y));
+            
+            var copyList = new List<Vector2Int>(possibleTileCoords);
+            var newCoords = new List<Vector2Int>();
+            for (var i = 0; i < range; i++)
+            {
+                foreach (var v in copyList)
+                {
+                    newCoords.Add(new Vector2Int(v.x + 1, v.y));
+                    newCoords.Add(new Vector2Int(v.x - 1, v.y)); 
+                    newCoords.Add(new Vector2Int(v.x, v.y + 1)); 
+                    newCoords.Add(new Vector2Int(v.x, v.y - 1)); 
+                }
+                
+                possibleTileCoords.AddRange(newCoords);
+                copyList.Clear();
+                
+                copyList.AddRange(newCoords);
+                newCoords.Clear();
+            }
+            return possibleTileCoords;
+        }
 
         #endregion
 
@@ -650,22 +678,17 @@ namespace NightmareEchoes.Unit.Combat
             }
             #endregion
 
-            List<OverlayTile> overlayTileInFront = new List<OverlayTile>(OverlayTileManager.Instance.TrimOutOfBounds(tilesPosInFront));
+            var overlayTileInFront = new List<OverlayTile>(OverlayTileManager.Instance.TrimOutOfBounds(tilesPosInFront));
 
-            for (int i = 0; i < overlayTileInFront.Count; i++)
+            foreach (var tile in overlayTileInFront)
             {
                 //for each overlayTile in front, check if the tiles have units that are not hostile (hero)
-                if (overlayTileInFront[i].CheckUnitOnTile()?.GetComponent<Entity>())
-                {
-                    if(!overlayTileInFront[i].CheckUnitOnTile().GetComponent<Entity>().IsHostile && !overlayTileInFront[i].CheckUnitOnTile().GetComponent<Entity>().IsProp)
-                    {
-                        if (overlayTileInFront[i].CheckUnitOnTile().GetComponent<Entity>().FindModifier(STATUS_EFFECT.STEALTH_TOKEN))
-                        {
-                            herosInStealth.Add(overlayTileInFront[i].CheckUnitOnTile().GetComponent<Entity>());
-
-                        }
-                    }
-                }
+                if (!tile.CheckUnitOnTile()) continue;
+                var entity = tile.CheckUnitOnTile().GetComponent<Entity>();
+                if (entity.IsHostile || entity.IsProp) continue;
+                
+                if (entity.FindModifier(STATUS_EFFECT.STEALTH_TOKEN))
+                    herosInStealth.Add(entity);
             }
 
             return herosInStealth;
