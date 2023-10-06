@@ -95,7 +95,7 @@ namespace NightmareEchoes.Unit.AI
                 //weight calculations
                 utilityDictionary.Clear();
                 utilityDictionary.Add("Attack", healthPercent);
-                utilityDictionary.Add("Retreat", 40);
+                //utilityDictionary.Add("Retreat", 40);
 
                 //sort by most utility score
                 var SortedOptions = utilityDictionary.OrderByDescending(utilityDictionary => utilityDictionary.Value);
