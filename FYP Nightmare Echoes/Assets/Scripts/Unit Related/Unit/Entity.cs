@@ -841,7 +841,7 @@ namespace NightmareEchoes.Unit
         {
             if (popupTextPrefab)
             {
-                GameObject prefab = Instantiate(popupTextPrefab, transform.localPosition + RandomVector(), Quaternion.identity);
+                GameObject prefab = Instantiate(popupTextPrefab, transform.position + RandomVector(), Quaternion.identity);
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = text;
 
