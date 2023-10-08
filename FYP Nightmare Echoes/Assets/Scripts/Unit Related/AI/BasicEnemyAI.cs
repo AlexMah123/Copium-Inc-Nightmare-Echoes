@@ -47,6 +47,7 @@ namespace NightmareEchoes.Unit.AI
         Dictionary<Entity, int> distancesDictionary = new Dictionary<Entity, int>();
         Dictionary<string, float> utilityDictionary = new Dictionary<string, float>();
         Dictionary<Entity, float> aggroDictionary = new Dictionary<Entity, float>();
+
         float healthPercent;
 
         public bool hasMoved;
@@ -397,23 +398,64 @@ namespace NightmareEchoes.Unit.AI
             inMoveAndAttackRange = false;
 
             #region checks if unit is inAtkRange/inMoveAndAttackRange
-            if (IsTileAttackableFrom(thisUnitTile, targetTileToMove))
+            switch (currSelectedSkill.TargetArea)
             {
-                inAtkRange = true;
+                case TargetArea.Line:
+                    if (IsTileAttackableFromCross(thisUnitTile, targetTileToMove))
+                    {
+                        inAtkRange = true;
+                    }
+                    for (int i = 0; i < tilesInRange.Count; i++)
+                    {
+                        if (IsTileAttackableFromCross(tilesInRange[i], targetTileToMove))
+                        {
+                            if (!tilesInRange[i].CheckUnitOnTile())
+                            {
+                                possibleAttackLocations.Add(tilesInRange[i]);
+                                inMoveAndAttackRange = true;
+                            }
+                        }
+                    }
+                    break;
+                case TargetArea.Diamond:
+                    if (IsTileAttackableFromDiamond(thisUnitTile, targetTileToMove))
+                    {
+                        inAtkRange = true;
+                    }
+                    for (int i = 0; i < tilesInRange.Count; i++)
+                    {
+                        if (IsTileAttackableFromDiamond(tilesInRange[i], targetTileToMove))
+                        {
+                            if (!tilesInRange[i].CheckUnitOnTile())
+                            {
+                                possibleAttackLocations.Add(tilesInRange[i]);
+                                inMoveAndAttackRange = true;
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    if (IsTileAttackableFromDiamond(thisUnitTile, targetTileToMove))
+                    {
+                        inAtkRange = true;
+                    }
+                    for (int i = 0; i < tilesInRange.Count; i++)
+                    {
+                        if (IsTileAttackableFromDiamond(tilesInRange[i], targetTileToMove))
+                        {
+                            if (!tilesInRange[i].CheckUnitOnTile())
+                            {
+                                possibleAttackLocations.Add(tilesInRange[i]);
+                                inMoveAndAttackRange = true;
+                            }
+                        }
+                    }
+                    break;
             }
+            
 
             //Checks tiles in range for possibleAttackableLocations if they do not have a unit on it
-            for (int i = 0; i < tilesInRange.Count; i++)
-            {
-                if (IsTileAttackableFrom(tilesInRange[i], targetTileToMove))
-                {
-                    if (!tilesInRange[i].CheckUnitOnTile())
-                    {
-                        possibleAttackLocations.Add(tilesInRange[i]);
-                        inMoveAndAttackRange = true;
-                    }
-                }
-            }
+            
             #endregion
         }
 
@@ -603,7 +645,23 @@ namespace NightmareEchoes.Unit.AI
             return dist;
         }
 
-        bool IsTileAttackableFrom(OverlayTile target1, OverlayTile target2)
+        bool IsTileAttackableFromDiamond(OverlayTile target1, OverlayTile target2)
+        {
+            rangeToTarget = Mathf.Abs(target1.gridLocation.x - target2.gridLocation.x) + Mathf.Abs(target1.gridLocation.y - target2.gridLocation.y);
+            if (rangeToTarget <= selectedAttackRange)
+            {
+                if (rangeToTarget >= selectedAttackMinRange)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else return false;
+        }
+        bool IsTileAttackableFromCross(OverlayTile target1, OverlayTile target2)
         {
             if (target1.CheckUnitOnTile())
             {
@@ -618,32 +676,33 @@ namespace NightmareEchoes.Unit.AI
                     {
                         if ((target1.gridLocation.y + selectedAttackMinRange > target2.gridLocation.y) && (target1.gridLocation.y - selectedAttackMinRange < target2.gridLocation.y))
                         {
-                            return false;
+                            return false; //too close, minimum range
                         }
-                        else return true;
+                        else return true; //fulfils min tange
                     }
-                    else return true;
+                    else return true; //no min range to check, in range
                 } 
-                else return false;
+                else return false; //out of range
             }
             else if (target1.gridLocation.y == target2.gridLocation.y)
             {
                 //same column/y
                 if ((target1.gridLocation.x + selectedAttackRange >= target2.gridLocation.x) && (target1.gridLocation.x - selectedAttackRange <= target2.gridLocation.x))
                 {
+                    //within range
                     if (selectedAttackMinRange != 0)
                     {
                         if ((target1.gridLocation.x + selectedAttackMinRange > target2.gridLocation.x) && (target1.gridLocation.x - selectedAttackMinRange < target2.gridLocation.x))
                         {
-                            return false;
+                            return false; //too close, minimum range
                         }
-                        else return true;
+                        else return true; //fulfils min tange
                     }
-                    else return true;
+                    else return true; //no min range to check, in range
                 }
-                else return false;
+                else return false; //out of range
             }
-            else return false;
+            else return false; //out of cross
         }
 
         #endregion

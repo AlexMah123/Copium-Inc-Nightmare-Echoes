@@ -35,6 +35,7 @@ namespace NightmareEchoes.Unit
                         prevDir = target.Direction;
                         StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
                         StartCoroutine(DelayTurn(target));
+                        thisUnit.CheckCrippled();
                     }
                 }
             }
