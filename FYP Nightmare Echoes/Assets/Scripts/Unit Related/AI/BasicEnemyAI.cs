@@ -15,6 +15,7 @@ namespace NightmareEchoes.Unit.AI
     {
         [Header("Hero List + Unit List")]
         [SerializeField] List<Entity> totalHeroList, totalUnitList;
+        [SerializeField] List<Entity> totalPropList;
 
         [Space(20), Header("Path List to hero")]
         public List<OverlayTile> totalPathList = new List<OverlayTile>();
@@ -26,7 +27,7 @@ namespace NightmareEchoes.Unit.AI
 
         //used for decision making
         Entity targetHero, closestHero;
-        float rangeToTarget, rangeToClosest;
+        float rangeToTarget, rangeToClosestHero;
 
         //checking if this unit can attk, move & attk and has attacked.
         public bool inAtkRange, inMoveAndAttackRange, hasAttacked, detectedStealthHero;
@@ -64,6 +65,12 @@ namespace NightmareEchoes.Unit.AI
             get => totalHeroList;
             set => totalHeroList = value;
         }
+
+        public List<Entity> TotalPropList
+        {
+            get => totalPropList;
+            set => totalPropList = value;
+        }
         #endregion
 
 
@@ -82,6 +89,7 @@ namespace NightmareEchoes.Unit.AI
 
             //sort heros by distance and find tiles in range
             SortHeroesByDistance(thisUnit);
+            AddHeroesAndObstacles();
 
             if (totalHeroList.Count > 0)
             {
@@ -153,8 +161,9 @@ namespace NightmareEchoes.Unit.AI
             }
 
             //setting the values based on the closest hero
-            targetHero = closestHero;
-            rangeToTarget = rangeToClosest;
+            
+            //targetHero = closestHero;
+            //rangeToTarget = rangeToClosestHero;
             targetTileToMove = targetHero.ActiveTile;
 
             InMoveAtkRangeCheck();
@@ -592,13 +601,44 @@ namespace NightmareEchoes.Unit.AI
                 var sortedHeroes = distancesDictionary.OrderBy(distancesDict => distancesDict.Value);
 
                 closestHero = sortedHeroes.ToList()[0].Key;
-                rangeToClosest = sortedHeroes.ToList()[0].Value;
+                rangeToClosestHero = sortedHeroes.ToList()[0].Value;
             }
             else
             {
                 distancesDictionary.Clear();
                 closestHero = null;
-                rangeToClosest = 0;
+                rangeToClosestHero = 0;
+            }
+        }
+
+        void AddHeroesAndObstacles()
+        {
+            UpdatePropList();
+
+            aggroDictionary.Clear();
+            
+            for (int i = 0; i < distancesDictionary.Count; i++)
+            {
+                aggroDictionary.Add(distancesDictionary.ToList()[i].Key, (distancesDictionary.ToList()[i].Value) - (thisUnit.BasicAttackSkill.Range + thisUnit.stats.MoveRange));
+            }
+            for (int i = 0; i < totalPropList.Count; i++)
+            {
+                int distTemp = (int)FindDistanceBetweenUnit(thisUnit, totalPropList[i]);
+                aggroDictionary.Add(totalPropList[i], distTemp);
+            }
+
+            var sortedAggros = aggroDictionary.OrderBy(aggroDictionary => aggroDictionary.Value);
+
+            targetHero = sortedAggros.ToList()[0].Key;
+            if (!targetHero.IsHostile && !targetHero.StealthToken && !targetHero.IsProp)
+            {
+                Debug.Log("hero aggro");
+                rangeToTarget = sortedAggros.ToList()[0].Value + (thisUnit.BasicAttackSkill.Range + thisUnit.stats.MoveRange);
+            }
+            else
+            {
+                Debug.Log("prop aggro");
+                rangeToTarget = sortedAggros.ToList()[0].Value;
             }
         }
 
@@ -618,6 +658,19 @@ namespace NightmareEchoes.Unit.AI
             }
         }
 
+        void UpdatePropList()
+        {
+            totalPropList.Clear();
+            totalUnitList = FindObjectsOfType<Entity>().ToList();
+
+            foreach (var unit in totalUnitList)
+            {
+                if (unit.IsProp)
+                {
+                    totalPropList.Add(unit);
+                }
+            }
+        }
 
         float FindDistanceBetweenUnit(Entity target1, Entity target2)
         {
