@@ -473,7 +473,7 @@ namespace NightmareEchoes.Unit.Combat
                 var direction = tile.transform.position - mainTile.transform.position;
                 var destination = tile.transform.position + direction;
                 
-                var unitSprite = tile.CheckUnitOnTile().GetComponent<SpriteRenderer>().sprite;
+                var unitSprite = tile.CheckUnitOnTile().GetComponent<SpriteRenderer>()?.sprite;
                 var clone = GetClone(tile.CheckUnitOnTile());
                 var cloneSr = clone.GetComponent<SpriteRenderer>();
                 cloneSr.sprite = unitSprite;

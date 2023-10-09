@@ -30,6 +30,9 @@ namespace NightmareEchoes.Inputs
         [SerializeField] float boundaryX;
         [SerializeField] float boundaryY;
 
+        float startingX;
+        float startingY;
+
         private Vector3 dragOrigin;
         private Vector3 dragDelta;
         private bool isDragging;
@@ -49,6 +52,8 @@ namespace NightmareEchoes.Inputs
         private void Start()
         {
             gameCamera = Camera.main;
+            startingX = gameCamera.transform.position.x;
+            startingY = gameCamera.transform.position.y;
         }
 
         private void Update()
@@ -111,8 +116,8 @@ namespace NightmareEchoes.Inputs
             {
                 gameCamera.transform.position = dragOrigin - dragDelta;
                 gameCamera.transform.position = new Vector3(
-                    Mathf.Clamp(gameCamera.transform.position.x, -boundaryX, boundaryX),
-                    Mathf.Clamp(gameCamera.transform.position.y, -boundaryY, boundaryY),
+                    Mathf.Clamp(gameCamera.transform.position.x, -boundaryX + startingX, boundaryX + startingX),
+                    Mathf.Clamp(gameCamera.transform.position.y, -boundaryY + startingY, boundaryY + startingY),
                     gameCamera.transform.position.z);
             }
         }
