@@ -30,6 +30,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         //ArrowBool Detection Stuff
         public bool isMoving = false;
+        public bool hasMoved = false;
         public bool isDragging = false;
         public bool isDraggingFromPlayer = false;
 
@@ -161,7 +162,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             //if player clicked and isnt moving + selected a unit or if they move to their activetile/starting point
             //currentHoverOverlayTile wont be null because you always are on the map
-            if (Input.GetMouseButtonDown(0) && !isMoving && (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentPathfindingUnit?.ActiveTile))
+            if (Input.GetMouseButtonDown(0) && !hasMoved && (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentPathfindingUnit?.ActiveTile))
             {
                 pathList = Pathfinding.FindPath(currentPathfindingUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
                 tempPathList = new List<OverlayTile>(pathList);
@@ -170,13 +171,13 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     //Resets lastaddedtile is null
                     lastAddedTile = null;
+                    hasMoved = true;
                     isMoving = true;
-
                     RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
                 }
             }
             // if player dragged move, isnt moving + selected a unit, or if they move to their activetile/starting point
-            else if (isDragging && !isMoving &&
+            else if (isDragging && !hasMoved &&
                 (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentPathfindingUnit.ActiveTile || currentHoveredOverlayTile == revertUnitPosition))
             {
                 //if the first tile is diagonal or is the same tile on the player, just return and ignore it
@@ -231,6 +232,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                     RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
                     tempPathList = new List<OverlayTile>(pathList);
+                    hasMoved = true;
                     isMoving = true;
 
                     //Resets not dragging and lastAddedTile to null
@@ -244,7 +246,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
 
             }
-            else if(isDragging && !isMoving && !playerTilesInRange.Contains(currentHoveredOverlayTile))
+            else if(isDragging && !hasMoved && !playerTilesInRange.Contains(currentHoveredOverlayTile))
             {
                 //if the currenthovered tile is the active tile or the reverted position or if you drag out of range resets not dragging 
                 isDragging = false;
@@ -266,8 +268,6 @@ namespace NightmareEchoes.Unit.Pathfinding
         #region Movement along Tile
         public IEnumerator MoveTowardsTile(Entity thisUnit, OverlayTile targetTile, float duration)
         {
-            
-
             float counter = 0;
 
             //Get the current position of the object to be moved
@@ -366,13 +366,13 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
 
                 CameraControl.Instance.isPanning = false;
-                
+                isMoving = false;
+
                 //remove comment out later if we want to hide tile and reset selectedUnit when we stop moving
                 //HideTilesInRange(tilesInRange);
                 //ifSelectedUnit = false;
 
                 //remove comment out if we want to enable multiple movement 
-                //isMoving = false;
             }
         }
         #endregion
@@ -501,7 +501,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             revertUnitHealth = 0;
 
 
-            isMoving = false;
+            hasMoved = false;
             isDragging = false;
             lastAddedTile = null;
         }

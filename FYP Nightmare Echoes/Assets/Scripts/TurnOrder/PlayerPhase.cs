@@ -11,6 +11,7 @@ namespace NightmareEchoes.TurnOrder
 {
     public class PlayerPhase : Phase
     {
+        bool runOnce = false;
         bool tempStun = false;
         protected override void OnEnter()
         {
@@ -74,6 +75,7 @@ namespace NightmareEchoes.TurnOrder
 
                     //Resets everything, not moving, not dragging, and lastaddedtile is null
                     PathfindingManager.Instance.isMoving = false;
+                    PathfindingManager.Instance.hasMoved = false;
                     PathfindingManager.Instance.isDragging = false;
                     PathfindingManager.Instance.lastAddedTile = null;
 
@@ -89,6 +91,20 @@ namespace NightmareEchoes.TurnOrder
                     PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
                     CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
 
+                }
+            }
+
+            if(PathfindingManager.Instance.isMoving)
+            {
+                UIManager.Instance.EnableCurrentUI(false);
+                runOnce = false;
+            }
+            else
+            {
+                if(!runOnce)
+                {
+                    UIManager.Instance.EnableCurrentUI(true);
+                    runOnce = true;
                 }
             }
         }
