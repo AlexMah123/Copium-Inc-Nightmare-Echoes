@@ -16,6 +16,9 @@ namespace NightmareEchoes.Unit
         public void FinishGettingHit()
         {
             animator.SetBool("GettingHit", false);
+            animator.SetBool("Moving", false);
+            animator.SetBool("Attacking", false);
+
         }
     }
 }

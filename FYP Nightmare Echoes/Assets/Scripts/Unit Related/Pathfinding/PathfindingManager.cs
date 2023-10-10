@@ -167,7 +167,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 pathList = Pathfinding.FindPath(currentPathfindingUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
                 tempPathList = new List<OverlayTile>(pathList);
 
-                if (!currentHoveredOverlayTile.CheckUnitOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
+                if (!currentHoveredOverlayTile.CheckEntityOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
                 {
                     //Resets lastaddedtile is null
                     lastAddedTile = null;
@@ -224,7 +224,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     if(pathList.Count > 0)
                     {
-                        if (pathList[pathList.Count - 1].CheckUnitOnTile())
+                        if (pathList[pathList.Count - 1].CheckEntityOnTile())
                         {
                             pathList.RemoveAt(pathList.Count - 1);
                         }
@@ -300,9 +300,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             //units movement
             if (pathList.Count > 0 && thisUnit != null) 
-            {
-                
-
+            {   
                 #region Setting Unit Direction
                 Vector3Int direction = pathList[0].gridLocation - thisUnit.ActiveTile.gridLocation;
 
@@ -326,32 +324,17 @@ namespace NightmareEchoes.Unit.Pathfinding
                     pathList.RemoveAt(0);
 
                     #region Trigger Movement Related Token Effect Before Movement
-                    for (int i = thisUnit.TokenList.Count - 1; i >= 0; i--)
+                    if (thisUnit.CheckImmobilize())
                     {
-                        switch (thisUnit.TokenList[i].statusEffect)
-                        {
-                            case STATUS_EFFECT.IMMOBILIZE_TOKEN:
-                                thisUnit.TokenList[i].TriggerEffect(thisUnit);
-                                isMoving = false;
-                                revertUnitPosition = null;
-
-                                ClearArrow(tempPathList);
-                                pathList.Clear();
-                                return;
-                        }
+                        isMoving = false;
+                        revertUnitPosition = null;
+                        ClearArrow(tempPathList);
                     }
                     #endregion
 
                     #region Triggering Movement Related BuffDebuff Effect During Movement
-                    for (int i = thisUnit.BuffDebuffList.Count - 1; i >= 0; i--) 
-                    {
-                        switch(thisUnit.BuffDebuffList[i].statusEffect)
-                        {
-                            case STATUS_EFFECT.CRIPPLED_DEBUFF:
-                                thisUnit.BuffDebuffList[i].TriggerEffect(thisUnit);
-                                break;
-                        }
-                    }
+                    thisUnit.CheckCrippled();
+
 
                     #endregion
                 }

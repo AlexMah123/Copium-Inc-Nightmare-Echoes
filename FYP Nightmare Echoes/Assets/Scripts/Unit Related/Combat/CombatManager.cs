@@ -151,9 +151,9 @@ namespace NightmareEchoes.Unit.Combat
                 }
                 else if (activeAoes.TryGetValue(kvp.Key, out var list))
                 {
-                    foreach (var tile in list.Where(tile => tile.CheckUnitOnTile()))
+                    foreach (var tile in list.Where(tile => tile.CheckEntityOnTile()))
                     {
-                        kvp.Key.Cast(tile.CheckUnitOnTile().GetComponent<Entity>());
+                        kvp.Key.Cast(tile.CheckEntityOnTile().GetComponent<Entity>());
                     }
                 }
             }
@@ -468,13 +468,13 @@ namespace NightmareEchoes.Unit.Combat
             foreach (var tile in aoePreviewTiles)
             {
                 if (tile == mainTile) continue;
-                if (!tile.CheckUnitOnTile()) continue;
+                if (!tile.CheckEntityOnTile()) continue;
 
                 var direction = tile.transform.position - mainTile.transform.position;
                 var destination = tile.transform.position + direction;
                 
-                var unitSprite = tile.CheckUnitOnTile().GetComponent<SpriteRenderer>()?.sprite;
-                var clone = GetClone(tile.CheckUnitOnTile());
+                var unitSprite = tile.CheckEntityOnTile().GetComponent<SpriteRenderer>()?.sprite;
+                var clone = GetClone(tile.CheckEntityOnTile());
                 var cloneSr = clone.GetComponent<SpriteRenderer>();
                 cloneSr.sprite = unitSprite;
                 cloneSr.sortingLayerID = SortingLayer.NameToID("Entity");
@@ -683,8 +683,8 @@ namespace NightmareEchoes.Unit.Combat
             foreach (var tile in overlayTileInFront)
             {
                 //for each overlayTile in front, check if the tiles have units that are not hostile (hero)
-                if (!tile.CheckUnitOnTile()) continue;
-                var entity = tile.CheckUnitOnTile().GetComponent<Entity>();
+                if (!tile.CheckEntityOnTile()) continue;
+                var entity = tile.CheckEntityOnTile().GetComponent<Entity>();
                 if (entity.IsHostile || entity.IsProp) continue;
                 
                 if (entity.FindModifier(STATUS_EFFECT.STEALTH_TOKEN))
@@ -732,7 +732,7 @@ namespace NightmareEchoes.Unit.Combat
                 var target = OverlayTileManager.Instance.GetOverlayTileOnMouseCursor();
                 if (target)
                 {
-                    if (!target.CheckUnitOnTile() && !target.CheckObstacleOnTile() && !target.CheckTrapOnTile() && skillRangeTiles.Any(tile => tile == target))
+                    if (!target.CheckEntityOnTile() && !target.CheckObstacleOnTile() && !target.CheckTrapOnTile() && skillRangeTiles.Any(tile => tile == target))
                     {
                         var preview = GetClone(activeSkill.PlacableGameObject);
                         preview.GetComponent<SpriteRenderer>().sprite = trapSprite;

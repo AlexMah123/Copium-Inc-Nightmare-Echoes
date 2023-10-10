@@ -192,6 +192,7 @@ namespace NightmareEchoes.Unit.AI
             //Debug.Log(highestTileUtil);
             #endregion
         }
+        #endregion
 
         #region Destination Calculation Methods
         void IfInAtkRange()
@@ -234,7 +235,7 @@ namespace NightmareEchoes.Unit.AI
                 }
 
                 //Debug.Log(currTileUtil);
-                if (!possibleAttackLocations[i].CheckUnitOnTile())
+                if (!possibleAttackLocations[i].CheckEntityOnTile())
                 {
                     if (currTileUtil > highestTileUtil)
                     {
@@ -281,33 +282,33 @@ namespace NightmareEchoes.Unit.AI
                         if ((possibleAttackLocations[i].gridLocation.x < targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
                         {
                             currTileUtil = currTileUtil + 20;
-                            Debug.Log("North MoveATK");
+                            //Debug.Log("North MoveATK");
                         }
                         break;
                     case Direction.SOUTH:
                         if ((possibleAttackLocations[i].gridLocation.x > targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == targetTileToMove.gridLocation.y))
                         {
                             currTileUtil = currTileUtil + 20;
-                            Debug.Log("South MoveATK");
+                            //Debug.Log("South MoveATK");
                         }
                         break;
                     case Direction.EAST:
                         if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < targetTileToMove.gridLocation.y))
                         {
                             currTileUtil = currTileUtil + 20;
-                            Debug.Log("East MoveATK");
+                            //Debug.Log("East MoveATK");
                         }
                         break;
                     case Direction.WEST:
                         if ((possibleAttackLocations[i].gridLocation.x == targetTileToMove.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > targetTileToMove.gridLocation.y))
                         {
                             currTileUtil = currTileUtil + 20;
-                            Debug.Log("West MoveATK");
+                            //Debug.Log("West MoveATK");
                         }
                         break;
                 }
                 //Debug.Log(currTileUtil);
-                if (!possibleAttackLocations[i].CheckUnitOnTile())
+                if (!possibleAttackLocations[i].CheckEntityOnTile())
                 {
                     if (currTileUtil > highestTileUtil)
                     {
@@ -366,7 +367,7 @@ namespace NightmareEchoes.Unit.AI
 
             for (int i = 0; i < tilesInRange.Count; i++)
             {
-                if (!tilesInRange[i].CheckUnitOnTile())
+                if (!tilesInRange[i].CheckEntityOnTile())
                 {
                     if (FindDistanceBetweenTile(targetTileToMove, tilesInRange[i]) < FindDistanceBetweenTile(targetTileToMove, bestMoveTile))
                     {
@@ -418,7 +419,7 @@ namespace NightmareEchoes.Unit.AI
                     {
                         if (IsTileAttackableFromCross(tilesInRange[i], targetTileToMove))
                         {
-                            if (!tilesInRange[i].CheckUnitOnTile())
+                            if (!tilesInRange[i].CheckEntityOnTile())
                             {
                                 possibleAttackLocations.Add(tilesInRange[i]);
                                 inMoveAndAttackRange = true;
@@ -435,7 +436,7 @@ namespace NightmareEchoes.Unit.AI
                     {
                         if (IsTileAttackableFromDiamond(tilesInRange[i], targetTileToMove))
                         {
-                            if (!tilesInRange[i].CheckUnitOnTile())
+                            if (!tilesInRange[i].CheckEntityOnTile())
                             {
                                 possibleAttackLocations.Add(tilesInRange[i]);
                                 inMoveAndAttackRange = true;
@@ -452,7 +453,7 @@ namespace NightmareEchoes.Unit.AI
                     {
                         if (IsTileAttackableFromDiamond(tilesInRange[i], targetTileToMove))
                         {
-                            if (!tilesInRange[i].CheckUnitOnTile())
+                            if (!tilesInRange[i].CheckEntityOnTile())
                             {
                                 possibleAttackLocations.Add(tilesInRange[i]);
                                 inMoveAndAttackRange = true;
@@ -468,7 +469,6 @@ namespace NightmareEchoes.Unit.AI
             #endregion
         }
 
-        #endregion
 
 
         #region Public Calls for Enemy Phase
@@ -518,29 +518,61 @@ namespace NightmareEchoes.Unit.AI
                             break;
                     }
 
-                    //then based on the units direction, move infront of the target
-                    switch (thisUnit.Direction)
+                    List<OverlayTile> tilesAroundTarget = new List<OverlayTile>(Pathfinding.Pathfinding.FindTilesInRange(targetTileToMove, 1));
+                    List<OverlayTile> possibleRedirectTiles = new List<OverlayTile>();
+
+                    if(tilesAroundTarget.Count > 0) 
                     {
-                        case Direction.NORTH:
-                            redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation - new Vector3Int(1, 0, 0)));
-                            break;
+                        for(int i= 0; i < tilesAroundTarget.Count; i++)
+                        {
+                            if (!tilesAroundTarget[i].CheckEntityOnTile() && !tilesAroundTarget[i].CheckObstacleOnTile())
+                            {
+                                if (FindDistanceBetweenTile(tilesAroundTarget[i], thisUnit.ActiveTile) <= 1)
+                                {
+                                    possibleRedirectTiles.Add(tilesAroundTarget[i]);
+                                }
+                            }
 
-                        case Direction.SOUTH:
-                            redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation + new Vector3Int(1, 0, 0)));
-                            break;
+                        }
 
-                        case Direction.EAST:
-                            redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation + new Vector3Int(0, 1, 0)));
-                            break;
+                        if(possibleRedirectTiles.Count > 1)
+                        {
+                            switch(Random.Range(0, possibleRedirectTiles.Count))
+                            {
+                                case 0:
+                                    redirectTile = possibleRedirectTiles.First();
+                                    break;
+                                case 1:
+                                    redirectTile = possibleRedirectTiles.Last();
+                                    break;
 
-                        case Direction.WEST:
-                            redirectTile = OverlayTileManager.Instance.GetOverlayTile((Vector2Int)(targetTileToMove.gridLocation - new Vector3Int(0, 1, 0)));
-                            break;
+                                default:
+                                    Debug.LogWarning("Not Suppose to have 3 possible tiles");
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            redirectTile = possibleRedirectTiles.First();
+                        }
+                    }
+                    else
+                    {
+                        return;
                     }
                 }
 
                 thisUnit.ShowPopUpText("Detected Stealth Hero!!", Color.red);
-                StartCoroutine(DetectedStealthUnit(redirectTile));
+
+                if(thisUnit.TypeOfUnit == TypeOfUnit.MELEE_UNIT)
+                {
+                    StartCoroutine(DetectedStealthUnit(redirectTile));
+                }
+                else
+                {
+                    targetTileToMove.CheckEntityOnTile()?.GetComponent<Entity>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
+                    AttackProcess(thisUnit, targetTileToMove);
+                }
             }
             //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.
             else if (totalPathList.Count == 0 && (inAtkRange || inMoveAndAttackRange) && !hasAttacked && !detectedStealthHero && totalHeroList.Count > 0)
@@ -551,12 +583,12 @@ namespace NightmareEchoes.Unit.AI
 
         public void AttackProcess(Entity thisUnit, OverlayTile targetTile)
         {
-            if (targetTile.CheckUnitOnTile()?.GetComponent<Entity>() != null)
+            if (targetTile.CheckEntityOnTile()?.GetComponent<Entity>() != null)
             {
                 targetTile.ShowEnemyTile();
                 hasAttacked = true;
 
-                StartCoroutine(Delay(thisUnit));
+                StartCoroutine(AttackAction(thisUnit));
             }
         }
 
@@ -567,7 +599,8 @@ namespace NightmareEchoes.Unit.AI
             StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, redirectTile, 0.25f));
 
             yield return new WaitUntil(() => Vector2.Distance(thisUnit.transform.position, redirectTile.transform.position) < 0.01f);
-            targetTileToMove.CheckUnitOnTile()?.GetComponent<Entity>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
+
+            targetTileToMove.CheckEntityOnTile()?.GetComponent<Entity>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
             AttackProcess(thisUnit, targetTileToMove);
 
         }
@@ -576,11 +609,11 @@ namespace NightmareEchoes.Unit.AI
 
         #region Calculations/Utility
         //delay used for attacks
-        IEnumerator Delay(Entity thisUnit)
+        IEnumerator AttackAction(Entity thisUnit)
         {
             yield return new WaitForSeconds(attackDelay);
 
-            CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckUnitOnTile().GetComponent<Entity>(), thisUnit.BasicAttackSkill);
+            CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckEntityOnTile().GetComponent<Entity>(), thisUnit.BasicAttackSkill);
             targetTileToMove.HideTile();
             totalPathList.Clear();
         }
@@ -716,7 +749,7 @@ namespace NightmareEchoes.Unit.AI
         }
         bool IsTileAttackableFromCross(OverlayTile target1, OverlayTile target2)
         {
-            if (target1.CheckUnitOnTile())
+            if (target1.CheckEntityOnTile())
             {
                 return false;
             }

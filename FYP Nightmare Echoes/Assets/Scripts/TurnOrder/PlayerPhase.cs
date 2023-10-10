@@ -22,7 +22,7 @@ namespace NightmareEchoes.TurnOrder
             if (controller.CurrentUnit != null)
             {
                 #region Tokens
-                //controller.CurrentUnit.ApplyAllTokenEffects();
+                controller.CurrentUnit.ApplyAllTokenEffects();
 
                 if (controller.CurrentUnit.StunToken)
                 {

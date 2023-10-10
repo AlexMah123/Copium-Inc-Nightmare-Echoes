@@ -28,7 +28,7 @@ namespace NightmareEchoes.Unit
                 var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
                 if (tileDestination)
                 {
-                    if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile())
+                    if (tileDestination.CheckEntityOnTile() || tileDestination.CheckObstacleOnTile())
                         tileOccupied = true;
                     
                     if (!tileOccupied)

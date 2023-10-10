@@ -276,7 +276,7 @@ namespace NightmareEchoes.Unit
                 {
                     //north
                     thisUnit.Direction = Direction.NORTH;
-                    if (target.CheckUnitOnTile()?.GetComponent<Entity>().Direction == Direction.NORTH)
+                    if (target.CheckEntityOnTile()?.GetComponent<Entity>().Direction == Direction.NORTH)
                     {
                         isBackstabbing = true;
                     }
@@ -285,7 +285,7 @@ namespace NightmareEchoes.Unit
                 {
                     //south
                     thisUnit.Direction = Direction.SOUTH;
-                    if (target.CheckUnitOnTile()?.GetComponent<Entity>().Direction == Direction.SOUTH)
+                    if (target.CheckEntityOnTile()?.GetComponent<Entity>().Direction == Direction.SOUTH)
                     {
                         isBackstabbing = true;
                     }
@@ -297,7 +297,7 @@ namespace NightmareEchoes.Unit
                 {
                     //east
                     thisUnit.Direction = Direction.EAST;
-                    if (target.CheckUnitOnTile()?.GetComponent<Entity>().Direction == Direction.EAST)
+                    if (target.CheckEntityOnTile()?.GetComponent<Entity>().Direction == Direction.EAST)
                     {
                         isBackstabbing = true;
                     }
@@ -306,7 +306,7 @@ namespace NightmareEchoes.Unit
                 {
                     //west
                     thisUnit.Direction = Direction.WEST;
-                    if (target.CheckUnitOnTile()?.GetComponent<Entity>().Direction == Direction.WEST)
+                    if (target.CheckEntityOnTile()?.GetComponent<Entity>().Direction == Direction.WEST)
                     {
                         isBackstabbing = true;
                     }
@@ -421,7 +421,7 @@ namespace NightmareEchoes.Unit
             var tileDestination = OverlayTileManager.Instance.GetOverlayTileOnWorldPosition(destination);
             if (!tileDestination) return;
 
-            if (tileDestination.CheckUnitOnTile() || tileDestination.CheckObstacleOnTile()) return;
+            if (tileDestination.CheckEntityOnTile() || tileDestination.CheckObstacleOnTile()) return;
             
             StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
             target.CheckCrippled();

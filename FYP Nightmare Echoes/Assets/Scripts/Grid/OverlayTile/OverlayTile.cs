@@ -100,7 +100,7 @@ namespace NightmareEchoes.Grid
             return new Color(c.r, c.g, c.b, c.a);
         }
 
-        public GameObject CheckUnitOnTile()
+        public GameObject CheckEntityOnTile()
         {
             var hit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Entity"));
             

@@ -10,7 +10,7 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
-            foreach (var entity in from tile in aoeTiles where tile.CheckUnitOnTile() select tile.CheckUnitOnTile().GetComponent<Entity>() into entity where !entity.IsProp select entity)
+            foreach (var entity in from tile in aoeTiles where tile.CheckEntityOnTile() select tile.CheckEntityOnTile().GetComponent<Entity>() into entity where !entity.IsProp select entity)
             {
                 entity.AddBuff(entity.IsHostile
                     ? GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1)

@@ -18,8 +18,8 @@ namespace NightmareEchoes.Unit
             var enemiesInRange = new List<Entity>();
             foreach (var tile in cleanedGrid)
             {
-                if (!tile.CheckUnitOnTile()) continue;
-                var target = tile.CheckUnitOnTile().GetComponent<Entity>();
+                if (!tile.CheckEntityOnTile()) continue;
+                var target = tile.CheckEntityOnTile().GetComponent<Entity>();
                 if (!target.IsHostile || target.IsProp) continue;
                 enemiesInRange.Add(target);
             }

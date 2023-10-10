@@ -11,9 +11,9 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target, aoeTiles);
 
-            if (target.CheckUnitOnTile())
+            if (target.CheckEntityOnTile())
             {
-                var unit = target.CheckUnitOnTile().GetComponent<Entity>();
+                var unit = target.CheckEntityOnTile().GetComponent<Entity>();
                 DealDamage(unit);
             }
 
@@ -21,9 +21,9 @@ namespace NightmareEchoes.Unit
             
             foreach (var tile in aoeTiles)
             {
-                if (!tile.CheckUnitOnTile()) continue;
+                if (!tile.CheckEntityOnTile()) continue;
   
-                var unit = tile.CheckUnitOnTile().GetComponent<Entity>();
+                var unit = tile.CheckEntityOnTile().GetComponent<Entity>();
 
                 //manually check for token
                 if (thisUnit.WeakenToken)

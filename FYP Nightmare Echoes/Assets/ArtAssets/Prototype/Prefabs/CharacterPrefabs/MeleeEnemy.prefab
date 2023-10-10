@@ -109,7 +109,7 @@ MonoBehaviour:
   isProp: 0
   isHostile: 1
   direction: 0
-  typeOfUnit: 0
+  typeOfUnit: 1
   popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _health: 0
@@ -161,6 +161,7 @@ MonoBehaviour:
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
   tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
+  popupTextDelay: 0.5
   basicAttackRange: 0
 --- !u!114 &165478112691146583
 MonoBehaviour:
@@ -176,6 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalHeroList: []
   totalUnitList: []
+  totalPropList: []
   totalPathList: []
   attackDelay: 0.5
   inAtkRange: 0
@@ -338,7 +340,7 @@ MonoBehaviour:
   - {x: -0.012245424, y: -0.04489989, z: 0}
   m_ShapePathHash: 554176341
   m_Mesh: {fileID: 0}
-  m_InstanceId: -35796
+  m_InstanceId: -4764
 --- !u!114 &1429316040
 MonoBehaviour:
   m_ObjectHideFlags: 0

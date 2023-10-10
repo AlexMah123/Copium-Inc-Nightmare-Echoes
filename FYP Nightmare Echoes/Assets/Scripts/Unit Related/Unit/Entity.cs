@@ -74,6 +74,11 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected OverlayTile activeTile;
         [SerializeField] protected PolygonCollider2D tileSize;
 
+        [Header("Popup Text Related")]
+        private Queue<GameObject> popupTextQueue = new Queue<GameObject>();
+        private bool isDisplayingPopupText = false;
+        [SerializeField] float popupTextDelay = 0.6f;
+
         #region Class Properties
 
         #region Unit Info Properties
@@ -175,7 +180,7 @@ namespace NightmareEchoes.Unit
                 {
                     if (value == true)
                     {
-                        var modelSprite = GetComponentsInChildren<SpriteRenderer>();
+                        var modelSprite = GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
                         foreach (var spriteRenderer in modelSprite)
                         {
                             if (spriteRenderer.color.a != 0.5f)
@@ -186,7 +191,7 @@ namespace NightmareEchoes.Unit
                     }
                     else
                     {
-                        var modelSprite = GetComponentsInChildren<SpriteRenderer>();
+                        var modelSprite = GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
                         foreach (var spriteRenderer in modelSprite)
                         {
                             if (spriteRenderer.color.a != 1.0f)
@@ -240,7 +245,7 @@ namespace NightmareEchoes.Unit
         #endregion
 
 
-        #region Buff Debuff Token
+        #region Buff Debuff Token List
         public List<Modifier> BuffDebuffList
         {
             get => buffDebuffList;
@@ -803,18 +808,6 @@ namespace NightmareEchoes.Unit
             #endregion            
         }
 
-        public virtual void HealUnit(int healAmount)
-        {
-            if (frontModel != null && frontModel.activeSelf && frontAnimator != null)
-            {
-                frontAnimator.SetBool("GettingHealed", true);
-            }
-            else if (backModel != null && backModel.activeSelf && backAnimator != null)
-            {
-                backAnimator.SetBool("GettingHealed", true);
-            }
-
-        }
 
         [ContextMenu("Destroy Object")]
         public void DestroyObject()
@@ -826,27 +819,38 @@ namespace NightmareEchoes.Unit
 
 
         #region Utility
-        public Vector3 RandomVector()
-        {
-            Vector2 minRange = new Vector3(-1f, 0f);
-            Vector2 maxRange = new Vector3(1f, 1.5f);
-
-            float randomX = UnityEngine.Random.Range(minRange.x, maxRange.x);
-            float randomY = UnityEngine.Random.Range(minRange.y, maxRange.y);
-
-            return new Vector3(randomX, randomY, 0);
-        }
-
         public void ShowPopUpText(string text, Color color)
         {
             if (popupTextPrefab)
             {
-                GameObject prefab = Instantiate(popupTextPrefab, transform.position + RandomVector(), Quaternion.identity);
+                popupTextQueue.Enqueue(popupTextPrefab);
+
+                if (!isDisplayingPopupText)
+                {
+                    StartCoroutine(DisplayNextPopupText(text, color));
+                }
+            }
+        }
+
+        IEnumerator DisplayNextPopupText(string text, Color color)
+        {
+            isDisplayingPopupText = true;
+
+            while(popupTextQueue.Count > 0)
+            {
+                popupTextQueue.Dequeue();
+
+                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up + (Vector3.left * 0.25f), Quaternion.identity);
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = text;
-
                 textMeshPro.color = color;
+
+                yield return new WaitForSeconds(popupTextDelay);
+
             }
+
+            isDisplayingPopupText = false;
+            
         }
 
         public void UpdateLocation()

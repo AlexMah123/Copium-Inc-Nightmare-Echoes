@@ -19,7 +19,7 @@ namespace NightmareEchoes.Unit
             
             var destinationTile = OverlayTileManager.Instance.GetOverlayTile(newPos);
 
-            if (destinationTile.CheckUnitOnTile() || destinationTile.CheckObstacleOnTile()) return false;
+            if (destinationTile.CheckEntityOnTile() || destinationTile.CheckObstacleOnTile()) return false;
 
             StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(thisUnit, destinationTile, 0.15f));
             StartCoroutine(DelayedAttack(target));
