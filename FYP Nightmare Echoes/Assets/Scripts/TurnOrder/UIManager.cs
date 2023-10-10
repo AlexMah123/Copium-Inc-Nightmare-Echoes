@@ -110,6 +110,8 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] Button passTurnButton;
         [SerializeField] Button settingButton;
         [SerializeField] GameObject settingsPanel;
+        [SerializeField] GameObject soundPanel;
+        [SerializeField] GameObject GeneralSettingsPanel;
         [NonSerialized] public bool gameIsPaused = false;
 
         [Header("Game Over")]
@@ -1111,6 +1113,43 @@ namespace NightmareEchoes.TurnOrder
                 settingsPanel.SetActive(false);
             }
         }
+
+        public void SoundButton()
+        {
+            if (!soundPanel.activeSelf)
+            {
+                settingsPanel.SetActive(false);
+                soundPanel.SetActive(true);
+            }
+        }
+
+        public void SoundBackButton()
+        {
+            if (soundPanel.activeSelf)
+            {
+                settingsPanel.SetActive(true);
+                soundPanel.SetActive(false);
+            }
+        }
+
+        public void GeneralSettingsButton()
+        {
+            if (!GeneralSettingsPanel.activeSelf)
+            {
+                settingsPanel.SetActive(false);
+                GeneralSettingsPanel.SetActive(true);
+            }
+        }
+
+        public void GeneralBackButton()
+        {
+            if (GeneralSettingsPanel.activeSelf)
+            {
+                settingsPanel.SetActive(true);
+                GeneralSettingsPanel.SetActive(false);
+            }
+        }
+
 
         public void MainMenuButton(int sceneIndex)
         {
