@@ -21,7 +21,6 @@ namespace NightmareEchoes.Unit.AI
         public List<OverlayTile> totalPathList = new List<OverlayTile>();
 
         [Space(20), Header("Enemy Specifics")]
-        Coroutine redirect;
         public float attackDelay = 1f;
         Entity thisUnit;
 

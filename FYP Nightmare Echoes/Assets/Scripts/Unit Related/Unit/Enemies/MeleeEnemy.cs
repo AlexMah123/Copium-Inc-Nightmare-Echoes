@@ -19,17 +19,6 @@ namespace NightmareEchoes.Unit.Enemy
         protected override void Start()
         {
             base.Start();
-
-            /*var rand = Random.Range(0, 2);
-
-            if(rand > 0)
-            {
-                AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.BARRIER_TOKEN, 1, 1));
-            }
-            else
-            {
-                AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.BLOCK_TOKEN, 1, 1));
-            }*/
         }
 
         protected override void Update()
