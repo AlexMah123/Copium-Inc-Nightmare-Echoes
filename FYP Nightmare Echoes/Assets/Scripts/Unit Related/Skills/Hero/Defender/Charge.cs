@@ -20,6 +20,17 @@ namespace NightmareEchoes.Unit
             var destinationTile = OverlayTileManager.Instance.GetOverlayTile(newPos);
 
             if (destinationTile.CheckEntityOnTile() || destinationTile.CheckObstacleOnTile()) return false;
+            
+            //Super redundant way for checking tile
+            if (Mathf.Abs(distance.x) == 3 || Mathf.Abs(distance.y) == 3)
+            {
+                if (xDist > 0) xDist -= 1; else if (xDist < 0) xDist += 1;
+                if (yDist > 0) yDist -= 1; else if (yDist < 0) yDist += 1;
+                
+                var frontalTilePos = new Vector2Int(thisUnit.ActiveTile.gridLocation.x + xDist, thisUnit.ActiveTile.gridLocation.y + yDist);
+                var frontalTile = OverlayTileManager.Instance.GetOverlayTile(frontalTilePos);
+                if (frontalTile.CheckEntityOnTile() || frontalTile.CheckObstacleOnTile()) return false;
+            }
 
             StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(thisUnit, destinationTile, 0.15f));
             StartCoroutine(DelayedAttack(target));
