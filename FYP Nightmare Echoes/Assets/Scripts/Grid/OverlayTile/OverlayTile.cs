@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static NightmareEchoes.Grid.ArrowRenderer;
 //created by Vinn
 namespace NightmareEchoes.Grid
 {
@@ -100,7 +99,7 @@ namespace NightmareEchoes.Grid
             return new Color(c.r, c.g, c.b, c.a);
         }
 
-        public GameObject CheckEntityOnTile()
+        public GameObject CheckEntityGameObjectOnTile()
         {
             var hit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Entity"));
             

@@ -60,7 +60,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             return new List<OverlayTile>();    
         }
 
-        public static List<OverlayTile> FindTilesInRange(OverlayTile startTile, int range)
+        public static List<OverlayTile> FindTilesInRange(OverlayTile startTile, int range, bool includeProps)
         {
             var inRangeTiles = new List<OverlayTile>();
             int stepCount = 0;
@@ -86,32 +86,41 @@ namespace NightmareEchoes.Unit.Pathfinding
 
 
             //cache the unit's type based on the start tile's unit
-            if(startTile.CheckEntityOnTile())
+            if(startTile.CheckEntityGameObjectOnTile())
             {
-                UnitAlignment = startTile.CheckEntityOnTile().GetComponent<Entity>().IsHostile;
+                UnitAlignment = startTile.CheckEntityGameObjectOnTile().GetComponent<Entity>().IsHostile;
 
             }
 
-            var RemovedTileWithObstacles = new List<OverlayTile>();
+            var filteredTiles = new List<OverlayTile>();
 
             //foreach tile in a filtered list with no duplicates
             foreach (var tiles in inRangeTiles.Distinct().ToList())
             {
                 //if tile does not have a unit and have an obstacle on it
-                if (!tiles.CheckEntityOnTile() && !tiles.CheckObstacleOnTile())
+                if (!tiles.CheckEntityGameObjectOnTile() && !tiles.CheckObstacleOnTile())
                 {
-                    RemovedTileWithObstacles.Add(tiles);
+                    filteredTiles.Add(tiles);
                 }
                 //else if there is a unit
-                else if (tiles.CheckEntityOnTile() != null && tiles.CheckEntityOnTile().GetComponent<Entity>() != null)
+                else if (tiles.CheckEntityGameObjectOnTile()?.GetComponent<Entity>() != null)
                 {
                     //check if that unit is the same type as the UnitAlignment, if so, add it.
-                    if (tiles.CheckEntityOnTile().GetComponent<Entity>().IsHostile == UnitAlignment && !tiles.CheckEntityOnTile().GetComponent<Entity>().StealthToken && !tiles.CheckEntityOnTile().GetComponent<Entity>().IsProp)
-                        RemovedTileWithObstacles.Add(tiles);
+                    if (tiles.CheckEntityGameObjectOnTile().GetComponent<Entity>().IsHostile == UnitAlignment && !tiles.CheckEntityGameObjectOnTile().GetComponent<Entity>().StealthToken && !tiles.CheckEntityGameObjectOnTile().GetComponent<Entity>().IsProp)
+                        filteredTiles.Add(tiles);
+
+                    //if do include props (for enemy)
+                    if (includeProps)
+                    {
+                        if(tiles.CheckEntityGameObjectOnTile().GetComponent<Entity>().IsProp)
+                        {
+                            filteredTiles.Add(tiles);
+                        }
+                    }                    
                 }
             }
 
-            return (from tile in RemovedTileWithObstacles let path = FindPath(startTile, tile, RemovedTileWithObstacles) where path.Count <= range && path.Count > 0 select tile).ToList();
+            return (from tile in filteredTiles let path = FindPath(startTile, tile, filteredTiles) where path.Count <= range && path.Count > 0 select tile).ToList();
         }
 
 

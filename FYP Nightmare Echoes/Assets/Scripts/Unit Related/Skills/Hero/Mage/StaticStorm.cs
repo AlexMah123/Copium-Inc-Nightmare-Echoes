@@ -23,9 +23,9 @@ namespace NightmareEchoes.Unit
             
             foreach (var tile in aoeTiles)
             {
-                if (!tile.CheckEntityOnTile()) continue;
+                if (!tile.CheckEntityGameObjectOnTile()) continue;
   
-                var unit = tile.CheckEntityOnTile().GetComponent<Entity>();
+                var unit = tile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
                 DealDamage(unit);
             }
 

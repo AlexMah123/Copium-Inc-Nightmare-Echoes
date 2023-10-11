@@ -21,7 +21,7 @@ namespace NightmareEchoes.Unit
             if (!Input.GetMouseButtonDown(0)) return;
             var target = OverlayTileManager.Instance.GetOverlayTileOnMouseCursor();
             if (!target) return;
-            if (target.CheckEntityOnTile()) return;
+            if (target.CheckEntityGameObjectOnTile()) return;
             
             if (tileRanges.All(tile => tile != target)) return;
 

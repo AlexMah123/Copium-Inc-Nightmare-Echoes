@@ -174,9 +174,9 @@ namespace NightmareEchoes.TurnOrder
                         skillDamageText.text = $"Damage: {CombatManager.Instance.ActiveSkill.Damage}";
                     }
 
-                    if (PathfindingManager.Instance.currentHoveredOverlayTile != null && PathfindingManager.Instance.currentHoveredOverlayTile.CheckEntityOnTile())
+                    if (PathfindingManager.Instance.currentHoveredOverlayTile != null && PathfindingManager.Instance.currentHoveredOverlayTile.CheckEntityGameObjectOnTile())
                     {
-                        var hoveredUnit = PathfindingManager.Instance.currentHoveredOverlayTile.CheckEntityOnTile().GetComponent<Entity>();
+                        var hoveredUnit = PathfindingManager.Instance.currentHoveredOverlayTile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
 
                         if (hoveredUnit != null)
                         {

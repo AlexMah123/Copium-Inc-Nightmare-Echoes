@@ -94,7 +94,7 @@ namespace NightmareEchoes.Unit.AI
             {
                 thisUnitTile = thisUnit.ActiveTile;
 
-                tilesInRange = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange);
+                tilesInRange = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, includeProps: false);
                 PathfindingManager.Instance.ShowTilesInRange(tilesInRange);
 
                 healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
@@ -234,7 +234,7 @@ namespace NightmareEchoes.Unit.AI
                 }
 
                 //Debug.Log(currTileUtil);
-                if (!possibleAttackLocations[i].CheckEntityOnTile())
+                if (!possibleAttackLocations[i].CheckEntityGameObjectOnTile())
                 {
                     if (currTileUtil > highestTileUtil)
                     {
@@ -307,7 +307,7 @@ namespace NightmareEchoes.Unit.AI
                         break;
                 }
                 //Debug.Log(currTileUtil);
-                if (!possibleAttackLocations[i].CheckEntityOnTile())
+                if (!possibleAttackLocations[i].CheckEntityGameObjectOnTile())
                 {
                     if (currTileUtil > highestTileUtil)
                     {
@@ -366,7 +366,7 @@ namespace NightmareEchoes.Unit.AI
 
             for (int i = 0; i < tilesInRange.Count; i++)
             {
-                if (!tilesInRange[i].CheckEntityOnTile())
+                if (!tilesInRange[i].CheckEntityGameObjectOnTile())
                 {
                     if (FindDistanceBetweenTile(targetTileToMove, tilesInRange[i]) < FindDistanceBetweenTile(targetTileToMove, bestMoveTile))
                     {
@@ -418,7 +418,7 @@ namespace NightmareEchoes.Unit.AI
                     {
                         if (IsTileAttackableFromCross(tilesInRange[i], targetTileToMove))
                         {
-                            if (!tilesInRange[i].CheckEntityOnTile())
+                            if (!tilesInRange[i].CheckEntityGameObjectOnTile())
                             {
                                 possibleAttackLocations.Add(tilesInRange[i]);
                                 inMoveAndAttackRange = true;
@@ -435,7 +435,7 @@ namespace NightmareEchoes.Unit.AI
                     {
                         if (IsTileAttackableFromDiamond(tilesInRange[i], targetTileToMove))
                         {
-                            if (!tilesInRange[i].CheckEntityOnTile())
+                            if (!tilesInRange[i].CheckEntityGameObjectOnTile())
                             {
                                 possibleAttackLocations.Add(tilesInRange[i]);
                                 inMoveAndAttackRange = true;
@@ -452,7 +452,7 @@ namespace NightmareEchoes.Unit.AI
                     {
                         if (IsTileAttackableFromDiamond(tilesInRange[i], targetTileToMove))
                         {
-                            if (!tilesInRange[i].CheckEntityOnTile())
+                            if (!tilesInRange[i].CheckEntityGameObjectOnTile())
                             {
                                 possibleAttackLocations.Add(tilesInRange[i]);
                                 inMoveAndAttackRange = true;
@@ -517,14 +517,14 @@ namespace NightmareEchoes.Unit.AI
                             break;
                     }
 
-                    List<OverlayTile> tilesAroundTarget = new List<OverlayTile>(Pathfinding.Pathfinding.FindTilesInRange(targetTileToMove, 1));
+                    List<OverlayTile> tilesAroundTarget = new List<OverlayTile>(Pathfinding.Pathfinding.FindTilesInRange(targetTileToMove, 1, includeProps:false));
                     List<OverlayTile> possibleRedirectTiles = new List<OverlayTile>();
 
                     if(tilesAroundTarget.Count > 0) 
                     {
                         for(int i= 0; i < tilesAroundTarget.Count; i++)
                         {
-                            if (!tilesAroundTarget[i].CheckEntityOnTile() && !tilesAroundTarget[i].CheckObstacleOnTile())
+                            if (!tilesAroundTarget[i].CheckEntityGameObjectOnTile() && !tilesAroundTarget[i].CheckObstacleOnTile())
                             {
                                 if (FindDistanceBetweenTile(tilesAroundTarget[i], thisUnit.ActiveTile) <= 1)
                                 {
@@ -569,7 +569,7 @@ namespace NightmareEchoes.Unit.AI
                 }
                 else
                 {
-                    targetTileToMove.CheckEntityOnTile()?.GetComponent<Entity>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
+                    targetTileToMove.CheckEntityGameObjectOnTile()?.GetComponent<Entity>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
                     AttackProcess(thisUnit, targetTileToMove);
                 }
             }
@@ -582,7 +582,7 @@ namespace NightmareEchoes.Unit.AI
 
         public void AttackProcess(Entity thisUnit, OverlayTile targetTile)
         {
-            if (targetTile.CheckEntityOnTile()?.GetComponent<Entity>() != null)
+            if (targetTile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>() != null)
             {
                 targetTile.ShowEnemyTile();
                 hasAttacked = true;
@@ -599,7 +599,7 @@ namespace NightmareEchoes.Unit.AI
 
             yield return new WaitUntil(() => Vector2.Distance(thisUnit.transform.position, redirectTile.transform.position) < 0.01f);
 
-            targetTileToMove.CheckEntityOnTile()?.GetComponent<Entity>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
+            targetTileToMove.CheckEntityGameObjectOnTile()?.GetComponent<Entity>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
             AttackProcess(thisUnit, targetTileToMove);
 
         }
@@ -612,7 +612,7 @@ namespace NightmareEchoes.Unit.AI
         {
             yield return new WaitForSeconds(attackDelay);
 
-            CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckEntityOnTile().GetComponent<Entity>(), thisUnit.BasicAttackSkill);
+            CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckEntityGameObjectOnTile().GetComponent<Entity>(), thisUnit.BasicAttackSkill);
             targetTileToMove.HideTile();
             totalPathList.Clear();
         }
@@ -748,7 +748,7 @@ namespace NightmareEchoes.Unit.AI
         }
         bool IsTileAttackableFromCross(OverlayTile target1, OverlayTile target2)
         {
-            if (target1.CheckEntityOnTile())
+            if (target1.CheckEntityGameObjectOnTile())
             {
                 return false;
             }

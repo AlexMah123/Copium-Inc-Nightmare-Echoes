@@ -98,7 +98,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 currentPathfindingUnit = hero;
 
                 //Gets the value of the start pos and the maximum range is the amount you can set
-                playerTilesInRange = new List<OverlayTile>(Pathfinding.FindTilesInRange(hero.ActiveTile, hero.stats.MoveRange));
+                playerTilesInRange = new List<OverlayTile>(Pathfinding.FindTilesInRange(hero.ActiveTile, hero.stats.MoveRange, includeProps: false));
 
                 //store values for players when they cancel their action
                 revertUnitPosition = hero.ActiveTile;
@@ -167,7 +167,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 pathList = Pathfinding.FindPath(currentPathfindingUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
                 tempPathList = new List<OverlayTile>(pathList);
 
-                if (!currentHoveredOverlayTile.CheckEntityOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
+                if (!currentHoveredOverlayTile.CheckEntityGameObjectOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
                 {
                     //Resets lastaddedtile is null
                     lastAddedTile = null;
@@ -224,7 +224,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     if(pathList.Count > 0)
                     {
-                        if (pathList[pathList.Count - 1].CheckEntityOnTile())
+                        if (pathList[pathList.Count - 1].CheckEntityGameObjectOnTile())
                         {
                             pathList.RemoveAt(pathList.Count - 1);
                         }
