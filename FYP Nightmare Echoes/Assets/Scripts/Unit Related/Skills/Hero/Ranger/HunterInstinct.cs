@@ -23,12 +23,10 @@ namespace NightmareEchoes.Unit
         {
             isActive = CombatManager.Instance.ActiveAoes.ContainsKey(this);
 
-            if (isActive)
+            if (!isActive) return;
+            if (unit.ActiveTile != currentPos)
             {
-                if (unit.ActiveTile != currentPos)
-                {
-                    CombatManager.Instance.ClearActiveAoe(this);
-                }
+                CombatManager.Instance.ClearActiveAoe(this);
             }
         }
 
@@ -39,14 +37,12 @@ namespace NightmareEchoes.Unit
             if (target.GetComponent<BasicEnemyAI>().hasMoved)
             {
                 DealDamage(target);
-                CombatManager.Instance.ClearActiveAoe(this);
                 return true;
             }
             
             if (target.GetComponent<BasicEnemyAI>().hasAttacked)
             {
                 DealDamage(target, secondaryDamage);
-                CombatManager.Instance.ClearActiveAoe(this);
                 return true;
             }
 

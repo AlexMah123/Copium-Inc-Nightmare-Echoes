@@ -742,7 +742,7 @@ namespace NightmareEchoes.Unit.Combat
                         ghostSprites.Add(preview);
                         preview.SetActive(true);
 
-                        if (Input.GetMouseButtonDown(0))
+                        if (Input.GetMouseButtonDown(0) && !trapList.Contains(preview.transform.position))
                         {
                             trapList.Add(preview.transform.position);
                             trapCount++;

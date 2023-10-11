@@ -10,8 +10,6 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(Entity target)
         {
-            base.Cast(target);
-
             DealDamage(target);
 
             return true;
@@ -19,6 +17,8 @@ namespace NightmareEchoes.Unit
 
         public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
+            base.Cast(target, aoeTiles);
+            
             var copy = new List<OverlayTile>(aoeTiles);
             
             foreach (var tile in aoeTiles)
