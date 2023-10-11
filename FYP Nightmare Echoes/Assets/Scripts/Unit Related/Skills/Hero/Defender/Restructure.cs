@@ -6,17 +6,11 @@ namespace NightmareEchoes.Unit
 {
     public class Restructure : Skill
     {
-        public override bool Cast(Entity target)
+        public override bool Cast()
         {
-
-            base.Cast(target);
-
-            target.stats.Health += heal;
-
-            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.RESTORATION_BUFF, 3, 1));
-
-
-            target.ClearAllStatusEffect(target.TokenList, ModifierType.NEGATIVETOKEN);
+            thisUnit.stats.Health += heal;
+            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.RESTORATION_BUFF, 3, 1));
+            thisUnit.ClearAllStatusEffect(thisUnit.TokenList, ModifierType.NEGATIVETOKEN);
 
             return true;
         }
