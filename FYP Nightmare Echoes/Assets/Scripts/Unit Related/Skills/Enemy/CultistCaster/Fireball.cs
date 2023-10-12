@@ -7,17 +7,28 @@ namespace NightmareEchoes.Unit
 {
     public class Fireball : Skill
     {
-        public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
+        public override bool Cast(Entity target)
         {
-            base.Cast(target, aoeTiles);
+            OverlayTile targetTile = target.ActiveTile;
+            List<Vector2Int> tilesToCheck = new List<Vector2Int>();
 
-            if (target.CheckEntityGameObjectOnTile())
+            tilesToCheck.Add(new Vector2Int((targetTile.gridLocation.x), (targetTile.gridLocation.y - 1)));
+            tilesToCheck.Add(new Vector2Int((targetTile.gridLocation.x), (targetTile.gridLocation.y + 1)));
+            tilesToCheck.Add(new Vector2Int((targetTile.gridLocation.x - 1), (targetTile.gridLocation.y)));
+            tilesToCheck.Add(new Vector2Int((targetTile.gridLocation.x + 1), (targetTile.gridLocation.y)));
+
+            List<OverlayTile> aoeTiles = OverlayTileManager.Instance.TrimOutOfBounds(tilesToCheck);
+
+            base.Cast(targetTile, aoeTiles);
+
+            DealDamage(target);
+            /*if (targetTile.CheckEntityGameObjectOnTile())
             {
-                var unit = target.CheckEntityGameObjectOnTile().GetComponent<Entity>();
+                var unit = targetTile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
                 DealDamage(unit);
-            }
+            }*/
 
-            aoeTiles.Remove(target);
+            aoeTiles.Remove(targetTile);
 
             foreach (var tile in aoeTiles)
             {
@@ -47,7 +58,7 @@ namespace NightmareEchoes.Unit
                     unit.TakeDamage(secondaryDamage);
                 }
 
-                Knockback(target, unit);
+                Knockback(targetTile, unit);
             }
 
             return true;
