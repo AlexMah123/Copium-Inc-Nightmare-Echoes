@@ -10,6 +10,14 @@ namespace NightmareEchoes.Unit
         public override bool Cast(Entity target)
         {
             var distance = target.ActiveTile.gridLocation - thisUnit.ActiveTile.gridLocation;
+            
+            //Skip everything below if target is just in front of ya
+            if (Mathf.Abs(distance.x) == 1 || Mathf.Abs(distance.y) == 1)
+            {
+                StartCoroutine(DelayedAttack(target));
+                return true;
+            }
+            
             var xDist = distance.x;
             var yDist = distance.y;
             if (xDist > 0) xDist -= 1; else if (xDist < 0) xDist += 1;
@@ -44,8 +52,8 @@ namespace NightmareEchoes.Unit
             base.Cast(target);
             DealDamage(target);
             
-            if (target)
-                Knockback(thisUnit.ActiveTile, target);
+            Knockback(thisUnit.ActiveTile, target);
+            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
         }
     }
 }
