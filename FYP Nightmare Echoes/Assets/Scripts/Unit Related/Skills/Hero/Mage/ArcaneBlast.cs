@@ -50,7 +50,7 @@ namespace NightmareEchoes.Unit
                 
                 Knockback(target, unit);
             }
-            //AudioManager.instance.PlaySFX("ArcaneMissle");
+            AudioManager.instance.PlaySFX("ArcaneBlast");
             return true;
         }
     }

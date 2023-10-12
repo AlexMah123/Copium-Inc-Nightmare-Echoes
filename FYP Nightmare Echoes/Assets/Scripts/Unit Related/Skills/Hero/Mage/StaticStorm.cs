@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using NightmareEchoes.Grid;
+using NightmareEchoes.Sound;
 using NightmareEchoes.Unit.Combat;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace NightmareEchoes.Unit
         {
             DealDamage(target);
 
+            AudioManager.instance.PlaySFX("StaticStorm");
             return true;
         }
 
@@ -30,6 +32,7 @@ namespace NightmareEchoes.Unit
             }
 
             CombatManager.Instance.SetActiveAoe(this, copy);
+            AudioManager.instance.PlaySFX("StaticStorm");
             return true;
         }
     }

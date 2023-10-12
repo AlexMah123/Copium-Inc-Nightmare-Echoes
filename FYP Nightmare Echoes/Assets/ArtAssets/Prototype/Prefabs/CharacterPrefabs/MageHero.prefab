@@ -3281,6 +3281,7 @@ GameObject:
   - component: {fileID: 8121445182508319268}
   - component: {fileID: 8121445182508319274}
   - component: {fileID: 8121445182508319275}
+  - component: {fileID: 1203696666}
   m_Layer: 6
   m_Name: MageHero
   m_TagString: Inspectable
@@ -3381,6 +3382,7 @@ MonoBehaviour:
   backAnimator: {fileID: 8121445182645513491}
   activeTile: {fileID: 0}
   tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
+  popupTextDelay: 0.6
 --- !u!114 &8121445182508319264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3418,6 +3420,7 @@ MonoBehaviour:
   backstabBonus: 3
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: "Single Target, 4 Direction, Deal 6 Damage\r\nEmpower: Deal 9
     Damage and Apply 1 Blind\r"
@@ -3458,6 +3461,7 @@ MonoBehaviour:
   backstabBonus: 0
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: "AOE Attack, 4 Direction, \nDeal 8 Damage in the middle and 4
     Damage at the side, Knockback enemy 1 tile\r\nCooldown: 2 Turns\r\nEmpower: Stun
@@ -3499,6 +3503,7 @@ MonoBehaviour:
   backstabBonus: 0
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: 'Target Hero or Enemy inside 2 Tiles Range, then Teleport him
     within 3 Tiles Range of Target.
@@ -3549,6 +3554,7 @@ MonoBehaviour:
   backstabBonus: 0
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: "AOE, Create Static Storm that last for 2 Turns\nEnemies that
     pass through the storm take 4 Damage, Enemy that Stay in (Start Turn) take 4
@@ -3591,6 +3597,7 @@ MonoBehaviour:
   backstabBonus: 0
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: Every 3 Turns, Empower Skills (Click to Enable)
 --- !u!60 &8121445182508319274
@@ -3643,6 +3650,58 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!212 &1203696666
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8121445182508319273}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &8428406998214740391
 GameObject:
   m_ObjectHideFlags: 0
@@ -3883,7 +3942,7 @@ MonoBehaviour:
   - {x: 0.23290169, y: 0.133703, z: 0}
   m_ShapePathHash: 1679284933
   m_Mesh: {fileID: 0}
-  m_InstanceId: -5238
+  m_InstanceId: -55612
 --- !u!1 &8598185888284416580
 GameObject:
   m_ObjectHideFlags: 0
