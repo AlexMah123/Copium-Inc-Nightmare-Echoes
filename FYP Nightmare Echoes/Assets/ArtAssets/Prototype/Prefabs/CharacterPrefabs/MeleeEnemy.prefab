@@ -180,10 +180,15 @@ MonoBehaviour:
   totalPropList: []
   totalPathList: []
   attackDelay: 0.5
+  targetHero: {fileID: 0}
+  closestHero: {fileID: 0}
   inAtkRange: 0
   inMoveAndAttackRange: 0
   hasAttacked: 0
   detectedStealthHero: 0
+  selectedAttackRange: 0
+  thisUnitTile: {fileID: 0}
+  targetTileToMove: {fileID: 0}
   hasMoved: 0
 --- !u!114 &4139838481242840768
 MonoBehaviour:
@@ -222,6 +227,7 @@ MonoBehaviour:
   backstabBonus: 3
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: Single Target, Deal 6 Damage
 --- !u!114 &4212859529687142437
@@ -261,6 +267,7 @@ MonoBehaviour:
   backstabBonus: 3
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: Move 1 tile and attack the tile ahead. Deal 5 Damage
 --- !u!50 &5583804447610931213
@@ -340,7 +347,7 @@ MonoBehaviour:
   - {x: -0.012245424, y: -0.04489989, z: 0}
   m_ShapePathHash: 554176341
   m_Mesh: {fileID: 0}
-  m_InstanceId: -4764
+  m_InstanceId: -1554
 --- !u!114 &1429316040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,5 +385,6 @@ MonoBehaviour:
   backstabBonus: 3
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: "Deal 5 Damage and Knockback target 1 tiles\r"

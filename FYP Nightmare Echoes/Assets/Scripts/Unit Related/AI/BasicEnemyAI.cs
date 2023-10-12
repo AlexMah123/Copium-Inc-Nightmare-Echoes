@@ -14,7 +14,7 @@ namespace NightmareEchoes.Unit.AI
     public class BasicEnemyAI : MonoBehaviour
     {
         [Header("Hero List + Unit List")]
-        [SerializeField] List<Entity> totalHeroList, totalUnitList;
+        public List<Entity> totalHeroList, totalUnitList;
         [SerializeField] List<Entity> totalPropList;
 
         [Space(20), Header("Path List to hero")]
@@ -25,12 +25,12 @@ namespace NightmareEchoes.Unit.AI
         Entity thisUnit;
 
         //used for decision making
-        Entity targetHero, closestHero;
+        public Entity targetHero, closestHero;
         float rangeToTarget, rangeToClosestHero;
 
         //checking if this unit can attk, move & attk and has attacked.
         public bool inAtkRange, inMoveAndAttackRange, hasAttacked, detectedStealthHero;
-        int selectedAttackRange;
+        public int selectedAttackRange;
         int selectedAttackMinRange;
         int rngHelper;
         float currTileUtil, highestTileUtil;
@@ -41,7 +41,7 @@ namespace NightmareEchoes.Unit.AI
         Skill currSelectedSkill;
         int skillAmount;
 
-        OverlayTile thisUnitTile, targetTileToMove;
+        public OverlayTile thisUnitTile, targetTileToMove;
         OverlayTile bestMoveTile;
 
         Dictionary<Entity, int> distancesDictionary = new Dictionary<Entity, int>();
@@ -188,6 +188,7 @@ namespace NightmareEchoes.Unit.AI
                 IfOutMoveAtkRange();
             }
 
+            //after assigning the totalPathList, check if immobilized
             if (thisUnit.CheckImmobilize())
             {
                 totalPathList.Clear();
@@ -573,18 +574,6 @@ namespace NightmareEchoes.Unit.AI
                 else
                 {
                     targetTileToMove.CheckEntityGameObjectOnTile()?.GetComponent<Entity>().UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
-                    AttackProcess(thisUnit, targetTileToMove);
-                }
-            }
-            //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.
-            else if (totalPathList.Count == 0 && (inAtkRange || inMoveAndAttackRange) && !hasAttacked && !detectedStealthHero && totalHeroList.Count > 0)
-            {
-                if(thisUnit.ImmobilizeToken && FindDistanceBetweenUnit(thisUnit, targetHero) <= selectedAttackRange) 
-                {
-                    AttackProcess(thisUnit, targetTileToMove);
-                }
-                else if(!thisUnit.ImmobilizeToken)
-                {
                     AttackProcess(thisUnit, targetTileToMove);
                 }
             }

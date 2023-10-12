@@ -285,6 +285,12 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             SetUnitPositionOnTile(targetTile, thisUnit);
 
+            var trapDmg = CombatManager.Instance.CheckTrap(thisUnit);
+            if (trapDmg)
+            {
+                trapDmg.Cast(thisUnit);
+            }
+
             #region Triggering Movement Related BuffDebuff Effect During Movement
 
             thisUnit.CheckCrippled();
@@ -295,7 +301,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 revertUnitPosition = null;
                 ClearArrow(tempPathList);
 
-                yield return null;
+                yield break;
             }
             #endregion
         }

@@ -66,7 +66,10 @@ namespace NightmareEchoes.TurnOrder
             #endregion
 
             //Start Turn
-            controller.StartCoroutine(EnemyTurn());
+            if(!tempStun)
+            {
+                controller.StartCoroutine(EnemyTurn());
+            }
             aoeSkillsPassed.Clear();
         }
 
@@ -75,19 +78,22 @@ namespace NightmareEchoes.TurnOrder
             //start a couroutine to move
             if (enemyAI == null || controller.CurrentUnit == null) return;
 
+            if (!madeDecision) return;
+
             if (enemyAI.TotalHeroList.Count > 0)
             {
                 enemyAI.MoveProcess(controller.CurrentUnit);
             }
-            if (!madeDecision) return;
-            
+
             var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
             if (aoeDmg)
             {
-                if (aoeSkillsPassed.Contains(aoeDmg)) return;
-                if (aoeDmg.Cast(controller.CurrentUnit)) aoeSkillsPassed.Add(aoeDmg);
+                if (aoeSkillsPassed.Contains(aoeDmg)) 
+                    return;
+                if (aoeDmg.Cast(controller.CurrentUnit)) 
+                    aoeSkillsPassed.Add(aoeDmg);
             }
-            
+
             var trapDmg = CombatManager.Instance.CheckTrap(controller.CurrentUnit);
             if (trapDmg)
             {
@@ -146,30 +152,30 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator EnemyTurn()
         {
-            
             yield return new WaitForSeconds(controller.enemythinkingDelay);
             
             if(controller.CurrentUnit != null)
             {
                 enemyAI.MakeDecision(controller.CurrentUnit);
+                madeDecision = true;
             }
 
-            madeDecision = true;
             yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
 
-            if(controller.CurrentUnit.ImmobilizeToken)
+            //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.
+            if ((enemyAI.inAtkRange || enemyAI.inMoveAndAttackRange) && !enemyAI.hasAttacked && !enemyAI.detectedStealthHero && enemyAI.totalHeroList.Count > 0)
             {
-                controller.StartCoroutine(controller.PassTurn());
+                if (controller.CurrentUnit.ImmobilizeToken && enemyAI.FindDistanceBetweenUnit(controller.CurrentUnit, enemyAI.targetHero) <= enemyAI.selectedAttackRange)
+                {
+                    enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.targetTileToMove);
+                }
+                else if (!controller.CurrentUnit.ImmobilizeToken)
+                {
+                    enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.targetTileToMove);
+                }
             }
-            else if (!enemyAI.inAtkRange && !enemyAI.inMoveAndAttackRange)
-            {
-                controller.StartCoroutine(controller.PassTurn());
-            }
-            else
-            {
-                yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
-                controller.StartCoroutine(controller.PassTurn());
-            }
+
+            controller.StartCoroutine(controller.PassTurn());
 
 
         }

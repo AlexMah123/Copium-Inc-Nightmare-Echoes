@@ -23,7 +23,7 @@ namespace NightmareEchoes.TurnOrder
             {
                 #region Tokens
                 //enable this if you want to test applying tokens manually in the editor
-                //controller.CurrentUnit.ApplyAllTokenEffects();
+                controller.CurrentUnit.ApplyAllTokenEffects();
 
                 if (controller.CurrentUnit.StunToken)
                 {
@@ -55,8 +55,12 @@ namespace NightmareEchoes.TurnOrder
 
             //Start Turn
             //COMMENT IF YOU WANT MANUAL MOVEMENT
-            PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
-            controller.StartCoroutine(WaitForTurnEnd());
+            if(!tempStun)
+            {
+                PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
+                controller.StartCoroutine(WaitForTurnEnd());
+            }
+            
         }
 
         protected override void OnUpdate()
