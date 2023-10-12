@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using UnityEngine;
 using NightmareEchoes.Grid;
@@ -41,7 +42,7 @@ namespace NightmareEchoes.Unit.Combat
         private Dictionary<Skill, int> activeAoesCD = new();
         
         //Active Traps
-        private Dictionary<GameObject, Skill> activeTraps = new();
+        private OrderedDictionary activeTraps = new();
 
         private Camera cam;
 
@@ -189,12 +190,14 @@ namespace NightmareEchoes.Unit.Combat
             var trap = target.CheckTrapOnTile();
 
             if (!trap) return null;
-            foreach (var kvp in activeTraps.Where(kvp => kvp.Key == trap))
+            var enumerator = activeTraps.GetEnumerator(); 
+            while (enumerator.MoveNext())
             {
-                var activatedTrap = kvp.Key;
-                activeTraps.Remove(kvp.Key);
-                Destroy(activatedTrap);
-                return kvp.Value;
+                if ((GameObject)enumerator.Key != trap) continue;
+                var activatedTrap = enumerator.Key;
+                activeTraps.Remove(enumerator.Key);
+                Destroy((Object)activatedTrap);
+                return enumerator.Value as Skill;
             }
 
             return null;
@@ -758,6 +761,28 @@ namespace NightmareEchoes.Unit.Combat
                 var skill = activeSkill;
                 activeTraps.Add(newTrap, skill);
             }
+            
+            //Check for extras
+            var count = activeTraps.Values.Cast<object>().Count(skill => skill as Skill == activeSkill);
+            Debug.Log(count);
+            if (count > activeSkill.MaxCount)
+            {
+                var enumerator = activeTraps.GetEnumerator();
+                var trapsToRemove = new List<object>();
+                while (enumerator.MoveNext() && count > activeSkill.MaxCount)
+                { 
+                    if (enumerator.Value as Skill != activeSkill) continue;
+                    trapsToRemove.Add(enumerator.Key);
+                    count--;
+                }
+
+                foreach (var trap in trapsToRemove)
+                {
+                    activeTraps.Remove(trap);
+                    Destroy((Object)trap);
+                }
+            }
+            
             EndTurn();
         }
 
