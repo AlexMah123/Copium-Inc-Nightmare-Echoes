@@ -40,6 +40,7 @@ namespace NightmareEchoes.Unit
 
         public override void BasicAttack()
         {
+            AudioManager.instance.PlaySFX("ArcaneMissle");
             CombatManager.Instance.SelectSkill(this, basicAttack);
         }
 
