@@ -47,6 +47,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected int backstabBonus = 3;
         [SerializeField] protected bool placable;
         [SerializeField] protected int placableCount;
+        [SerializeField] protected int maxCount;
         [SerializeField] protected GameObject placableGameObject;
         
         [field: TextArea(1,10)][SerializeField] protected string skillDescription;
@@ -171,6 +172,12 @@ namespace NightmareEchoes.Unit
         {
             get => placableCount;
             set => placableCount = value;
+        }
+
+        public int MaxCount
+        {
+            get => maxCount;
+            set => maxCount = value;
         }
 
         public GameObject PlacableGameObject
