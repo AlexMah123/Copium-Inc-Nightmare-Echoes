@@ -14,10 +14,11 @@ namespace NightmareEchoes.Unit
             base.Cast(target);
 
             DealDamage(target);
-
+            
+            Knockback(thisUnit.ActiveTile, target);
 
             //knockback
-            var direction = target.transform.position - thisUnit.transform.position;
+            /*var direction = target.transform.position - thisUnit.transform.position;
             var destination = target.transform.position + direction;
             
             var tileOccupied = false;
@@ -39,7 +40,7 @@ namespace NightmareEchoes.Unit
                     }
                 }
             }
-            
+            */
             
             return true;
         }

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace NightmareEchoes.Unit
 {
     //Written by Ter (stolen from jh)
-    public class Bash : Skill
+    public class Knockback : Skill
     {
         Direction prevDir;
         public override bool Cast(Entity target)
@@ -16,8 +16,10 @@ namespace NightmareEchoes.Unit
 
             DealDamage(target);
 
+            Knockback(thisUnit.ActiveTile, target);
+
             //knockback
-            var direction = target.transform.position - thisUnit.transform.position;
+            /*var direction = target.transform.position - thisUnit.transform.position;
             var destination = target.transform.position + direction;
             prevDir = target.Direction;
                 
@@ -39,7 +41,7 @@ namespace NightmareEchoes.Unit
                         thisUnit.CheckCrippled();
                     }
                 }
-            }
+            }*/
 
 
             return true;

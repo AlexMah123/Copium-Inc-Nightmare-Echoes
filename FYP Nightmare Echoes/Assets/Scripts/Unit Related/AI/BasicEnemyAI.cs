@@ -612,7 +612,7 @@ namespace NightmareEchoes.Unit.AI
         {
             yield return new WaitForSeconds(attackDelay);
 
-            CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckEntityGameObjectOnTile().GetComponent<Entity>(), thisUnit.BasicAttackSkill);
+            CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckEntityGameObjectOnTile().GetComponent<Entity>(), currSelectedSkill);
             targetTileToMove.HideTile();
             totalPathList.Clear();
         }
