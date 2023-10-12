@@ -54,7 +54,6 @@ namespace NightmareEchoes.TurnOrder
             #endregion
 
             //Start Turn
-            //COMMENT IF YOU WANT MANUAL MOVEMENT
             if(!tempStun)
             {
                 PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
@@ -65,7 +64,6 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnUpdate()
         {
-            //COMMENT IF YOU WANT MANUAL MOVEMENT
             PathfindingManager.Instance.PlayerInputPathfinding();
 
             //if you cancel movement

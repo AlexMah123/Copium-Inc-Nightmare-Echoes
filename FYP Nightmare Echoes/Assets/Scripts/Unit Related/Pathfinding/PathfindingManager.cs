@@ -359,12 +359,6 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 CameraControl.Instance.isPanning = false;
                 isMoving = false;
-
-                //remove comment out later if we want to hide tile and reset selectedUnit when we stop moving
-                //HideTilesInRange(tilesInRange);
-                //ifSelectedUnit = false;
-
-                //remove comment out if we want to enable multiple movement 
             }
         }
         #endregion

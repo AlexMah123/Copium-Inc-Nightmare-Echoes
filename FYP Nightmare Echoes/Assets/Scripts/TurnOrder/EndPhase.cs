@@ -2,6 +2,7 @@ using NightmareEchoes.Unit;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -38,7 +39,10 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnUpdate()
         {
-
+            if (controller.FindAllEnemies() == null)
+            {
+                SceneManager.LoadScene(0);
+            }
         }
 
         protected override void OnExit()

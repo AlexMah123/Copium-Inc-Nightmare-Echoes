@@ -14,7 +14,6 @@ namespace NightmareEchoes.TurnOrder
     public class EnemyPhase : Phase
     {
         bool tempStun = false;
-        private bool madeDecision;
 
         BasicEnemyAI enemyAI;
 
@@ -24,7 +23,6 @@ namespace NightmareEchoes.TurnOrder
         {
             //Reseting Values
             tempStun = false;
-            madeDecision = false;
 
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
@@ -78,8 +76,6 @@ namespace NightmareEchoes.TurnOrder
             //start a couroutine to move
             if (enemyAI == null || controller.CurrentUnit == null) return;
 
-            if (!madeDecision) return;
-
             if (enemyAI.TotalHeroList.Count > 0)
             {
                 enemyAI.MoveProcess(controller.CurrentUnit);
@@ -95,6 +91,7 @@ namespace NightmareEchoes.TurnOrder
             }
 
             var trapDmg = CombatManager.Instance.CheckTrap(controller.CurrentUnit);
+
             if (trapDmg)
             {
                 trapDmg.Cast(controller.CurrentUnit);
@@ -157,7 +154,6 @@ namespace NightmareEchoes.TurnOrder
             if(controller.CurrentUnit != null)
             {
                 enemyAI.MakeDecision(controller.CurrentUnit);
-                madeDecision = true;
             }
 
             yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);

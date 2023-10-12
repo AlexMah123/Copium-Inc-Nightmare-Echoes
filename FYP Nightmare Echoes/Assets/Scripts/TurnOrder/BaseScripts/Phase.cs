@@ -73,12 +73,6 @@ namespace NightmareEchoes.TurnOrder
                     controller.gameOver = true;
                     UIManager.Instance.GameOver();
                 }
-
-                if (controller.FindAllEnemies() == null)
-                {
-                    SceneManager.LoadScene(0);
-                }
-
             }
 
             OnUpdate();
