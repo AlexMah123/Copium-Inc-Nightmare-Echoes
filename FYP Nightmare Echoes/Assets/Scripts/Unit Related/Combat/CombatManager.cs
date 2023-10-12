@@ -516,7 +516,10 @@ namespace NightmareEchoes.Unit.Combat
                     possibleTileCoords = FrontalRange(unit.ActiveTile, range , unit);
                     break;
                 case "Diamond":
-                    possibleTileCoords = DiamondRange(unit.ActiveTile, range);
+                    possibleTileCoords = DiamondRange(unit.ActiveTile, range, false);
+                    break;
+                case "DiamondGap":
+                    possibleTileCoords = DiamondRange(unit.ActiveTile, range, true);
                     break;
                 default:
                     Debug.LogWarning("ERROR");
@@ -601,7 +604,7 @@ namespace NightmareEchoes.Unit.Combat
             return possibleTileCoords;
         }
 
-        public List<Vector2Int> DiamondRange(OverlayTile startTile, int range)
+        public List<Vector2Int> DiamondRange(OverlayTile startTile, int range, bool gap)
         {
             var possibleTileCoords = new List<Vector2Int>();
             possibleTileCoords.Add(new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y));
@@ -624,6 +627,20 @@ namespace NightmareEchoes.Unit.Combat
                 copyList.AddRange(newCoords);
                 newCoords.Clear();
             }
+
+            if (!gap) return possibleTileCoords;
+            
+            var n = new Vector2Int(startTile.gridLocation.x + 1, startTile.gridLocation.y);
+            var s = new Vector2Int(startTile.gridLocation.x - 1, startTile.gridLocation.y);
+            var e = new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y + 1);
+            var w = new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y - 1);
+
+            var copy = new List<Vector2Int>(possibleTileCoords);
+            foreach (var coord in copy.Where(coord => coord == n || coord == s || coord == e || coord == w || coord == new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y)))
+            {
+                possibleTileCoords.Remove(coord);
+            }
+
             return possibleTileCoords;
         }
 

@@ -15,6 +15,8 @@ namespace NightmareEchoes.Unit
                 entity.AddBuff(entity.IsHostile
                     ? GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1)
                     : GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
+                if (entity.IsHostile)
+                    entity.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.SPEED_DEBUFF, 3, 1));
             }
 
             return true;
