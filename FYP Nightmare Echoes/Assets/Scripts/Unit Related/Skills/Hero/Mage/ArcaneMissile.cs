@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using NightmareEchoes.Grid;
+using NightmareEchoes.Sound;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace NightmareEchoes.Unit
 
             DealDamage(target);
 
+            AudioManager.instance.PlaySFX("ArcaneMissle");
             return true;
         }
     }
