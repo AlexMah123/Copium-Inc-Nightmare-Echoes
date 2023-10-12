@@ -607,7 +607,8 @@ namespace NightmareEchoes.Unit.Combat
         public List<Vector2Int> DiamondRange(OverlayTile startTile, int range, bool gap)
         {
             var possibleTileCoords = new List<Vector2Int>();
-            possibleTileCoords.Add(new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y));
+            var startCoord = (Vector2Int)startTile.gridLocation;
+            possibleTileCoords.Add(startCoord);
             
             var copyList = new List<Vector2Int>(possibleTileCoords);
             var newCoords = new List<Vector2Int>();
@@ -615,10 +616,10 @@ namespace NightmareEchoes.Unit.Combat
             {
                 foreach (var v in copyList)
                 {
-                    newCoords.Add(new Vector2Int(v.x + 1, v.y));
-                    newCoords.Add(new Vector2Int(v.x - 1, v.y)); 
-                    newCoords.Add(new Vector2Int(v.x, v.y + 1)); 
-                    newCoords.Add(new Vector2Int(v.x, v.y - 1)); 
+                    newCoords.Add(v + Vector2Int.right);
+                    newCoords.Add(v + Vector2Int.left); 
+                    newCoords.Add(v + Vector2Int.up); 
+                    newCoords.Add(v + Vector2Int.down); 
                 }
                 
                 possibleTileCoords.AddRange(newCoords);
@@ -630,13 +631,13 @@ namespace NightmareEchoes.Unit.Combat
 
             if (!gap) return possibleTileCoords;
             
-            var n = new Vector2Int(startTile.gridLocation.x + 1, startTile.gridLocation.y);
-            var s = new Vector2Int(startTile.gridLocation.x - 1, startTile.gridLocation.y);
-            var e = new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y + 1);
-            var w = new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y - 1);
+            var n = startCoord + Vector2Int.right;
+            var s = startCoord + Vector2Int.left;
+            var e = startCoord + Vector2Int.up;
+            var w = startCoord + Vector2Int.down;
 
             var copy = new List<Vector2Int>(possibleTileCoords);
-            foreach (var coord in copy.Where(coord => coord == n || coord == s || coord == e || coord == w || coord == new Vector2Int(startTile.gridLocation.x, startTile.gridLocation.y)))
+            foreach (var coord in copy.Where(coord => coord == n || coord == s || coord == e || coord == w || coord == startCoord))
             {
                 possibleTileCoords.Remove(coord);
             }
