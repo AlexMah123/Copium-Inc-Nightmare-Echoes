@@ -6,7 +6,6 @@ using UnityEngine;
 using NightmareEchoes.Unit.AI;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
-using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using NightmareEchoes.Inputs;
 
 //created by Alex
@@ -34,15 +33,18 @@ namespace NightmareEchoes.TurnOrder
                 enemyAI = controller.CurrentUnit.GetComponent<BasicEnemyAI>();
 
                 #region Tokens
+                //enable this if you want to test applying tokens manually in the editor
                 //controller.CurrentUnit.ApplyAllTokenEffects();
 
                 if (controller.CurrentUnit.StunToken)
                 {
+                    tempStun = true;
                     controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
 
                     UIManager.Instance.EnableCurrentUI(false);
                     controller.StartCoroutine(controller.PassTurn());
                 }
+
                 #endregion
 
                 #region BuffDebuff
@@ -114,7 +116,8 @@ namespace NightmareEchoes.TurnOrder
 
                 //update effects & stats
                 controller.CurrentUnit.ApplyAllBuffDebuffs();
-                controller.CurrentUnit.ApplyAllTokenEffects();
+                //should not need this but just checking
+                //controller.CurrentUnit.ApplyAllTokenEffects();
                 controller.CurrentUnit.UpdateBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
 
@@ -154,7 +157,11 @@ namespace NightmareEchoes.TurnOrder
             madeDecision = true;
             yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
 
-            if (!enemyAI.inAtkRange && !enemyAI.inMoveAndAttackRange)
+            if(controller.CurrentUnit.ImmobilizeToken)
+            {
+                controller.StartCoroutine(controller.PassTurn());
+            }
+            else if (!enemyAI.inAtkRange && !enemyAI.inMoveAndAttackRange)
             {
                 controller.StartCoroutine(controller.PassTurn());
             }

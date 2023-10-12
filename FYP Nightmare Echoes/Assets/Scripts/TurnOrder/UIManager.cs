@@ -791,7 +791,6 @@ namespace NightmareEchoes.TurnOrder
 
                     if (glossaryObj != null)
                     {
-                        Debug.Log("here");
                         glossaryObj.transform.GetChild(0).GetComponentInChildren<Image>().sprite =
                             currentUnitTotalStatusEffectList[i].icon;
 

@@ -7,6 +7,7 @@ using NightmareEchoes.Grid;
 using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Unit.AI;
+using UnityEngine.Pool;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.Unit
@@ -75,7 +76,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected PolygonCollider2D tileSize;
 
         [Header("Popup Text Related")]
-        private Queue<GameObject> popupTextQueue = new Queue<GameObject>();
+        private Queue<PopupTextData> popupTextQueue = new Queue<PopupTextData>();
         private bool isDisplayingPopupText = false;
         [SerializeField] float popupTextDelay = 0.6f;
 
@@ -823,27 +824,27 @@ namespace NightmareEchoes.Unit
         {
             if (popupTextPrefab)
             {
-                popupTextQueue.Enqueue(popupTextPrefab);
+                popupTextQueue.Enqueue(new PopupTextData(text, color));
 
                 if (!isDisplayingPopupText)
                 {
-                    StartCoroutine(DisplayNextPopupText(text, color));
+                    StartCoroutine(DisplayNextPopupText());
                 }
             }
         }
 
-        IEnumerator DisplayNextPopupText(string text, Color color)
+        IEnumerator DisplayNextPopupText()
         {
             isDisplayingPopupText = true;
 
             while(popupTextQueue.Count > 0)
             {
-                popupTextQueue.Dequeue();
+                var tempData = popupTextQueue.Dequeue();
 
                 GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up + (Vector3.left * 0.25f), Quaternion.identity);
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
-                textMeshPro.text = text;
-                textMeshPro.color = color;
+                textMeshPro.text = tempData.popupTextData;
+                textMeshPro.color = tempData.textColor;
 
                 yield return new WaitForSeconds(popupTextDelay);
 
@@ -1088,6 +1089,7 @@ namespace NightmareEchoes.Unit
                 mod.TriggerEffect(this);
                 return true;
             }
+
             return false;
         }
 
@@ -1117,6 +1119,18 @@ namespace NightmareEchoes.Unit
     {
         RANGED_UNIT = 0,
         MELEE_UNIT = 1,
+    }
+
+    public class PopupTextData
+    {
+        public string popupTextData;
+        public Color textColor;
+
+        public PopupTextData(string textData, Color color)
+        {
+            popupTextData = textData;
+            textColor = color;
+        }
     }
 
     [Serializable]

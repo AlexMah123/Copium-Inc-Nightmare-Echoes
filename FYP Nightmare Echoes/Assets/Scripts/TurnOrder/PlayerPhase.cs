@@ -22,10 +22,12 @@ namespace NightmareEchoes.TurnOrder
             if (controller.CurrentUnit != null)
             {
                 #region Tokens
-                controller.CurrentUnit.ApplyAllTokenEffects();
+                //enable this if you want to test applying tokens manually in the editor
+                //controller.CurrentUnit.ApplyAllTokenEffects();
 
                 if (controller.CurrentUnit.StunToken)
                 {
+                    tempStun = true;
                     controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
 
                     UIManager.Instance.EnableCurrentUI(false);
@@ -85,6 +87,7 @@ namespace NightmareEchoes.TurnOrder
                     if (CombatManager.Instance.ActiveSkill != null)
                     {
                         CombatManager.Instance.SelectSkill(controller.CurrentUnit, CombatManager.Instance.ActiveSkill);
+                        CombatManager.Instance.ClearPreviews();
                     }
 
                     //shows back the tiles in range
@@ -129,7 +132,8 @@ namespace NightmareEchoes.TurnOrder
 
                 //update effects & stats
                 controller.CurrentUnit.ApplyAllBuffDebuffs();
-                controller.CurrentUnit.ApplyAllTokenEffects();
+                //should not need this but just checking
+                //controller.CurrentUnit.ApplyAllTokenEffects(); 
                 controller.CurrentUnit.UpdateBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
 

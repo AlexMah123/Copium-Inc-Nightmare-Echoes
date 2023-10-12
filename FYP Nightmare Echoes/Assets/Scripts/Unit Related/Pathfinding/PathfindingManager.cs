@@ -285,15 +285,19 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             SetUnitPositionOnTile(targetTile, thisUnit);
 
+            #region Triggering Movement Related BuffDebuff Effect During Movement
+
+            thisUnit.CheckCrippled();
+
             if (thisUnit.CheckImmobilize())
             {
                 isMoving = false;
                 revertUnitPosition = null;
                 ClearArrow(tempPathList);
+
                 yield return null;
             }
-
-            thisUnit.CheckCrippled();
+            #endregion
         }
 
         public void MoveAlongPath(Entity thisUnit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
@@ -301,12 +305,11 @@ namespace NightmareEchoes.Unit.Pathfinding
             //units movement
             if (pathList.Count > 0 && thisUnit != null) 
             {   
-                #region Setting Unit Direction
+                //Setting Unit Direction
                 Vector3Int direction = pathList[0].gridLocation - thisUnit.ActiveTile.gridLocation;
 
                 //setting directions as well as the moving boolean
                 ChangeDirection(direction, thisUnit);
-                #endregion
 
                 var step = movingSpeed * Time.deltaTime;
                 var zIndex = pathList[0].transform.position.z;
@@ -323,18 +326,18 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                     pathList.RemoveAt(0);
 
-                    #region Trigger Movement Related Token Effect Before Movement
+                    #region Triggering Movement Related BuffDebuff Effect During Movement
+                    thisUnit.CheckCrippled();
+
                     if (thisUnit.CheckImmobilize())
                     {
                         isMoving = false;
                         revertUnitPosition = null;
-                        ClearArrow(tempPathList);
+                        ClearArrow(pathList);
+                        pathList.Clear();
+
+                        return;
                     }
-                    #endregion
-
-                    #region Triggering Movement Related BuffDebuff Effect During Movement
-                    thisUnit.CheckCrippled();
-
 
                     #endregion
                 }
@@ -363,45 +366,48 @@ namespace NightmareEchoes.Unit.Pathfinding
         #region Utility for unit direction
         public void ChangeDirection(Vector3 direction, Entity thisUnit)
         {
+            //reset the movements
+            if (thisUnit.BackModel != null && thisUnit.FrontModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
+            {
+                thisUnit.BackAnimator.SetBool("Moving", false);
+                thisUnit.FrontAnimator.SetBool("Moving", false);
+            }
+
             //setting directions as well as the moving boolean
             if (direction == new Vector3Int(1, 0, 0)) //back facing
             {
                 thisUnit.Direction = Direction.NORTH;
 
-                if (thisUnit.BackModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
+                if (thisUnit.BackModel != null && thisUnit.BackAnimator != null)
                 {
                     thisUnit.BackAnimator.SetBool("Moving", true);
-                    thisUnit.FrontAnimator.SetBool("Moving", false);
                 }
             }
             else if (direction == new Vector3Int(0, 1, 0)) //back facing
             {
                 thisUnit.Direction = Direction.WEST;
 
-                if (thisUnit.BackModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
+                if (thisUnit.BackModel != null && thisUnit.BackAnimator != null)
                 {
                     thisUnit.BackAnimator.SetBool("Moving", true);
-                    thisUnit.FrontAnimator.SetBool("Moving", false);
                 }
             }
             else if (direction == new Vector3Int(-1, 0, 0)) //front facing
             {
                 thisUnit.Direction = Direction.SOUTH;
 
-                if (thisUnit.FrontModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
+                if (thisUnit.FrontModel != null && thisUnit.FrontAnimator != null)
                 {
                     thisUnit.FrontAnimator.SetBool("Moving", true);
-                    thisUnit.BackAnimator.SetBool("Moving", false);
                 }
             }
             else if (direction == new Vector3Int(0, -1, 0)) //front facing
             {
                 thisUnit.Direction = Direction.EAST;
 
-                if (thisUnit.FrontModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
+                if (thisUnit.FrontModel != null && thisUnit.FrontAnimator != null)
                 {
                     thisUnit.FrontAnimator.SetBool("Moving", true);
-                    thisUnit.BackAnimator.SetBool("Moving", false);
                 }
             }
         }

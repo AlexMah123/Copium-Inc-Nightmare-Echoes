@@ -188,7 +188,10 @@ namespace NightmareEchoes.Unit.AI
                 IfOutMoveAtkRange();
             }
 
-            //Debug.Log(highestTileUtil);
+            if (thisUnit.CheckImmobilize())
+            {
+                totalPathList.Clear();
+            }
             #endregion
         }
         #endregion
@@ -576,7 +579,14 @@ namespace NightmareEchoes.Unit.AI
             //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.
             else if (totalPathList.Count == 0 && (inAtkRange || inMoveAndAttackRange) && !hasAttacked && !detectedStealthHero && totalHeroList.Count > 0)
             {
-                AttackProcess(thisUnit, targetTileToMove);
+                if(thisUnit.ImmobilizeToken && FindDistanceBetweenUnit(thisUnit, targetHero) <= selectedAttackRange) 
+                {
+                    AttackProcess(thisUnit, targetTileToMove);
+                }
+                else if(!thisUnit.ImmobilizeToken)
+                {
+                    AttackProcess(thisUnit, targetTileToMove);
+                }
             }
         }
 
@@ -664,12 +674,12 @@ namespace NightmareEchoes.Unit.AI
             targetHero = sortedAggros.ToList()[0].Key;
             if (!targetHero.IsHostile && !targetHero.StealthToken && !targetHero.IsProp)
             {
-                Debug.Log("hero aggro");
+                //Debug.Log("hero aggro");
                 rangeToTarget = sortedAggros.ToList()[0].Value + (thisUnit.BasicAttackSkill.Range + thisUnit.stats.MoveRange);
             }
             else
             {
-                Debug.Log("prop aggro");
+                //Debug.Log("prop aggro");
                 rangeToTarget = sortedAggros.ToList()[0].Value;
             }
         }
@@ -704,7 +714,7 @@ namespace NightmareEchoes.Unit.AI
             }
         }
 
-        float FindDistanceBetweenUnit(Entity target1, Entity target2)
+        public float FindDistanceBetweenUnit(Entity target1, Entity target2)
         {
             float dist;
             Vector3Int t1v, t2v;
@@ -717,7 +727,7 @@ namespace NightmareEchoes.Unit.AI
             return dist;
         }
 
-        float FindDistanceBetweenTile(OverlayTile target1, OverlayTile target2)
+        public float FindDistanceBetweenTile(OverlayTile target1, OverlayTile target2)
         {
             float dist;
             Vector3Int t1v, t2v;

@@ -764,7 +764,7 @@ namespace NightmareEchoes.Unit.Combat
             
             //Check for extras
             var count = activeTraps.Values.Cast<object>().Count(skill => skill as Skill == activeSkill);
-            Debug.Log(count);
+            //Debug.Log(count);
             if (count > activeSkill.MaxCount)
             {
                 var enumerator = activeTraps.GetEnumerator();

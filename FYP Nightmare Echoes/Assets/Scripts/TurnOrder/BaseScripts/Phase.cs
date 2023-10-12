@@ -81,7 +81,6 @@ namespace NightmareEchoes.TurnOrder
 
             }
 
-
             OnUpdate();
         }
 
