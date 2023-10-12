@@ -59,5 +59,57 @@ namespace NightmareEchoes.Sound
                 sfxSource.PlayOneShot(SFXSound.clip);
             }
         }
+
+        public void ToggleMaster()
+        {
+            musicSource.mute = !musicSource.mute;
+
+        }
+
+        public void ToggleMusic()
+        {
+            musicSource.mute = !musicSource.mute;
+        }
+
+        public void ToggleSFX()
+        {
+            sfxSource.mute = !sfxSource.mute;
+        }
+
+        public void MasterVolume(float Volume)
+        {
+            musicSource.volume = Volume;
+
+            if (Volume == 0)
+            {
+                musicSource.volume = 0;
+            }
+            else if (Volume > 10)
+                musicSource.volume = 10;
+        }
+
+        public void MusicVolume(float Volume)
+        {
+            musicSource.volume = Volume;
+
+            if (Volume == 0)
+            {
+                musicSource.volume = 0;
+            }
+            else if (Volume > 10)
+                musicSource.volume = 10;
+        }
+
+        public void SFXVolume(float Volume)
+        {
+            sfxSource.volume = Volume;
+
+            if (Volume == 0)
+            {
+                sfxSource.volume = 0;
+            }
+            else if (Volume > 10)
+                sfxSource.volume = 10;
+        }
     }
 }
