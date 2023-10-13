@@ -502,7 +502,6 @@ namespace NightmareEchoes.Unit.AI
                 //set the targets based on the range (defaulted to 1)
                 List<Entity> targets = CombatManager.Instance.IsStealthUnitInViewRange(thisUnit, 1);
 
-
                 if (targets.Count > 0)
                 {
                     //based on the amount, randomize the targets
@@ -535,7 +534,6 @@ namespace NightmareEchoes.Unit.AI
                                     possibleRedirectTiles.Add(tilesAroundTarget[i]);
                                 }
                             }
-
                         }
 
                         if(possibleRedirectTiles.Count > 1)

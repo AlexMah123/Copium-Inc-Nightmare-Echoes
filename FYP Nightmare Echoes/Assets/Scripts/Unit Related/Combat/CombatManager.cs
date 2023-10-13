@@ -608,7 +608,7 @@ namespace NightmareEchoes.Unit.Combat
             possibleTileCoords.Add(frontalTile);
 
 
-            for (var i = 1; i < range; i++)
+            for (var i = 1; i <= range; i++)
             {
                 if (unit.Direction == Direction.NORTH || unit.Direction == Direction.SOUTH)
                 {
@@ -671,62 +671,20 @@ namespace NightmareEchoes.Unit.Combat
         public List<Entity> IsStealthUnitInViewRange(Entity thisUnit, int range)
         {
             //declare variables and reset
-            List<Vector2Int> tilesPosInFront = new List<Vector2Int>();
             List<Entity> herosInStealth = new List<Entity>();
-            Vector3Int thisUnitPos = thisUnit.ActiveTile.gridLocation;
 
-            #region adding tiles to check
-            /*for (int i = 1; i <= range; ++i)
-            {
-                switch (thisUnit.Direction)
-                {
-                    case Direction.NORTH:
-                        //add the front
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y));
-
-                        //add the side
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y + range));
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y - range));
-                        break;
-
-                    case Direction.SOUTH:
-                        //add the front
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y));
-
-                        //add the side
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y + range));
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y - range));
-                        break;
-
-                    case Direction.EAST:
-                        //add the front
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y - range));
-
-                        //add the side
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y - range));
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y - range));
-                        break;
-
-                    case Direction.WEST:
-                        //add the front
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x, thisUnitPos.y + range));
-
-                        //add the side
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x + range, thisUnitPos.y + range));
-                        tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y + range));
-                        break;
-                }
-            }*/
-            #endregion
-
-            var overlayTileInFront = new List<OverlayTile>(OverlayTileManager.Instance.TrimOutOfBounds(tilesPosInFront));
+            var overlayTileInFront = new List<OverlayTile>(OverlayTileManager.Instance.TrimOutOfBounds(FrontalRange(thisUnit.ActiveTile, range, thisUnit)));
 
             foreach (var tile in overlayTileInFront)
             {
                 //for each overlayTile in front, check if the tiles have units that are not hostile (hero)
-                if (!tile.CheckEntityGameObjectOnTile()) continue;
+                if (!tile.CheckEntityGameObjectOnTile()) 
+                    continue;
+
                 var entity = tile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
-                if (entity.IsHostile || entity.IsProp) continue;
+
+                if (entity.IsHostile || entity.IsProp) 
+                    continue;
                 
                 if (entity.FindModifier(STATUS_EFFECT.STEALTH_TOKEN))
                     herosInStealth.Add(entity);
@@ -736,7 +694,7 @@ namespace NightmareEchoes.Unit.Combat
         }
         #endregion
 
-        //==Coroutines==
+        #region Coroutine
         public IEnumerator UpdateUnitPositionsAtStart()
         {
             yield return new WaitForSeconds(1f);
@@ -745,11 +703,6 @@ namespace NightmareEchoes.Unit.Combat
             {
                 unitsInvolved[i].UpdateLocation();
             }
-
-            /*foreach (var unit in unitsInvolved)
-            {
-                unit.UpdateLocation();
-            }*/
         }
         
         IEnumerator PlaceTraps()
@@ -835,9 +788,10 @@ namespace NightmareEchoes.Unit.Combat
             yield return new WaitUntil(() => activeSkill.Cast(target, aoeTiles));
             EndTurn();
         }
+        #endregion
 
         #region Object Pooling
-        
+
         private List<GameObject> clonePool = new();
         private int cloneCount = 0;
 
