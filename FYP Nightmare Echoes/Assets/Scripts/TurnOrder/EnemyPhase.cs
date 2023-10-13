@@ -89,13 +89,6 @@ namespace NightmareEchoes.TurnOrder
                 if (aoeDmg.Cast(controller.CurrentUnit)) 
                     aoeSkillsPassed.Add(aoeDmg);
             }
-
-            var trapDmg = CombatManager.Instance.CheckTrap(controller.CurrentUnit);
-
-            if (trapDmg)
-            {
-                trapDmg.Cast(controller.CurrentUnit);
-            }
         }
 
         protected override void OnExit()

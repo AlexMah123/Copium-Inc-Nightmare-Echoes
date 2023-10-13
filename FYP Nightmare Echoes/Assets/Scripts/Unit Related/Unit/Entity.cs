@@ -7,6 +7,7 @@ using NightmareEchoes.Grid;
 using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Unit.AI;
+using NightmareEchoes.Unit.Combat;
 using UnityEngine.Pool;
 
 //created by Alex, edited by Ter
@@ -595,6 +596,12 @@ namespace NightmareEchoes.Unit
 
                 OnDestroyedEvent?.Invoke(this);
                 Destroy(gameObject);
+            }
+
+            var trapDmg = CombatManager.Instance.CheckTrap(this);
+            if (trapDmg)
+            {
+                trapDmg.Cast(this);
             }
 
             #region Sprite/Animation Updates
