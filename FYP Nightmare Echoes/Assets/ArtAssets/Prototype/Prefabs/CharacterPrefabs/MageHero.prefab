@@ -3357,7 +3357,8 @@ MonoBehaviour:
     stunResistModifier: 0
     resistModifier: 0
   buffDebuffList: []
-  tokenList: []
+  tokenList:
+  - {fileID: 11400000, guid: 8f427ed2890ffd04ba565d2451350935, type: 2}
   dodgeToken: 0
   blockToken: 0
   strengthToken: 0
@@ -3536,7 +3537,7 @@ MonoBehaviour:
   range: 4
   minRange: 1
   targetType: 1
-  targetArea: 2
+  targetArea: 6
   targetUnitAlignment: 2
   aoeType: 1
   aoeSize: 1
@@ -3942,7 +3943,7 @@ MonoBehaviour:
   - {x: 0.23290169, y: 0.133703, z: 0}
   m_ShapePathHash: 1679284933
   m_Mesh: {fileID: 0}
-  m_InstanceId: -83414
+  m_InstanceId: -1852
 --- !u!1 &8598185888284416580
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ namespace NightmareEchoes.Unit
   
                 var unit = tile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
                 DealDamage(unit);
+                unit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1));
             }
 
             CombatManager.Instance.SetActiveAoe(this, copy);

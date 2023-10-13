@@ -378,7 +378,7 @@ namespace NightmareEchoes.Unit.Combat
 
             var aoeArea = activeSkill.AoeType switch
             {
-                AOEType.Square => SquareRange(target, 1),
+                AOEType.Square => SquareRange(target, 1, false),
                 AOEType.Cross => LineRange(target, 1, false),
                 AOEType.NonAOE => SquareRange(target, 0)
             };
@@ -507,7 +507,10 @@ namespace NightmareEchoes.Unit.Combat
                     possibleTileCoords = LineRange(unit.ActiveTile, range, false);
                     break;
                 case "Square":
-                    possibleTileCoords = SquareRange(unit.ActiveTile, range);
+                    possibleTileCoords = SquareRange(unit.ActiveTile, range, false);
+                    break;
+                case "SquareGap":
+                    possibleTileCoords = SquareRange(unit.ActiveTile, range, true);
                     break;
                 case "Crosshair":
                     possibleTileCoords = LineRange(unit.ActiveTile, range, true);
@@ -548,7 +551,7 @@ namespace NightmareEchoes.Unit.Combat
             return possibleTileCoords;
         }
         
-        public List<Vector2Int> SquareRange(OverlayTile startTile, int range)
+        public List<Vector2Int> SquareRange(OverlayTile startTile, int range, bool gap = false)
         {
             var possibleTileCoords = new List<Vector2Int>();
 
@@ -559,6 +562,23 @@ namespace NightmareEchoes.Unit.Combat
                     possibleTileCoords.Add(new Vector2Int(startTile.gridLocation.x + i, startTile.gridLocation.y + j));
                 }
             }
+
+            if (!gap) return possibleTileCoords;
+
+            var startCoord = (Vector2Int) startTile.gridLocation;
+            var list = new List<Vector2Int>
+            {
+                startCoord + Vector2Int.right, startCoord + Vector2Int.left, startCoord + Vector2Int.up, startCoord + Vector2Int.down,
+                startCoord + Vector2Int.right + Vector2Int.up, startCoord + Vector2Int.right + Vector2Int.down, startCoord + Vector2Int.left + Vector2Int.up, startCoord + Vector2Int.left + Vector2Int.down,
+                startCoord
+            };
+            
+            var copy = new List<Vector2Int>(possibleTileCoords);
+            foreach (var coord in from coord in copy from c in list where coord == c select coord)
+            {
+                possibleTileCoords.Remove(coord);
+            }
+            
             return possibleTileCoords;
         }
 
@@ -604,7 +624,7 @@ namespace NightmareEchoes.Unit.Combat
             return possibleTileCoords;
         }
 
-        public List<Vector2Int> DiamondRange(OverlayTile startTile, int range, bool gap)
+        public List<Vector2Int> DiamondRange(OverlayTile startTile, int range, bool gap = false)
         {
             var possibleTileCoords = new List<Vector2Int>();
             var startCoord = (Vector2Int)startTile.gridLocation;
