@@ -21,12 +21,7 @@ namespace NightmareEchoes.Unit
 
             base.Cast(targetTile, aoeTiles);
 
-            DealDamage(target);
-            /*if (targetTile.CheckEntityGameObjectOnTile())
-            {
-                var unit = targetTile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
-                DealDamage(unit);
-            }*/
+            DealDamage(target, default, checkBlind: false);
 
             aoeTiles.Remove(targetTile);
 
@@ -36,36 +31,8 @@ namespace NightmareEchoes.Unit
 
                 var unit = tile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
 
-                //manually check for token
-                if (thisUnit.WeakenToken)
-                {
-                    int newDamage = Mathf.RoundToInt(secondaryDamage * 0.5f);
-                    if (DealDamage(unit, newDamage))
-                    {
-                        Knockback(targetTile, unit);
-                    }
-
-                    thisUnit.ShowPopUpText($"Attack was weakened!", Color.red);
-                    thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
-                }
-                else if (thisUnit.StrengthToken)
-                {
-                    int newDamage = Mathf.RoundToInt(secondaryDamage * 1.5f);
-                    if (DealDamage(unit, newDamage))
-                    {
-                        Knockback(targetTile, unit);
-                    }
-
-                    thisUnit.ShowPopUpText($"Attack was strengthen!", Color.red);
-                    thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
-                }
-                else
-                {
-                    if (DealDamage(unit, secondaryDamage)){
-                        Knockback(targetTile, unit);
-                    }
-                }
-
+                DealDamage(unit, secondaryDamage, checkBlind: false);
+                Knockback(targetTile, unit);
             }
 
             return true;

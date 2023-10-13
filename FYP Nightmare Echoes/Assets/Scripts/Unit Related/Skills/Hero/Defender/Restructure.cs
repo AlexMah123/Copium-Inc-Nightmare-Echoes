@@ -9,7 +9,7 @@ namespace NightmareEchoes.Unit
         public override bool Cast()
         {
             thisUnit.stats.Health += heal;
-            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.RESTORATION_BUFF, 3, 1));
+            //thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.RESTORATION_BUFF, 3, 1));
             thisUnit.ClearAllStatusEffect(thisUnit.TokenList, ModifierType.NEGATIVETOKEN);
 
             return true;

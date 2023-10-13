@@ -15,7 +15,7 @@ namespace NightmareEchoes.Unit
 
             unit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.IMMOBILIZE_TOKEN, 1, 2));
             unit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
-            unit.TakeDamage(damage);
+            unit.TakeDamage(damage, ignoreTokens: true);
 
             return true;
         }

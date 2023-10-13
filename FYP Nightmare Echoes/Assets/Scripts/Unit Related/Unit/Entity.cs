@@ -720,7 +720,7 @@ namespace NightmareEchoes.Unit
         }
 
 
-        public virtual void TakeDamage(int damage, bool checkDodge = true)
+        public virtual void TakeDamage(int damage, bool checkDodge = true, bool ignoreTokens = false)
         {
             if (frontModel != null && frontModel.activeSelf && frontAnimator != null)
             {
@@ -733,6 +733,15 @@ namespace NightmareEchoes.Unit
 
 
             #region Token Checks Before Taking Dmg
+
+            if(ignoreTokens)
+            {
+                stats.Health -= damage;
+
+                ShowPopUpText($"-{damage}", Color.yellow);
+                return;
+            }
+
             if (dodgeToken && checkDodge)
             {
                 if (FindModifier(STATUS_EFFECT.DODGE_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))

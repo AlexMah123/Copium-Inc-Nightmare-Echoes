@@ -10,11 +10,14 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target);
 
-            if (!DealDamage(target)) return true;
-            if ((stunChance - target.stats.StunResist) > (Random.Range(0, 101)))
+            if (DealDamage(target))
             {
-                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
+                if ((stunChance - target.stats.StunResist) > (Random.Range(0, 101)))
+                {
+                    target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
+                }
             }
+            
 
             return true;
         }

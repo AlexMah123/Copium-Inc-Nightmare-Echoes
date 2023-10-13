@@ -676,7 +676,7 @@ namespace NightmareEchoes.Unit.Combat
             Vector3Int thisUnitPos = thisUnit.ActiveTile.gridLocation;
 
             #region adding tiles to check
-            for (int i = 1; i <= range; ++i)
+            /*for (int i = 1; i <= range; ++i)
             {
                 switch (thisUnit.Direction)
                 {
@@ -716,7 +716,7 @@ namespace NightmareEchoes.Unit.Combat
                         tilesPosInFront.Add(new Vector2Int(thisUnitPos.x - range, thisUnitPos.y + range));
                         break;
                 }
-            }
+            }*/
             #endregion
 
             var overlayTileInFront = new List<OverlayTile>(OverlayTileManager.Instance.TrimOutOfBounds(tilesPosInFront));

@@ -28,8 +28,9 @@ namespace NightmareEchoes.Unit
                 if (!tile.CheckEntityGameObjectOnTile()) continue;
   
                 var unit = tile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
-                DealDamage(unit, default, false);
-                if (Random.Range(0, 101) > 20)
+                DealDamage(unit, default, checkBlind: false);
+
+                if ((DebuffChance - unit.stats.Resist) > Random.Range(0, 101))
                 {
                     unit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1));
                 }

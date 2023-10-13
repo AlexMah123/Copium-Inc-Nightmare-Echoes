@@ -15,7 +15,7 @@ namespace NightmareEchoes.Unit
             if (target.CheckEntityGameObjectOnTile())
             {
                 var unit = target.CheckEntityGameObjectOnTile().GetComponent<Entity>();
-                DealDamage(unit,default,false);
+                DealDamage(unit, default, checkBlind: false);
             }
 
             aoeTiles.Remove(target);
@@ -26,7 +26,7 @@ namespace NightmareEchoes.Unit
   
                 var unit = tile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
 
-                DealDamage(unit,secondaryDamage,false);
+                DealDamage(unit, secondaryDamage, checkBlind:false);
                 Knockback(target, unit);
             }
             AudioManager.instance.PlaySFX("ArcaneBlast");

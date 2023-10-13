@@ -37,8 +37,8 @@ namespace NightmareEchoes.Unit
                 }
             }
             
-            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 3));
-            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STEALTH_TOKEN, 1, 3));
+            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
+            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STEALTH_TOKEN, 1, 1));
             
             return true;
         }

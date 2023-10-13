@@ -56,7 +56,7 @@ namespace NightmareEchoes.Unit
             CombatManager.Instance.SelectSkill(this, skill3);
         }
 
-        public override void TakeDamage(int damage, bool checkDodge = true)
+        public override void TakeDamage(int damage, bool checkDodge = true, bool ignoreTokens = false)
         {
             base.TakeDamage(damage, checkDodge);
 
