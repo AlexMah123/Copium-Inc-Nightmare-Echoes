@@ -17,29 +17,31 @@ namespace NightmareEchoes.Unit
             var destination = thisUnit.transform.position + (direction/2);
 
             var tileOccupied = false;
-            var hit = Physics2D.Raycast(destination, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
-            if (hit)
+
+            if (!thisUnit.CheckImmobilize())
             {
-                var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
-                if (tileDestination)
+                var hit = Physics2D.Raycast(destination, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+                if (hit)
                 {
-                    if (tileDestination.CheckEntityGameObjectOnTile() || tileDestination.CheckObstacleOnTile())
-                        tileOccupied = true;
-                    
-                    if (!tileOccupied)
+                    var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
+                    if (tileDestination)
                     {
+                        if (tileDestination.CheckEntityGameObjectOnTile() || tileDestination.CheckObstacleOnTile())
+                            tileOccupied = true;
+
                         if (!tileOccupied)
                         {
-                            StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(thisUnit, tileDestination, 0.15f));
+                            if (!tileOccupied)
+                            {
+                                StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(thisUnit, tileDestination, 0.15f));
+                                if (DealDamage(target))
+                                {
+                                    target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+                                }
+                            }
                         }
                     }
                 }
-            }
-
-            
-            if(DealDamage(target))
-            {
-                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
             }
 
             return true;
