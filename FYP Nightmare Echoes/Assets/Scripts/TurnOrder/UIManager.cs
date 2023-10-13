@@ -1118,6 +1118,7 @@ namespace NightmareEchoes.TurnOrder
             if (!soundPanel.activeSelf)
             {
                 settingsPanel.SetActive(false);
+                settingButton.gameObject.SetActive(false);
                 soundPanel.SetActive(true);
             }
         }
@@ -1127,6 +1128,7 @@ namespace NightmareEchoes.TurnOrder
             if (soundPanel.activeSelf)
             {
                 settingsPanel.SetActive(true);
+                settingButton.gameObject.SetActive(true);
                 soundPanel.SetActive(false);
             }
         }
@@ -1136,6 +1138,7 @@ namespace NightmareEchoes.TurnOrder
             if (!GeneralSettingsPanel.activeSelf)
             {
                 settingsPanel.SetActive(false);
+                settingButton.gameObject.SetActive(false);
                 GeneralSettingsPanel.SetActive(true);
             }
         }
@@ -1145,6 +1148,7 @@ namespace NightmareEchoes.TurnOrder
             if (GeneralSettingsPanel.activeSelf)
             {
                 settingsPanel.SetActive(true);
+                settingButton.gameObject.SetActive(true);
                 GeneralSettingsPanel.SetActive(false);
             }
         }
