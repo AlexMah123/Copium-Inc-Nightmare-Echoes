@@ -170,6 +170,10 @@ namespace NightmareEchoes.TurnOrder
                     controller.StartCoroutine(controller.PassTurn());
                 }
             }
+            else
+            {
+                controller.StartCoroutine(controller.PassTurn());
+            }
 
             yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
 

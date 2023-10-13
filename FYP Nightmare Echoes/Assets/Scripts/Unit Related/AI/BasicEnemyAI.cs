@@ -570,7 +570,10 @@ namespace NightmareEchoes.Unit.AI
 
                 if (thisUnit.TypeOfUnit == TypeOfUnit.MELEE_UNIT)
                 {
-                    StartCoroutine(DetectedStealthUnit(redirectTile));
+                    if(!thisUnit.ImmobilizeToken)
+                    {
+                        StartCoroutine(DetectedStealthUnit(redirectTile));
+                    }
                 }
                 else
                 {
@@ -594,13 +597,10 @@ namespace NightmareEchoes.Unit.AI
         {
             yield return new WaitForSeconds(1f);
 
-            if(!thisUnit.CheckImmobilize())
-            {
-                StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, redirectTile, 0.25f));
-                yield return new WaitUntil(() => Vector2.Distance(thisUnit.transform.position, redirectTile.transform.position) < 0.01f);
+            StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, redirectTile, 0.25f));
+            yield return new WaitUntil(() => Vector2.Distance(thisUnit.transform.position, redirectTile.transform.position) < 0.01f);
 
-                AttackProcess(thisUnit, targetTileToMove);
-            }
+            AttackProcess(thisUnit, targetTileToMove);
         }
 
         #endregion

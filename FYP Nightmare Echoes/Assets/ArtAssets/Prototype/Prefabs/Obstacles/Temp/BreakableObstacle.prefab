@@ -103,7 +103,7 @@ MonoBehaviour:
   sprite: {fileID: -642702251, guid: 90aa4ead36d8eb543ae65db7afe77dac, type: 3}
   isProp: 1
   isHostile: 0
-  direction: 0
+  direction: -1
   typeOfUnit: 0
   popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
@@ -152,6 +152,7 @@ MonoBehaviour:
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
   tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
+  popupTextDelay: 0.6
 --- !u!60 &2380185597739719038
 PolygonCollider2D:
   m_ObjectHideFlags: 0

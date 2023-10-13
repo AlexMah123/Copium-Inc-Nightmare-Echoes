@@ -1109,6 +1109,7 @@ namespace NightmareEchoes.Unit
 
     public enum Direction
     {
+        NONE = -1,
         NORTH = 0,
         SOUTH = 1,
         EAST = 2,

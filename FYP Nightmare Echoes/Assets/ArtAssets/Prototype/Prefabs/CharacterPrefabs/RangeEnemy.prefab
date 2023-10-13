@@ -160,6 +160,7 @@ MonoBehaviour:
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
   tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
+  popupTextDelay: 0.6
   basicAttackRange: 0
 --- !u!114 &9039162952523036802
 MonoBehaviour:
@@ -175,12 +176,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalHeroList: []
   totalUnitList: []
+  totalPropList: []
   totalPathList: []
-  attackDelay: 0.5
+  attackDelay: 1
+  targetHero: {fileID: 0}
+  closestHero: {fileID: 0}
   inAtkRange: 0
   inMoveAndAttackRange: 0
   hasAttacked: 0
   detectedStealthHero: 0
+  selectedAttackRange: 0
+  thisUnitTile: {fileID: 0}
+  targetTileToMove: {fileID: 0}
   hasMoved: 0
 --- !u!114 &1961892246
 MonoBehaviour:
@@ -219,6 +226,7 @@ MonoBehaviour:
   backstabBonus: 3
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: Single Target, Deal 3 Damage and 2 Wound
 --- !u!114 &1076513885083324510
@@ -258,6 +266,7 @@ MonoBehaviour:
   backstabBonus: 3
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: Deal 2 Damage and Knockback target 1 tile
 --- !u!60 &964070419
@@ -337,4 +346,4 @@ MonoBehaviour:
   - {x: -0.008214869, y: -0.04598648, z: 0}
   m_ShapePathHash: -1766056635
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1542
+  m_InstanceId: -1396
