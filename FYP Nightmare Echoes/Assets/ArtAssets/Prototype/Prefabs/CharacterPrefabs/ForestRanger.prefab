@@ -161,6 +161,7 @@ MonoBehaviour:
   backAnimator: {fileID: 0}
   activeTile: {fileID: 0}
   tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
+  popupTextDelay: 0.6
 --- !u!114 &601295391118310421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +199,7 @@ MonoBehaviour:
   backstabBonus: 3
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: Single Target, Deal 4 Damage and 3 Wound
 --- !u!114 &601295391118310427
@@ -213,13 +215,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillName: Suppressing Shot
-  damage: 4
+  damage: 5
   heal: 0
   cooldown: 0
-  range: 2
+  range: 4
   minRange: 1
   targetType: 0
-  targetArea: 1
+  targetArea: 4
   targetUnitAlignment: 0
   aoeType: 0
   aoeSize: 1
@@ -237,6 +239,7 @@ MonoBehaviour:
   backstabBonus: 3
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: Single Target, 3 Tiles Range, Deal 4 Damage and Stun (80%)
 --- !u!114 &837001683
@@ -276,6 +279,7 @@ MonoBehaviour:
   backstabBonus: 3
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: "Nature\u2019s Embrace (Cannot Affected by Blind & Strength)\r\nSingle
     target, 2 Tiles Range, Self Heal or Ally for 10 HP\r\n"
@@ -316,6 +320,7 @@ MonoBehaviour:
   backstabBonus: 3
   placable: 0
   placableCount: 0
+  maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: "Enter A Stance that oversees a region.\nAttack Enemy that \u2018Move\u2019
     in range for 3 Damage\r\nAttack Enemy that \u2018Attack\u2019 in range for 5
@@ -397,4 +402,4 @@ MonoBehaviour:
   - {x: 0.020537138, y: -0.037771642, z: 0.00000011920929}
   m_ShapePathHash: -1537655057
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1588
+  m_InstanceId: -1444

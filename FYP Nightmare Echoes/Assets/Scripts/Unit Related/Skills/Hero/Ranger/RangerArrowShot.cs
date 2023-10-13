@@ -11,6 +11,7 @@ namespace NightmareEchoes.Unit
             base.Cast(target);
 
             DealDamage(target);
+            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 3, 1));
 
             return true;
         }
