@@ -40,7 +40,10 @@ namespace NightmareEchoes.Unit
                 if (thisUnit.WeakenToken)
                 {
                     int newDamage = Mathf.RoundToInt(secondaryDamage * 0.5f);
-                    unit.TakeDamage(newDamage);
+                    if (DealDamage(unit, newDamage))
+                    {
+                        Knockback(targetTile, unit);
+                    }
 
                     thisUnit.ShowPopUpText($"Attack was weakened!", Color.red);
                     thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
@@ -48,17 +51,21 @@ namespace NightmareEchoes.Unit
                 else if (thisUnit.StrengthToken)
                 {
                     int newDamage = Mathf.RoundToInt(secondaryDamage * 1.5f);
-                    unit.TakeDamage(newDamage);
+                    if (DealDamage(unit, newDamage))
+                    {
+                        Knockback(targetTile, unit);
+                    }
 
                     thisUnit.ShowPopUpText($"Attack was strengthen!", Color.red);
                     thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
                 }
                 else
                 {
-                    unit.TakeDamage(secondaryDamage);
+                    if (DealDamage(unit, secondaryDamage)){
+                        Knockback(targetTile, unit);
+                    }
                 }
 
-                Knockback(targetTile, unit);
             }
 
             return true;

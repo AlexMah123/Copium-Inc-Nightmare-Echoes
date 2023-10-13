@@ -13,9 +13,10 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target);
 
-            DealDamage(target);
-            
-            Knockback(thisUnit.ActiveTile, target);
+            if (DealDamage(target))
+            {
+                Knockback(thisUnit.ActiveTile, target);
+            }
 
             //knockback
             /*var direction = target.transform.position - thisUnit.transform.position;
@@ -41,7 +42,7 @@ namespace NightmareEchoes.Unit
                 }
             }
             */
-            
+
             return true;
         }
         IEnumerator DelayTurn(Entity target)
