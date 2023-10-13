@@ -598,15 +598,6 @@ namespace NightmareEchoes.Unit
                 Destroy(gameObject);
             }
 
-            if (isHostile && !isProp)
-            {
-                var trapDmg = CombatManager.Instance.CheckTrap(this);
-                if (trapDmg)
-                {
-                    trapDmg.Cast(this);
-                }
-            }
-
             #region Sprite/Animation Updates
             if (isProp) return;
             if (sprites.Count > 0)

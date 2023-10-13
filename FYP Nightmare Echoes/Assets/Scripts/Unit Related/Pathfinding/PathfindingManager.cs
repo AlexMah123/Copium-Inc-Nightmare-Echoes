@@ -285,12 +285,6 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             SetUnitPositionOnTile(targetTile, thisUnit);
 
-            var trapDmg = CombatManager.Instance.CheckTrap(thisUnit);
-            if (trapDmg)
-            {
-                trapDmg.Cast(thisUnit);
-            }
-
             #region Triggering Movement Related BuffDebuff Effect During Movement
 
             thisUnit.CheckCrippled();
@@ -456,6 +450,12 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             unit.gameObject.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
             unit.ActiveTile = tile;
+
+            var trapDmg = CombatManager.Instance.CheckTrap(unit);
+            if (trapDmg)
+            {
+                trapDmg.Cast(unit);
+            }
         }
 
         public void ShowTilesInRange(List<OverlayTile> overlayTileList)

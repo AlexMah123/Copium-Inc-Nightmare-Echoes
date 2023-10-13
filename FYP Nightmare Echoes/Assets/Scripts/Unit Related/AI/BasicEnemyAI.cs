@@ -601,7 +601,6 @@ namespace NightmareEchoes.Unit.AI
 
                 AttackProcess(thisUnit, targetTileToMove);
             }
-
         }
 
         #endregion

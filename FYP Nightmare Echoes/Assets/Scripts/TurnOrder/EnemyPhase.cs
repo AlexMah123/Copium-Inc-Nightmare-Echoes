@@ -149,20 +149,29 @@ namespace NightmareEchoes.TurnOrder
                 enemyAI.MakeDecision(controller.CurrentUnit);
             }
 
+
             yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
 
             //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.
             if ((enemyAI.inAtkRange || enemyAI.inMoveAndAttackRange) && !enemyAI.hasAttacked && !enemyAI.detectedStealthHero && enemyAI.totalHeroList.Count > 0)
             {
-                if (controller.CurrentUnit.ImmobilizeToken && enemyAI.FindDistanceBetweenUnit(controller.CurrentUnit, enemyAI.targetHero) <= enemyAI.selectedAttackRange)
+                //if you are not immobilized, just attack
+                if (!controller.CurrentUnit.ImmobilizeToken)
                 {
                     enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.targetTileToMove);
                 }
-                else if (!controller.CurrentUnit.ImmobilizeToken)
+                //if you are immobilized, but your range is within your selected attack range, attack
+                else if (controller.CurrentUnit.ImmobilizeToken && enemyAI.FindDistanceBetweenUnit(controller.CurrentUnit, enemyAI.targetHero) <= enemyAI.selectedAttackRange)
                 {
                     enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.targetTileToMove);
+                }
+                else
+                {
+                    controller.StartCoroutine(controller.PassTurn());
                 }
             }
+
+            yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
 
             controller.StartCoroutine(controller.PassTurn());
 
