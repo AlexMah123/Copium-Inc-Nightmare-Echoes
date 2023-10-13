@@ -709,8 +709,8 @@ namespace NightmareEchoes.Unit.Combat
         {
             var trapCount = 0;
             var trapList = new List<Vector3>();
-            var trapSprite = activeSkill.PlacableGameObject.GetComponent<SpriteRenderer>().sprite;
-            while (trapCount < activeSkill.PlacableCount)
+            var trapSprite = activeSkill?.PlacableGameObject.GetComponent<SpriteRenderer>().sprite;
+            while (trapCount < activeSkill?.PlacableCount)
             {
                 ClearPreviews();
 

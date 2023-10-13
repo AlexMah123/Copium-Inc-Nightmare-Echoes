@@ -575,7 +575,14 @@ namespace NightmareEchoes.Unit.AI
                 }
                 else
                 {
-                    AttackProcess(thisUnit, targetTileToMove);
+                    if (currSelectedSkill.TargetArea != TargetArea.Line)
+                    {
+                        AttackProcess(thisUnit, targetTileToMove);
+                    }
+                    else
+                    {
+                        StartCoroutine(DetectedStealthUnit(redirectTile));
+                    }
                 }
             }
         }

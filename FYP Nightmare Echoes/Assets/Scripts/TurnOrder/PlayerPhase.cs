@@ -75,8 +75,6 @@ namespace NightmareEchoes.TurnOrder
                     PathfindingManager.Instance.CurrentPathfindingUnit.Direction = PathfindingManager.Instance.RevertUnitDirection;
                     controller.CurrentUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
 
-                    //Add Section to have reverts if they hit a trap.
-
                     //Resets everything, not moving, not dragging, and lastaddedtile is null
                     PathfindingManager.Instance.isMoving = false;
                     PathfindingManager.Instance.hasMoved = false;

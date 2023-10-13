@@ -225,7 +225,7 @@ namespace NightmareEchoes.TurnOrder
             }
             #endregion
 
-            #region Current Unit text
+            #region Current Unit Panel
             if (CurrentUnit != null)
             {
                 if(!currentUnitPanel.activeSelf)
@@ -238,7 +238,7 @@ namespace NightmareEchoes.TurnOrder
                 if (CurrentUnit.SpriteRenderer != null)
                 {
                     currentUnitProfile.image.color = new Color(CurrentUnit.SpriteRenderer.color.r,
-                    CurrentUnit.SpriteRenderer.color.g, CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
+                    CurrentUnit.SpriteRenderer.color.g, CurrentUnit.SpriteRenderer.color.b, 1);
                 }
                 else
                 {
@@ -281,7 +281,7 @@ namespace NightmareEchoes.TurnOrder
                 if (inspectedUnit.SpriteRenderer != null)
                 {
                     inspectedUnitProfile.image.color = new Color(inspectedUnit.SpriteRenderer.color.r,
-                                         inspectedUnit.SpriteRenderer.color.g, inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
+                                         inspectedUnit.SpriteRenderer.color.g, inspectedUnit.SpriteRenderer.color.b, 1);
                 }
                 else
                 {
@@ -605,7 +605,7 @@ namespace NightmareEchoes.TurnOrder
                         new Color(TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.r,
                         TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.g,
                         TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.b,
-                        TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.a);
+                        1);
                     }
                     else
                     {
@@ -767,7 +767,7 @@ namespace NightmareEchoes.TurnOrder
                 {
                     glossaryImage.color = new Color(
                     CurrentUnit.SpriteRenderer.color.r, CurrentUnit.SpriteRenderer.color.g,
-                    CurrentUnit.SpriteRenderer.color.b, CurrentUnit.SpriteRenderer.color.a);
+                    CurrentUnit.SpriteRenderer.color.b, 1);
                 }
                 else
                 {
@@ -842,7 +842,7 @@ namespace NightmareEchoes.TurnOrder
                 {
                     glossaryImage.color = new Color(
                     inspectedUnit.SpriteRenderer.color.r, inspectedUnit.SpriteRenderer.color.g,
-                    inspectedUnit.SpriteRenderer.color.b, inspectedUnit.SpriteRenderer.color.a);
+                    inspectedUnit.SpriteRenderer.color.b, 1);
                     glossaryName.text = inspectedUnit.Name;
                 }
                 else

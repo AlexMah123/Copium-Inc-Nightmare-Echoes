@@ -13,7 +13,7 @@ namespace NightmareEchoes.Unit
             if (thisUnit.FindModifier(STATUS_EFFECT.STEALTH_TOKEN)) return false;
             
             //Get enemies in nearby proximity
-            var grid = CombatManager.Instance.SquareRange(thisUnit.ActiveTile, 2);
+            var grid = CombatManager.Instance.SquareRange(thisUnit.ActiveTile, 1);
             var cleanedGrid = OverlayTileManager.Instance.TrimOutOfBounds(grid);
             var enemiesInRange = new List<Entity>();
             foreach (var tile in cleanedGrid)
