@@ -170,7 +170,7 @@ namespace NightmareEchoes.TurnOrder
                     controller.StartCoroutine(controller.PassTurn());
                 }
             }
-            else
+            else if(!enemyAI.detectedStealthHero)
             {
                 controller.StartCoroutine(controller.PassTurn());
             }

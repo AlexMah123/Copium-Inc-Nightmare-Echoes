@@ -5,6 +5,7 @@ using NightmareEchoes.Unit;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Inputs;
+using NightmareEchoes.Grid;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -95,9 +96,49 @@ namespace NightmareEchoes.TurnOrder
                     CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
 
                 }
+                else
+                {
+                    controller.CurrentUnit.ShowPopUpText("Cannot Cancel Action!", Color.red);
+                }
             }
 
-            if(PathfindingManager.Instance.isMoving)
+            if (controller.CurrentUnit.StealthToken)
+            {
+                var grid = CombatManager.Instance.SquareRange(controller.CurrentUnit.ActiveTile, 1);
+                var cleanedGrid = OverlayTileManager.Instance.TrimOutOfBounds(grid);
+                var enemiesInRange = new List<Entity>();
+
+                foreach (var tile in cleanedGrid)
+                {
+                    if (!tile.CheckEntityGameObjectOnTile())
+                        continue;
+
+                    var target = tile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
+
+                    if (!target.IsHostile || target.IsProp)
+                        continue;
+                    enemiesInRange.Add(target);
+                }
+
+                //Check if this unit is in range of said enemies
+                foreach (var enemy in enemiesInRange)
+                {
+                    grid = CombatManager.Instance.FrontalRange(enemy.ActiveTile, 1, enemy);
+                    cleanedGrid = OverlayTileManager.Instance.TrimOutOfBounds(grid);
+
+                    foreach (var tile in cleanedGrid)
+                    {
+                        if (controller.CurrentUnit.ActiveTile == tile)
+                        {
+                            enemy.ShowPopUpText("Detected Stealth Hero!!", Color.red);
+                            controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
+                            PathfindingManager.Instance.RevertUnitPosition = null;
+                        }
+                    }
+                }
+            }
+
+            if (PathfindingManager.Instance.isMoving)
             {
                 UIManager.Instance.EnableCurrentUI(false);
                 runOnce = false;
