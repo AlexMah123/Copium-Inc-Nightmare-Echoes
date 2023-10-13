@@ -9,9 +9,11 @@ namespace NightmareEchoes.Unit
        public override bool Cast(Entity target)
         {
             base.Cast(target);
-
-            DealDamage(target);
-            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 3, 1));
+            
+            if (DealDamage(target))
+            {
+                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 3));
+            }
 
             return true;
         }

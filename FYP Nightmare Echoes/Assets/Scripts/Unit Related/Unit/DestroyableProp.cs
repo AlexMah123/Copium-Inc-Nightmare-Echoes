@@ -21,11 +21,6 @@ namespace NightmareEchoes.Unit
             base.Update();
         }
 
-        public override void TakeDamage(int damage)
-        {
-            base.TakeDamage(damage);
-        }
-
         IEnumerator UpdateTileLocation()
         {
             yield return new WaitForSeconds(1f);

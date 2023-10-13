@@ -10,9 +10,10 @@ namespace NightmareEchoes.Unit
         public override bool Cast(Entity target)
         {
             base.Cast(target);
-            DealDamage(target);
-
-            Knockback(thisUnit.ActiveTile, target);
+            if (DealDamage(target))
+            {
+                Knockback(thisUnit.ActiveTile, target);
+            }
 
             return true;
         }

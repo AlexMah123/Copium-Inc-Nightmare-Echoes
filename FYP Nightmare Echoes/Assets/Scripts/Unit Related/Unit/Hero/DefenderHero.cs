@@ -56,9 +56,9 @@ namespace NightmareEchoes.Unit
             CombatManager.Instance.SelectSkill(this, skill3);
         }
 
-        public override void TakeDamage(int damage)
+        public override void TakeDamage(int damage, bool checkDodge = true)
         {
-            base.TakeDamage(damage);
+            base.TakeDamage(damage, checkDodge);
 
             if (FindModifier(STATUS_EFFECT.WOUND_DEBUFF))
             {

@@ -17,7 +17,7 @@ namespace NightmareEchoes.Unit
                 StartCoroutine(DelayedAttack(target));
                 return true;
             }
-            
+
             var xDist = distance.x;
             var yDist = distance.y;
             if (xDist > 0) xDist -= 1; else if (xDist < 0) xDist += 1;
@@ -50,10 +50,11 @@ namespace NightmareEchoes.Unit
         {
             yield return new WaitForSeconds(0.16f);
             base.Cast(target);
-            DealDamage(target);
-            
-            Knockback(thisUnit.ActiveTile, target);
-            target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
+            if (DealDamage(target))
+            {
+                Knockback(thisUnit.ActiveTile, target);
+                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
+            }
         }
     }
 }

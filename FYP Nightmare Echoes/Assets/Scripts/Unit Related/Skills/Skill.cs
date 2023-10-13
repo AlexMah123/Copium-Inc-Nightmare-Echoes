@@ -337,14 +337,14 @@ namespace NightmareEchoes.Unit
         #endregion
         
         //used for attacks that are damage type
-        protected bool DealDamage(Entity target, int secondaryDmg = 0)
+        protected bool DealDamage(Entity target, int secondaryDmg = 0, bool checkBlind = true, bool checkDodge = true)
         {
             var damage = this.damage;
             if (secondaryDmg > 0) damage = secondaryDmg;
             
             #region Token Checks Before Dealing Dmg
 
-            if (thisUnit.BlindToken && targetType == TargetType.Single)
+            if (thisUnit.BlindToken && targetType == TargetType.Single && checkBlind)
             {
                 if (thisUnit.FindModifier(STATUS_EFFECT.BLIND_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
                 {
@@ -358,7 +358,7 @@ namespace NightmareEchoes.Unit
                     if (thisUnit.WeakenToken)
                     {
                         int newDamage = Mathf.RoundToInt(damage * 0.5f);
-                        CheckForBackstab(target, newDamage);
+                        CheckForBackstab(target, newDamage, checkDodge);
 
                         thisUnit.ShowPopUpText($"Attack was weakened!", Color.red);
                         thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
@@ -366,14 +366,14 @@ namespace NightmareEchoes.Unit
                     else if (thisUnit.StrengthToken)
                     {
                         int newDamage = Mathf.RoundToInt(damage * 1.5f);
-                        CheckForBackstab(target, newDamage);
+                        CheckForBackstab(target, newDamage, checkDodge);
 
                         thisUnit.ShowPopUpText($"Attack was strengthen!", Color.red);
                         thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
                     }
                     else
                     {
-                        CheckForBackstab(target, damage);
+                        CheckForBackstab(target, damage, checkDodge);
                     }
 
                 }
@@ -383,7 +383,7 @@ namespace NightmareEchoes.Unit
             else if (thisUnit.WeakenToken)
             {
                 int newDamage = Mathf.RoundToInt(damage * 0.5f);
-                CheckForBackstab(target, newDamage);
+                CheckForBackstab(target, newDamage, checkDodge);
 
                 thisUnit.ShowPopUpText($"Attack was weakened!", Color.red);
                 thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
@@ -391,29 +391,29 @@ namespace NightmareEchoes.Unit
             else if (thisUnit.StrengthToken)
             {
                 int newDamage = Mathf.RoundToInt(damage * 1.5f);
-                CheckForBackstab(target, newDamage);
+                CheckForBackstab(target, newDamage, checkDodge);
 
                 thisUnit.ShowPopUpText($"Attack was strengthen!", Color.red);
                 thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
             }
             else
             {
-                CheckForBackstab(target, damage);
+                CheckForBackstab(target, damage, checkDodge);
             }
 
             return true;
             #endregion 
         }
 
-        private void CheckForBackstab(Entity target, int damage)
+        private void CheckForBackstab(Entity target, int damage, bool checkDodge)
         {
             if (isBackstabbing && targetType == TargetType.Single)
             {
-                target.TakeDamage(damage + backstabBonus);
+                target.TakeDamage(damage + backstabBonus, checkDodge);
             }
             else
             {
-                target.TakeDamage(damage);
+                target.TakeDamage(damage, checkDodge);
             }
             isBackstabbing = false;
         }

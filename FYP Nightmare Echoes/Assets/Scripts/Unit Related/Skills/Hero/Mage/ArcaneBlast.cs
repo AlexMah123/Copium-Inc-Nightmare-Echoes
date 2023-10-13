@@ -15,7 +15,7 @@ namespace NightmareEchoes.Unit
             if (target.CheckEntityGameObjectOnTile())
             {
                 var unit = target.CheckEntityGameObjectOnTile().GetComponent<Entity>();
-                DealDamage(unit);
+                DealDamage(unit,default,false);
             }
 
             aoeTiles.Remove(target);
@@ -26,28 +26,7 @@ namespace NightmareEchoes.Unit
   
                 var unit = tile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
 
-                //manually check for token
-                if (thisUnit.WeakenToken)
-                {
-                    int newDamage = Mathf.RoundToInt(secondaryDamage * 0.5f);
-                    unit.TakeDamage(newDamage);
-
-                    thisUnit.ShowPopUpText($"Attack was weakened!", Color.red);
-                    thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
-                }
-                else if (thisUnit.StrengthToken)
-                {
-                    int newDamage = Mathf.RoundToInt(secondaryDamage * 1.5f);
-                    unit.TakeDamage(newDamage);
-
-                    thisUnit.ShowPopUpText($"Attack was strengthen!", Color.red);
-                    thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
-                }
-                else
-                {
-                    unit.TakeDamage(secondaryDamage);
-                }
-                
+                DealDamage(unit,secondaryDamage,false);
                 Knockback(target, unit);
             }
             AudioManager.instance.PlaySFX("ArcaneBlast");

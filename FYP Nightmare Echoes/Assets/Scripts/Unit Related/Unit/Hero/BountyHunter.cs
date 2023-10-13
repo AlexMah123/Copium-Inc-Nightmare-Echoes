@@ -57,11 +57,6 @@ namespace NightmareEchoes.Unit
             CombatManager.Instance.SelectSkill(this, skill3);
         }
 
-        public override void TakeDamage(int damage)
-        {
-            base.TakeDamage(damage);
-        }
-
         [ContextMenu("Take Damage (2)")]
         public void TestDamage()
         {
