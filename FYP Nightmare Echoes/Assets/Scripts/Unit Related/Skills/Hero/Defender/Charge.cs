@@ -18,6 +18,8 @@ namespace NightmareEchoes.Unit
                 return true;
             }
 
+            if (thisUnit.CheckImmobilize()) return false;
+            
             var xDist = distance.x;
             var yDist = distance.y;
             if (xDist > 0) xDist -= 1; else if (xDist < 0) xDist += 1;

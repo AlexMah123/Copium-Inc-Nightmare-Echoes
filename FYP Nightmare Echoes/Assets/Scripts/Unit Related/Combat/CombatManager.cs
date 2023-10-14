@@ -779,14 +779,28 @@ namespace NightmareEchoes.Unit.Combat
 
         IEnumerator WaitForSkill(Entity target)
         {
-            yield return new WaitUntil(() => activeSkill.Cast(target));
-            EndTurn();
+            if (activeSkill.Cast(target))
+            {
+                EndTurn();
+                yield return null;
+            }else if (secondaryTargeting)
+            {
+                yield return new WaitUntil(() => activeSkill.Cast(target));
+                EndTurn();
+            }
         }
         
         IEnumerator WaitForSkill(OverlayTile target, List<OverlayTile> aoeTiles)
         {
-            yield return new WaitUntil(() => activeSkill.Cast(target, aoeTiles));
-            EndTurn();
+            if (activeSkill.Cast(target, aoeTiles))
+            {
+                EndTurn();
+                yield return null;
+            }else if (secondaryTargeting)
+            {
+                yield return new WaitUntil(() => activeSkill.Cast(target, aoeTiles));
+                EndTurn();
+            }
         }
         #endregion
 
