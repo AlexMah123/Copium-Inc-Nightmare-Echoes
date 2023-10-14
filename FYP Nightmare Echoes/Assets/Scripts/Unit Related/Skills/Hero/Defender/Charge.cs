@@ -55,7 +55,10 @@ namespace NightmareEchoes.Unit
             if (DealDamage(target))
             {
                 Knockback(thisUnit.ActiveTile, target);
-                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
+                if (stunChance - target.stats.StunResist > Random.Range(1,101))
+                {
+                    target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
+                }
             }
         }
     }
