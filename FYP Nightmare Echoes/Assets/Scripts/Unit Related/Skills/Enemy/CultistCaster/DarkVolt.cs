@@ -13,7 +13,10 @@ namespace NightmareEchoes.Unit
 
             if(DealDamage(target))
             {
-                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1));
+                if ((debuffChance - target.stats.Resist) > Random.Range(0, 101))
+                {
+                    target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1));
+                }
             }
 
 
