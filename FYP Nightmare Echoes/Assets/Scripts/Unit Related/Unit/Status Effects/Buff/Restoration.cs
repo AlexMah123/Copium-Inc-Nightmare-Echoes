@@ -19,10 +19,14 @@ namespace NightmareEchoes.Unit
 
         public override void ApplyEffect(Entity unit)
         {
-            unit.ShowPopUpText("Restoration!", Color.red);
+            unit.ShowPopUpText("Gained Restoration!", Color.green);
+        }
+
+        public override void TriggerEffect(Entity unit)
+        {
+            unit.ShowPopUpText("Restoration Healing!", Color.green);
             unit.ShowPopUpText($"+{restorationHeal * restorationStack}", Color.yellow);
             unit.stats.Health += restorationHeal * restorationStack;
-
         }
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
@@ -30,9 +34,9 @@ namespace NightmareEchoes.Unit
             return mod;
         }
 
-        public override void IncreaseLifeTime()
+        public override void IncreaseLifeTime(int stack = 0)
         {
-            restorationStack++;
+            restorationStack += stack;
         }
 
         public override void UpdateLifeTime()

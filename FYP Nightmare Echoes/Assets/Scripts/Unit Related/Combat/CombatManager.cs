@@ -686,7 +686,7 @@ namespace NightmareEchoes.Unit.Combat
                 if (entity.IsHostile || entity.IsProp) 
                     continue;
                 
-                if (entity.FindModifier(STATUS_EFFECT.STEALTH_TOKEN))
+                if (entity.DoesModifierExist(STATUS_EFFECT.STEALTH_TOKEN))
                     herosInStealth.Add(entity);
             }
 

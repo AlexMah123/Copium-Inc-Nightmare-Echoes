@@ -20,13 +20,13 @@ namespace NightmareEchoes.Unit
         {
             unit.StrengthToken = true;
 
-            if (!unit.WeakenToken && !unit.StrengthToken)
+            if (!unit.WeakenToken && unit.StrengthToken)
             {
-                unit.ShowPopUpText("Gained Strength!", Color.red);
+                unit.ShowPopUpText("Gained Strength!", Color.blue);
             }
             else if (unit.WeakenToken)
             {
-                unit.ShowPopUpText("Negated Weaken!", Color.red);
+                unit.ShowPopUpText("Negated Weaken!", Color.blue);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
             }
@@ -44,9 +44,16 @@ namespace NightmareEchoes.Unit
         }
 
         #region LifeTime Related
-        public override void IncreaseLifeTime()
+        public override void IncreaseLifeTime(Entity unit)
         {
-            tokenStack++;
+            if (tokenStack < limitStack)
+            {
+                tokenStack++;
+            }
+            else
+            {
+                unit.ShowPopUpText("Strength reached max limit!", Color.blue);
+            }
         }
 
         public override void UpdateLifeTime(Entity unit)

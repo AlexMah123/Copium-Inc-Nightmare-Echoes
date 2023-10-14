@@ -20,7 +20,7 @@ namespace NightmareEchoes.Unit
         {
             unit.BlockToken = true;
 
-            if (!unit.VulnerableToken && !unit.BlockToken)
+            if (!unit.VulnerableToken && unit.BlockToken)
             {
                 unit.ShowPopUpText("Gained Block!", Color.red);
             }
@@ -44,9 +44,16 @@ namespace NightmareEchoes.Unit
         }
 
         #region LifeTime Related
-        public override void IncreaseLifeTime()
+        public override void IncreaseLifeTime(Entity unit)
         {
-            tokenStack++;
+            if (tokenStack < limitStack)
+            {
+                tokenStack++;
+            }
+            else
+            {
+                unit.ShowPopUpText("Block reached max limit!", Color.blue);
+            }
         }
 
         public override void UpdateLifeTime(Entity unit)

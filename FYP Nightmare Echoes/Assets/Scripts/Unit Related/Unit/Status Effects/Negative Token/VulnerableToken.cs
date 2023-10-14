@@ -22,11 +22,11 @@ namespace NightmareEchoes.Unit
 
             if (!unit.BlockToken)
             {
-                unit.ShowPopUpText("Vulnerable!", Color.red);
+                unit.ShowPopUpText("Vulnerable!", Color.yellow);
             }
             else if (unit.BlockToken)
             {
-                unit.ShowPopUpText("Negated Block!", Color.red);
+                unit.ShowPopUpText("Negated Block!", Color.blue);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
             }
@@ -44,9 +44,16 @@ namespace NightmareEchoes.Unit
         }
 
         #region LifeTime Related
-        public override void IncreaseLifeTime()
+        public override void IncreaseLifeTime(Entity unit)
         {
-            tokenStack++;
+            if (tokenStack < limitStack)
+            {
+                tokenStack++;
+            }
+            else
+            {
+                unit.ShowPopUpText("Vulnerable token reached max limit!", Color.blue);
+            }
         }
 
         public override void UpdateLifeTime(Entity unit)

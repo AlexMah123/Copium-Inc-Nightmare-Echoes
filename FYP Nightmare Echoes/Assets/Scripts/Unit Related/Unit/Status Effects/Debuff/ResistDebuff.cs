@@ -20,6 +20,7 @@ namespace NightmareEchoes.Unit
 
         public override void ApplyEffect(Entity unit)
         {
+            unit.ShowPopUpText("Resist Decreased!", Color.red);
 
         }
 
@@ -29,7 +30,7 @@ namespace NightmareEchoes.Unit
             return mod;
         }
 
-        public override void IncreaseLifeTime()
+        public override void IncreaseLifeTime(int stack = 0)
         {
             debuffDuration++;
         }

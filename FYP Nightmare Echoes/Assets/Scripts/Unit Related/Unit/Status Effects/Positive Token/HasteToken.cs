@@ -21,7 +21,7 @@ namespace NightmareEchoes.Unit
         {
             unit.HasteToken = true;
 
-            if (!unit.VertigoToken && !unit.HasteToken)
+            if (!unit.VertigoToken && unit.HasteToken)
             {
                 unit.ShowPopUpText("Gained Haste!", Color.red);
             }
@@ -47,9 +47,16 @@ namespace NightmareEchoes.Unit
         }
 
         #region LifeTime Related
-        public override void IncreaseLifeTime()
+        public override void IncreaseLifeTime(Entity unit)
         {
-            tokenStack++;
+            if (tokenStack < limitStack)
+            {
+                tokenStack++;
+            }
+            else
+            {
+                unit.ShowPopUpText("Haste reached max limit!", Color.blue);
+            }
         }
 
         public override void UpdateLifeTime(Entity unit)

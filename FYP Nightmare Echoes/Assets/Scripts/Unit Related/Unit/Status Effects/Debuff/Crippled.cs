@@ -19,12 +19,12 @@ namespace NightmareEchoes.Unit
 
         public override void ApplyEffect(Entity unit)
         {
-            
+            unit.ShowPopUpText("Crippled!", Color.red);
         }
 
         public override void TriggerEffect(Entity unit)
         {
-            unit.ShowPopUpText("Crippled!", Color.red);
+            unit.ShowPopUpText("Crippled Dmg!", Color.red);
             unit.ShowPopUpText($"-{crippledDmg}", Color.yellow);
             unit.stats.Health -= crippledDmg;
         }
@@ -34,9 +34,9 @@ namespace NightmareEchoes.Unit
             return mod;
         }
 
-        public override void IncreaseLifeTime()
+        public override void IncreaseLifeTime(int stack = 0)
         {
-            crippledStack++;
+            crippledStack += stack;
         }
 
         public override void UpdateLifeTime()

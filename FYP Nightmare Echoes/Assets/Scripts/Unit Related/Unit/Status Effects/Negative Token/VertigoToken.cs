@@ -23,11 +23,11 @@ namespace NightmareEchoes.Unit
 
             if (!unit.HasteToken)
             {
-                unit.ShowPopUpText("Vertigo!", Color.red);
+                unit.ShowPopUpText("Vertigo!", Color.yellow);
             }
             else if (unit.HasteToken)
             {
-                unit.ShowPopUpText("Negated Haste!", Color.red);
+                unit.ShowPopUpText("Negated Haste!", Color.blue);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
             }
@@ -47,9 +47,16 @@ namespace NightmareEchoes.Unit
         }
 
         #region LifeTime Related
-        public override void IncreaseLifeTime()
+        public override void IncreaseLifeTime(Entity unit)
         {
-            tokenStack++;
+            if (tokenStack < limitStack)
+            {
+                tokenStack++;
+            }
+            else
+            {
+                unit.ShowPopUpText("Vertigo token reached max limit!", Color.blue);
+            }
         }
 
         public override void UpdateLifeTime(Entity unit)

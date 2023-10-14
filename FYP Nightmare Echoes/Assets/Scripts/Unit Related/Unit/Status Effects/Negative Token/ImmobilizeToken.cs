@@ -18,7 +18,7 @@ namespace NightmareEchoes.Unit
         #region Effect Related
         public override void ApplyEffect(Entity unit)
         {
-            unit.ShowPopUpText("Immobilized!", Color.red);
+            unit.ShowPopUpText("Immobilized!", Color.yellow);
             unit.ImmobilizeToken = true;
         }
 
@@ -35,9 +35,16 @@ namespace NightmareEchoes.Unit
 
 
         #region LifeTime Related
-        public override void IncreaseLifeTime()
+        public override void IncreaseLifeTime(Entity unit)
         {
-            tokenStack++;
+            if (tokenStack < limitStack)
+            {
+                tokenStack++;
+            }
+            else
+            {
+                unit.ShowPopUpText("Immobilized token reached max limit!", Color.blue);
+            }
         }
 
         public override void UpdateLifeTime(Entity unit)

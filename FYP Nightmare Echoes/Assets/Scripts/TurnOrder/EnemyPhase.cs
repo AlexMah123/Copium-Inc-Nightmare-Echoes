@@ -96,10 +96,25 @@ namespace NightmareEchoes.TurnOrder
             if (controller.CurrentUnit != null && enemyAI != null)
             {
                 #region End of Turn Effects
+
+                #region Tokens
                 if (controller.CurrentUnit.ImmobilizeToken)
                 {
                     controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.IMMOBILIZE_TOKEN);
                 }
+                #endregion
+
+                #region BuffDebuff
+                for (int i = controller.CurrentUnit.BuffDebuffList.Count - 1; i >= 0; i--)
+                {
+                    switch (controller.CurrentUnit.BuffDebuffList[i].statusEffect)
+                    {
+                        case STATUS_EFFECT.RESTORATION_BUFF:
+                            controller.CurrentUnit.BuffDebuffList[i].TriggerEffect(controller.CurrentUnit);
+                            break;
+                    }
+                }
+                #endregion
                 #endregion
 
                 #region Mandatory Checks
@@ -111,8 +126,9 @@ namespace NightmareEchoes.TurnOrder
                 }
 
                 //update effects & stats
-                controller.CurrentUnit.ApplyAllBuffDebuffs();
+
                 //should not need this but just checking
+                //controller.CurrentUnit.ApplyAllBuffDebuffs();
                 //controller.CurrentUnit.ApplyAllTokenEffects();
                 controller.CurrentUnit.UpdateBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();

@@ -18,6 +18,7 @@ namespace NightmareEchoes.Unit
         #region Effects Related
         public override void ApplyEffect(Entity unit)
         {
+            unit.ShowPopUpText("Blinded!", Color.yellow);
             unit.BlindToken = true;
         }
 
@@ -33,9 +34,16 @@ namespace NightmareEchoes.Unit
         }
 
         #region LifeTime Related
-        public override void IncreaseLifeTime()
+        public override void IncreaseLifeTime(Entity unit)
         {
-            tokenStack++;
+            if (tokenStack < limitStack)
+            {
+                tokenStack++;
+            }
+            else
+            {
+                unit.ShowPopUpText("Blind token reached max limit!", Color.blue);
+            }
         }
 
         public override void UpdateLifeTime(Entity unit)

@@ -24,12 +24,6 @@ namespace NightmareEchoes.Unit
         protected override void Update()
         {
             base.Update();
-
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                ShowPopUpText("testing1", Color.red);
-                ShowPopUpText("testing2", Color.yellow);
-            }
         }
 
         #region Abilities

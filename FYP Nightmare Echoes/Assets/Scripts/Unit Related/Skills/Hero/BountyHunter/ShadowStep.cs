@@ -10,9 +10,10 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast()
         {
-            if (thisUnit.FindModifier(STATUS_EFFECT.STEALTH_TOKEN))
+            if (thisUnit.DoesModifierExist(STATUS_EFFECT.STEALTH_TOKEN))
             {
-                //thisUnit.ShowPopUpText("Already In Stealth!!", Color.red);
+                thisUnit.ShowPopUpText("Already In Stealth!!", Color.red);
+                CombatManager.Instance.SelectSkill(thisUnit, this);
                 return false;
             }
 
@@ -42,7 +43,8 @@ namespace NightmareEchoes.Unit
                 {
                     if (thisUnit.ActiveTile == tile)
                     {
-                        //thisUnit.ShowPopUpText("Cannot Go Into Stealth, Too Close to Enemy!!", Color.red);
+                        thisUnit.ShowPopUpText("Cannot Go Into Stealth, Too Close to Enemy!!", Color.red);
+                        CombatManager.Instance.SelectSkill(thisUnit, this);
                         return false;
                     }
                 }

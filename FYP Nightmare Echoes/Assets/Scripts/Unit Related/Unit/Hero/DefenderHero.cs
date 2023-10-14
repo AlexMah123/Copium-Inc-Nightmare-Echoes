@@ -60,9 +60,9 @@ namespace NightmareEchoes.Unit
         {
             base.TakeDamage(damage, checkDodge);
 
-            if (FindModifier(STATUS_EFFECT.WOUND_DEBUFF))
+            if (DoesModifierExist(STATUS_EFFECT.WOUND_DEBUFF))
             {
-                buffDebuffList.Remove(FindModifier(STATUS_EFFECT.WOUND_DEBUFF));
+                buffDebuffList.Remove(DoesModifierExist(STATUS_EFFECT.WOUND_DEBUFF));
             }
         }
 

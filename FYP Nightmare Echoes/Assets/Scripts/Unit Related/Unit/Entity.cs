@@ -13,6 +13,7 @@ using UnityEngine.Pool;
 //created by Alex, edited by Ter
 namespace NightmareEchoes.Unit
 {
+    [SelectionBase]
     [RequireComponent(typeof(PolygonCollider2D), typeof(Rigidbody2D)), Serializable]
     public class Entity : MonoBehaviour
     {
@@ -744,7 +745,7 @@ namespace NightmareEchoes.Unit
 
             if (dodgeToken && checkDodge)
             {
-                if (FindModifier(STATUS_EFFECT.DODGE_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
+                if (DoesModifierExist(STATUS_EFFECT.DODGE_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
                 {
                     ShowPopUpText($"Dodged!", Color.red);
                 }
@@ -852,6 +853,7 @@ namespace NightmareEchoes.Unit
                 var tempData = popupTextQueue.Dequeue();
 
                 GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up + (Vector3.left * 0.25f), Quaternion.identity);
+                prefab.hideFlags = HideFlags.HideInHierarchy;
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = tempData.popupTextData;
                 textMeshPro.color = tempData.textColor;
@@ -882,7 +884,7 @@ namespace NightmareEchoes.Unit
             OnAddBuffEvent?.Invoke();
         }
 
-        public Modifier FindModifier(STATUS_EFFECT enumIndex)
+        public Modifier DoesModifierExist(STATUS_EFFECT enumIndex)
         {
             List<Modifier> tempList = BuffDebuffList.Concat(TokenList).ToList();
 
@@ -948,16 +950,57 @@ namespace NightmareEchoes.Unit
                 //if buff or debuff
                 case ModifierType.BUFF:
                 case ModifierType.DEBUFF:
-                    buff.AwakeStatusEffect();
-                    BuffDebuffList.Add(buff);
+
+                    var existingBuffDebuff = DoesModifierExist(buff.statusEffect);
+
+                    if(existingBuffDebuff)
+                    {
+                        switch (existingBuffDebuff.statusEffect)
+                        {
+                            case STATUS_EFFECT.CRIPPLED_DEBUFF:
+                            case STATUS_EFFECT.WOUND_DEBUFF:
+                            case STATUS_EFFECT.RESTORATION_BUFF:
+                                existingBuffDebuff.ApplyEffect(this);
+                                existingBuffDebuff.IncreaseLifeTime(buff.modifierDuration);
+                                break;
+
+                            default:
+                                existingBuffDebuff.AwakeStatusEffect();
+                                existingBuffDebuff.ApplyEffect(this);
+                                BuffDebuffList.Add(buff);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        buff.AwakeStatusEffect();
+                        buff.ApplyEffect(this);
+                        BuffDebuffList.Add(buff);
+                    }
                     break;
 
                 //if positive token or negative token
                 case ModifierType.POSITIVETOKEN:
                 case ModifierType.NEGATIVETOKEN:
-                    buff.AwakeStatusEffect();
-                    TokenList.Add(buff);
-                    buff.ApplyEffect(this);
+
+                    var exisitingToken = DoesModifierExist(buff.statusEffect);
+
+                    if (exisitingToken)
+                    {
+                        if(exisitingToken.ReturnLifeTime() < exisitingToken.limitStack)
+                        {
+                            exisitingToken.ApplyEffect(this);
+                        }
+
+                        exisitingToken.IncreaseLifeTime(this);
+                    }
+                    else
+                    {
+                        buff.AwakeStatusEffect();
+                        buff.ApplyEffect(this);
+                        TokenList.Add(buff);
+                    }
+
                     break;
             }
 
@@ -974,6 +1017,7 @@ namespace NightmareEchoes.Unit
             foreach (Modifier statusEffect in totalStatusEffects)
             {
                 statusEffect.AwakeStatusEffect();
+                statusEffect.ApplyEffect(this);
             }
         }
 

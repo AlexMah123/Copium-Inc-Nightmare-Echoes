@@ -346,7 +346,7 @@ namespace NightmareEchoes.Unit
 
             if (thisUnit.BlindToken && targetType == TargetType.Single && checkBlind)
             {
-                if (thisUnit.FindModifier(STATUS_EFFECT.BLIND_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
+                if (thisUnit.DoesModifierExist(STATUS_EFFECT.BLIND_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
                 {
                     thisUnit.ShowPopUpText($"Blinded!", Color.red);
                     return false;

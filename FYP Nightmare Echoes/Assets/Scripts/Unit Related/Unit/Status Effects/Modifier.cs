@@ -17,8 +17,9 @@ namespace NightmareEchoes.Unit
         [Space(15), Header("Status Effect Values")]
         public STATUS_EFFECT statusEffect;
         public ModifierType modifierType;
-        [SerializeField] public float genericValue;
-        [SerializeField] public int modifierDuration;
+        [Tooltip("Value for status effect, tokens are defaulted to 1")] public float genericValue;
+        [Tooltip("duration/stacks for status effect")] public int modifierDuration;
+        [Tooltip("the limit on how many this effect can exist")] public int limitStack = 1;
 
         public abstract void AwakeStatusEffect();
         public abstract void ApplyEffect(Entity unit);
@@ -29,7 +30,17 @@ namespace NightmareEchoes.Unit
         }
 
         public abstract ModifiersStruct ApplyModifier(ModifiersStruct mod);
-        public abstract void IncreaseLifeTime();
+
+        public virtual void IncreaseLifeTime(int stacks = 0)
+        {
+
+        }
+
+
+        public virtual void IncreaseLifeTime(Entity unit)
+        {
+
+        }
 
         public virtual void UpdateLifeTime()
         {
