@@ -166,6 +166,11 @@ namespace NightmareEchoes.TurnOrder
                 {
                     controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.IMMOBILIZE_TOKEN);
                 }
+
+                if(controller.CurrentUnit.DeathMarkToken)
+                {
+                    controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.DEATHMARK_TOKEN);
+                }
                 #endregion
 
                 #region BuffDebuff

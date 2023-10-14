@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//created by Alex
 namespace NightmareEchoes.Unit
 {
-    [CreateAssetMenu(fileName = "VertigoToken", menuName = "Unit Modifiers/NegativeToken/Vertigo Token")]
-    public class VertigoToken : Modifier
+    [CreateAssetMenu(fileName = "DeathMarkToken", menuName = "Unit Modifiers/Unique Tokens/Death Mark Token")]
+    public class DeathMarkToken : Modifier
     {
         [Space(15), Header("Runtime Values")]
         [SerializeField] int tokenStack;
@@ -16,33 +15,21 @@ namespace NightmareEchoes.Unit
             tokenStack = modifierDuration;
         }
 
-        #region Effect Related
+        #region Effects Related
         public override void ApplyEffect(Entity unit)
         {
-
-            if (!unit.HasteToken)
-            {
-                unit.VertigoToken = true;
-                unit.ShowPopUpText("Vertigo!", Color.yellow);
-            }
-            else if (unit.HasteToken)
-            {
-                unit.ShowPopUpText("Negated Haste!", Color.blue);
-                unit.UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
-                unit.UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
-            }
+            unit.DeathMarkToken = true;
+            unit.ShowPopUpText("Marked For Death!", Color.magenta);
         }
 
         public override void TriggerEffect(Entity unit)
         {
-            
+
         }
         #endregion
 
         public override ModifiersStruct ApplyModifier(ModifiersStruct mod)
         {
-            mod.speedModifier -= (int)genericValue;
-
             return mod;
         }
 
@@ -55,7 +42,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Vertigo token reached max limit!", Color.blue);
+                unit.ShowPopUpText("Death Mark reached max limit!", Color.blue);
             }
         }
 
@@ -65,7 +52,7 @@ namespace NightmareEchoes.Unit
 
             if (tokenStack == 0)
             {
-                unit.VertigoToken = false;
+                unit.DeathMarkToken = false;
             }
         }
 

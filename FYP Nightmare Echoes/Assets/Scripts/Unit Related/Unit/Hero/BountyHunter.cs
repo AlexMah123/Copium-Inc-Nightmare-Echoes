@@ -23,14 +23,6 @@ namespace NightmareEchoes.Unit
         protected override void Update()
         {
             base.Update();
-
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.CRIPPLED_DEBUFF, 1, 1));
-                AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.BARRIER_TOKEN, 1, 1));
-                AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.HASTE_TOKEN, 1, 1));
-            }
-
         }
 
         #region Abilities()

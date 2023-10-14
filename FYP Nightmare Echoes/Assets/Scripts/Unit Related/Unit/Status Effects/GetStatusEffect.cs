@@ -10,7 +10,8 @@ namespace NightmareEchoes.Unit
     {
         public static GetStatusEffect Instance;
 
-        [NonReorderable] public List<ModifierDictionary> totalPossibleModifiers = new List<ModifierDictionary>();
+        //[NonReorderable]
+        public List<ModifierDictionary> totalPossibleModifiers = new List<ModifierDictionary>();
 
 
         public void Awake()
@@ -46,6 +47,7 @@ namespace NightmareEchoes.Unit
 
     public enum STATUS_EFFECT
     {
+        //positive token
         NONE = -1,
         DODGE_TOKEN = 0,
         BLOCK_TOKEN = 1,
@@ -54,6 +56,7 @@ namespace NightmareEchoes.Unit
         BARRIER_TOKEN = 4,
         STEALTH_TOKEN = 5,
 
+        //negative tokens
         BLIND_TOKEN = 6,
         VULNERABLE_TOKEN = 7,
         WEAKEN_TOKEN = 8,
@@ -61,18 +64,23 @@ namespace NightmareEchoes.Unit
         STUN_TOKEN = 10,
         IMMOBILIZE_TOKEN = 11,
 
+        //buffs
         RESTORATION_BUFF = 12,
         MOVERANGE_BUFF = 13,
         SPEED_BUFF = 14,
         RESISTANCE_BUFF = 15,
         STUN_RESISTANCE_BUFF = 16,
 
+        //debuffs
         WOUND_DEBUFF = 17,
         CRIPPLED_DEBUFF = 18,
         MOVERANGE_DEBUFF = 19,
         SPEED_DEBUFF = 20,
         RESISTANCE_DEBUFF = 21,
         STUN_RESISTANCE_DEBUFF = 22,
+
+        //unique tokens
+        DEATHMARK_TOKEN = 23,
     }
 
     [Serializable]

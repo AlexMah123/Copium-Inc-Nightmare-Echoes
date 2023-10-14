@@ -57,6 +57,8 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected bool stunToken;
         [SerializeField] protected bool immobilizeToken;
 
+        [Space(15), Header("Unique Skill Bools")]
+        [SerializeField] protected bool deathMarkToken;
 
         [Space(15), Header("Unit Skills")]
         [SerializeField] protected Skill basicAttack;
@@ -247,6 +249,13 @@ namespace NightmareEchoes.Unit
         }
         #endregion
 
+        #region Unique Skills Bool
+        public bool DeathMarkToken
+        {
+            get => deathMarkToken;
+            set => deathMarkToken = value;
+        }
+        #endregion
 
         #region Buff Debuff Token List
         public List<Modifier> BuffDebuffList
@@ -899,55 +908,11 @@ namespace NightmareEchoes.Unit
             return null;
         }
 
-        public void ClearAllStatusEffect(List<Modifier> statusEffectList, ModifierType modifierEnum)
-        {
-            switch(modifierEnum)
-            {
-                case ModifierType.BUFF:
-                case ModifierType.DEBUFF:
-                    buffDebuffList.Clear();
-                    break;
-
-                case ModifierType.POSITIVETOKEN:
-                    foreach(var statusEffect in statusEffectList)
-                    {
-                        if(statusEffect.modifierType == ModifierType.POSITIVETOKEN)
-                        {
-                            while (statusEffect.ReturnLifeTime() > 0)
-                            {
-                                UpdateTokenLifeTime(statusEffect.statusEffect);
-                            }
-                        }
-                        
-                    }
-                    break;
-
-                case ModifierType.NEGATIVETOKEN:
-                    foreach (var statusEffect in statusEffectList)
-                    {
-                        if (statusEffect.modifierType == ModifierType.NEGATIVETOKEN)
-                        {
-                            while (statusEffect.ReturnLifeTime() > 0)
-                            {
-                                UpdateTokenLifeTime(statusEffect.statusEffect);
-                            }
-                        }
-                        
-                    }
-                    break;
-            }
-
-            UpdateStatusEffectEvent();
-            UpdateStatsWithoutEndCycleEffect();
-        }
-
-
         //call to add buff to unit
         public void AddBuff(Modifier buff)
         {
             switch (buff.modifierType)
             {
-                //if buff or debuff
                 case ModifierType.BUFF:
                 case ModifierType.DEBUFF:
 
@@ -979,31 +944,141 @@ namespace NightmareEchoes.Unit
                     }
                     break;
 
-                //if positive token or negative token
                 case ModifierType.POSITIVETOKEN:
                 case ModifierType.NEGATIVETOKEN:
 
-                    var exisitingToken = DoesModifierExist(buff.statusEffect);
+                    var existingToken = DoesModifierExist(buff.statusEffect);
 
-                    if (exisitingToken)
+                    if (existingToken)
                     {
-                        if(exisitingToken.ReturnLifeTime() < exisitingToken.limitStack)
+                        switch(existingToken.statusEffect)
                         {
-                            exisitingToken.ApplyEffect(this);
-                        }
+                            case STATUS_EFFECT.BLOCK_TOKEN:
+                                if(deathMarkToken)
+                                {
+                                    existingToken.ApplyEffect(this);
+                                }
+                                else
+                                {
+                                    if (existingToken.ReturnLifeTime() < existingToken.limitStack)
+                                    {
+                                        existingToken.ApplyEffect(this);
+                                    }
 
-                        exisitingToken.IncreaseLifeTime(this);
+                                    existingToken.IncreaseLifeTime(this);
+                                }
+                                break;
+
+                            default:
+                                if (existingToken.ReturnLifeTime() < existingToken.limitStack)
+                                {
+                                    existingToken.ApplyEffect(this);
+                                }
+
+                                existingToken.IncreaseLifeTime(this);
+                                break;
+                        }
                     }
                     else
                     {
-                        buff.AwakeStatusEffect();
-                        buff.ApplyEffect(this);
-                        TokenList.Add(buff);
+                        switch(buff.statusEffect)
+                        {
+                            case STATUS_EFFECT.BLOCK_TOKEN:
+                                if(deathMarkToken)
+                                {
+                                    buff.ApplyEffect(this);
+                                }
+                                else
+                                {
+                                    buff.AwakeStatusEffect();
+                                    buff.ApplyEffect(this);
+                                    TokenList.Add(buff);
+                                }
+                                break;
+
+                            default:
+                                buff.AwakeStatusEffect();
+                                buff.ApplyEffect(this);
+                                TokenList.Add(buff);
+                                break;
+                        }
                     }
 
                     break;
             }
 
+
+            UpdateStatusEffectEvent();
+            UpdateStatsWithoutEndCycleEffect();
+        }
+
+        public void RemoveBuff(STATUS_EFFECT statusEffectEnum)
+        {
+            var existingStatusEffect = DoesModifierExist(statusEffectEnum);
+
+            if (!existingStatusEffect)
+                return;
+
+            switch (existingStatusEffect.modifierType)
+            {
+                case ModifierType.BUFF:
+                case ModifierType.DEBUFF:
+                    while (existingStatusEffect.ReturnLifeTime() > 0)
+                    {
+                        UpdateTokenLifeTime(existingStatusEffect.statusEffect);
+                    }
+                    break;
+
+                case ModifierType.POSITIVETOKEN:
+                case ModifierType.NEGATIVETOKEN:
+                    while (existingStatusEffect.ReturnLifeTime() > 0)
+                    {
+                        UpdateTokenLifeTime(existingStatusEffect.statusEffect);
+                    }
+                    break;
+            }
+
+            UpdateStatusEffectEvent();
+            UpdateStatsWithoutEndCycleEffect();
+        }
+
+        public void ClearAllStatusEffectOfType(ModifierType modifierEnum)
+        {
+            switch (modifierEnum)
+            {
+                case ModifierType.BUFF:
+                case ModifierType.DEBUFF:
+                    buffDebuffList.Clear();
+                    break;
+
+                case ModifierType.POSITIVETOKEN:
+                    foreach (var statusEffect in TokenList)
+                    {
+                        if (statusEffect.modifierType == ModifierType.POSITIVETOKEN)
+                        {
+                            while (statusEffect.ReturnLifeTime() > 0)
+                            {
+                                UpdateTokenLifeTime(statusEffect.statusEffect);
+                            }
+                        }
+
+                    }
+                    break;
+
+                case ModifierType.NEGATIVETOKEN:
+                    foreach (var statusEffect in TokenList)
+                    {
+                        if (statusEffect.modifierType == ModifierType.NEGATIVETOKEN)
+                        {
+                            while (statusEffect.ReturnLifeTime() > 0)
+                            {
+                                UpdateTokenLifeTime(statusEffect.statusEffect);
+                            }
+                        }
+
+                    }
+                    break;
+            }
 
             UpdateStatusEffectEvent();
             UpdateStatsWithoutEndCycleEffect();
@@ -1050,7 +1125,6 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        //only call in class properties
         public void UpdateTokenLifeTime(STATUS_EFFECT enumIndex)
         {
             for (int i = TokenList.Count - 1; i >= 0; i--)

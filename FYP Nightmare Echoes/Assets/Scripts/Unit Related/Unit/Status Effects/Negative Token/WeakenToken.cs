@@ -18,10 +18,10 @@ namespace NightmareEchoes.Unit
         #region Effects Related
         public override void ApplyEffect(Entity unit)
         {
-            unit.WeakenToken = true;
 
             if (!unit.StrengthToken)
             {
+                unit.WeakenToken = true;
                 unit.ShowPopUpText("Weaken!", Color.yellow);
             }
             else if (unit.StrengthToken)

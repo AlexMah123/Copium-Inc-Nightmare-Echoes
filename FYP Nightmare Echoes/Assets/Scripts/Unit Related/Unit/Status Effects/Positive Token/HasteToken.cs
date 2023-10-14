@@ -19,10 +19,10 @@ namespace NightmareEchoes.Unit
         #region Effects Related
         public override void ApplyEffect(Entity unit)
         {
-            unit.HasteToken = true;
 
-            if (!unit.VertigoToken && unit.HasteToken)
+            if (!unit.VertigoToken)
             {
+                unit.HasteToken = true;
                 unit.ShowPopUpText("Gained Haste!", Color.red);
             }
             else if (unit.VertigoToken)

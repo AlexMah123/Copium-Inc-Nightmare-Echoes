@@ -10,7 +10,7 @@ namespace NightmareEchoes.Unit
         {
             thisUnit.stats.Health += heal;
             //thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.RESTORATION_BUFF, 3, 1));
-            thisUnit.ClearAllStatusEffect(thisUnit.TokenList, ModifierType.NEGATIVETOKEN);
+            thisUnit.ClearAllStatusEffectOfType(ModifierType.NEGATIVETOKEN);
 
             return true;
         }

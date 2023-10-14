@@ -18,10 +18,14 @@ namespace NightmareEchoes.Unit
         #region Effects Related
         public override void ApplyEffect(Entity unit)
         {
-            unit.BlockToken = true;
 
-            if (!unit.VulnerableToken && unit.BlockToken)
+            if (unit.DeathMarkToken)
             {
+                unit.ShowPopUpText("Death Mark Prevents Block!", Color.red);
+            }
+            else if (!unit.VulnerableToken && !unit.DeathMarkToken)
+            {
+                unit.BlockToken = true;
                 unit.ShowPopUpText("Gained Block!", Color.red);
             }
             else if (unit.VulnerableToken)
@@ -30,6 +34,7 @@ namespace NightmareEchoes.Unit
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
             }
+            
         }
 
         public override void TriggerEffect(Entity unit)

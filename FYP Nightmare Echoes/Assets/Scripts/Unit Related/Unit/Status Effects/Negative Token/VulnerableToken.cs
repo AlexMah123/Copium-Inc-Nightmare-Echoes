@@ -18,10 +18,10 @@ namespace NightmareEchoes.Unit
         #region Effects Related
         public override void ApplyEffect(Entity unit)
         {
-            unit.VulnerableToken = true;
 
             if (!unit.BlockToken)
             {
+                unit.VulnerableToken = true;
                 unit.ShowPopUpText("Vulnerable!", Color.yellow);
             }
             else if (unit.BlockToken)

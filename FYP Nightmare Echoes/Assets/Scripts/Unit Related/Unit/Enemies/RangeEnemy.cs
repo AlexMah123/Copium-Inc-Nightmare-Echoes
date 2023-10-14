@@ -25,6 +25,11 @@ namespace NightmareEchoes.Unit.Enemy
         protected override void Update()
         {
             base.Update();
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.BLOCK_TOKEN, 1, 1));
+            }
         }
 
 
