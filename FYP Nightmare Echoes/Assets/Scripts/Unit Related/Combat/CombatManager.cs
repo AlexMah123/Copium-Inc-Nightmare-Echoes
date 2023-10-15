@@ -367,30 +367,25 @@ namespace NightmareEchoes.Unit.Combat
             StartCoroutine(WaitForSkill(target));
         }
 
-        public void EnemyTargetGround(Vector3 TargetTile, Skill skill)
+        public void EnemyTargetGround(OverlayTile targetTile, Skill skill)
         {
             activeSkill = skill;
 
-            var target = OverlayTileManager.Instance.GetOverlayTileOnMouseCursor();
-            if (!target) return;
-            
-            if (skillRangeTiles.All(tile => tile != target)) return;
-
             var aoeArea = activeSkill.AoeType switch
             {
-                AOEType.Square => SquareRange(target, 1, false),
-                AOEType.Cross => LineRange(target, 1, false),
-                AOEType.NonAOE => SquareRange(target, 0)
+                AOEType.Square => SquareRange(targetTile, 1, false),
+                AOEType.Cross => LineRange(targetTile, 1, false),
+                AOEType.NonAOE => SquareRange(targetTile, 0)
             };
 
-            aoePreviewTiles.Add(target);
+            aoePreviewTiles.Add(targetTile);
             foreach (var coord in aoeArea.Where(coord => OverlayTileManager.Instance.gridDictionary.ContainsKey(coord)))
             {
                 if (OverlayTileManager.Instance.gridDictionary.TryGetValue(coord, out var tile))
                     aoePreviewTiles.Add(tile);
             }
 
-            StartCoroutine(WaitForSkill(target, aoePreviewTiles));
+            StartCoroutine(WaitForSkill(targetTile, aoePreviewTiles));
         }
 
         #endregion

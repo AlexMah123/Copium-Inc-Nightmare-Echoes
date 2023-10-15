@@ -22,14 +22,14 @@ namespace NightmareEchoes.Unit.AI
 
         [Space(20), Header("Enemy Specifics")]
         public float attackDelay = 1f;
-        Entity thisUnit;
+        public Entity thisUnit;
 
         //used for decision making
         public Entity targetHero, closestHero;
         float rangeToTarget, rangeToClosestHero;
 
         //checking if this unit can attk, move & attk and has attacked.
-        public bool inAtkRange, inMoveAndAttackRange, hasAttacked, detectedStealthHero;
+        public bool inAtkRange, inMoveAndAttackRange, detectedStealthHero;
         public int selectedAttackRange;
         int selectedAttackMinRange;
         int rngHelper;
@@ -41,7 +41,7 @@ namespace NightmareEchoes.Unit.AI
         Skill currSelectedSkill;
         int skillAmount;
 
-        public OverlayTile thisUnitTile, targetTileToMove;
+        public OverlayTile thisUnitTile, targetTileToMove, aoeTargetTile;
         OverlayTile bestMoveTile;
 
         Dictionary<Entity, int> distancesDictionary = new Dictionary<Entity, int>();
@@ -49,8 +49,6 @@ namespace NightmareEchoes.Unit.AI
         Dictionary<Entity, float> aggroDictionary = new Dictionary<Entity, float>();
 
         float healthPercent;
-
-        public bool hasMoved;
 
         #region Class Attributes
         public List<OverlayTile> TilesInRange
@@ -82,13 +80,13 @@ namespace NightmareEchoes.Unit.AI
         public void MakeDecision(Entity thisUnit)
         {
             //reset values
-            hasAttacked = false;
-            hasMoved = false;
+            thisUnit.HasAttacked = false;
+            thisUnit.HasMoved = false;
             detectedStealthHero = false;
 
             //sort heros by distance and find tiles in range
             SortHeroesByDistance(thisUnit);
-            AddHeroesAndObstacles();
+            //AddHeroesAndObstacles();
 
             if (totalHeroList.Count > 0)
             {
@@ -161,8 +159,8 @@ namespace NightmareEchoes.Unit.AI
 
             //setting the values based on the closest hero
             
-            //targetHero = closestHero;
-            //rangeToTarget = rangeToClosestHero;
+            targetHero = closestHero;
+            rangeToTarget = rangeToClosestHero;
             targetTileToMove = targetHero.ActiveTile;
 
             InMoveAtkRangeCheck();
@@ -172,7 +170,11 @@ namespace NightmareEchoes.Unit.AI
             currTileUtil = 0;
             highestTileUtil = 0;
 
-            if (inAtkRange)
+            if (currSelectedSkill.TargetType == TargetType.AOE)
+            {
+                IfTargetTypeAOE();
+            }
+            else if (inAtkRange)
             {
                 //Debug.Log("A");
                 IfInAtkRange();
@@ -398,6 +400,70 @@ namespace NightmareEchoes.Unit.AI
 
         }
 
+        void IfTargetTypeAOE()
+        {
+            bestMoveTile = thisUnitTile;
+
+            rngHelper = 1;
+
+            for (int i = 0; i < tilesInRange.Count; i++)
+            {
+                if (!tilesInRange[i].CheckEntityGameObjectOnTile())
+                {
+                    if (FindDistanceBetweenTile(targetTileToMove, tilesInRange[i]) < FindDistanceBetweenTile(targetTileToMove, bestMoveTile))
+                    {
+                        bestMoveTile = tilesInRange[i];
+                    }
+                    else if (FindDistanceBetweenTile(targetTileToMove, tilesInRange[i]) == FindDistanceBetweenTile(targetTileToMove, bestMoveTile))
+                    {
+                        rngHelper++;
+                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                        {
+                            bestMoveTile = tilesInRange[i];
+                        }
+                    }
+                }
+            }
+
+            if (bestMoveTile == thisUnitTile)
+            {
+                totalPathList.Clear();
+            }
+            else
+            {
+                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRange);
+            }
+
+            float xDist = thisUnitTile.gridLocation.x - targetTileToMove.gridLocation.x;
+            float yDist = thisUnitTile.gridLocation.y - targetTileToMove.gridLocation.y;
+
+            if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
+            {
+                if (xDist < 0)
+                {
+                    //north
+                    aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(thisUnitTile.gridLocation.x + 1, thisUnitTile.gridLocation.y));
+                }
+                else
+                {
+                    //south
+                    aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(thisUnitTile.gridLocation.x - 1, thisUnitTile.gridLocation.y));
+                }
+            }
+            else
+            {
+                if (yDist > 0)
+                {
+                    //east
+                    aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(thisUnitTile.gridLocation.x, thisUnitTile.gridLocation.y + 1));
+                }
+                else
+                {
+                    //west
+                    aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(thisUnitTile.gridLocation.x, thisUnitTile.gridLocation.y - 1));
+                }
+            }
+        }
         #endregion
 
         void InMoveAtkRangeCheck()
@@ -447,6 +513,7 @@ namespace NightmareEchoes.Unit.AI
                         }
                     }
                     break;
+
                 default:
                     if (IsTileAttackableFromDiamond(thisUnitTile, targetTileToMove))
                     {
@@ -486,13 +553,13 @@ namespace NightmareEchoes.Unit.AI
                 //only if you havent detected hero
                 if (!detectedStealthHero)
                 {
-                    hasMoved = true;
+                    thisUnit.HasMoved = true;
                     PathfindingManager.Instance.MoveAlongPath(thisUnit, totalPathList, tilesInRange);
                 }
             }
 
             //if you find a stealth unit in view, and you havent attack
-            if (CombatManager.Instance.IsStealthUnitInViewRange(thisUnit, 1).Count > 0 && !hasAttacked && !detectedStealthHero)
+            if (CombatManager.Instance.IsStealthUnitInViewRange(thisUnit, 1).Count > 0 && !thisUnit.HasAttacked && !detectedStealthHero)
             {
                 //resetting values
                 detectedStealthHero = true;
@@ -592,7 +659,7 @@ namespace NightmareEchoes.Unit.AI
             if (targetTile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>() != null)
             {
                 targetTile.ShowEnemyTile();
-                hasAttacked = true;
+                thisUnit.HasAttacked = true;
 
                 StartCoroutine(AttackAction(thisUnit));
             }
@@ -616,9 +683,18 @@ namespace NightmareEchoes.Unit.AI
         {
             yield return new WaitForSeconds(attackDelay);
 
-            CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckEntityGameObjectOnTile().GetComponent<Entity>(), currSelectedSkill);
-            targetTileToMove.HideTile();
-            totalPathList.Clear();
+            if (currSelectedSkill.TargetType == TargetType.AOE)
+            {
+                CombatManager.Instance.EnemyTargetGround(aoeTargetTile, currSelectedSkill);
+                targetTileToMove.HideTile();
+                totalPathList.Clear();
+            }
+            else
+            {
+                CombatManager.Instance.EnemyTargetUnit(targetTileToMove.CheckEntityGameObjectOnTile().GetComponent<Entity>(), currSelectedSkill);
+                targetTileToMove.HideTile();
+                totalPathList.Clear();
+            }
         }
 
         void SortHeroesByDistance(Entity thisUnit)
@@ -793,7 +869,6 @@ namespace NightmareEchoes.Unit.AI
             }
             else return false; //out of cross
         }
-
         #endregion
         
     }

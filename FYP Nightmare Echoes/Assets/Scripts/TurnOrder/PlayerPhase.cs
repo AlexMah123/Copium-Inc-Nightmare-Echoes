@@ -7,7 +7,7 @@ using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.Grid;
 
-//created by Alex
+//created by Alex, edited by Ter
 namespace NightmareEchoes.TurnOrder
 {
     public class PlayerPhase : Phase

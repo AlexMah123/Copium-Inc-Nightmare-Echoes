@@ -28,6 +28,8 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected bool isHostile;
         [SerializeField] protected Direction direction;
         [SerializeField] protected TypeOfUnit typeOfUnit;
+        [SerializeField] protected bool hasAttacked;
+        [SerializeField] protected bool hasMoved;
 
         [Space(15), Header("Units Popup text")]
         [SerializeField] protected GameObject popupTextPrefab;
@@ -127,6 +129,18 @@ namespace NightmareEchoes.Unit
         {
             get => typeOfUnit;
             set => typeOfUnit = value;
+        }
+
+        public bool HasAttacked
+        {
+            get => hasAttacked;
+            set => hasAttacked = value;
+        }
+
+        public bool HasMoved
+        {
+            get => hasMoved;
+            set => hasMoved = value;
         }
 
         #endregion

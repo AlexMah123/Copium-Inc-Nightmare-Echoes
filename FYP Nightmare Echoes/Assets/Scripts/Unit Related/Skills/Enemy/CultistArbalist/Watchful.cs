@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NightmareEchoes.Unit
 {
-    public class HunterInstinct : Skill
+    public class Watchful : Skill
     {
         private bool isActive;
         private OverlayTile currentPos;
@@ -32,14 +32,14 @@ namespace NightmareEchoes.Unit
 
         public override bool Cast(Entity target)
         {
-            if (!target.IsHostile || target.IsProp) return false;
-            
+            if (target.IsHostile || target.IsProp) return false;
+
             if (target.HasMoved)
             {
-                DealDamage(target);
+                DealDamage(target); 
                 return true;
             }
-            
+
             if (target.HasAttacked)
             {
                 DealDamage(target, secondaryDamage);

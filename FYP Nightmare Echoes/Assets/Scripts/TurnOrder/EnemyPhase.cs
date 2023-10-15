@@ -175,7 +175,7 @@ namespace NightmareEchoes.TurnOrder
             yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
 
             //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.
-            if ((enemyAI.inAtkRange || enemyAI.inMoveAndAttackRange) && !enemyAI.hasAttacked && !enemyAI.detectedStealthHero && enemyAI.totalHeroList.Count > 0)
+            if ((enemyAI.inAtkRange || enemyAI.inMoveAndAttackRange) && !enemyAI.thisUnit.HasAttacked && !enemyAI.detectedStealthHero && enemyAI.totalHeroList.Count > 0)
             {
                 //if you are not immobilized, just attack
                 if (!controller.CurrentUnit.ImmobilizeToken)
