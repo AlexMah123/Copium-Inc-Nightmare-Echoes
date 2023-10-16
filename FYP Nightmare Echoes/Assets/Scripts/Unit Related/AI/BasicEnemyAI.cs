@@ -36,7 +36,6 @@ namespace NightmareEchoes.Unit.AI
         public List<OverlayTile> pathWithProps = new List<OverlayTile>();
 
         //checking if this unit can attk, move & attk and has attacked.
-        bool hasFinishedDecision = false;
         public bool inAtkRange, inMoveAndAttackRange, detectedStealthHero;
         public int selectedAttackRange;
         int selectedAttackMinRange;
@@ -376,8 +375,6 @@ namespace NightmareEchoes.Unit.AI
             {
                 totalPathList.Clear();
             }
-
-            hasFinishedDecision = true;
             #endregion
         }
         #endregion
@@ -738,7 +735,7 @@ namespace NightmareEchoes.Unit.AI
         #region Public Calls for Enemy Phase
         public void MoveProcess(Entity thisUnit)
         {
-            if (totalPathList.Count > 0 && hasFinishedDecision)
+            if (totalPathList.Count > 0)
             {
                 //render arrow, pan camera
                 PathfindingManager.Instance.RenderArrow(tilesInRangeWithoutProps, totalPathList, thisUnit);
@@ -753,7 +750,7 @@ namespace NightmareEchoes.Unit.AI
             }
 
             //if you find a stealth unit in view, and you havent attack
-            if (CombatManager.Instance.IsStealthUnitInViewRange(thisUnit, 1).Count > 0 && !thisUnit.HasAttacked && !detectedStealthHero && hasFinishedDecision)
+            if (CombatManager.Instance.IsStealthUnitInViewRange(thisUnit, 1).Count > 0 && !thisUnit.HasAttacked && !detectedStealthHero)
             {
                 //resetting values
                 detectedStealthHero = true;
