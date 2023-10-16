@@ -6,7 +6,7 @@ using NightmareEchoes.Grid;
 using NightmareEchoes.Unit.Combat;
 using UnityEngine;
 
-//Created by JH
+//Created by JH, edited by Ter
 namespace NightmareEchoes.Unit
 {
     public abstract class Skill : MonoBehaviour
@@ -420,6 +420,7 @@ namespace NightmareEchoes.Unit
 
         protected void Knockback(OverlayTile originTile, Entity target)
         {
+            var prevDir = target.Direction;
             var position = target.transform.position;
             var direction = position - originTile.transform.position;
             direction = Vector3.Normalize(direction);
@@ -431,6 +432,7 @@ namespace NightmareEchoes.Unit
             if (tileDestination.CheckEntityGameObjectOnTile() || tileDestination.CheckObstacleOnTile()) return;
             
             StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
+            target.Direction = prevDir;
             target.CheckCrippled();
         }
 

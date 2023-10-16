@@ -14,10 +14,14 @@ namespace NightmareEchoes.TurnOrder
     {
         bool runOnce = false;
         bool tempStun = false;
+        private List<Skill> aoeSkillsPassed = new();
+
         protected override void OnEnter()
         {
             //Reseting Values
             tempStun = false;
+            controller.CurrentUnit.HasMoved = false;
+            controller.CurrentUnit.HasAttacked = false;
 
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
@@ -67,6 +71,15 @@ namespace NightmareEchoes.TurnOrder
         {
             PathfindingManager.Instance.PlayerInputPathfinding();
 
+            var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
+            if (aoeDmg)
+            {
+                if (aoeSkillsPassed.Contains(aoeDmg))
+                    return;
+                if (aoeDmg.Cast(controller.CurrentUnit))
+                    aoeSkillsPassed.Add(aoeDmg);
+            }
+
             //if you cancel movement
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -77,6 +90,7 @@ namespace NightmareEchoes.TurnOrder
                     controller.CurrentUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
 
                     //Resets everything, not moving, not dragging, and lastaddedtile is null
+                    controller.CurrentUnit.HasMoved = false;
                     PathfindingManager.Instance.isMoving = false;
                     PathfindingManager.Instance.hasMoved = false;
                     PathfindingManager.Instance.isDragging = false;
@@ -153,6 +167,8 @@ namespace NightmareEchoes.TurnOrder
                     runOnce = true;
                 }
             }
+
+            
         }
 
         protected override void OnExit()
@@ -229,6 +245,7 @@ namespace NightmareEchoes.TurnOrder
         {
             yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
             PathfindingManager.Instance.RevertUnitPosition = null;
+            controller.CurrentUnit.HasAttacked = true;
             controller.StartCoroutine(controller.PassTurn());
         }
     }

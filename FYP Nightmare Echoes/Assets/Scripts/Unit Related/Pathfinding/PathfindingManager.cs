@@ -353,6 +353,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 CameraControl.Instance.isPanning = false;
                 isMoving = false;
+                thisUnit.HasMoved = true;
             }
         }
         #endregion
