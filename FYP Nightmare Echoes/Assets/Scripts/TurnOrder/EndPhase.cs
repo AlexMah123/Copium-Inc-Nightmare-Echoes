@@ -37,6 +37,11 @@ namespace NightmareEchoes.TurnOrder
             
         }
 
+        protected override void OnFixedUpdate()
+        {
+
+        }
+
         protected override void OnUpdate()
         {
             if (controller.FindAllEnemies() == null)

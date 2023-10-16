@@ -15,6 +15,11 @@ namespace NightmareEchoes.TurnOrder
             CombatManager.Instance.OnTurnStart();
         }
 
+        protected override void OnFixedUpdate()
+        {
+            
+        }
+
         protected override void OnUpdate()
         {
             

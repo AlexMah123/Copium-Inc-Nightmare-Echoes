@@ -67,10 +67,8 @@ namespace NightmareEchoes.TurnOrder
             
         }
 
-        protected override void OnUpdate()
+        protected override void OnFixedUpdate()
         {
-            PathfindingManager.Instance.PlayerInputPathfinding();
-
             var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
             if (aoeDmg)
             {
@@ -79,6 +77,25 @@ namespace NightmareEchoes.TurnOrder
                 if (aoeDmg.Cast(controller.CurrentUnit))
                     aoeSkillsPassed.Add(aoeDmg);
             }
+
+            if (PathfindingManager.Instance.isMoving)
+            {
+                UIManager.Instance.EnableCurrentUI(false);
+                runOnce = false;
+            }
+            else
+            {
+                if (!runOnce)
+                {
+                    UIManager.Instance.EnableCurrentUI(true);
+                    runOnce = true;
+                }
+            }
+        }
+
+        protected override void OnUpdate()
+        {
+            PathfindingManager.Instance.PlayerInputPathfinding();
 
             //if you cancel movement
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -153,22 +170,7 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
             #endregion
-
-            if (PathfindingManager.Instance.isMoving)
-            {
-                UIManager.Instance.EnableCurrentUI(false);
-                runOnce = false;
-            }
-            else
-            {
-                if(!runOnce)
-                {
-                    UIManager.Instance.EnableCurrentUI(true);
-                    runOnce = true;
-                }
-            }
-
-            
+      
         }
 
         protected override void OnExit()

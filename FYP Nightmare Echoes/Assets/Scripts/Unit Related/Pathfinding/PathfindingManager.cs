@@ -312,13 +312,14 @@ namespace NightmareEchoes.Unit.Pathfinding
                 ChangeDirection(direction, thisUnit);
 
                 var step = movingSpeed * Time.deltaTime;
-                var zIndex = pathList[0].transform.position.z;
+                var targetPosition = pathList[0].transform.position;
+                //var zIndex = pathList[0].transform.position.z;
 
-                thisUnit.transform.position = Vector2.MoveTowards(thisUnit.transform.position, pathList[0].transform.position, step);
-                thisUnit.transform.position = new Vector3(thisUnit.transform.position.x, thisUnit.transform.position.y, zIndex);
+                thisUnit.transform.position = Vector2.MoveTowards(thisUnit.transform.position, targetPosition, step);
+                //thisUnit.transform.position = new Vector3(thisUnit.transform.position.x, thisUnit.transform.position.y, zIndex);
 
                 //as you reach the tile, set the units position and the arrow, remove the pathlist[0] to move to the next tile
-                if (Vector2.Distance(thisUnit.transform.position, pathList[0].transform.position) < 0.01f)
+                if (Vector2.Distance(thisUnit.transform.position, targetPosition) < 0.001f)
                 {
                     SetUnitPositionOnTile(pathList[0], thisUnit);
 

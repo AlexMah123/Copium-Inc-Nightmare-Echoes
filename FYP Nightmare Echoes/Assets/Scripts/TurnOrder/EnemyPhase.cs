@@ -71,12 +71,12 @@ namespace NightmareEchoes.TurnOrder
             aoeSkillsPassed.Clear();
         }
 
-        protected override void OnUpdate()
+        protected override void OnFixedUpdate()
         {
             //start a couroutine to move
-            if (enemyAI == null || controller.CurrentUnit == null) return;
+            //if (enemyAI == null || controller.CurrentUnit == null) return;
 
-            if (enemyAI.TotalHeroList.Count > 0)
+            if (enemyAI.totalPathList.Count > 0)
             {
                 enemyAI.MoveProcess(controller.CurrentUnit);
             }
@@ -84,11 +84,17 @@ namespace NightmareEchoes.TurnOrder
             var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
             if (aoeDmg)
             {
-                if (aoeSkillsPassed.Contains(aoeDmg)) 
+                if (aoeSkillsPassed.Contains(aoeDmg))
                     return;
-                if (aoeDmg.Cast(controller.CurrentUnit)) 
+                if (aoeDmg.Cast(controller.CurrentUnit))
                     aoeSkillsPassed.Add(aoeDmg);
             }
+        }
+
+        protected override void OnUpdate()
+        {
+            
+
         }
 
         protected override void OnExit()

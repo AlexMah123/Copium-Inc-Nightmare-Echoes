@@ -63,6 +63,12 @@ namespace NightmareEchoes.TurnOrder
             OnEnter();
         }
 
+        public void OnFixedUpdatePhase()
+        {
+
+            OnFixedUpdate();
+        }
+
         public void OnUpdatePhase()
         {
             if (controller.currentPhase != controller.planPhase && controller.currentPhase != controller.startPhase && !controller.gameOver)
@@ -101,6 +107,11 @@ namespace NightmareEchoes.TurnOrder
 
         //overrides
         protected virtual void OnEnter()
+        {
+
+        }
+
+        protected virtual void OnFixedUpdate()
         {
 
         }

@@ -18,6 +18,11 @@ namespace NightmareEchoes.TurnOrder
             //insert planning faze, placing heros
         }
 
+        protected override void OnFixedUpdate()
+        {
+
+        }
+
         protected override void OnUpdate()
         {
 

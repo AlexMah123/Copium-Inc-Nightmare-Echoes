@@ -84,6 +84,14 @@ namespace NightmareEchoes.TurnOrder
             }
         }
 
+        private void FixedUpdate()
+        {
+            if(currentPhase != null)
+            {
+                currentPhase.OnFixedUpdatePhase();
+            }
+        }
+
         void StartGame()
         {
             cycleCount = 1;

@@ -93,7 +93,6 @@ namespace NightmareEchoes.Unit.AI
             thisUnit.HasAttacked = false;
             thisUnit.HasMoved = false;
             detectedStealthHero = false;
-            hasFinishedDecision = false;
             bestPath = new List<OverlayTile>();
 
             //sort heros by distance and find tiles in range
@@ -106,8 +105,12 @@ namespace NightmareEchoes.Unit.AI
                 tilesInRangeWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, includeProps: false);
                 tilesInRangeWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, includeProps: true);
 
-                tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, 99, includeProps: false);
-                tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, 99, includeProps: true);
+                tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (TileMapManager.Instance.length + TileMapManager.Instance.width) / 2, includeProps: false);
+                tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (TileMapManager.Instance.length + TileMapManager.Instance.width) / 2, includeProps: true);
+
+                //Debug.Log(FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile));
+                //tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile), includeProps: false);
+                //tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile), includeProps: true);
 
                 PathfindingManager.Instance.ShowTilesInRange(tilesInRangeWithoutProps);
 
@@ -174,10 +177,12 @@ namespace NightmareEchoes.Unit.AI
             }
 
             //setting the values based on the closest hero
-            
             targetHero = closestHero;
             rangeToTarget = rangeToClosestHero;
             tileToAttack = targetHero.ActiveTile;
+            //bestMoveTile = thisUnit.ActiveTile;
+            rngHelper = 1;
+
 
             #region Deciding To attack through obstacles or not
             //setting the different end points around the target.
@@ -273,9 +278,10 @@ namespace NightmareEchoes.Unit.AI
 
             for (int i = 0; i < pathWithProps.Count; i++)
             {
-                if (pathWithProps[i].CheckEntityGameObjectOnTile())
+                var checkEntity = pathWithProps[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+                if (checkEntity)
                 {
-                    if (pathWithProps[i].CheckEntityGameObjectOnTile().GetComponent<Entity>().IsProp)
+                    if (checkEntity.IsProp)
                     {
                         withPropsUtil = wastedMoveCounter + withPropsUtil;
                         wastedMoveCounter = thisUnit.stats.MoveRange - 1;
@@ -287,7 +293,7 @@ namespace NightmareEchoes.Unit.AI
                         {
                             wastedMoveCounter = thisUnit.stats.MoveRange;
                         }
-                    }
+                    }                    
                 }
             }
 
@@ -306,39 +312,44 @@ namespace NightmareEchoes.Unit.AI
 
                 for (int i = 0; i < thisUnit.stats.MoveRange + currSelectedSkill.Range; i++)
                 {
-                    if (pathWithProps[i].CheckEntityGameObjectOnTile())
+                    var checkEntity = pathWithProps[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+
+                    if (checkEntity)
                     {
-                        if (pathWithProps[i].CheckEntityGameObjectOnTile().GetComponent<Entity>().IsProp)
+                        if(checkEntity.IsProp)
                         {
                             if (i == 0)
                             {
                                 totalPathList.Clear();
                                 tileToAttack = pathWithProps[i];
-                                targetHero = tileToAttack.CheckEntityGameObjectOnTile().GetComponent<Entity>();
+                                targetHero = checkEntity;
                                 break;
                             }
                             else
                             {
                                 totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[i - 1], tilesInRangeWithProps);
                                 tileToAttack = pathWithProps[i];
-                                targetHero = tileToAttack.CheckEntityGameObjectOnTile().GetComponent<Entity>();
+                                targetHero = checkEntity;
                                 break;
                             }
                         }
+                        
                     }  
                 }
             }
             else
             {
-                if (thisUnit.stats.MoveRange >= pathWithProps.Count)
+                if(pathWithoutProps.Count > 0)
                 {
-                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[pathWithoutProps.Count - 1], tilesInRangeWithoutProps);
+                    if (thisUnit.stats.MoveRange >= pathWithProps.Count)
+                    {
+                        totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[pathWithoutProps.Count - 1], tilesInRangeWithoutProps);
+                    }
+                    else
+                    {
+                        totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithoutProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithoutProps);
+                    }
                 }
-                else
-                {
-                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithoutProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithoutProps);
-                }
-
             }
             #endregion
 
@@ -356,17 +367,14 @@ namespace NightmareEchoes.Unit.AI
             }
             else if (inAtkRange)
             {
-                //Debug.Log("A");
                 IfInAtkRange();
             }
             else if (inMoveAndAttackRange)
             {
-                //Debug.Log("B");
                 IfInMoveAtkRange();
             }
             else
             {
-                //Debug.Log("C");
                 IfOutMoveAtkRange();
             }
 
@@ -386,7 +394,6 @@ namespace NightmareEchoes.Unit.AI
             {
                 bestMoveTile = possibleAttackLocations[0];
             }
-            rngHelper = 1;
 
             for (int i = 0; i < possibleAttackLocations.Count; i++)
             {
@@ -455,7 +462,6 @@ namespace NightmareEchoes.Unit.AI
             {
                 bestMoveTile = possibleAttackLocations[0];
             }
-            rngHelper = 1;
 
             for (int i = 0; i < possibleAttackLocations.Count; i++)
             {
@@ -467,32 +473,28 @@ namespace NightmareEchoes.Unit.AI
                         if ((possibleAttackLocations[i].gridLocation.x < tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == tileToAttack.gridLocation.y))
                         {
                             currTileUtil = currTileUtil + 20;
-                            //Debug.Log("North MoveATK");
                         }
                         break;
                     case Direction.SOUTH:
                         if ((possibleAttackLocations[i].gridLocation.x > tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == tileToAttack.gridLocation.y))
                         {
                             currTileUtil = currTileUtil + 20;
-                            //Debug.Log("South MoveATK");
                         }
                         break;
                     case Direction.EAST:
                         if ((possibleAttackLocations[i].gridLocation.x == tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < tileToAttack.gridLocation.y))
                         {
                             currTileUtil = currTileUtil + 20;
-                            //Debug.Log("East MoveATK");
                         }
                         break;
                     case Direction.WEST:
                         if ((possibleAttackLocations[i].gridLocation.x == tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > tileToAttack.gridLocation.y))
                         {
                             currTileUtil = currTileUtil + 20;
-                            //Debug.Log("West MoveATK");
                         }
                         break;
                 }
-                //Debug.Log(currTileUtil);
+
                 if (!possibleAttackLocations[i].CheckEntityGameObjectOnTile())
                 {
                     if (currTileUtil > highestTileUtil)
@@ -526,7 +528,6 @@ namespace NightmareEchoes.Unit.AI
         {
             if (currSelectedSkill != thisUnit.BasicAttackSkill)
             {
-                //reinitializing skill
                 currSelectedSkill = thisUnit.BasicAttackSkill;
 
                 InMoveAtkRangeCheck();
@@ -545,14 +546,37 @@ namespace NightmareEchoes.Unit.AI
                 }
                 return;
             }
+
+            for (int i = 0; i < tilesInRangeWithoutProps.Count; i++)
+            {
+                if (!tilesInRangeWithoutProps[i].CheckEntityGameObjectOnTile())
+                {
+                    if (FindDistanceBetweenTile(tileToAttack, tilesInRangeWithoutProps[i]) < FindDistanceBetweenTile(tileToAttack, bestMoveTile))
+                    {
+                        bestMoveTile = tilesInRangeWithoutProps[i];
+                    }
+                    else if (FindDistanceBetweenTile(tileToAttack, tilesInRangeWithoutProps[i]) == FindDistanceBetweenTile(tileToAttack, bestMoveTile))
+                    {
+                        rngHelper++;
+                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                        {
+                            bestMoveTile = tilesInRangeWithoutProps[i];
+                        }
+                    }
+                }
+            }
+            if (bestMoveTile == thisUnitTile)
+            {
+                totalPathList.Clear();
+            }
+            else
+            {
+                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
+            }
         }
 
         void IfTargetTypeAOE()
         {
-            bestMoveTile = thisUnitTile;
-
-            rngHelper = 1;
-
             for (int i = 0; i < tilesInRangeWithoutProps.Count; i++)
             {
                 if (!tilesInRangeWithoutProps[i].CheckEntityGameObjectOnTile())
@@ -723,10 +747,6 @@ namespace NightmareEchoes.Unit.AI
                     }
                     break;
             }
-            
-
-            //Checks tiles in range for possibleAttackableLocations if they do not have a unit on it
-            
             #endregion
         }
 
@@ -916,37 +936,6 @@ namespace NightmareEchoes.Unit.AI
             }
         }
 
-        void AddHeroesAndObstacles()
-        {
-            UpdatePropList();
-
-            aggroDictionary.Clear();
-            
-            for (int i = 0; i < distancesDictionary.Count; i++)
-            {
-                aggroDictionary.Add(distancesDictionary.ToList()[i].Key, (distancesDictionary.ToList()[i].Value) - (thisUnit.BasicAttackSkill.Range + thisUnit.stats.MoveRange));
-            }
-            for (int i = 0; i < totalPropList.Count; i++)
-            {
-                int distTemp = (int)FindDistanceBetweenUnit(thisUnit, totalPropList[i]);
-                aggroDictionary.Add(totalPropList[i], distTemp);
-            }
-
-            var sortedAggros = aggroDictionary.OrderBy(aggroDictionary => aggroDictionary.Value);
-
-            targetHero = sortedAggros.ToList()[0].Key;
-            if (!targetHero.IsHostile && !targetHero.StealthToken && !targetHero.IsProp)
-            {
-                //Debug.Log("hero aggro");
-                rangeToTarget = sortedAggros.ToList()[0].Value + (thisUnit.BasicAttackSkill.Range + thisUnit.stats.MoveRange);
-            }
-            else
-            {
-                //Debug.Log("prop aggro");
-                rangeToTarget = sortedAggros.ToList()[0].Value;
-            }
-        }
-
         void UpdateHeroList()
         {
             //populating unitList
@@ -954,11 +943,11 @@ namespace NightmareEchoes.Unit.AI
             totalUnitList = FindObjectsOfType<Entity>().ToList();
 
             //filter by heroes
-            foreach (var unit in totalUnitList)
+            for(int i = 0; i < totalUnitList.Count; i++)
             {
-                if (!unit.IsHostile && !unit.StealthToken && !unit.IsProp)
+                if (!totalUnitList[i].IsHostile && !totalUnitList[i].StealthToken && !totalUnitList[i].IsProp)
                 {
-                    totalHeroList.Add(unit);
+                    totalHeroList.Add(totalUnitList[i]);
                 }
             }
         }
@@ -968,11 +957,12 @@ namespace NightmareEchoes.Unit.AI
             totalPropList.Clear();
             totalUnitList = FindObjectsOfType<Entity>().ToList();
 
-            foreach (var unit in totalUnitList)
+
+            for (int i = 0; i < totalUnitList.Count; i++)
             {
-                if (unit.IsProp)
+                if (totalUnitList[i].IsProp)
                 {
-                    totalPropList.Add(unit);
+                    totalPropList.Add(totalUnitList[i]);
                 }
             }
         }
@@ -990,9 +980,9 @@ namespace NightmareEchoes.Unit.AI
             return dist;
         }
 
-        public float FindDistanceBetweenTile(OverlayTile target1, OverlayTile target2)
+        public int FindDistanceBetweenTile(OverlayTile target1, OverlayTile target2)
         {
-            float dist;
+            int dist;
             Vector3Int t1v, t2v;
 
             t1v = target1.gridLocation;
@@ -1021,11 +1011,6 @@ namespace NightmareEchoes.Unit.AI
         }
         bool IsTileAttackableFromCross(OverlayTile target1, OverlayTile target2)
         {
-            /*if (target1.CheckEntityGameObjectOnTile())
-            {
-                Debug.Log("here4");
-                return false;
-            }*/
             if (target1.gridLocation.x == target2.gridLocation.x)
             {
                 //same row/x
