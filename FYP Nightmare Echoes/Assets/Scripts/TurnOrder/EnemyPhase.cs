@@ -180,12 +180,12 @@ namespace NightmareEchoes.TurnOrder
                 //if you are not immobilized, just attack
                 if (!controller.CurrentUnit.ImmobilizeToken)
                 {
-                    enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.targetTileToMove);
+                    enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.tileToAttack);
                 }
                 //if you are immobilized, but your range is within your selected attack range, attack
                 else if (controller.CurrentUnit.ImmobilizeToken && enemyAI.FindDistanceBetweenUnit(controller.CurrentUnit, enemyAI.targetHero) <= enemyAI.selectedAttackRange)
                 {
-                    enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.targetTileToMove);
+                    enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.tileToAttack);
                 }
                 else
                 {
