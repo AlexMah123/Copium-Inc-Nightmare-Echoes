@@ -9,9 +9,6 @@ namespace NightmareEchoes.Unit
     {
         protected override void Awake()
         {
-            isProp = true;
-            isHostile = true;
-            gameObject.layer = LayerMask.NameToLayer("Entity");
             base.Awake();
             StartCoroutine(UpdateTileLocation());
         }

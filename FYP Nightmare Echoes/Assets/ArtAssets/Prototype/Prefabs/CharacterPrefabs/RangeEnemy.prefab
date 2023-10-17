@@ -179,7 +179,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalHeroList: []
   totalUnitList: []
-  totalPropList: []
   totalPathList: []
   attackDelay: 1
   thisUnit: {fileID: 0}
@@ -191,6 +190,8 @@ MonoBehaviour:
   inMoveAndAttackRange: 0
   detectedStealthHero: 0
   selectedAttackRange: 0
+  tilesInSightWithoutProps: []
+  tilesInSightWithProps: []
   thisUnitTile: {fileID: 0}
   tileToAttack: {fileID: 0}
   aoeTargetTile: {fileID: 0}

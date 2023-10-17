@@ -65,16 +65,10 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnFixedUpdatePhase()
         {
-
-            OnFixedUpdate();
-        }
-
-        public void OnUpdatePhase()
-        {
             if (controller.gameOver)
                 return;
 
-            if(controller.cachedHeroesList == null)
+            if (controller.cachedHeroesList == null)
             {
                 controller.cachedHeroesList = controller.FindAllHeros();
             }
@@ -89,6 +83,16 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 
+            if (controller.FindAllEnemies() == null)
+            {
+                SceneManager.LoadScene(0);
+            }
+
+            OnFixedUpdate();
+        }
+
+        public void OnUpdatePhase()
+        {
             OnUpdate();
         }
 

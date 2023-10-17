@@ -44,10 +44,7 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnUpdate()
         {
-            if (controller.FindAllEnemies() == null)
-            {
-                SceneManager.LoadScene(0);
-            }
+            
         }
 
         protected override void OnExit()
