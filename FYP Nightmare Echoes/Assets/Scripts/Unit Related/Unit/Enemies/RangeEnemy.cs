@@ -26,10 +26,10 @@ namespace NightmareEchoes.Unit.Enemy
         {
             base.Update();
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            /*if (Input.GetKeyDown(KeyCode.Space))
             {
                 AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.BLOCK_TOKEN, 1, 1));
-            }
+            }*/
         }
 
 

@@ -398,8 +398,8 @@ namespace NightmareEchoes.Unit.AI
                 if (!tilesInRangeWithoutProps[i].CheckEntityGameObjectOnTile())
                 {
                     //set distance between tile without prop and the target tile to move.
-                    var distanceBetweentTileAndTarget = FindDistanceBetweenTile(targetTileToMove, tilesInRangeWithoutProps[i]) + thisUnit.stats.MoveRange;
-                    var tilesInRangeFromTileWithoutEntity = new List<OverlayTile>(Pathfinding.Pathfinding.FindTilesInRange(tilesInRangeWithoutProps[i], distanceBetweentTileAndTarget, ignoreProps: false));
+                    var distanceBetweenTileAndTarget = FindDistanceBetweenTile(targetTileToMove, tilesInRangeWithoutProps[i]) + thisUnit.stats.MoveRange;
+                    var tilesInRangeFromTileWithoutEntity = new List<OverlayTile>(Pathfinding.Pathfinding.FindTilesInRange(tilesInRangeWithoutProps[i], distanceBetweenTileAndTarget, ignoreProps: false));
                     var pathFromPossibleTile = new List<OverlayTile>(Pathfinding.Pathfinding.FindPath(tilesInRangeWithoutProps[i], targetTileToMove, tilesInRangeFromTileWithoutEntity));
 
                     if(pathFromPossibleTile.Count == 0)
