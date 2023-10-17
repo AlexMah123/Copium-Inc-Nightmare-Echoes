@@ -56,7 +56,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             return new List<OverlayTile>();
         }
 
-        public static List<OverlayTile> FindTilesInRange(OverlayTile startTile, int range, bool includeProps)
+        public static List<OverlayTile> FindTilesInRange(OverlayTile startTile, int range, bool ignoreProps)
         {
             var overLayTileManager = OverlayTileManager.Instance;
             var inRangeTiles = new List<OverlayTile> { startTile };
@@ -105,7 +105,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                         filteredTiles.Add(tile);
                     }
 
-                    if (includeProps && entityOnTile.IsProp)
+                    if (ignoreProps && entityOnTile.IsProp)
                     {
                         filteredTiles.Add(tile);
                     }

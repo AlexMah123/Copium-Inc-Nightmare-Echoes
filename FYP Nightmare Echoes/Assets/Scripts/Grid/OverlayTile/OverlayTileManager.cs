@@ -80,9 +80,23 @@ namespace NightmareEchoes.Grid
         {
             var map = gridDictionary;
 
-            Dictionary<Vector2Int, OverlayTile> tileToSearch = LimitTiles.Count > 0
+            Dictionary<Vector2Int, OverlayTile> tileToSearch = new Dictionary<Vector2Int, OverlayTile>();
+
+            if (LimitTiles.Count > 0)
+            {
+                for(int i =0; i < LimitTiles.Count; i++)
+                {
+                    tileToSearch.Add(new Vector2Int(LimitTiles[i].gridLocation.x, LimitTiles[i].gridLocation.y), LimitTiles[i]);
+                }
+            }
+            else
+            {
+                tileToSearch = map;
+            }
+
+            /*Dictionary<Vector2Int, OverlayTile> tileToSearch = LimitTiles.Count > 0
                 ? LimitTiles.ToDictionary(tile => new Vector2Int(tile.gridLocation.x, tile.gridLocation.y))
-                : map.ToDictionary(kv => new Vector2Int(kv.Key.x, kv.Key.y), kv => kv.Value);
+                : map.ToDictionary(kv => new Vector2Int(kv.Key.x, kv.Key.y), kv => kv.Value);*/
 
             List<OverlayTile> neighbours = new List<OverlayTile>();
 
