@@ -13,9 +13,10 @@ namespace NightmareEchoes.Unit.AI
 {
     public class BasicEnemyAI : MonoBehaviour
     {
+        OverlayTileManager overlayTileManager;
+
         [Header("Hero List + Unit List")]
         public List<Entity> totalHeroList, totalUnitList;
-        [SerializeField] List<Entity> totalPropList;
 
         [Space(20), Header("Path List to hero")]
         public List<OverlayTile> totalPathList = new List<OverlayTile>();
@@ -45,13 +46,14 @@ namespace NightmareEchoes.Unit.AI
         //this unit's specific variables
         List<OverlayTile> tilesInRangeWithoutProps = new List<OverlayTile>();
         List<OverlayTile> tilesInRangeWithProps = new List<OverlayTile>();
-        List<OverlayTile> tilesInSightWithoutProps = new List<OverlayTile>();
-        List<OverlayTile> tilesInSightWithProps = new List<OverlayTile>();
+        public List<OverlayTile> tilesInSightWithoutProps = new List<OverlayTile>();
+        public List<OverlayTile> tilesInSightWithProps = new List<OverlayTile>();
         List<OverlayTile> possibleAttackLocations = new List<OverlayTile>();
         Skill currSelectedSkill;
         int skillAmount;
 
         public OverlayTile thisUnitTile, tileToAttack, aoeTargetTile;
+        OverlayTile targetTileToMove;
         OverlayTile bestMoveTile;
 
         Dictionary<Entity, int> distancesDictionary = new Dictionary<Entity, int>();
@@ -73,17 +75,18 @@ namespace NightmareEchoes.Unit.AI
             set => totalHeroList = value;
         }
 
-        public List<Entity> TotalPropList
-        {
-            get => totalPropList;
-            set => totalPropList = value;
-        }
         #endregion
 
 
         private void Awake()
         {
             thisUnit = GetComponent<Entity>();
+
+        }
+
+        private void Start()
+        {
+            overlayTileManager = OverlayTileManager.Instance;
         }
 
         //Main Action
@@ -97,7 +100,6 @@ namespace NightmareEchoes.Unit.AI
 
             //sort heros by distance and find tiles in range
             SortHeroesByDistance(thisUnit);
-            //AddHeroesAndObstacles();
 
             if (totalHeroList.Count > 0)
             {
@@ -105,10 +107,9 @@ namespace NightmareEchoes.Unit.AI
                 tilesInRangeWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, includeProps: false);
                 tilesInRangeWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, includeProps: true);
 
-                tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (TileMapManager.Instance.length + TileMapManager.Instance.width) / 2, includeProps: false);
-                tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (TileMapManager.Instance.length + TileMapManager.Instance.width) / 2, includeProps: true);
+                tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (TileMapManager.Instance.length + TileMapManager.Instance.width), includeProps: false);
+                tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (TileMapManager.Instance.length + TileMapManager.Instance.width), includeProps: true);
 
-                //Debug.Log(FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile));
                 //tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile), includeProps: false);
                 //tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile), includeProps: true);
 
@@ -141,7 +142,6 @@ namespace NightmareEchoes.Unit.AI
         #region Types of Actions
         void AggressiveAction(Entity thisUnit)
         {
-            //setting the amount of skills that is attached to the unit
             skillAmount = 1;
 
             if (thisUnit.Skill1Skill != null)
@@ -157,7 +157,6 @@ namespace NightmareEchoes.Unit.AI
                 skillAmount += 3;
             }
 
-            //randomising between which skill to use
             switch (Random.Range(0, skillAmount))
             {
                 case 1:
@@ -171,8 +170,6 @@ namespace NightmareEchoes.Unit.AI
                     break;
                 default:
                     currSelectedSkill = thisUnit.BasicAttackSkill;
-                    //currSelectedSkill = thisUnit.Skill1Skill;
-                    //uncomment above to force unit to try Skill1 first 
                     break;
             }
 
@@ -180,65 +177,41 @@ namespace NightmareEchoes.Unit.AI
             targetHero = closestHero;
             rangeToTarget = rangeToClosestHero;
             tileToAttack = targetHero.ActiveTile;
-            //bestMoveTile = thisUnit.ActiveTile;
             rngHelper = 1;
 
 
             #region Deciding To attack through obstacles or not
             //setting the different end points around the target.
-            pathA = Pathfinding.Pathfinding.FindPath(thisUnitTile, OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(tileToAttack.gridLocation.x + 1, tileToAttack.gridLocation.y)), tilesInSightWithoutProps);
-            pathB = Pathfinding.Pathfinding.FindPath(thisUnitTile, OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(tileToAttack.gridLocation.x, tileToAttack.gridLocation.y + 1)), tilesInSightWithoutProps);
-            pathC = Pathfinding.Pathfinding.FindPath(thisUnitTile, OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(tileToAttack.gridLocation.x - 1, tileToAttack.gridLocation.y)), tilesInSightWithoutProps);
-            pathD = Pathfinding.Pathfinding.FindPath(thisUnitTile, OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(tileToAttack.gridLocation.x, tileToAttack.gridLocation.y - 1)), tilesInSightWithoutProps);
+            List<List<OverlayTile>> pathOptions = new List<List<OverlayTile>>();
 
-            // assigning bestPath.
+            Vector2Int[] directions = {
+                new Vector2Int(1, 0),  // Right
+                new Vector2Int(0, 1),  // Up
+                new Vector2Int(-1, 0), // Left
+                new Vector2Int(0, -1)  // Down
+            };
+
+            for (int i = 0; i < directions.Length; i++)
+            {
+                Vector2Int targetLocation = new Vector2Int(tileToAttack.gridLocation.x, tileToAttack.gridLocation.y) + directions[i];
+                targetTileToMove = overlayTileManager.GetOverlayTile(targetLocation);
+
+                // Check if the target location is valid (not blocked by entities or obstacles)
+                if (targetTileToMove != null && !targetTileToMove.CheckEntityGameObjectOnTile() && !targetTileToMove.CheckObstacleOnTile())
+                {
+                    List<OverlayTile> path = Pathfinding.Pathfinding.FindPath(thisUnitTile, targetTileToMove, tilesInSightWithoutProps);
+                    //bestMoveTile = targetTileToMove;
+                    pathOptions.Add(path);
+                }
+            }
 
             #region Assigning best path
-            if (pathA.Count != 0)
+            for (int i = 0; i < pathOptions.Count; i++)
             {
-                bestPath = pathA;
-            }
-
-            if (pathB.Count != 0)
-            {
-                if (bestPath.Count != 0)
+                if (bestPath.Count == 0 || bestPath.Count > pathOptions[i].Count)
                 {
-                    if (bestPath.Count > pathB.Count)
-                    {
-                        bestPath = pathB;
-                    }
-                }
-                else
-                {
-                    bestPath = pathB;
-                }
-            }
-            if (pathC.Count != 0)
-            {
-                if (bestPath.Count != 0)
-                {
-                    if (bestPath.Count > pathC.Count)
-                    {
-                        bestPath = pathC;
-                    }
-                }
-                else
-                {
-                    bestPath = pathC;
-                }
-            }
-            if (pathD.Count != 0)
-            {
-                if (bestPath.Count != 0)
-                {
-                    if (bestPath.Count > pathD.Count)
-                    {
-                        bestPath = pathD;
-                    }
-                }
-                else
-                {
-                    bestPath = pathD;
+                    bestPath = pathOptions[i];
+                    bestMoveTile = bestPath.Last();
                 }
             }
 
@@ -246,33 +219,14 @@ namespace NightmareEchoes.Unit.AI
             {
                 return;
             }
-            else
-            {
-                if (bestPath == pathA)
-                {
-                    bestMoveTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(tileToAttack.gridLocation.x + 1, tileToAttack.gridLocation.y));
-                }
-                else if (bestPath == pathB)
-                {
-                    bestMoveTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(tileToAttack.gridLocation.x, tileToAttack.gridLocation.y + 1));
-                }
-                else if (bestPath == pathC)
-                {
-                    bestMoveTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(tileToAttack.gridLocation.x - 1, tileToAttack.gridLocation.y));
-                }
-                else if (bestPath == pathD)
-                {
-                    bestMoveTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(tileToAttack.gridLocation.x, tileToAttack.gridLocation.y - 1));
-                }
-            }
-
-            #endregion
 
             pathWithoutProps = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInSightWithoutProps);
             pathWithProps = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInSightWithProps);
 
+            #endregion
+
             int withoutPropsUtil = pathWithoutProps.Count();
-            int withPropsUtil = pathWithProps.Count();
+            int withPropsUtil = 0;
 
             int wastedMoveCounter = thisUnit.stats.MoveRange;
 
@@ -283,11 +237,12 @@ namespace NightmareEchoes.Unit.AI
                 {
                     if (checkEntity.IsProp)
                     {
-                        withPropsUtil = wastedMoveCounter + withPropsUtil;
+                        withPropsUtil = wastedMoveCounter + 1;
                         wastedMoveCounter = thisUnit.stats.MoveRange - 1;
                     }
                     else
                     {
+                        withPropsUtil++;
                         wastedMoveCounter--;
                         if (wastedMoveCounter <= 0)
                         {
@@ -300,15 +255,9 @@ namespace NightmareEchoes.Unit.AI
             if (withPropsUtil < withoutPropsUtil)
             {
                 //if there is no obstacles
-                if (thisUnit.stats.MoveRange >= pathWithProps.Count)
-                {
-                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[pathWithProps.Count - 1], tilesInRangeWithProps);
-                }
-                else
-                {
+                totalPathList = thisUnit.stats.MoveRange >= pathWithProps.Count ? 
+                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[pathWithProps.Count - 1], tilesInRangeWithProps) :
                     totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithProps);
-                }
-
 
                 for (int i = 0; i < thisUnit.stats.MoveRange + currSelectedSkill.Range; i++)
                 {
@@ -339,16 +288,13 @@ namespace NightmareEchoes.Unit.AI
             }
             else
             {
-                if(pathWithoutProps.Count > 0)
+                Debug.Log("here");
+
+                if (pathWithoutProps.Count > 0)
                 {
-                    if (thisUnit.stats.MoveRange >= pathWithProps.Count)
-                    {
-                        totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[pathWithoutProps.Count - 1], tilesInRangeWithoutProps);
-                    }
-                    else
-                    {
-                        totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithoutProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithoutProps);
-                    }
+                    totalPathList = thisUnit.stats.MoveRange >= pathWithProps.Count ?
+                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[pathWithoutProps.Count - 1], tilesInRangeWithoutProps) :
+                    totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithoutProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithoutProps);
                 }
             }
             #endregion
@@ -390,138 +336,12 @@ namespace NightmareEchoes.Unit.AI
         #region Destination Calculation Methods
         void IfInAtkRange()
         {
-            if (possibleAttackLocations.Count > 0)
-            {
-                bestMoveTile = possibleAttackLocations[0];
-            }
-
-            for (int i = 0; i < possibleAttackLocations.Count; i++)
-            {
-                currTileUtil = FindDistanceBetweenTile(tileToAttack, possibleAttackLocations[i]);
-                switch (targetHero.Direction)
-                {
-                    case Direction.NORTH:
-                        if ((possibleAttackLocations[i].gridLocation.x < tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == tileToAttack.gridLocation.y))
-                        {
-                            currTileUtil = currTileUtil + 20;
-                        }
-                        break;
-                    case Direction.SOUTH:
-                        if ((possibleAttackLocations[i].gridLocation.x > tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == tileToAttack.gridLocation.y))
-                        {
-                            currTileUtil = currTileUtil + 20;
-                        }
-                        break;
-                    case Direction.EAST:
-                        if ((possibleAttackLocations[i].gridLocation.x == tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < tileToAttack.gridLocation.y))
-                        {
-                            currTileUtil = currTileUtil + 20;
-                        }
-                        break;
-                    case Direction.WEST:
-                        if ((possibleAttackLocations[i].gridLocation.x == tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > tileToAttack.gridLocation.y))
-                        {
-                            currTileUtil = currTileUtil + 20;
-                        }
-                        break;
-                }
-
-                //Debug.Log(currTileUtil);
-                if (!possibleAttackLocations[i].CheckEntityGameObjectOnTile())
-                {
-                    if (currTileUtil > highestTileUtil)
-                    {
-                        bestMoveTile = possibleAttackLocations[i];
-                        highestTileUtil = currTileUtil;
-                    }
-                    else if (currTileUtil == highestTileUtil)
-                    {
-                        rngHelper++;
-                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
-                        {
-                            bestMoveTile = possibleAttackLocations[i];
-                            highestTileUtil = currTileUtil;
-                        }
-                    }
-                }
-            }
-
-            if (bestMoveTile == null)
-            {
-                totalPathList.Clear();
-            }
-            else
-            {
-                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
-            }
+            FindBestmoveTile(possibleAttackLocations);
         }
         
         void IfInMoveAtkRange()
         {
-            if (possibleAttackLocations.Count > 0)
-            {
-                bestMoveTile = possibleAttackLocations[0];
-            }
-
-            for (int i = 0; i < possibleAttackLocations.Count; i++)
-            {
-                currTileUtil = FindDistanceBetweenTile(tileToAttack, possibleAttackLocations[i]);
-
-                switch (targetHero.Direction)
-                {
-                    case Direction.NORTH:
-                        if ((possibleAttackLocations[i].gridLocation.x < tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == tileToAttack.gridLocation.y))
-                        {
-                            currTileUtil = currTileUtil + 20;
-                        }
-                        break;
-                    case Direction.SOUTH:
-                        if ((possibleAttackLocations[i].gridLocation.x > tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y == tileToAttack.gridLocation.y))
-                        {
-                            currTileUtil = currTileUtil + 20;
-                        }
-                        break;
-                    case Direction.EAST:
-                        if ((possibleAttackLocations[i].gridLocation.x == tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y < tileToAttack.gridLocation.y))
-                        {
-                            currTileUtil = currTileUtil + 20;
-                        }
-                        break;
-                    case Direction.WEST:
-                        if ((possibleAttackLocations[i].gridLocation.x == tileToAttack.gridLocation.x) && (possibleAttackLocations[i].gridLocation.y > tileToAttack.gridLocation.y))
-                        {
-                            currTileUtil = currTileUtil + 20;
-                        }
-                        break;
-                }
-
-                if (!possibleAttackLocations[i].CheckEntityGameObjectOnTile())
-                {
-                    if (currTileUtil > highestTileUtil)
-                    {
-                        bestMoveTile = possibleAttackLocations[i];
-                        highestTileUtil = currTileUtil;
-                    }
-                    else if (currTileUtil == highestTileUtil)
-                    {
-                        rngHelper++;
-                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
-                        {
-                            bestMoveTile = possibleAttackLocations[i];
-                            highestTileUtil = currTileUtil;
-                        }
-                    }
-                }
-            }
-
-            if (bestMoveTile == null)
-            {
-                totalPathList.Clear();
-            }
-            else
-            {
-                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
-            }
+            FindBestmoveTile(possibleAttackLocations);
         }
 
         void IfOutMoveAtkRange()
@@ -544,125 +364,26 @@ namespace NightmareEchoes.Unit.AI
                 {
                     IfOutMoveAtkRange();
                 }
+
                 return;
             }
 
-            for (int i = 0; i < tilesInRangeWithoutProps.Count; i++)
-            {
-                if (!tilesInRangeWithoutProps[i].CheckEntityGameObjectOnTile())
-                {
-                    if (FindDistanceBetweenTile(tileToAttack, tilesInRangeWithoutProps[i]) < FindDistanceBetweenTile(tileToAttack, bestMoveTile))
-                    {
-                        bestMoveTile = tilesInRangeWithoutProps[i];
-                    }
-                    else if (FindDistanceBetweenTile(tileToAttack, tilesInRangeWithoutProps[i]) == FindDistanceBetweenTile(tileToAttack, bestMoveTile))
-                    {
-                        rngHelper++;
-                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
-                        {
-                            bestMoveTile = tilesInRangeWithoutProps[i];
-                        }
-                    }
-                }
-            }
-            if (bestMoveTile == thisUnitTile)
-            {
-                totalPathList.Clear();
-            }
-            else
-            {
-                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
-            }
+            FindBestmoveTile(tilesInRangeWithoutProps);
         }
 
         void IfTargetTypeAOE()
         {
-            for (int i = 0; i < tilesInRangeWithoutProps.Count; i++)
-            {
-                if (!tilesInRangeWithoutProps[i].CheckEntityGameObjectOnTile())
-                {
-                    if (FindDistanceBetweenTile(tileToAttack, tilesInRangeWithoutProps[i]) < FindDistanceBetweenTile(tileToAttack, bestMoveTile))
-                    {
-                        bestMoveTile = tilesInRangeWithoutProps[i];
-                    }
-                    else if (FindDistanceBetweenTile(tileToAttack, tilesInRangeWithoutProps[i]) == FindDistanceBetweenTile(tileToAttack, bestMoveTile))
-                    {
-                        rngHelper++;
-                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
-                        {
-                            bestMoveTile = tilesInRangeWithoutProps[i];
-                        }
-                    }
-                }
-            }
+            FindBestmoveTile(tilesInRangeWithoutProps);
 
             if (bestMoveTile == thisUnitTile)
             {
                 totalPathList.Clear();
-
-                float xDist = thisUnitTile.gridLocation.x - tileToAttack.gridLocation.x;
-                float yDist = thisUnitTile.gridLocation.y - tileToAttack.gridLocation.y;
-
-                if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
-                {
-                    if (xDist < 0)
-                    {
-                        //north
-                        aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(thisUnitTile.gridLocation.x + 1, thisUnitTile.gridLocation.y));
-                    }
-                    else
-                    {
-                        //south
-                        aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(thisUnitTile.gridLocation.x + 1, thisUnitTile.gridLocation.y));
-                    }
-                }
-                else
-                {
-                    if (yDist > 0)
-                    {
-                        //east
-                        aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(thisUnitTile.gridLocation.x, thisUnitTile.gridLocation.y - 1));
-                    }
-                    else
-                    {
-                        //west
-                        aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(thisUnitTile.gridLocation.x, thisUnitTile.gridLocation.y + 1));
-                    }
-                }
+                SetAOETargetTile(thisUnitTile);
             }
             else
             {
                 totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
-
-                float xDist = bestMoveTile.gridLocation.x - tileToAttack.gridLocation.x;
-                float yDist = bestMoveTile.gridLocation.y - tileToAttack.gridLocation.y;
-
-                if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
-                {
-                    if (xDist < 0)
-                    {
-                        //north
-                        aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(bestMoveTile.gridLocation.x + 1, bestMoveTile.gridLocation.y));
-                    }
-                    else
-                    {
-                        //south
-                        aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(bestMoveTile.gridLocation.x + 1, bestMoveTile.gridLocation.y));
-                    }
-                }
-                else
-                {
-                    if (yDist > 0)
-                    {
-                        //east
-                        aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(bestMoveTile.gridLocation.x, bestMoveTile.gridLocation.y - 1));
-                    }
-                    else
-                    {
-                        //west
-                        aoeTargetTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(bestMoveTile.gridLocation.x, bestMoveTile.gridLocation.y + 1));
-                    }
-                }
+                SetAOETargetTile(bestMoveTile);
             }
             
             
@@ -952,17 +673,76 @@ namespace NightmareEchoes.Unit.AI
             }
         }
 
-        void UpdatePropList()
+        void FindBestmoveTile(List<OverlayTile> tileList)
         {
-            totalPropList.Clear();
-            totalUnitList = FindObjectsOfType<Entity>().ToList();
-
-
-            for (int i = 0; i < totalUnitList.Count; i++)
+            if (tileList.Count > 0)
             {
-                if (totalUnitList[i].IsProp)
+                bestMoveTile = tileList[0];
+            }
+
+            for (int i = 0; i < tileList.Count; i++)
+            {
+                currTileUtil = FindDistanceBetweenTile(tileToAttack, tileList[i]);
+                AdjustTileUtilityBasedOnDirection(tileList[i]);
+
+                if (!tileList[i].CheckEntityGameObjectOnTile())
                 {
-                    totalPropList.Add(totalUnitList[i]);
+                    if (currTileUtil > highestTileUtil)
+                    {
+                        bestMoveTile = tileList[i];
+                        highestTileUtil = currTileUtil;
+                    }
+                    else if (currTileUtil == highestTileUtil)
+                    {
+                        rngHelper++;
+                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                        {
+                            bestMoveTile = tileList[i];
+                            highestTileUtil = currTileUtil;
+                        }
+                    }
+                }
+            }
+
+            if (bestMoveTile == null)
+            {
+                totalPathList.Clear();
+            }
+            else
+            {
+                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
+            }
+        }
+
+        void SetAOETargetTile(OverlayTile sourceTile)
+        {
+            float xDist = bestMoveTile.gridLocation.x - tileToAttack.gridLocation.x;
+            float yDist = bestMoveTile.gridLocation.y - tileToAttack.gridLocation.y;
+
+            if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
+            {
+                if (xDist < 0)
+                {
+                    //north
+                    aoeTargetTile = overlayTileManager.GetOverlayTile(new Vector2Int(bestMoveTile.gridLocation.x + 1, bestMoveTile.gridLocation.y));
+                }
+                else
+                {
+                    //south
+                    aoeTargetTile = overlayTileManager.GetOverlayTile(new Vector2Int(bestMoveTile.gridLocation.x + 1, bestMoveTile.gridLocation.y));
+                }
+            }
+            else
+            {
+                if (yDist > 0)
+                {
+                    //east
+                    aoeTargetTile = overlayTileManager.GetOverlayTile(new Vector2Int(bestMoveTile.gridLocation.x, bestMoveTile.gridLocation.y - 1));
+                }
+                else
+                {
+                    //west
+                    aoeTargetTile = overlayTileManager.GetOverlayTile(new Vector2Int(bestMoveTile.gridLocation.x, bestMoveTile.gridLocation.y + 1));
                 }
             }
         }
@@ -993,22 +773,43 @@ namespace NightmareEchoes.Unit.AI
             return dist;
         }
 
+        void AdjustTileUtilityBasedOnDirection(OverlayTile tile)
+        {
+            switch (targetHero.Direction)
+            {
+                case Direction.NORTH:
+                    if (tile.gridLocation.x < tileToAttack.gridLocation.x && tile.gridLocation.y == tileToAttack.gridLocation.y)
+                    {
+                        currTileUtil += 20;
+                    }
+                    break;
+                case Direction.SOUTH:
+                    if (tile.gridLocation.x > tileToAttack.gridLocation.x && tile.gridLocation.y == tileToAttack.gridLocation.y)
+                    {
+                        currTileUtil += 20;
+                    }
+                    break;
+                case Direction.EAST:
+                    if (tile.gridLocation.x == tileToAttack.gridLocation.x && tile.gridLocation.y < tileToAttack.gridLocation.y)
+                    {
+                        currTileUtil += 20;
+                    }
+                    break;
+                case Direction.WEST:
+                    if (tile.gridLocation.x == tileToAttack.gridLocation.x && tile.gridLocation.y > tileToAttack.gridLocation.y)
+                    {
+                        currTileUtil += 20;
+                    }
+                    break;
+            }
+        }
+
         bool IsTileAttackableFromDiamond(OverlayTile target1, OverlayTile target2)
         {
             rangeToTarget = Mathf.Abs(target1.gridLocation.x - target2.gridLocation.x) + Mathf.Abs(target1.gridLocation.y - target2.gridLocation.y);
-            if (rangeToTarget <= selectedAttackRange)
-            {
-                if (rangeToTarget >= selectedAttackMinRange)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else return false;
+            return rangeToTarget <= selectedAttackRange && rangeToTarget >= selectedAttackMinRange;
         }
+
         bool IsTileAttackableFromCross(OverlayTile target1, OverlayTile target2)
         {
             if (target1.gridLocation.x == target2.gridLocation.x)
