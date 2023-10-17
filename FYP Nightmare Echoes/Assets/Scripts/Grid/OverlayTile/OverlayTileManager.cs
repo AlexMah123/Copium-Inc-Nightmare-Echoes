@@ -80,21 +80,6 @@ namespace NightmareEchoes.Grid
         {
             var map = gridDictionary;
 
-            /*Dictionary<Vector2Int, OverlayTile> tileToSearch = new Dictionary<Vector2Int, OverlayTile>();
-
-            //if statement to limit the tiles
-            if (LimitTiles.Count > 0)
-            {
-                foreach (var item in LimitTiles)
-                {
-                    tileToSearch.Add(new Vector2Int(item.gridLocation.x, item.gridLocation.y), item);
-                }
-            }
-            else
-            {
-                tileToSearch = map;
-            }*/
-
             Dictionary<Vector2Int, OverlayTile> tileToSearch = LimitTiles.Count > 0
                 ? LimitTiles.ToDictionary(tile => new Vector2Int(tile.gridLocation.x, tile.gridLocation.y))
                 : map.ToDictionary(kv => new Vector2Int(kv.Key.x, kv.Key.y), kv => kv.Value);
