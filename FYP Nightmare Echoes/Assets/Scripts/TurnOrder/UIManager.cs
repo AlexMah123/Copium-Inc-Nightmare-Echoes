@@ -1115,26 +1115,6 @@ namespace NightmareEchoes.TurnOrder
             }
         }
 
-        public void SoundButton()
-        {
-            if (!soundPanel.activeSelf)
-            {
-                settingsPanel.SetActive(false);
-                settingButton.gameObject.SetActive(false);
-                soundPanel.SetActive(true);
-            }
-        }
-
-        public void SoundBackButton()
-        {
-            if (soundPanel.activeSelf)
-            {
-                settingsPanel.SetActive(true);
-                settingButton.gameObject.SetActive(true);
-                soundPanel.SetActive(false);
-            }
-        }
-
         public void GeneralSettingsButton()
         {
             if (!GeneralSettingsPanel.activeSelf)

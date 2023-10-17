@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Audio;
 
 namespace NightmareEchoes.Sound
 {
@@ -12,6 +13,8 @@ namespace NightmareEchoes.Sound
         public Sound[] musicSounds;
         public Sound[] sfxSounds;
         public AudioSource musicSource, sfxSource;
+        public AudioMixer audioMixer;
+        public float VolumeControl;
 
         private void Awake()
         {
@@ -29,6 +32,7 @@ namespace NightmareEchoes.Sound
         private void Start()
         {
             PlayMusic("BgSoundTest");
+            MasterVolume(0);
         }
 
         public void PlayMusic(string Name)
@@ -64,39 +68,16 @@ namespace NightmareEchoes.Sound
         {
             musicSource.volume = Volume;
             sfxSource.volume = Volume;
-
-            if (Volume == 0)
-            {
-                musicSource.volume = 0;
-                sfxSource.volume = 0;
-            }
-            else if (Volume > 10)
-                musicSource.volume = 10;
-                sfxSource.volume = 10;
         }
 
         public void MusicVolume(float Volume)
         {
             musicSource.volume = Volume;
-
-            if (Volume == 0)
-            {
-                musicSource.volume = 0;
-            }
-            else if (Volume > 10)
-                musicSource.volume = 10;
         }
 
         public void SFXVolume(float Volume)
         {
             sfxSource.volume = Volume;
-
-            if (Volume == 0)
-            {
-                sfxSource.volume = 0;
-            }
-            else if (Volume > 10)
-                sfxSource.volume = 10;
         }
     }
 }

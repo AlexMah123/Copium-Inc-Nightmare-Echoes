@@ -3243,7 +3243,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 386124857}
         m_TargetAssemblyTypeName: NightmareEchoes.TurnOrder.UIManager, NightmareEchoes.TurnOrder
-        m_MethodName: SoundBackButton
+        m_MethodName: GeneralBackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4278,7 +4278,7 @@ MonoBehaviour:
   settingButton: {fileID: 1710368855}
   settingsPanel: {fileID: 529466687}
   soundPanel: {fileID: 1961228502}
-  GeneralSettingsPanel: {fileID: 0}
+  GeneralSettingsPanel: {fileID: 548627460}
   gameOverPanel: {fileID: 501860694}
   unitIndicator: {fileID: 231520302}
   frequency: 4
@@ -6753,12 +6753,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 779873518}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_MaxValue: 10
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2086079290}
+        m_TargetAssemblyTypeName: NightmareEchoes.Sound.AudioManager, NightmareEchoes.Sound
+        m_MethodName: MasterVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &587356135
 GameObject:
   m_ObjectHideFlags: 0
@@ -16451,12 +16463,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 353625808}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_MaxValue: 10
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2086079290}
+        m_TargetAssemblyTypeName: NightmareEchoes.Sound.AudioManager, NightmareEchoes.Sound
+        m_MethodName: SFXVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1429316038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20773,12 +20797,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1713998744}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_MaxValue: 10
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2086079290}
+        m_TargetAssemblyTypeName: NightmareEchoes.Sound.AudioManager, NightmareEchoes.Sound
+        m_MethodName: MusicVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1865336357
 GameObject:
   m_ObjectHideFlags: 0
