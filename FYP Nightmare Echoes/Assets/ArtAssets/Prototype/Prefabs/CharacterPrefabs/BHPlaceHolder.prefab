@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 2924613594053572864}
   - component: {fileID: 5105758200137203564}
   - component: {fileID: 128770042}
-  - component: {fileID: -299813580901063140}
   m_Layer: 6
   m_Name: BHPlaceHolder
   m_TagString: Inspectable
@@ -122,6 +121,8 @@ MonoBehaviour:
   isHostile: 0
   direction: 0
   typeOfUnit: 1
+  hasAttacked: 0
+  hasMoved: 0
   popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _health: 0
@@ -392,30 +393,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &-299813580901063140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726962122940716085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 1
-  m_ApplyToSortingLayers: 000000002bd54a01
-  m_ShapePath:
-  - {x: -0.13821082, y: 0, z: 0}
-  - {x: -0.117673665, y: 0.1328291, z: 0}
-  - {x: 0.16696283, y: 0.13693649, z: 0}
-  - {x: 0.1875, y: 0, z: 0}
-  m_ShapePathHash: -2004012350
-  m_Mesh: {fileID: 0}
-  m_InstanceId: -1298

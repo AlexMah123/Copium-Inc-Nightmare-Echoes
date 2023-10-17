@@ -340,7 +340,8 @@ namespace NightmareEchoes.TurnOrder
             }
             else
             {
-                unitIndicator.SetActive(false);
+                if(unitIndicator.activeSelf)
+                    unitIndicator.SetActive(false);
             }
 
             #endregion
@@ -348,7 +349,6 @@ namespace NightmareEchoes.TurnOrder
             #region TurnOrderPanel
 
             currentTurnNum.text = $"{TurnOrderController.Instance.cycleCount}";
-
 
             //sets indicator to the first image on the list
             if (turnOrderSpritePool[0].activeSelf)
@@ -362,7 +362,8 @@ namespace NightmareEchoes.TurnOrder
             }
             else
             {
-                turnIndicator.SetActive(false);
+                if(turnIndicator.activeSelf)
+                    turnIndicator.SetActive(false);
             }
             #endregion
 
@@ -592,16 +593,16 @@ namespace NightmareEchoes.TurnOrder
             //sets all the images in the panel for current turn
             for (int i = 0; i < TurnOrderController.Instance.CurrentUnitQueue.Count; i++)
             {
-                GameObject image = GetImageObject();
+                var image = GetImageObject()?.GetComponent<Image>();
 
                 if (image != null)
                 {
-                    image.GetComponent<Image>().sprite = TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].Sprite;
+                    image.sprite = TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].Sprite;
 
                     //slowly remove this as animations come out
                     if (TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer != null)
                     {
-                        image.GetComponent<Image>().color =
+                        image.color =
                         new Color(TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.r,
                         TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.g,
                         TurnOrderController.Instance.CurrentUnitQueue.ToArray()[i].SpriteRenderer.color.b,
@@ -609,11 +610,11 @@ namespace NightmareEchoes.TurnOrder
                     }
                     else
                     {
-                        image.GetComponent<Image>().color = Color.white;
+                        image.color = Color.white;
                     }
 
 
-                    image.SetActive(true);
+                    image.gameObject.SetActive(true);
                 }
             }
         }
@@ -635,12 +636,11 @@ namespace NightmareEchoes.TurnOrder
                 for (int i = 0; i < currentUnitTotalStatusEffectList.Count; i++)
                 {
                     //get obj from pool
-                    GameObject statusEffectObj = GetStatusEffectObject(currentUnitStatusEffectsPanel);
+                    var statusEffectImage = GetStatusEffectObject(currentUnitStatusEffectsPanel)?.GetComponent<Image>();
 
-                    if (statusEffectObj != null)
+                    if (statusEffectImage != null)
                     {
                         //sets image component and scriptable object component
-                        Image statusEffectImage = statusEffectObj.GetComponent<Image>();
                         Modifier modifier = currentUnitTotalStatusEffectList[i];
 
                         //sets image to icon
@@ -668,7 +668,7 @@ namespace NightmareEchoes.TurnOrder
                         }
 
 
-                        statusEffectObj.SetActive(true);
+                        statusEffectImage.gameObject.SetActive(true);
                     }
                 }
             }
@@ -689,12 +689,12 @@ namespace NightmareEchoes.TurnOrder
                 for (int i = 0; i < inspectedUnitTotalStatusEffectList.Count; i++)
                 {
                     //get obj from pool
-                    GameObject statusEffectObj = GetStatusEffectObject(inspectedUnitStatusEffectsPanel);
+                    var statusEffectImage = GetStatusEffectObject(inspectedUnitStatusEffectsPanel)?.GetComponent<Image>();
+                    //Image statusEffectImage = statusEffectObj.GetComponent<Image>();
 
-                    if (statusEffectObj != null)
+                    if (statusEffectImage != null)
                     {
                         //sets image component and scriptable object component
-                        Image statusEffectImage = statusEffectObj.GetComponent<Image>();
                         Modifier modifier = inspectedUnitTotalStatusEffectList[i];
 
                         //sets image to icon
@@ -722,7 +722,7 @@ namespace NightmareEchoes.TurnOrder
                         }
 
 
-                        statusEffectObj.SetActive(true);
+                        statusEffectImage.gameObject.SetActive(true);
                     }
                 }
             }
@@ -1068,9 +1068,9 @@ namespace NightmareEchoes.TurnOrder
 
         public void EnableInspectedUI(bool enable)
         {
-            foreach (Button button in inspectedUnitButtonList)
+            for(int i = 0; i < inspectedUnitButtonList.Count; i++)
             {
-                button.interactable = enable;
+                inspectedUnitButtonList[i].interactable |= enable;
             }
 
             inspectedUnitPanel.SetActive(enable);

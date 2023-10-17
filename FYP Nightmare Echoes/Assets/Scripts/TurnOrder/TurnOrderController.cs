@@ -36,6 +36,7 @@ namespace NightmareEchoes.TurnOrder
         List<Entity> totalHeroList = new List<Entity>();
         List<Entity> totalEnemiesList = new List<Entity>();
 
+        public List<Entity> cachedHeroesList = null;
 
         #region Class Properties
         public Entity CurrentUnit

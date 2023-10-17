@@ -71,9 +71,17 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnUpdatePhase()
         {
+            if (controller.gameOver)
+                return;
+
+            if(controller.cachedHeroesList == null)
+            {
+                controller.cachedHeroesList = controller.FindAllHeros();
+            }
+
             if (controller.currentPhase != controller.planPhase && controller.currentPhase != controller.startPhase && !controller.gameOver)
             {
-                if (controller.FindAllHeros() == null)
+                if (controller.FindAllHeros().Count == 0)
                 {
                     //Game Over
                     controller.gameOver = true;

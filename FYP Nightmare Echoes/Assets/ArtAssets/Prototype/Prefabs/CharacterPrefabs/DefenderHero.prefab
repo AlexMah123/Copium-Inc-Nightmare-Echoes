@@ -1744,7 +1744,6 @@ GameObject:
   - component: {fileID: 2262890932342477676}
   - component: {fileID: 1640256430824122786}
   - component: {fileID: 2905729128967353104}
-  - component: {fileID: -3187154731525986911}
   m_Layer: 6
   m_Name: DefenderHero
   m_TagString: Inspectable
@@ -1849,6 +1848,8 @@ MonoBehaviour:
   isHostile: 0
   direction: 0
   typeOfUnit: 0
+  hasAttacked: 0
+  hasMoved: 0
   popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _health: 0
@@ -1884,6 +1885,7 @@ MonoBehaviour:
   vertigoToken: 0
   stunToken: 0
   immobilizeToken: 0
+  deathMarkToken: 0
   basicAttack: {fileID: 817498675}
   skill1: {fileID: 817498681}
   skill2: {fileID: 817498682}
@@ -2128,32 +2130,3 @@ PolygonCollider2D:
       - {x: 0, y: -0.5}
       - {x: 1, y: 0}
       - {x: 0, y: 0.5}
---- !u!114 &-3187154731525986911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9088455817183482634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 1
-  m_ApplyToSortingLayers: 000000002bd54a01
-  m_ShapePath:
-  - {x: -0.22776958, y: 0, z: 0}
-  - {x: -0.16615814, y: 0.14515139, z: 0}
-  - {x: 0.15197499, y: 0.15527768, z: 0}
-  - {x: 0.2811662, y: 0.07532504, z: 0}
-  - {x: 0.203125, y: 0, z: 0}
-  - {x: -0.012322299, y: -0.058308773, z: 0}
-  m_ShapePathHash: 45762548
-  m_Mesh: {fileID: 0}
-  m_InstanceId: -56496

@@ -437,15 +437,17 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         public RaycastHit2D? GetFocusedTile()
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            var hits = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
 
             //Checks if the raycast has hit any tile
-            if (hits.Length > 0)
+            if (hits)
             {
-                return hits.OrderByDescending(i => i.collider.transform.position.z).First();
+                return hits;
             }
-
-            return null;
+            else
+            {
+                return null;
+            }
         }
 
         public void SetUnitPositionOnTile(OverlayTile tile, Entity unit)

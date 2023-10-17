@@ -102,9 +102,11 @@ MonoBehaviour:
   _name: Destroyable Wall
   sprite: {fileID: -642702251, guid: 90aa4ead36d8eb543ae65db7afe77dac, type: 3}
   isProp: 1
-  isHostile: 0
+  isHostile: 1
   direction: -1
   typeOfUnit: 0
+  hasAttacked: 0
+  hasMoved: 0
   popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _health: 1
@@ -140,6 +142,7 @@ MonoBehaviour:
   vertigoToken: 0
   stunToken: 0
   immobilizeToken: 0
+  deathMarkToken: 0
   basicAttack: {fileID: 0}
   skill1: {fileID: 0}
   skill2: {fileID: 0}

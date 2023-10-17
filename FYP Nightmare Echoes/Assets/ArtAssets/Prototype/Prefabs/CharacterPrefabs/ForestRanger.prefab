@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 1863292055}
   - component: {fileID: 136229569}
   - component: {fileID: 6249669551677435555}
-  - component: {fileID: -7115739878205201126}
   m_Layer: 6
   m_Name: ForestRanger
   m_TagString: Inspectable
@@ -110,6 +109,8 @@ MonoBehaviour:
   isHostile: 0
   direction: 0
   typeOfUnit: 0
+  hasAttacked: 0
+  hasMoved: 0
   popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _health: 0
@@ -145,6 +146,7 @@ MonoBehaviour:
   vertigoToken: 0
   stunToken: 0
   immobilizeToken: 0
+  deathMarkToken: 0
   basicAttack: {fileID: 601295391118310421}
   skill1: {fileID: 601295391118310427}
   skill2: {fileID: 837001683}
@@ -375,31 +377,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &-7115739878205201126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 601295390074279018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 1
-  m_ApplyToSortingLayers: 000000002bd54a01
-  m_ShapePath:
-  - {x: -0.171875, y: 0, z: 0}
-  - {x: -0.08151144, y: 0.11639941, z: 0}
-  - {x: 0.20473444, y: 0.07943252, z: 0}
-  - {x: 0.171875, y: 0, z: 0}
-  - {x: 0.020537138, y: -0.037771642, z: 0.00000011920929}
-  m_ShapePathHash: -1537655057
-  m_Mesh: {fileID: 0}
-  m_InstanceId: -1444
