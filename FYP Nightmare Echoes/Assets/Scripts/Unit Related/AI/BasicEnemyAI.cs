@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 using System.Linq;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.Unit.Combat;
-using Mono.Cecil.Cil;
+using System;
 
 //by Terrence, editted by alex
 namespace NightmareEchoes.Unit.AI
@@ -38,7 +38,7 @@ namespace NightmareEchoes.Unit.AI
         public List<OverlayTile> pathWithProps = new List<OverlayTile>();
 
         //checking if this unit can attk, move & attk and has attacked.
-        public bool inAtkRange, inMoveAndAttackRange, detectedStealthHero;
+        public bool inAtkRange, inMoveAndAttackRange,detectedStealthHero;
         public int selectedAttackRange;
         int selectedAttackMinRange;
         int rngHelper;
@@ -111,8 +111,8 @@ namespace NightmareEchoes.Unit.AI
                 //tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (TileMapManager.Instance.length + TileMapManager.Instance.width), includeProps: false);
                 //tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (TileMapManager.Instance.length + TileMapManager.Instance.width), includeProps: true);
 
-                tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile), ignoreProps: false);
-                tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile), ignoreProps: true);
+                tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile) + 2, ignoreProps: false);
+                tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile) + 2, ignoreProps: true);
 
                 PathfindingManager.Instance.ShowTilesInRange(tilesInRangeWithoutProps);
 
@@ -148,22 +148,22 @@ namespace NightmareEchoes.Unit.AI
         #region Types of Actions
         void AggressiveAction(Entity thisUnit)
         {
-            skillAmount = 1;
+            skillAmount = 0;
 
             if (thisUnit.Skill1Skill != null)
             {
-                skillAmount += 1;
+                skillAmount++;
             }
             if (thisUnit.Skill2Skill != null)
             {
-                skillAmount += 2;
+                skillAmount++;
             }
             if (thisUnit.Skill3Skill != null)
             {
-                skillAmount += 3;
+                skillAmount++;
             }
 
-            switch (Random.Range(0, skillAmount))
+            switch (UnityEngine.Random.Range(0, skillAmount))
             {
                 case 1:
                     currSelectedSkill = thisUnit.Skill1Skill;
@@ -206,11 +206,12 @@ namespace NightmareEchoes.Unit.AI
                 if (targetTileToMove != null && !targetTileToMove.CheckEntityGameObjectOnTile() && !targetTileToMove.CheckObstacleOnTile())
                 {
                     List<OverlayTile> path = Pathfinding.Pathfinding.FindPath(thisUnitTile, targetTileToMove, tilesInSightWithProps);
-                    if(path.Count > 0)
+
+                    if (path.Count > 0)
                     {
                         pathOptions.Add(path);
                     }
-                        
+
                 }
             }
 
@@ -243,17 +244,8 @@ namespace NightmareEchoes.Unit.AI
                 for (int i = 0; i < pathWithProps.Count; i++)
                 {
                     var checkEntity = pathWithProps[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
-                    if (!checkEntity)
-                    {
-                        continue;                        
-                    }
 
-                    if (checkEntity.IsProp)
-                    {
-                        withPropsUtil += wastedMoveCounter;
-                        wastedMoveCounter = thisUnit.stats.MoveRange - 1;
-                    }
-                    else
+                    if (!checkEntity)
                     {
                         withPropsUtil++;
                         wastedMoveCounter--;
@@ -261,6 +253,13 @@ namespace NightmareEchoes.Unit.AI
                         {
                             wastedMoveCounter = thisUnit.stats.MoveRange;
                         }
+                        continue;
+                    }
+
+                    if (checkEntity.IsProp)
+                    {
+                        withPropsUtil += wastedMoveCounter;
+                        wastedMoveCounter = thisUnit.stats.MoveRange - 1;
                     }
                 }
 
@@ -270,7 +269,6 @@ namespace NightmareEchoes.Unit.AI
                     totalPathList = thisUnit.stats.MoveRange >= pathWithProps.Count ?
                         totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[pathWithProps.Count - 1], tilesInRangeWithProps) :
                         totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithProps);
-
 
                     for (int i = 0; i < thisUnit.stats.MoveRange + currSelectedSkill.Range; i++)
                     {
@@ -309,16 +307,13 @@ namespace NightmareEchoes.Unit.AI
                 {
                     if (pathWithoutProps.Count > 0)
                     {
-                        Debug.Log(pathWithoutProps.Count);
-
                         totalPathList = thisUnit.stats.MoveRange >= pathWithProps.Count ?
                         totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[pathWithoutProps.Count - 1], tilesInRangeWithoutProps) :
                         totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithoutProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithoutProps);
                     }
                 }
             }
-
-            
+             
             #endregion
 
             InMoveAtkRangeCheck();
@@ -414,7 +409,7 @@ namespace NightmareEchoes.Unit.AI
                         runOnce = true;
                     }
 
-                    if (pathFromPossibleTile.Count <= shortestPathLength)
+                    if (pathFromPossibleTile.Count < shortestPathLength)
                     {
                         shortestPathLength = pathFromPossibleTile.Count;
                         bestMoveTile = tilesInRangeWithoutProps[i];
@@ -424,7 +419,27 @@ namespace NightmareEchoes.Unit.AI
 
             if (bestMoveTile == thisUnitTile)
             {
-                totalPathList.Clear();
+                //Defaulted
+                for (int i = 0; i < tilesInRangeWithoutProps.Count; i++)
+                {
+                    if (!tilesInRangeWithoutProps[i].CheckEntityGameObjectOnTile())
+                    {
+                        if (FindDistanceBetweenTile(targetTileToMove, tilesInRangeWithoutProps[i]) < FindDistanceBetweenTile(targetTileToMove, bestMoveTile))
+                        {
+                            bestMoveTile = tilesInRangeWithoutProps[i];
+                        }
+                        else if (FindDistanceBetweenTile(targetTileToMove, tilesInRangeWithoutProps[i]) == FindDistanceBetweenTile(targetTileToMove, bestMoveTile))
+                        {
+                            rngHelper++;
+                            if (UnityEngine.Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                            {
+                                bestMoveTile = tilesInRangeWithoutProps[i];
+                            }
+                        }
+                    }
+                }
+
+                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
             }
             else
             {
@@ -460,7 +475,6 @@ namespace NightmareEchoes.Unit.AI
             possibleAttackLocations.Clear();
             inAtkRange = false;
             inMoveAndAttackRange = false;
-
 
             #region checks if unit is inAtkRange/inMoveAndAttackRange
             switch (currSelectedSkill.TargetArea)
@@ -565,7 +579,7 @@ namespace NightmareEchoes.Unit.AI
                 if (targets.Count > 0)
                 {
                     //based on the amount, randomize the targets
-                    switch (Random.Range(0, targets.Count))
+                    switch (UnityEngine.Random.Range(0, targets.Count))
                     {
                         case 0:
                             tileToAttack = targets[0].ActiveTile;
@@ -598,7 +612,7 @@ namespace NightmareEchoes.Unit.AI
 
                         if(possibleRedirectTiles.Count > 1)
                         {
-                            switch(Random.Range(0, possibleRedirectTiles.Count))
+                            switch(UnityEngine.Random.Range(0, possibleRedirectTiles.Count))
                             {
                                 case 0:
                                     redirectTile = possibleRedirectTiles.First();
@@ -783,7 +797,7 @@ namespace NightmareEchoes.Unit.AI
                     else if (currTileUtil == highestTileUtil)
                     {
                         rngHelper++;
-                        if (Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
+                        if (UnityEngine.Random.Range(0.0f, 1.0f) < (1.0f / rngHelper))
                         {
                             bestMoveTile = tileList[i];
                             highestTileUtil = currTileUtil;

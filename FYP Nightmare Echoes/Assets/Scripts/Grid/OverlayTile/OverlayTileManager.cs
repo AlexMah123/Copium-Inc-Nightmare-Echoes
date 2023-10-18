@@ -76,27 +76,23 @@ namespace NightmareEchoes.Grid
             }
         }
         
-        public List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile , List<OverlayTile> LimitTiles)
+        public List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile , List<OverlayTile> searchableTiles)
         {
             var map = gridDictionary;
 
             Dictionary<Vector2Int, OverlayTile> tileToSearch = new Dictionary<Vector2Int, OverlayTile>();
 
-            if (LimitTiles.Count > 0)
+            if (searchableTiles.Count > 0)
             {
-                for(int i =0; i < LimitTiles.Count; i++)
+                for(int i =0; i < searchableTiles.Count; i++)
                 {
-                    tileToSearch.Add(new Vector2Int(LimitTiles[i].gridLocation.x, LimitTiles[i].gridLocation.y), LimitTiles[i]);
+                    tileToSearch.Add(searchableTiles[i].gridLocation2D, searchableTiles[i]);
                 }
             }
             else
             {
                 tileToSearch = map;
             }
-
-            /*Dictionary<Vector2Int, OverlayTile> tileToSearch = LimitTiles.Count > 0
-                ? LimitTiles.ToDictionary(tile => new Vector2Int(tile.gridLocation.x, tile.gridLocation.y))
-                : map.ToDictionary(kv => new Vector2Int(kv.Key.x, kv.Key.y), kv => kv.Value);*/
 
             List<OverlayTile> neighbours = new List<OverlayTile>();
 
@@ -108,7 +104,7 @@ namespace NightmareEchoes.Grid
             };
 
 
-            Vector2Int currentLocation = new Vector2Int(currentOverlayTile.gridLocation.x, currentOverlayTile.gridLocation.y);
+            Vector2Int currentLocation = currentOverlayTile.gridLocation2D;
 
             foreach (var direction in directions)
             {

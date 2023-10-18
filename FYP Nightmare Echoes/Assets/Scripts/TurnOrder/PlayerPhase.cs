@@ -102,7 +102,7 @@ namespace NightmareEchoes.TurnOrder
             {
                 if (PathfindingManager.Instance.CurrentPathfindingUnit != null && PathfindingManager.Instance.RevertUnitPosition != null)
                 {
-                    PathfindingManager.Instance.SetUnitPositionOnTile(PathfindingManager.Instance.RevertUnitPosition, controller.CurrentUnit);
+                    PathfindingManager.Instance.SetUnitPositionOnTile(controller.CurrentUnit, PathfindingManager.Instance.RevertUnitPosition);
                     PathfindingManager.Instance.CurrentPathfindingUnit.Direction = PathfindingManager.Instance.RevertUnitDirection;
                     controller.CurrentUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
 

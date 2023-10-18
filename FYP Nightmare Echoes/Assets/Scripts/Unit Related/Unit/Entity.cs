@@ -895,7 +895,7 @@ namespace NightmareEchoes.Unit
             if (hitTile)
             {
                 activeTile = hitTile.collider.gameObject.GetComponent<OverlayTile>();
-                PathfindingManager.Instance.SetUnitPositionOnTile(activeTile, this);
+                PathfindingManager.Instance.SetUnitPositionOnTile(this, activeTile);
             }
         }
         #endregion

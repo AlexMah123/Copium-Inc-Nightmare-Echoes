@@ -147,9 +147,9 @@ MonoBehaviour:
   stunToken: 0
   immobilizeToken: 0
   deathMarkToken: 0
-  basicAttack: {fileID: 359293498}
-  skill1: {fileID: 0}
-  skill2: {fileID: 0}
+  basicAttack: {fileID: 1961892246}
+  skill1: {fileID: 1076513885083324510}
+  skill2: {fileID: 359293498}
   skill3: {fileID: 0}
   passive: {fileID: 0}
   sprites:
@@ -341,16 +341,16 @@ MonoBehaviour:
   damage: 3
   heal: 0
   cooldown: 0
-  range: 99
-  minRange: 0
+  range: 1
+  minRange: 1
   targetType: 1
   targetArea: 0
   targetUnitAlignment: 0
   aoeType: 1
-  aoeSize: 5
-  aoeOffset: 0
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  aoeSize: 2
+  aoeOffset: 3
+  aoeDuration: 1
+  aoeColor: {r: 0.7877358, g: 1, b: 0.94388205, a: 0}
   skillType: 0
   secondaryDamage: 2
   secondaryRange: 0

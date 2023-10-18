@@ -23,13 +23,13 @@ namespace NightmareEchoes.Grid
 
     public static class ArrowRenderer
     { 
-        public static ArrowDirections TranslateDirection(OverlayTile prevTile, OverlayTile curTile, OverlayTile FutureTile)
+        public static ArrowDirections TranslateDirection(OverlayTile prevTile, OverlayTile currTile, OverlayTile futureTile)
         {
-            bool isFinal = FutureTile == null;
+            bool isFinal = futureTile == null;
                 
             // ? means then : means else
-            Vector3Int pastDirection = prevTile != null ? curTile.gridLocation - prevTile.gridLocation : new Vector3Int(0, 0, 0);
-            Vector3Int futureDirection = FutureTile != null ? FutureTile.gridLocation - curTile.gridLocation : new Vector3Int(0, 0, 0);
+            Vector3Int pastDirection = prevTile != null ? currTile.gridLocation - prevTile.gridLocation : new Vector3Int(0, 0, 0);
+            Vector3Int futureDirection = futureTile != null ? futureTile.gridLocation - currTile.gridLocation : new Vector3Int(0, 0, 0);
             Vector3Int direction = pastDirection != futureDirection ? pastDirection + futureDirection : futureDirection;
 
             if (direction == new Vector3Int(0, 1, 0) && !isFinal)

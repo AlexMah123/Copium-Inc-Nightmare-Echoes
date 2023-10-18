@@ -65,9 +65,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             int stepCount = 0;
             bool unitAlignment = false;
 
-            //inRangeTiles.Add(startTile);
-            //tileForPreviousStep.Add(startTile);
-
             while (stepCount < range)
             {
                 var surroundingTiles = new List<OverlayTile>();

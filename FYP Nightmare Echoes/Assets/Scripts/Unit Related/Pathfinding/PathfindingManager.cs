@@ -273,17 +273,17 @@ namespace NightmareEchoes.Unit.Pathfinding
             //Get the current position of the object to be moved
             Vector3 startPos = thisUnit.transform.position;
             Vector3 direction = targetTile.gridLocation - thisUnit.ActiveTile.gridLocation;
-
+            var cachedTargetTile = targetTile;
             ChangeDirection(direction, thisUnit);
 
             while (counter < duration)
             {
                 counter += Time.deltaTime;
-                thisUnit.transform.position = Vector3.Lerp(startPos, targetTile.transform.position, counter / duration);
+                thisUnit.transform.position = Vector3.Lerp(startPos, cachedTargetTile.transform.position, counter / duration);
                 yield return null;
             }
 
-            SetUnitPositionOnTile(targetTile, thisUnit);
+            SetUnitPositionOnTile(thisUnit, cachedTargetTile);
 
             #region Triggering Movement Related BuffDebuff Effect During Movement
 
@@ -321,7 +321,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 //as you reach the tile, set the units position and the arrow, remove the pathlist[0] to move to the next tile
                 if (Vector2.Distance(thisUnit.transform.position, targetPosition) < 0.001f)
                 {
-                    SetUnitPositionOnTile(pathList[0], thisUnit);
+                    SetUnitPositionOnTile(thisUnit, pathList[0]);
 
                     pathList[0].SetArrowSprite(ArrowDirections.None);
 
@@ -450,7 +450,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
         }
 
-        public void SetUnitPositionOnTile(OverlayTile tile, Entity unit)
+        public void SetUnitPositionOnTile(Entity unit, OverlayTile tile)
         {
             unit.gameObject.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
             unit.ActiveTile = tile;

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 //created by Vinn
 namespace NightmareEchoes.Grid
 {
@@ -15,6 +16,7 @@ namespace NightmareEchoes.Grid
         public bool isBlocked;
         public OverlayTile prevTile;
         public Vector3Int gridLocation;
+        public Vector2Int gridLocation2D { get { return new Vector2Int(gridLocation.x, gridLocation.y); } }
 
         private SpriteRenderer sr;
         [SerializeField] Color inactiveColor;

@@ -16,7 +16,7 @@ namespace NightmareEchoes.Unit
 
             DealDamage(target);
 
-            AudioManager.instance.PlaySFX("ArcaneMissle");
+            //AudioManager.instance.PlaySFX("ArcaneMissle");
             return true;
         }
     }

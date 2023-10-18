@@ -29,7 +29,7 @@ namespace NightmareEchoes.Unit
                 DealDamage(unit, secondaryDamage, checkBlind:false);
                 Knockback(target, unit);
             }
-            AudioManager.instance.PlaySFX("ArcaneBlast");
+            //AudioManager.instance.PlaySFX("ArcaneBlast");
             return true;
         }
     }

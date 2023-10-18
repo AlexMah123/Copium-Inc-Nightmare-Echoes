@@ -13,7 +13,7 @@ namespace NightmareEchoes.Unit
         {
             DealDamage(target);
 
-            AudioManager.instance.PlaySFX("StaticStorm");
+            //AudioManager.instance.PlaySFX("StaticStorm");
             return true;
         }
 
@@ -37,7 +37,7 @@ namespace NightmareEchoes.Unit
             }
 
             CombatManager.Instance.SetActiveAoe(this, copy);
-            AudioManager.instance.PlaySFX("StaticStorm");
+            //AudioManager.instance.PlaySFX("StaticStorm");
             return true;
         }
     }
