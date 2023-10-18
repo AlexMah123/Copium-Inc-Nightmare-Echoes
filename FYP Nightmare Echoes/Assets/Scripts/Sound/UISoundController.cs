@@ -7,6 +7,7 @@ namespace NightmareEchoes.Sound
 {
     public class UISoundController : MonoBehaviour
     {
+        [Header("Sound")]
         public Slider _MasterSlider, _MusicSlider, _SFXSlider;
         public AudioMixer _AudioMixer;
 

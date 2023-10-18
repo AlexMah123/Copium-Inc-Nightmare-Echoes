@@ -124,6 +124,10 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] private float magnitude = 0.05f;
         [SerializeField] private float offset = 0.75f;
 
+        [Space(20), Header("Resolution")]
+        Resolution[] Resolutions;
+        [SerializeField] private  Dropdown _resDropDown;
+
         int unitMask;
 
         private void Awake()
@@ -153,6 +157,19 @@ namespace NightmareEchoes.TurnOrder
             inspectedUnitPanel.SetActive(false);
             currentUnitPanel.SetActive(false);
             glossaryPanel.SetActive(false);
+
+            Resolutions = Screen.resolutions;
+
+            _resDropDown.ClearOptions();
+
+            List<string> ResOptions = new List<string>();
+            for (int i = 0; i < Resolutions.Length; i++)
+            {
+                string resOption = Resolutions[i].width + " X " + Resolutions[i].height;
+                ResOptions.Add(resOption);
+            }
+
+            _resDropDown.AddOptions(ResOptions);
         }
 
         private void Update()
