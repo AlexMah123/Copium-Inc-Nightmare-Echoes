@@ -148,8 +148,8 @@ MonoBehaviour:
   immobilizeToken: 0
   deathMarkToken: 0
   basicAttack: {fileID: 4139838481242840768}
-  skill1: {fileID: 4212859529687142437}
-  skill2: {fileID: 1429316040}
+  skill1: {fileID: 1429316040}
+  skill2: {fileID: 0}
   skill3: {fileID: 0}
   passive: {fileID: 0}
   sprites:
@@ -186,6 +186,7 @@ MonoBehaviour:
   closestHero: {fileID: 0}
   pathWithoutProps: []
   pathWithProps: []
+  frontTileTemp: {fileID: 0}
   inAtkRange: 0
   inMoveAndAttackRange: 0
   detectedStealthHero: 0
@@ -251,8 +252,8 @@ MonoBehaviour:
   damage: 5
   heal: 0
   cooldown: 0
-  range: 1
-  minRange: 1
+  range: 2
+  minRange: 2
   targetType: 0
   targetArea: 0
   targetUnitAlignment: 0

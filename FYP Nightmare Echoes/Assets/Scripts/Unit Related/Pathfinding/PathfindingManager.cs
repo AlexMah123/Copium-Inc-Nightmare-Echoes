@@ -279,7 +279,15 @@ namespace NightmareEchoes.Unit.Pathfinding
             while (counter < duration)
             {
                 counter += Time.deltaTime;
-                thisUnit.transform.position = Vector3.Lerp(startPos, cachedTargetTile.transform.position, counter / duration);
+                if (cachedTargetTile != null)
+                {
+                    thisUnit.transform.position = Vector3.Lerp(startPos, cachedTargetTile.transform.position, counter / duration);
+                }
+                else
+                {
+                    counter = duration;
+                }
+
                 yield return null;
             }
 

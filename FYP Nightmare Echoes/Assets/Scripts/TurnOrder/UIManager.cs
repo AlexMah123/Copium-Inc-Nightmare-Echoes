@@ -158,7 +158,7 @@ namespace NightmareEchoes.TurnOrder
             currentUnitPanel.SetActive(false);
             glossaryPanel.SetActive(false);
 
-            Resolutions = Screen.resolutions;
+            /*Resolutions = Screen.resolutions;
 
             _resDropDown.ClearOptions();
 
@@ -169,7 +169,7 @@ namespace NightmareEchoes.TurnOrder
                 ResOptions.Add(resOption);
             }
 
-            _resDropDown.AddOptions(ResOptions);
+            _resDropDown.AddOptions(ResOptions);*/
         }
 
         private void Update()
