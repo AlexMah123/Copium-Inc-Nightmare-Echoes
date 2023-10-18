@@ -36,6 +36,7 @@ namespace NightmareEchoes.Unit.AI
         List<OverlayTile> bestPath = new List<OverlayTile>();
         public List<OverlayTile> pathWithoutProps = new List<OverlayTile>();
         public List<OverlayTile> pathWithProps = new List<OverlayTile>();
+        public OverlayTile frontTileTemp;
 
         //checking if this unit can attk, move & attk and has attacked.
         public bool inAtkRange, inMoveAndAttackRange,detectedStealthHero;
@@ -440,10 +441,32 @@ namespace NightmareEchoes.Unit.AI
                 }
 
                 totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
+
+                /*frontTileTemp = returnFrontTile(thisUnitTile, thisUnit.Direction);
+                if (frontTileTemp.CheckEntityGameObjectOnTile())
+                {
+                    if (frontTileTemp.CheckEntityGameObjectOnTile().GetComponent<Entity>().IsProp)
+                    {
+                        tileToAttack = frontTileTemp;
+                        inAtkRange = true;
+                    }
+                }
+                frontTileTemp = null;*/
             }
             else
             {
                 totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
+
+                /*frontTileTemp = returnFrontTile(thisUnitTile, thisUnit.Direction);
+                if (frontTileTemp.CheckEntityGameObjectOnTile())
+                {
+                    if (frontTileTemp.CheckEntityGameObjectOnTile().GetComponent<Entity>().IsProp)
+                    {
+                        tileToAttack = frontTileTemp;
+                        inAtkRange = true;
+                    }
+                }
+                frontTileTemp = null;*/
             }
         }
 
@@ -910,6 +933,34 @@ namespace NightmareEchoes.Unit.AI
         {
             rangeToTarget = Mathf.Abs(target1.gridLocation.x - target2.gridLocation.x) + Mathf.Abs(target1.gridLocation.y - target2.gridLocation.y);
             return rangeToTarget <= selectedAttackRange && rangeToTarget >= selectedAttackMinRange;
+        }
+
+        OverlayTile returnFrontTile(OverlayTile checkFrom, Direction facing)
+        {
+            OverlayTile frontTile;
+            switch (facing)
+            {
+                case Direction.NORTH:
+                    frontTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(checkFrom.gridLocation.x + 1, checkFrom.gridLocation.y));
+                    break;
+
+                case Direction.SOUTH:
+                    frontTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(checkFrom.gridLocation.x - 1, checkFrom.gridLocation.y));
+                    break;
+
+                case Direction.EAST:
+                    frontTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(checkFrom.gridLocation.x, checkFrom.gridLocation.y + 1));
+                    break;
+
+                case Direction.WEST:
+                    frontTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(checkFrom.gridLocation.x, checkFrom.gridLocation.y - 1));
+                    break;
+
+                default: //treat as if facing north
+                    frontTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(checkFrom.gridLocation.x + 1, checkFrom.gridLocation.y));
+                    break;
+            }
+            return frontTile;
         }
 
         bool IsTileAttackableFromCross(OverlayTile target1, OverlayTile target2)
