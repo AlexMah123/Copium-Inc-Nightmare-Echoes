@@ -109,7 +109,63 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
             }
 
-            return GetFilteredTilesInRange(startTile, filteredTiles, range);
+            return filteredTiles;
+        }
+        
+         public static List<OverlayTile> FindTilesInRangeToDestination(OverlayTile startTile, OverlayTile endTile, bool ignoreProps)
+        {
+            var overLayTileManager = OverlayTileManager.Instance;
+            var inRangeTiles = new List<OverlayTile> { startTile };
+            var tileForPreviousStep = new List<OverlayTile> { startTile };
+            
+            bool unitAlignment = false;
+            bool destinationFound = false;
+
+            while (!destinationFound)
+            {
+                var surroundingTiles = new List<OverlayTile>();
+
+                foreach (var tile in tileForPreviousStep)
+                {
+                    if (tile == endTile) destinationFound = true;
+                    surroundingTiles.AddRange(overLayTileManager.GetNeighbourTiles(tile, new List<OverlayTile>()));
+                }
+
+                inRangeTiles.AddRange(surroundingTiles);
+                tileForPreviousStep = GetDistinctTiles(surroundingTiles);
+            }
+
+            if (startTile.CheckEntityGameObjectOnTile())
+            {
+                unitAlignment = startTile.CheckEntityGameObjectOnTile().GetComponent<Entity>().IsHostile;
+            }
+
+            var filteredTiles = new List<OverlayTile>();
+
+            foreach (var tile in inRangeTiles.Distinct())
+            {
+                var entityOnTile = tile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+                var obstacleOnTile = tile.CheckObstacleOnTile();
+
+                if (!tile.CheckEntityGameObjectOnTile() && !obstacleOnTile)
+                {
+                    filteredTiles.Add(tile);
+                }
+                else if (entityOnTile != null)
+                {
+                    if (entityOnTile.IsHostile == unitAlignment && !entityOnTile.StealthToken && !entityOnTile.IsProp)
+                    {
+                        filteredTiles.Add(tile);
+                    }
+
+                    if (ignoreProps && entityOnTile.IsProp)
+                    {
+                        filteredTiles.Add(tile);
+                    }
+                }
+            }
+
+            return filteredTiles;
         }
 
         private static OverlayTile GetLowestFTile(List<OverlayTile> tiles)
@@ -158,20 +214,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             finishedList.Reverse();
 
             return finishedList;
-        }
-
-        private static List<OverlayTile> GetFilteredTilesInRange(OverlayTile startTile, List<OverlayTile> tiles, int range)
-        {
-            var filteredTiles = new List<OverlayTile>();
-            foreach (var tile in tiles)
-            {
-                var path = FindPath(startTile, tile, tiles);
-                if (path.Count <= range && path.Count > 0)
-                {
-                    filteredTiles.Add(tile);
-                }
-            }
-            return filteredTiles;
         }
     }
 
