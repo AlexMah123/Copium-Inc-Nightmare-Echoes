@@ -99,29 +99,13 @@ namespace NightmareEchoes.Unit.AI
             thisUnit.HasMoved = false;
             detectedStealthHero = false;
             bestPath = new List<OverlayTile>();
+            thisUnitTile = thisUnit.ActiveTile;
 
             //sort heros by distance and find tiles in range
             SortHeroesByDistance(thisUnit);
 
             if (totalHeroList.Count > 0)
             {
-                thisUnitTile = thisUnit.ActiveTile;
-                tilesInRangeWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: false);
-                tilesInRangeWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: true);
-
-                //tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (TileMapManager.Instance.length + TileMapManager.Instance.width), includeProps: false);
-                //tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (TileMapManager.Instance.length + TileMapManager.Instance.width), includeProps: true);
-
-                tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile) + 2, ignoreProps: false);
-                tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, closestHero.ActiveTile) + 2, ignoreProps: true);
-
-                PathfindingManager.Instance.ShowTilesInRange(tilesInRangeWithoutProps);
-
-                /*foreach(var tile in tilesInSightWithProps)
-                {
-                    tile.ShowCustomColor(Color.blue);
-                }*/
-
                 healthPercent = 100 * thisUnit.stats.Health / thisUnit.stats.MaxHealth;
                 //Debug.Log(healthPercent);
 
@@ -186,6 +170,16 @@ namespace NightmareEchoes.Unit.AI
             tileToAttack = targetHero.ActiveTile;
             rngHelper = 1;
 
+            tilesInRangeWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: false);
+            tilesInRangeWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: true);
+
+            tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile), ignoreProps: false);
+            tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile), ignoreProps: true);
+
+            //tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, targetHero.ActiveTile, ignoreProps: false);
+            //tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, targetHero.ActiveTile, ignoreProps: true);
+
+            PathfindingManager.Instance.ShowTilesInRange(tilesInRangeWithoutProps);
 
             #region Deciding To attack through obstacles or not
             //setting the different end points around the target.
@@ -261,6 +255,15 @@ namespace NightmareEchoes.Unit.AI
                     {
                         withPropsUtil += wastedMoveCounter;
                         wastedMoveCounter = thisUnit.stats.MoveRange - 1;
+                    }
+                    else
+                    {
+                        withPropsUtil++;
+                        wastedMoveCounter--;
+                        if (wastedMoveCounter <= 0)
+                        {
+                            wastedMoveCounter = thisUnit.stats.MoveRange;
+                        }
                     }
                 }
 
@@ -898,69 +901,10 @@ namespace NightmareEchoes.Unit.AI
             return dist;
         }
 
-        void AdjustTileUtilityBasedOnDirection(OverlayTile tile)
-        {
-            switch (targetHero.Direction)
-            {
-                case Direction.NORTH:
-                    if (tile.gridLocation.x < tileToAttack.gridLocation.x && tile.gridLocation.y == tileToAttack.gridLocation.y)
-                    {
-                        currTileUtil += 20;
-                    }
-                    break;
-                case Direction.SOUTH:
-                    if (tile.gridLocation.x > tileToAttack.gridLocation.x && tile.gridLocation.y == tileToAttack.gridLocation.y)
-                    {
-                        currTileUtil += 20;
-                    }
-                    break;
-                case Direction.EAST:
-                    if (tile.gridLocation.x == tileToAttack.gridLocation.x && tile.gridLocation.y < tileToAttack.gridLocation.y)
-                    {
-                        currTileUtil += 20;
-                    }
-                    break;
-                case Direction.WEST:
-                    if (tile.gridLocation.x == tileToAttack.gridLocation.x && tile.gridLocation.y > tileToAttack.gridLocation.y)
-                    {
-                        currTileUtil += 20;
-                    }
-                    break;
-            }
-        }
-
         bool IsTileAttackableFromDiamond(OverlayTile target1, OverlayTile target2)
         {
             rangeToTarget = Mathf.Abs(target1.gridLocation.x - target2.gridLocation.x) + Mathf.Abs(target1.gridLocation.y - target2.gridLocation.y);
             return rangeToTarget <= selectedAttackRange && rangeToTarget >= selectedAttackMinRange;
-        }
-
-        OverlayTile returnFrontTile(OverlayTile checkFrom, Direction facing)
-        {
-            OverlayTile frontTile;
-            switch (facing)
-            {
-                case Direction.NORTH:
-                    frontTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(checkFrom.gridLocation.x + 1, checkFrom.gridLocation.y));
-                    break;
-
-                case Direction.SOUTH:
-                    frontTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(checkFrom.gridLocation.x - 1, checkFrom.gridLocation.y));
-                    break;
-
-                case Direction.EAST:
-                    frontTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(checkFrom.gridLocation.x, checkFrom.gridLocation.y + 1));
-                    break;
-
-                case Direction.WEST:
-                    frontTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(checkFrom.gridLocation.x, checkFrom.gridLocation.y - 1));
-                    break;
-
-                default: //treat as if facing north
-                    frontTile = OverlayTileManager.Instance.GetOverlayTile(new Vector2Int(checkFrom.gridLocation.x + 1, checkFrom.gridLocation.y));
-                    break;
-            }
-            return frontTile;
         }
 
         bool IsTileAttackableFromCross(OverlayTile target1, OverlayTile target2)

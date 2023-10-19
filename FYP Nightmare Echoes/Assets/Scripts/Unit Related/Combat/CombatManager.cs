@@ -1,11 +1,11 @@
+using NightmareEchoes.Grid;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using UnityEngine;
-using NightmareEchoes.Grid;
 using UnityEngine.Tilemaps;
-using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 //created by JH, edited by Ter
 namespace NightmareEchoes.Unit.Combat
@@ -364,7 +364,8 @@ namespace NightmareEchoes.Unit.Combat
         public void EnemyTargetUnit(Entity target, Skill skill)
         {
             activeSkill = skill;
-            StartCoroutine(WaitForSkill(target));
+            activeSkill.Cast(target);
+            EndTurn();
         }
 
         public void EnemyTargetGround(OverlayTile targetTile, Skill skill)
@@ -385,7 +386,8 @@ namespace NightmareEchoes.Unit.Combat
                     aoePreviewTiles.Add(tile);
             }
 
-            StartCoroutine(WaitForSkill(targetTile, aoePreviewTiles));
+            activeSkill.Cast(targetTile, aoePreviewTiles);
+            EndTurn();
         }
 
         #endregion
@@ -791,7 +793,8 @@ namespace NightmareEchoes.Unit.Combat
             {
                 EndTurn();
                 yield return null;
-            }else if (secondaryTargeting)
+            }
+            else if (secondaryTargeting)
             {
                 yield return new WaitUntil(() => activeSkill.Cast(target, aoeTiles));
                 EndTurn();

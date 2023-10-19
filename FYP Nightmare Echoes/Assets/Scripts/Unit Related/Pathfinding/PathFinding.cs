@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using NightmareEchoes.Grid;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
+using static UnityEditor.Progress;
 
 
 //created by Vinn, editted by Alex
@@ -34,21 +36,21 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 var neighbourTiles = overLayTileManager.GetNeighbourTiles(currentOverlayTile, LimitTiles);
 
-                foreach (var neighbour in neighbourTiles)
+                for(int i = 0; i < neighbourTiles.Count; i++) 
                 {
-                    if (neighbour.isBlocked || endList.Contains(neighbour))
+                    if (neighbourTiles[i].isBlocked || endList.Contains(neighbourTiles[i]))
                     {
                         continue;
                     }
 
-                    neighbour.G = GetManhattanDistance(start, neighbour);
-                    neighbour.H = GetManhattanDistance(end, neighbour);
+                    neighbourTiles[i].G = GetManhattanDistance(start, neighbourTiles[i]);
+                    neighbourTiles[i].H = GetManhattanDistance(end, neighbourTiles[i]);
 
-                    neighbour.prevTile = currentOverlayTile;
+                    neighbourTiles[i].prevTile = currentOverlayTile;
 
-                    if (!openList.Contains(neighbour))
+                    if (!openList.Contains(neighbourTiles[i]))
                     {
-                        openList.Add(neighbour);
+                        openList.Add(neighbourTiles[i]);
                     }
                 }
             }
@@ -69,9 +71,9 @@ namespace NightmareEchoes.Unit.Pathfinding
             {
                 var surroundingTiles = new List<OverlayTile>();
 
-                foreach (var item in tileForPreviousStep)
+                for(int i = 0; i < tileForPreviousStep.Count; i++)
                 {
-                    surroundingTiles.AddRange(overLayTileManager.GetNeighbourTiles(item, new List<OverlayTile>()));
+                    surroundingTiles.AddRange(overLayTileManager.GetNeighbourTiles(tileForPreviousStep[i], new List<OverlayTile>()));
                 }
 
                 inRangeTiles.AddRange(surroundingTiles);
@@ -86,25 +88,25 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             var filteredTiles = new List<OverlayTile>();
 
-            foreach (var tile in inRangeTiles.Distinct())
+            for(int i = 0; i < inRangeTiles.Count; i++)
             {
-                var entityOnTile = tile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
-                var obstacleOnTile = tile.CheckObstacleOnTile();
+                var entityOnTile = inRangeTiles[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+                var obstacleOnTile = inRangeTiles[i].CheckObstacleOnTile();
 
-                if (!tile.CheckEntityGameObjectOnTile() && !obstacleOnTile)
+                if (!inRangeTiles[i].CheckEntityGameObjectOnTile() && !obstacleOnTile)
                 {
-                    filteredTiles.Add(tile);
+                    filteredTiles.Add(inRangeTiles[i]);
                 }
                 else if (entityOnTile != null)
                 {
                     if (entityOnTile.IsHostile == unitAlignment && !entityOnTile.StealthToken && !entityOnTile.IsProp)
                     {
-                        filteredTiles.Add(tile);
+                        filteredTiles.Add(inRangeTiles[i]);
                     }
 
                     if (ignoreProps && entityOnTile.IsProp)
                     {
-                        filteredTiles.Add(tile);
+                        filteredTiles.Add(inRangeTiles[i]);
                     }
                 }
             }
@@ -125,10 +127,11 @@ namespace NightmareEchoes.Unit.Pathfinding
             {
                 var surroundingTiles = new List<OverlayTile>();
 
-                foreach (var tile in tileForPreviousStep)
+                for (int i = 0; i < tileForPreviousStep.Count; i++)
                 {
-                    if (tile == endTile) destinationFound = true;
-                    surroundingTiles.AddRange(overLayTileManager.GetNeighbourTiles(tile, new List<OverlayTile>()));
+                    if (tileForPreviousStep[i] == endTile)
+                        destinationFound = true;
+                    surroundingTiles.AddRange(overLayTileManager.GetNeighbourTiles(tileForPreviousStep[i], new List<OverlayTile>()));
                 }
 
                 inRangeTiles.AddRange(surroundingTiles);
@@ -142,25 +145,25 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             var filteredTiles = new List<OverlayTile>();
 
-            foreach (var tile in inRangeTiles.Distinct())
+            for (int i = 0; i < inRangeTiles.Count; i++)
             {
-                var entityOnTile = tile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
-                var obstacleOnTile = tile.CheckObstacleOnTile();
+                var entityOnTile = inRangeTiles[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+                var obstacleOnTile = inRangeTiles[i].CheckObstacleOnTile();
 
-                if (!tile.CheckEntityGameObjectOnTile() && !obstacleOnTile)
+                if (!inRangeTiles[i].CheckEntityGameObjectOnTile() && !obstacleOnTile)
                 {
-                    filteredTiles.Add(tile);
+                    filteredTiles.Add(inRangeTiles[i]);
                 }
                 else if (entityOnTile != null)
                 {
                     if (entityOnTile.IsHostile == unitAlignment && !entityOnTile.StealthToken && !entityOnTile.IsProp)
                     {
-                        filteredTiles.Add(tile);
+                        filteredTiles.Add(inRangeTiles[i]);
                     }
 
                     if (ignoreProps && entityOnTile.IsProp)
                     {
-                        filteredTiles.Add(tile);
+                        filteredTiles.Add(inRangeTiles[i]);
                     }
                 }
             }
@@ -171,26 +174,30 @@ namespace NightmareEchoes.Unit.Pathfinding
         private static OverlayTile GetLowestFTile(List<OverlayTile> tiles)
         {
             OverlayTile lowestF = tiles[0];
-            foreach (var tile in tiles)
+
+            for(int i = 0; i < tiles.Count; i++)
             {
-                if (tile.F < lowestF.F)
+                if (tiles[i].F < lowestF.F)
                 {
-                    lowestF = tile;
+                    lowestF = tiles[i];
                 }
             }
+ 
             return lowestF;
         }
 
         private static List<OverlayTile> GetDistinctTiles(List<OverlayTile> tiles)
         {
             var distinctTiles = new List<OverlayTile>();
-            foreach (var tile in tiles)
+
+            for(int i =0; i < distinctTiles.Count; i++)
             {
-                if (!distinctTiles.Contains(tile))
+                if (!distinctTiles.Contains(distinctTiles[i]))
                 {
-                    distinctTiles.Add(tile);
+                    distinctTiles.Add(distinctTiles[i]);
                 }
             }
+
             return distinctTiles;
         }
 
