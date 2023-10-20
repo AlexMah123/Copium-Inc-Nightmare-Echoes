@@ -136,6 +136,13 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 inRangeTiles.AddRange(surroundingTiles);
                 tileForPreviousStep = surroundingTiles.Distinct().ToList();
+
+                if(inRangeTiles.Count >= TileMapManager.Instance.width * TileMapManager.Instance.length)
+                {
+                    Debug.LogWarning("CANNOT FIND DESTINATION");
+                    destinationFound = true;
+                    break;
+                }
             }
 
             if (startTile.CheckEntityGameObjectOnTile())
