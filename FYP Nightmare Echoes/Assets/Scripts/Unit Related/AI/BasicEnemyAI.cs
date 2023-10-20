@@ -444,32 +444,10 @@ namespace NightmareEchoes.Unit.AI
                 }
 
                 totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
-
-                /*frontTileTemp = returnFrontTile(thisUnitTile, thisUnit.Direction);
-                if (frontTileTemp.CheckEntityGameObjectOnTile())
-                {
-                    if (frontTileTemp.CheckEntityGameObjectOnTile().GetComponent<Entity>().IsProp)
-                    {
-                        tileToAttack = frontTileTemp;
-                        inAtkRange = true;
-                    }
-                }
-                frontTileTemp = null;*/
             }
             else
             {
                 totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
-
-                /*frontTileTemp = returnFrontTile(thisUnitTile, thisUnit.Direction);
-                if (frontTileTemp.CheckEntityGameObjectOnTile())
-                {
-                    if (frontTileTemp.CheckEntityGameObjectOnTile().GetComponent<Entity>().IsProp)
-                    {
-                        tileToAttack = frontTileTemp;
-                        inAtkRange = true;
-                    }
-                }
-                frontTileTemp = null;*/
             }
         }
 

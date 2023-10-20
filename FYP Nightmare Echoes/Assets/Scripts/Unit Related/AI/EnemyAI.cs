@@ -21,9 +21,10 @@ namespace NightmareEchoes.Unit.AI
         
         List<List<OverlayTile>> bestPathOptionsIgnoreProps = new List<List<OverlayTile>>();
         List<List<OverlayTile>> bestPathOptionsIncludeProps = new List<List<OverlayTile>>();
-        List<OverlayTile> bestPathOptionsIgnorePropsFiltered = new List<OverlayTile>();
-        List<OverlayTile> bestPathOptionsIncludePropsFiltered = new List<OverlayTile>();
+        List<OverlayTile> bestPathIgnorePropsFiltered = new List<OverlayTile>();
+        List<OverlayTile> bestPathIncludePropsFiltered = new List<OverlayTile>();
 
+        int bestPathCount;
         int ignorePropsUtil;
         int includePropsUtil;
 
@@ -65,10 +66,8 @@ namespace NightmareEchoes.Unit.AI
             targetHero = closestHero;
             finalMovePath.Clear();
 
-            accessibleTiles = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (int)rangeToClosestHero, ignoreProps: true);
-            walkableTiles = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (int)rangeToClosestHero, ignoreProps: false);
-            //accessibleTiles = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: true);
-            //walkableTiles = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: false);
+            accessibleTiles = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: true);
+            walkableTiles = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: false);
             walkableThisTurnTiles = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: false);
 
             PathfindingManager.Instance.ShowTilesInRange(walkableThisTurnTiles);
@@ -77,66 +76,75 @@ namespace NightmareEchoes.Unit.AI
             attack = false;
             detectedStealthHero = false;
 
-            for (int i = 0; i < 4; i++)
+            Vector2Int[] directions = {
+                        new Vector2Int(1, 0),  // Right
+                        new Vector2Int(0, 1),  // Up
+                        new Vector2Int(-1, 0), // Left
+                        new Vector2Int(0, -1)  // Down
+                    };
+
+            #region checking for best path options
+            for (int i = 0; i < directions.Length; i++)
             {
-                Vector2Int directionModifier;
-                switch (i) {
-                    case 0://N
-                        directionModifier = new Vector2Int(1, 0);
-                        break;
-                    case 1://S
-                        directionModifier = new Vector2Int(-1, 0);
-                        break;
-                    case 2://E
-                        directionModifier = new Vector2Int(0, 1);
-                        break;
-                    case 3://W
-                        directionModifier = new Vector2Int(0, -1);
-                        break;
-                    default: //default to N
-                        directionModifier = new Vector2Int(1, 0);
-                        break;
-                }
+                OverlayTile check = OverlayTileManager.Instance.GetOverlayTile(closestHero.ActiveTile.gridLocation2D + directions[i]);
 
-                OverlayTile check = OverlayTileManager.Instance.GetOverlayTile(closestHero.ActiveTile.gridLocation2D + directionModifier);
-                if (check != null)
+                if(check == null)
                 {
-                    if (!check.CheckEntityGameObjectOnTile() && !check.CheckObstacleOnTile())
-                    {
-                        List<OverlayTile> pathOptionsIgnoreProps = Pathfinding.Pathfinding.FindPath(thisUnitTile, check, accessibleTiles);
-                        List<OverlayTile> pathOptionsIncludeProps = Pathfinding.Pathfinding.FindPath(thisUnitTile, check, walkableTiles);
-
-                        if (pathOptionsIgnoreProps.Count != 0)
-                        {
-                            bestPathOptionsIgnoreProps.Add(pathOptionsIgnoreProps);
-                        }
-                        if (pathOptionsIncludeProps.Count != 0)
-                        {
-                            bestPathOptionsIncludeProps.Add(pathOptionsIncludeProps);
-                        }
-                    }
+                    continue;
                 }
+
+                if (check.CheckEntityGameObjectOnTile() || check.CheckObstacleOnTile())
+                {
+                    continue;
+                }
+
+                List<OverlayTile> pathOptionsIgnoreProps = Pathfinding.Pathfinding.FindPath(thisUnitTile, check, accessibleTiles);
+                List<OverlayTile> pathOptionsIncludeProps = Pathfinding.Pathfinding.FindPath(thisUnitTile, check, walkableTiles);
+
+                if (pathOptionsIgnoreProps.Count > 0)
+                {
+                    bestPathOptionsIgnoreProps.Add(pathOptionsIgnoreProps);
+                }
+                if (pathOptionsIncludeProps.Count > 0)
+                {
+                    bestPathOptionsIncludeProps.Add(pathOptionsIncludeProps);
+                }
+
             }
+
             for (int i = 0; i < bestPathOptionsIgnoreProps.Count; i++)
             {
-                int bestAmt = 0;
-                if (bestPathOptionsIgnoreProps[i].Count > bestAmt)
+                if(i == 0)
                 {
-                    bestAmt = bestPathOptionsIgnoreProps[i].Count;
-                    bestPathOptionsIgnorePropsFiltered = bestPathOptionsIgnoreProps[i];
+                    bestPathCount = bestPathOptionsIgnoreProps[i].Count;
+                    bestPathIgnorePropsFiltered = bestPathOptionsIgnoreProps[i];
+                    continue;
+                }
+
+                if (bestPathOptionsIgnoreProps[i].Count < bestPathCount)
+                {
+                    bestPathCount = bestPathOptionsIgnoreProps[i].Count;
+                    bestPathIgnorePropsFiltered = bestPathOptionsIgnoreProps[i];
                 }
             }
 
             for (int i = 0; i < bestPathOptionsIncludeProps.Count; i++)
             {
-                int bestAmt = 0;
-                if (bestPathOptionsIncludeProps[i].Count > bestAmt)
+                if (i == 0)
                 {
-                    bestAmt = bestPathOptionsIncludeProps[i].Count;
-                    bestPathOptionsIncludePropsFiltered = bestPathOptionsIncludeProps[i];
+                    bestPathCount = bestPathOptionsIncludeProps[i].Count;
+                    bestPathIncludePropsFiltered = bestPathOptionsIncludeProps[i];
+                    continue;
+                }
+
+                if (bestPathOptionsIncludeProps[i].Count < bestPathCount)
+                {
+                    bestPathCount = bestPathOptionsIncludeProps[i].Count;
+                    bestPathIncludePropsFiltered = bestPathOptionsIncludeProps[i];
                 }
                 
             }
+            #endregion
 
             #region ignorePropsUtil calc
             ignorePropsUtil = 0;
@@ -174,20 +182,22 @@ namespace NightmareEchoes.Unit.AI
             }
             #endregion
 
-            includePropsUtil = bestPathOptionsIncludePropsFiltered.Count;
+            #region checking for best util to use and assigning shortest path
+            includePropsUtil = bestPathIncludePropsFiltered.Count;
             
             if (ignorePropsUtil < includePropsUtil)
             {
-                shortestPath = bestPathOptionsIgnorePropsFiltered;
+                shortestPath = bestPathIgnorePropsFiltered;
             }
             else if (ignorePropsUtil == includePropsUtil && Random.Range(0.0f,1.0f) > 0.5f)
             {
-                shortestPath = bestPathOptionsIgnorePropsFiltered;
+                shortestPath = bestPathIgnorePropsFiltered;
             }
             else
             {
-                shortestPath = bestPathOptionsIncludePropsFiltered;
+                shortestPath = bestPathIncludePropsFiltered;
             }
+            #endregion
 
             #region skill selection
             skillAmount = 0;
@@ -223,82 +233,168 @@ namespace NightmareEchoes.Unit.AI
             #endregion
 
             #region decision making
-            if(shortestPath.Count > (thisUnit.stats.MoveRange + currSelectedSkill.Range))
+            //checking if path is longer than move and attack range
+            if (shortestPath.Count > (thisUnit.stats.MoveRange + currSelectedSkill.Range))
             {
-                //do 3a
+                //do 3a. just move, while checking for obstacles in between
                 if (shortestPath.Count >= thisUnit.stats.MoveRange)
                 {
-                    for (int i = 0; i < thisUnit.stats.MoveRange - 1; i++)
+                    for (int i = 0; i < thisUnit.stats.MoveRange; i++)
                     {
-                        finalMovePath.Add(shortestPath[i]);
+                        var checkEntityOnPath = shortestPath[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+
+                        if (checkEntityOnPath)
+                        {
+                            //switch to prop to attack
+                            if (checkEntityOnPath.IsProp)
+                            {
+                                moveAndAttack = true;
+                                targetTileToAttack = shortestPath[i];
+                                currSelectedSkill = thisUnit.BasicAttackSkill;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            finalMovePath.Add(shortestPath[i]);
+                        }
                     }
                 }
                 else
                 {
+                    //do 3a. just move, while checking for obstacles in between
                     for (int i = 0; i < shortestPath.Count - 1; i++)
                     {
-                        finalMovePath.Add(shortestPath[i]);
+                        var checkEntityOnPath = shortestPath[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+
+                        if (checkEntityOnPath)
+                        {
+                            //switch to prop to attack
+                            if (checkEntityOnPath.IsProp)
+                            {
+                                moveAndAttack = true;
+                                targetTileToAttack = shortestPath[i];
+                                currSelectedSkill = thisUnit.BasicAttackSkill;
+                                break;
+                            }   
+                        }
+                        else
+                        {
+                            finalMovePath.Add(shortestPath[i]);
+                        }
                     }
                 }
             }
             else
             {
-                if (shortestPath.Count <= currSelectedSkill.Range)
+                //within attack range
+                if (shortestPath.Count <= currSelectedSkill.Range && FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile) <= currSelectedSkill.Range)
                 {
-                    //do 1a
+                    //do 1a, just attack
                     targetTileToAttack = targetHero.ActiveTile;
+
                     if(currSelectedSkill.TargetType == TargetType.AOE)
                     {
                         SetAOETargetTile(thisUnitTile);
                     }
                     attack = true;
                 }
-                else
+                else if(shortestPath.Count > 0) //path found but not within attack range
                 {
                     moveAndAttack = true;
-                    bool found = false;
-                    for (int i = 0; i < shortestPath.Count - 1; i++)
+                    bool foundProp = false;
+
+                    for (int i = 0; i < shortestPath.Count; i++)
                     {
-                        if (found)
+                        var checkEntityOnPath = shortestPath[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+
+                        if (checkEntityOnPath == null)
                         {
                             continue;
                         }
 
-                        if (shortestPath[i].CheckEntityGameObjectOnTile())
+                        //do 2b, switch to prop to attack
+                        if (checkEntityOnPath.IsProp)
                         {
-                            //do 2b
-                            if (shortestPath[i].CheckEntityGameObjectOnTile().GetComponent<Entity>().IsProp)
+                            foundProp = true;
+                            targetTileToAttack = shortestPath[i];
+                            currSelectedSkill = thisUnit.BasicAttackSkill;
+
+                            for (int j = 0; j < i; j++)
                             {
-                                found = true;
-                                targetTileToAttack = shortestPath[i];
-                                currSelectedSkill = thisUnit.BasicAttackSkill;
-                                for (int j = 0; j < i - 1; j++)
-                                {
-                                    finalMovePath.Add(shortestPath[j]);
-                                }
+                                finalMovePath.Add(shortestPath[j]);
                             }
+                            break;
                         }
                     }
 
-                    if (!found)
+                    if (!foundProp)
                     {
+                        //do 2a. just attack normally
                         targetTileToAttack = targetHero.ActiveTile;
                         for (int i = 0; i < shortestPath.Count - currSelectedSkill.Range; i++)
                         {
                             finalMovePath.Add(shortestPath[i]);
                         }
+
                         if (currSelectedSkill.TargetType == TargetType.AOE)
                         {
                             SetAOETargetTile(finalMovePath[finalMovePath.Count - 1]);
                         }
                     }
                 }
+                else //no path found
+                {
+                    List<OverlayTile> shortestPath = new List<OverlayTile>();
+                    for (int i = walkableThisTurnTiles.Count - 1; i >= 0 ; i--)
+                    {
+                        if (walkableThisTurnTiles[i].CheckEntityGameObjectOnTile())
+                        {
+                            continue;
+                        }
 
+                        for (int j = 0; j < directions.Length; j++)
+                        {
+                            OverlayTile checkTileAround = OverlayTileManager.Instance.GetOverlayTile(closestHero.ActiveTile.gridLocation2D + directions[j]);
+
+                            if(checkTileAround == null)
+                            {
+                                continue;
+                            }
+
+                            if(checkTileAround.CheckEntityGameObjectOnTile() || checkTileAround.CheckObstacleOnTile())
+                            {
+                                continue;
+                            }
+
+                            var rangeFromTileWithoutEntity = Pathfinding.Pathfinding.FindTilesInRangeToDestination(walkableThisTurnTiles[i], targetHero.ActiveTile, ignoreProps: false);
+                            var pathFromPossibleTile = Pathfinding.Pathfinding.FindPath(walkableThisTurnTiles[i], checkTileAround, rangeFromTileWithoutEntity);
+
+                            if (pathFromPossibleTile.Count == 0)
+                            {
+                                continue;
+                            }
+
+                            shortestPath = pathFromPossibleTile;
+                            break;
+                        }
+                    }
+
+                    if(shortestPath.Count > 0)
+                    {
+                        Debug.Log("Here");
+                        for (int i = 0; i < thisUnit.stats.MoveRange - 1; i++)
+                        {
+                            finalMovePath.Add(shortestPath[i]);
+                        }
+                    }
+                }
             }
+ 
             #endregion
         }
 
-        #region move and attack scripts (copied)
+        #region move and attack scripts
         public void MoveProcess(Entity thisUnit)
         {
             if (finalMovePath.Count > 0)
