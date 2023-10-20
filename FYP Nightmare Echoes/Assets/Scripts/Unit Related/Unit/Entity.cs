@@ -624,6 +624,7 @@ namespace NightmareEchoes.Unit
 
             #region Sprite/Animation Updates
             if (isProp) return;
+
             if (sprites.Count > 0)
             {
                 switch (Direction)
@@ -936,6 +937,7 @@ namespace NightmareEchoes.Unit
                     {
                         switch (existingBuffDebuff.statusEffect)
                         {
+                            //Increase lifetimes, do not need to add a new buff
                             case STATUS_EFFECT.CRIPPLED_DEBUFF:
                             case STATUS_EFFECT.WOUND_DEBUFF:
                             case STATUS_EFFECT.RESTORATION_BUFF:
@@ -967,6 +969,7 @@ namespace NightmareEchoes.Unit
                     {
                         switch(existingToken.statusEffect)
                         {
+                            //block token needs to check if there is a deathmark to block it
                             case STATUS_EFFECT.BLOCK_TOKEN:
                                 if(deathMarkToken)
                                 {
@@ -974,6 +977,7 @@ namespace NightmareEchoes.Unit
                                 }
                                 else
                                 {
+                                    //just add stack like normal
                                     if (existingToken.ReturnLifeTime() < existingToken.limitStack)
                                     {
                                         existingToken.ApplyEffect(this);
@@ -1066,30 +1070,28 @@ namespace NightmareEchoes.Unit
                     break;
 
                 case ModifierType.POSITIVETOKEN:
-                    foreach (var statusEffect in TokenList)
+                    for (int i = 0; i < tokenList.Count; i++)
                     {
-                        if (statusEffect.modifierType == ModifierType.POSITIVETOKEN)
+                        if (tokenList[i].modifierType == ModifierType.POSITIVETOKEN)
                         {
-                            while (statusEffect.ReturnLifeTime() > 0)
+                            while (tokenList[i].ReturnLifeTime() > 0)
                             {
-                                UpdateTokenLifeTime(statusEffect.statusEffect);
+                                UpdateTokenLifeTime(tokenList[i].statusEffect);
                             }
                         }
-
                     }
                     break;
 
                 case ModifierType.NEGATIVETOKEN:
-                    foreach (var statusEffect in TokenList)
+                    for (int i = 0; i < tokenList.Count; i++)
                     {
-                        if (statusEffect.modifierType == ModifierType.NEGATIVETOKEN)
+                        if (tokenList[i].modifierType == ModifierType.NEGATIVETOKEN)
                         {
-                            while (statusEffect.ReturnLifeTime() > 0)
+                            while (tokenList[i].ReturnLifeTime() > 0)
                             {
-                                UpdateTokenLifeTime(statusEffect.statusEffect);
+                                UpdateTokenLifeTime(tokenList[i].statusEffect);
                             }
                         }
-
                     }
                     break;
             }
@@ -1103,10 +1105,10 @@ namespace NightmareEchoes.Unit
         {
             List<Modifier> totalStatusEffects = BuffDebuffList.Concat(TokenList).ToList();
 
-            foreach (Modifier statusEffect in totalStatusEffects)
+            for(int i = 0; i < totalStatusEffects.Count; i++)
             {
-                statusEffect.AwakeStatusEffect();
-                statusEffect.ApplyEffect(this);
+                totalStatusEffects[i].AwakeStatusEffect();
+                totalStatusEffects[i].ApplyEffect(this);
             }
         }
 
@@ -1143,14 +1145,16 @@ namespace NightmareEchoes.Unit
         {
             for (int i = TokenList.Count - 1; i >= 0; i--)
             {
-                if (TokenList[i].statusEffect == enumIndex)
+                if (TokenList[i].statusEffect != enumIndex)
                 {
-                    TokenList[i].UpdateLifeTime(this);
+                    continue;
+                }
 
-                    if (TokenList[i].ReturnLifeTime() <= 0)
-                    {
-                        TokenList.RemoveAt(i);
-                    }
+                TokenList[i].UpdateLifeTime(this);
+
+                if (TokenList[i].ReturnLifeTime() <= 0)
+                {
+                    TokenList.RemoveAt(i);
                 }
             }
             

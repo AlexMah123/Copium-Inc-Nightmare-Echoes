@@ -66,9 +66,9 @@ namespace NightmareEchoes.Unit.AI
             targetHero = closestHero;
             finalMovePath.Clear();
 
-            accessibleTiles = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: true);
-            walkableTiles = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: false);
-            walkableThisTurnTiles = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: false);
+            accessibleTiles = Pathfind.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: true);
+            walkableTiles = Pathfind.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: false);
+            walkableThisTurnTiles = Pathfind.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: false);
 
             PathfindingManager.Instance.ShowTilesInRange(walkableThisTurnTiles);
 
@@ -98,8 +98,8 @@ namespace NightmareEchoes.Unit.AI
                     continue;
                 }
 
-                List<OverlayTile> pathOptionsIgnoreProps = Pathfinding.Pathfinding.FindPath(thisUnitTile, check, accessibleTiles);
-                List<OverlayTile> pathOptionsIncludeProps = Pathfinding.Pathfinding.FindPath(thisUnitTile, check, walkableTiles);
+                List<OverlayTile> pathOptionsIgnoreProps = Pathfind.FindPath(thisUnitTile, check, accessibleTiles);
+                List<OverlayTile> pathOptionsIncludeProps = Pathfind.FindPath(thisUnitTile, check, walkableTiles);
 
                 if (pathOptionsIgnoreProps.Count > 0)
                 {
@@ -284,6 +284,19 @@ namespace NightmareEchoes.Unit.AI
                         }
                     }
                 }
+
+                Vector2Int direction = finalMovePath[1].gridLocation2D - finalMovePath[0].gridLocation2D;
+                var checkTile = OverlayTileManager.Instance.GetOverlayTile(finalMovePath[finalMovePath.Count - 1].gridLocation2D + direction);
+                var checkEntity = checkTile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+
+                if (checkEntity)
+                {
+                    if(checkEntity.IsProp)
+                    {
+                        targetTileToAttack = checkTile;
+                        attack = true;
+                    }
+                }
             }
             else
             {
@@ -346,6 +359,7 @@ namespace NightmareEchoes.Unit.AI
                 else //no path found
                 {
                     List<OverlayTile> shortestPath = new List<OverlayTile>();
+                    List<OverlayTile> newPath = new List<OverlayTile>();
                     for (int i = walkableThisTurnTiles.Count - 1; i >= 0 ; i--)
                     {
                         if (walkableThisTurnTiles[i].CheckEntityGameObjectOnTile())
@@ -367,25 +381,27 @@ namespace NightmareEchoes.Unit.AI
                                 continue;
                             }
 
-                            var rangeFromTileWithoutEntity = Pathfinding.Pathfinding.FindTilesInRangeToDestination(walkableThisTurnTiles[i], targetHero.ActiveTile, ignoreProps: false);
-                            var pathFromPossibleTile = Pathfinding.Pathfinding.FindPath(walkableThisTurnTiles[i], checkTileAround, rangeFromTileWithoutEntity);
+                            var rangeFromTileWithoutEntity = Pathfind.FindTilesInRangeToDestination(walkableThisTurnTiles[i], targetHero.ActiveTile, ignoreProps: false);
+                            var pathFromPossibleTile = Pathfind.FindPath(walkableThisTurnTiles[i], checkTileAround, rangeFromTileWithoutEntity);
 
                             if (pathFromPossibleTile.Count == 0)
                             {
                                 continue;
                             }
 
-                            shortestPath = pathFromPossibleTile;
-                            break;
+                            newPath = Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], rangeFromTileWithoutEntity);
+                            if (newPath.Count > 0)
+                            {
+                                break;
+                            }
                         }
                     }
 
-                    if(shortestPath.Count > 0)
+                    if(newPath.Count > 0)
                     {
-                        Debug.Log("Here");
-                        for (int i = 0; i < thisUnit.stats.MoveRange - 1; i++)
+                        for (int i = 0; i < thisUnit.stats.MoveRange; i++)
                         {
-                            finalMovePath.Add(shortestPath[i]);
+                            finalMovePath.Add(newPath[i]);
                         }
                     }
                 }
@@ -440,7 +456,7 @@ namespace NightmareEchoes.Unit.AI
                             break;
                     }
 
-                    List<OverlayTile> tilesAroundTarget = new List<OverlayTile>(Pathfinding.Pathfinding.FindTilesInRange(targetTileToAttack, 1, ignoreProps: false));
+                    List<OverlayTile> tilesAroundTarget = new List<OverlayTile>(Pathfind.FindTilesInRange(targetTileToAttack, 1, ignoreProps: false));
                     List<OverlayTile> possibleRedirectTiles = new List<OverlayTile>();
 
                     if (tilesAroundTarget.Count > 0)
@@ -656,7 +672,7 @@ namespace NightmareEchoes.Unit.AI
         public float FindPathDistance(OverlayTile target1, OverlayTile target2)
         {
             float dist;
-            List<OverlayTile> tempPath = Pathfinding.Pathfinding.FindPath(target1, target2, accessibleTiles);
+            List<OverlayTile> tempPath = Pathfind.FindPath(target1, target2, accessibleTiles);
             dist = tempPath.Count;
             return dist;
         }

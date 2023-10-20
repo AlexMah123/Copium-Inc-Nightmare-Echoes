@@ -148,10 +148,12 @@ namespace NightmareEchoes.TurnOrder
         {
             turnOrderList = new List<Entity>(FindObjectsOfType<Entity>());
             
-            var iterator = new List<Entity>(turnOrderList);
-            foreach (var unit in iterator.Where(unit => unit.IsProp))
+            for(int i = turnOrderList.Count - 1; i >= 0; i--)
             {
-                turnOrderList.Remove(unit);
+                if (turnOrderList[i].IsProp)
+                {
+                    turnOrderList.RemoveAt(i);
+                }
             }
             
             turnOrderList.Sort(CompareSpeed); //sorts in ascending order
@@ -220,11 +222,11 @@ namespace NightmareEchoes.TurnOrder
             totalUnitList = FindObjectsOfType<Entity>().ToList();
 
             //filter by heroes
-            foreach (var unit in totalUnitList)
+            for(int i = totalUnitList.Count - 1; i >= 0; i--)
             {
-                if (!unit.IsHostile && !unit.IsProp)
+                if (!totalUnitList[i].IsHostile && !totalUnitList[i].IsProp)
                 {
-                    totalHeroList.Add(unit);
+                    totalHeroList.Add(totalUnitList[i]);
                 }
             }
 
@@ -245,11 +247,12 @@ namespace NightmareEchoes.TurnOrder
             totalUnitList = FindObjectsOfType<Entity>().ToList();
 
             //filter by heroes
-            foreach (var unit in totalUnitList)
+
+            for (int i = totalUnitList.Count - 1; i >= 0; i--)
             {
-                if (unit.IsHostile && !unit.IsProp)
+                if (totalUnitList[i].IsHostile && !totalUnitList[i].IsProp)
                 {
-                    totalEnemiesList.Add(unit);
+                    totalEnemiesList.Add(totalUnitList[i]);
                 }
             }
 

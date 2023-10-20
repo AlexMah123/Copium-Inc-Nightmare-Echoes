@@ -170,11 +170,11 @@ namespace NightmareEchoes.Unit.AI
             tileToAttack = targetHero.ActiveTile;
             rngHelper = 1;
 
-            tilesInRangeWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: false);
-            tilesInRangeWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: true);
+            tilesInRangeWithoutProps = Pathfinding.Pathfind.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: false);
+            tilesInRangeWithProps = Pathfinding.Pathfind.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: true);
 
-            tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile), ignoreProps: false);
-            tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile), ignoreProps: true);
+            tilesInSightWithoutProps = Pathfinding.Pathfind.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile), ignoreProps: false);
+            tilesInSightWithProps = Pathfinding.Pathfind.FindTilesInRange(thisUnitTile, FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile), ignoreProps: true);
 
             //tilesInSightWithoutProps = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, targetHero.ActiveTile, ignoreProps: false);
             //tilesInSightWithProps = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, targetHero.ActiveTile, ignoreProps: true);
@@ -200,7 +200,7 @@ namespace NightmareEchoes.Unit.AI
                 // Check if the target location is valid (not blocked by entities or obstacles)
                 if (targetTileToMove != null && !targetTileToMove.CheckEntityGameObjectOnTile() && !targetTileToMove.CheckObstacleOnTile())
                 {
-                    List<OverlayTile> path = Pathfinding.Pathfinding.FindPath(thisUnitTile, targetTileToMove, tilesInSightWithProps);
+                    List<OverlayTile> path = Pathfinding.Pathfind.FindPath(thisUnitTile, targetTileToMove, tilesInSightWithProps);
 
                     if (path.Count > 0)
                     {
@@ -226,8 +226,8 @@ namespace NightmareEchoes.Unit.AI
 
             if (bestPath.Count > 0)
             {
-                pathWithoutProps = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInSightWithoutProps);
-                pathWithProps = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInSightWithProps);
+                pathWithoutProps = Pathfinding.Pathfind.FindPath(thisUnitTile, bestMoveTile, tilesInSightWithoutProps);
+                pathWithProps = Pathfinding.Pathfind.FindPath(thisUnitTile, bestMoveTile, tilesInSightWithProps);
 
                 #endregion
 
@@ -271,8 +271,8 @@ namespace NightmareEchoes.Unit.AI
                 {
                     //if there is no obstacles
                     totalPathList = thisUnit.stats.MoveRange >= pathWithProps.Count ?
-                        totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[pathWithProps.Count - 1], tilesInRangeWithProps) :
-                        totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithProps);
+                        totalPathList = Pathfinding.Pathfind.FindPath(thisUnitTile, pathWithProps[pathWithProps.Count - 1], tilesInRangeWithProps) :
+                        totalPathList = Pathfinding.Pathfind.FindPath(thisUnitTile, pathWithProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithProps);
 
                     for (int i = 0; i < thisUnit.stats.MoveRange + currSelectedSkill.Range; i++)
                     {
@@ -299,7 +299,7 @@ namespace NightmareEchoes.Unit.AI
                             }
                             else
                             {
-                                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[i - 1], tilesInRangeWithProps);
+                                totalPathList = Pathfinding.Pathfind.FindPath(thisUnitTile, pathWithProps[i - 1], tilesInRangeWithProps);
                                 tileToAttack = pathWithProps[i];
                                 targetHero = checkEntity;
                                 break;
@@ -312,8 +312,8 @@ namespace NightmareEchoes.Unit.AI
                     if (pathWithoutProps.Count > 0)
                     {
                         totalPathList = thisUnit.stats.MoveRange >= pathWithProps.Count ?
-                        totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithProps[pathWithoutProps.Count - 1], tilesInRangeWithoutProps) :
-                        totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, pathWithoutProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithoutProps);
+                        totalPathList = Pathfinding.Pathfind.FindPath(thisUnitTile, pathWithProps[pathWithoutProps.Count - 1], tilesInRangeWithoutProps) :
+                        totalPathList = Pathfinding.Pathfind.FindPath(thisUnitTile, pathWithoutProps[thisUnit.stats.MoveRange - 1], tilesInRangeWithoutProps);
                     }
                 }
             }
@@ -398,8 +398,8 @@ namespace NightmareEchoes.Unit.AI
                 {
                     //set distance between tile without prop and the target tile to move.
                     var distanceBetweenTileAndTarget = FindDistanceBetweenTile(targetTileToMove, tilesInRangeWithoutProps[i]) + thisUnit.stats.MoveRange;
-                    var tilesInRangeFromTileWithoutEntity = new List<OverlayTile>(Pathfinding.Pathfinding.FindTilesInRange(tilesInRangeWithoutProps[i], distanceBetweenTileAndTarget, ignoreProps: false));
-                    var pathFromPossibleTile = new List<OverlayTile>(Pathfinding.Pathfinding.FindPath(tilesInRangeWithoutProps[i], targetTileToMove, tilesInRangeFromTileWithoutEntity));
+                    var tilesInRangeFromTileWithoutEntity = new List<OverlayTile>(Pathfinding.Pathfind.FindTilesInRange(tilesInRangeWithoutProps[i], distanceBetweenTileAndTarget, ignoreProps: false));
+                    var pathFromPossibleTile = new List<OverlayTile>(Pathfinding.Pathfind.FindPath(tilesInRangeWithoutProps[i], targetTileToMove, tilesInRangeFromTileWithoutEntity));
 
                     if(pathFromPossibleTile.Count == 0)
                     {
@@ -443,11 +443,11 @@ namespace NightmareEchoes.Unit.AI
                     }
                 }
 
-                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
+                totalPathList = Pathfinding.Pathfind.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
             }
             else
             {
-                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
+                totalPathList = Pathfinding.Pathfind.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
             }
         }
 
@@ -462,7 +462,7 @@ namespace NightmareEchoes.Unit.AI
             }
             else
             {
-                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
+                totalPathList = Pathfinding.Pathfind.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
                 SetAOETargetTile(bestMoveTile);
             }
             
@@ -598,7 +598,7 @@ namespace NightmareEchoes.Unit.AI
                             break;
                     }
 
-                    List<OverlayTile> tilesAroundTarget = new List<OverlayTile>(Pathfinding.Pathfinding.FindTilesInRange(tileToAttack, 1, ignoreProps:false));
+                    List<OverlayTile> tilesAroundTarget = new List<OverlayTile>(Pathfinding.Pathfind.FindTilesInRange(tileToAttack, 1, ignoreProps:false));
                     List<OverlayTile> possibleRedirectTiles = new List<OverlayTile>();
 
                     if(tilesAroundTarget.Count > 0) 
@@ -816,7 +816,7 @@ namespace NightmareEchoes.Unit.AI
             }
             else
             {
-                totalPathList = Pathfinding.Pathfinding.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
+                totalPathList = Pathfinding.Pathfind.FindPath(thisUnitTile, bestMoveTile, tilesInRangeWithoutProps);
             }
         }
 

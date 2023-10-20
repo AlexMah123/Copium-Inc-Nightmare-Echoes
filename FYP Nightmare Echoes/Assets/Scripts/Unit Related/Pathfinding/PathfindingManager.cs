@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.Unit.Combat;
+using static UnityEditor.Progress;
 
 
 //created by Vinn, editted by Alex and Ter
@@ -89,30 +90,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             playerTilesInRange.Clear();
         }
 
-        //Called in Player Phase
-        public void StartPlayerPathfinding(Entity hero)
-        {
-            if (hero != null && !hero.IsHostile && !hero.IsProp)
-            {
-                //set currentSelected to the raycasted unit
-                currentPathfindingUnit = hero;
-
-                //Gets the value of the start pos and the maximum range is the amount you can set
-                playerTilesInRange = new List<OverlayTile>(Pathfinding.FindTilesInRange(hero.ActiveTile, hero.stats.MoveRange, ignoreProps: false));
-
-                //store values for players when they cancel their action
-                revertUnitPosition = hero.ActiveTile;
-                revertUnitDirection = hero.Direction;
-                revertUnitHealth = hero.stats.Health;
-
-                //display tiles in range
-                ShowTilesInRange(playerTilesInRange);
-                CameraControl.Instance.UpdateCameraPan(currentPathfindingUnit.gameObject);
-            }
-        }
-
-        //Called in Player Phase
-        public void PlayerInputPathfinding()
+        private void Update()
         {
             //Check HoverTile based on mouse pos if its on the map
             hoveredTile = GetFocusedTile();
@@ -129,7 +107,33 @@ namespace NightmareEchoes.Unit.Pathfinding
             {
                 currentHoveredOverlayTile = null;
             }
+        }
 
+        //Called in Player Phase
+        public void StartPlayerPathfinding(Entity hero)
+        {
+            if (hero != null && !hero.IsHostile && !hero.IsProp)
+            {
+                //set currentSelected to the raycasted unit
+                currentPathfindingUnit = hero;
+
+                //Gets the value of the start pos and the maximum range is the amount you can set
+                playerTilesInRange = Pathfind.FindTilesInRange(hero.ActiveTile, hero.stats.MoveRange, ignoreProps: false);
+
+                //store values for players when they cancel their action
+                revertUnitPosition = hero.ActiveTile;
+                revertUnitDirection = hero.Direction;
+                revertUnitHealth = hero.stats.Health;
+
+                //display tiles in range
+                ShowTilesInRange(playerTilesInRange);
+                CameraControl.Instance.UpdateCameraPan(currentPathfindingUnit.gameObject);
+            }
+        }
+
+        //Called in Player Phase
+        public void PlayerInputPathfinding()
+        {
             #region Check for types of input
             //if player clicks
             if (Input.GetMouseButtonDown(0))
@@ -164,7 +168,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             //currentHoverOverlayTile wont be null because you always are on the map
             if (Input.GetMouseButtonDown(0) && !hasMoved && (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentPathfindingUnit?.ActiveTile))
             {
-                pathList = Pathfinding.FindPath(currentPathfindingUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
+                pathList = Pathfind.FindPath(currentPathfindingUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
                 tempPathList = new List<OverlayTile>(pathList);
 
                 if (!currentHoveredOverlayTile.CheckEntityGameObjectOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
@@ -308,6 +312,8 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 yield break;
             }
+
+            yield break;
             #endregion
         }
 
@@ -324,10 +330,8 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 var step = movingSpeed * Time.deltaTime;
                 var targetPosition = pathList[0].transform.position;
-                //var zIndex = pathList[0].transform.position.z;
 
                 thisUnit.transform.position = Vector2.MoveTowards(thisUnit.transform.position, targetPosition, step);
-                //thisUnit.transform.position = new Vector3(thisUnit.transform.position.x, thisUnit.transform.position.y, zIndex);
 
                 //as you reach the tile, set the units position and the arrow, remove the pathlist[0] to move to the next tile
                 if (Vector2.Distance(thisUnit.transform.position, targetPosition) < 0.001f)
@@ -431,9 +435,9 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         public void RenderArrow(List<OverlayTile> tilesInRange, List<OverlayTile> pathList, Entity thisUnit)
         {
-            foreach (var item in tilesInRange)
+            for (int i = 0; i < tilesInRange.Count; i++)
             {
-                item.SetArrowSprite(ArrowDirections.None);
+                tilesInRange[i].SetArrowSprite(ArrowDirections.None);
             }
 
             for (int i = 0; i < pathList.Count; i++)
@@ -448,17 +452,9 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         public RaycastHit2D? GetFocusedTile()
         {
-            var hits = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
+            var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
 
-            //Checks if the raycast has hit any tile
-            if (hits)
-            {
-                return hits;
-            }
-            else
-            {
-                return null;
-            }
+            return hit ? hit : null;
         }
 
         public void SetUnitPositionOnTile(Entity unit, OverlayTile tile)
@@ -467,33 +463,28 @@ namespace NightmareEchoes.Unit.Pathfinding
             unit.ActiveTile = tile;
 
             var trapDmg = CombatManager.Instance.CheckTrap(unit);
+
             if (trapDmg)
             {
                 trapDmg.Cast(unit);
             }
         }
 
-        public void ShowTilesInRange(List<OverlayTile> overlayTileList)
+        public void ShowTilesInRange(List<OverlayTile> tilesInRange)
         {
-            //hides all the tiles in range to reset
-            foreach (var item in overlayTileList)
-            {
-                item.HideTile();
-            }
+            HideTilesInRange(tilesInRange);
 
-            //displays all the tiles in range 
-            foreach (var item in overlayTileList)
+            for(int i = 0; i < tilesInRange.Count; i++)
             {
-                item.ShowMoveTile();
+                tilesInRange[i].ShowMoveTile();
             }
         }
 
         public void HideTilesInRange(List<OverlayTile> tilesInRange)
         {
-            //hides all the tiles in range to reset
-            foreach (var item in tilesInRange)
+            for (int i = 0; i < tilesInRange.Count; i++)
             {
-                item.HideTile();
+                tilesInRange[i].HideTile();
             }
         }
 
@@ -512,9 +503,9 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         public void ClearArrow(List<OverlayTile> pathList)
         {
-            foreach (var tile in pathList)
+            for(int i = 0; i < pathList.Count; i++)
             {
-                tile.SetArrowSprite(ArrowDirections.None);
+                pathList[i].SetArrowSprite(ArrowDirections.None);
             }
 
             pathList.Clear();

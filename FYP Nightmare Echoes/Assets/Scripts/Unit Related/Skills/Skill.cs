@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Unit.Combat;
+using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine;
 
 //Created by JH, edited by Ter
@@ -426,12 +427,12 @@ namespace NightmareEchoes.Unit
             direction = Vector3.Normalize(direction);
             var destination = position + direction;
             
-            var tileDestination = OverlayTileManager.Instance.GetOverlayTileOnWorldPosition(destination);
+            var tileDestination = OverlayTileManager.Instance.GetOverlayTileInWorldPos(destination);
             if (!tileDestination) return;
 
             if (tileDestination.CheckEntityGameObjectOnTile() || tileDestination.CheckObstacleOnTile()) return;
             
-            StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
+            StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
             target.Direction = prevDir;
             target.CheckCrippled();
         }

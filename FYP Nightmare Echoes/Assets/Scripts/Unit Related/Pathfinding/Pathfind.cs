@@ -4,29 +4,26 @@ using System.Linq;
 using UnityEngine;
 using NightmareEchoes.Grid;
 using UnityEngine.Tilemaps;
-using UnityEngine.WSA;
-using static UnityEditor.Progress;
-
 
 //created by Vinn, editted by Alex
 namespace NightmareEchoes.Unit.Pathfinding
 {
-    public static class Pathfinding
+    public static class Pathfind
     {
-        public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> LimitTiles)
+        public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> tilesInRange)
         {
             var overLayTileManager = OverlayTileManager.Instance;
-            List<OverlayTile> openList = new List<OverlayTile>();
-            List<OverlayTile> endList = new List<OverlayTile>();
+            List<OverlayTile> currTilesToCheck = new List<OverlayTile>();
+            List<OverlayTile> prevTilesToCheck = new List<OverlayTile>();
 
-            openList.Add(start);
+            currTilesToCheck.Add(start);
 
-            while (openList.Count > 0)
+            while (currTilesToCheck.Count > 0)
             {
-                OverlayTile currentOverlayTile = GetLowestFTile(openList);
+                OverlayTile currentOverlayTile = currTilesToCheck.OrderBy(x => x.F).First();
 
-                openList.Remove(currentOverlayTile);
-                endList.Add(currentOverlayTile);
+                currTilesToCheck.Remove(currentOverlayTile);
+                prevTilesToCheck.Add(currentOverlayTile);
 
                 if (currentOverlayTile == end)
                 {
@@ -34,11 +31,11 @@ namespace NightmareEchoes.Unit.Pathfinding
                     return GetFinishedList(start, end);
                 }
 
-                var neighbourTiles = overLayTileManager.GetNeighbourTiles(currentOverlayTile, LimitTiles);
+                var neighbourTiles = overLayTileManager.GetNeighbourTiles(currentOverlayTile, tilesInRange);
 
                 for(int i = 0; i < neighbourTiles.Count; i++) 
                 {
-                    if (neighbourTiles[i].isBlocked || endList.Contains(neighbourTiles[i]))
+                    if (neighbourTiles[i].isBlocked || prevTilesToCheck.Contains(neighbourTiles[i]))
                     {
                         continue;
                     }
@@ -48,9 +45,9 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                     neighbourTiles[i].prevTile = currentOverlayTile;
 
-                    if (!openList.Contains(neighbourTiles[i]))
+                    if (!currTilesToCheck.Contains(neighbourTiles[i]))
                     {
-                        openList.Add(neighbourTiles[i]);
+                        currTilesToCheck.Add(neighbourTiles[i]);
                     }
                 }
             }
@@ -114,7 +111,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             return filteredTiles;
         }
         
-         public static List<OverlayTile> FindTilesInRangeToDestination(OverlayTile startTile, OverlayTile endTile, bool ignoreProps)
+        public static List<OverlayTile> FindTilesInRangeToDestination(OverlayTile startTile, OverlayTile endTile, bool ignoreProps)
         {
             var overLayTileManager = OverlayTileManager.Instance;
             var inRangeTiles = new List<OverlayTile> { startTile };
@@ -178,21 +175,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             return filteredTiles;
         }
 
-        private static OverlayTile GetLowestFTile(List<OverlayTile> tiles)
-        {
-            OverlayTile lowestF = tiles[0];
-
-            for(int i = 0; i < tiles.Count; i++)
-            {
-                if (tiles[i].F < lowestF.F)
-                {
-                    lowestF = tiles[i];
-                }
-            }
- 
-            return lowestF;
-        }
-
         private static int GetManhattanDistance(OverlayTile start, OverlayTile neighbour)
         {
             return Mathf.Abs(start.gridLocation.x - neighbour.gridLocation.x) + Mathf.Abs(start.gridLocation.y - neighbour.gridLocation.y);
@@ -202,12 +184,12 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             var finishedList = new List<OverlayTile>();
 
-            OverlayTile currentOverlayTile = end;
+            OverlayTile currentTile = end;
 
-            while (currentOverlayTile != start)
+            while (currentTile != start)
             {
-                finishedList.Add(currentOverlayTile);
-                currentOverlayTile = currentOverlayTile.prevTile;
+                finishedList.Add(currentTile);
+                currentTile = currentTile.prevTile;
             }
 
             finishedList.Reverse();

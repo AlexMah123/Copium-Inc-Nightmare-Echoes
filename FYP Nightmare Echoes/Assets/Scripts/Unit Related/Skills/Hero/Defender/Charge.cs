@@ -1,6 +1,7 @@
 using NightmareEchoes.Grid;
 using System.Collections;
 using System.Collections.Generic;
+using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine;
 
 namespace NightmareEchoes.Unit
@@ -42,7 +43,7 @@ namespace NightmareEchoes.Unit
                 if (frontalTile.CheckEntityGameObjectOnTile() || frontalTile.CheckObstacleOnTile()) return false;
             }
 
-            StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(thisUnit, destinationTile, 0.15f));
+            StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, destinationTile, 0.15f));
             StartCoroutine(DelayedAttack(target));
             
             return true;
