@@ -7,7 +7,7 @@ using System.Linq;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.Unit.Combat;
 
-namespace NightmareEchoes.Unit
+namespace NightmareEchoes.Unit.AI
 {
     public class EnemyAI : MonoBehaviour
     {
@@ -29,27 +29,27 @@ namespace NightmareEchoes.Unit
 
         List<OverlayTile> accessibleTiles = new List<OverlayTile>();
         List<OverlayTile> walkableTiles = new List<OverlayTile>();
-        List<OverlayTile> walkableThisTurnTiles = new List<OverlayTile>();
+        public List<OverlayTile> walkableThisTurnTiles = new List<OverlayTile>();
 
-        Entity thisUnit;
+        public Entity thisUnit;
         OverlayTile thisUnitTile;
         Entity closestHero;
-        Entity targetHero; 
-        OverlayTile targetTileToAttack;
+        public Entity targetHero; 
+        public OverlayTile targetTileToAttack;
         float rangeToClosestHero;
         OverlayTile aoeTargetTile;
 
         int skillAmount;
-        Skill currSelectedSkill;
+        public Skill currSelectedSkill;
 
-        bool moveAndAttack;
         public float attackDelay = 1f;
-        bool attack;
+        public bool attack;
+        public bool moveAndAttack;
 
         Dictionary<Entity, int> distancesDictionary = new Dictionary<Entity, int>();
         Dictionary<string, float> utilityDictionary = new Dictionary<string, float>();
 
-        bool detectedStealthHero;
+        public bool detectedStealthHero;
 
         private void Awake()
         {
@@ -59,13 +59,20 @@ namespace NightmareEchoes.Unit
         public void Execute()
         {
             //reset values
-            thisUnitTile = thisUnit.ActiveTile;
             SortHeroesByDistance();
-            accessibleTiles = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (int)rangeToClosestHero, ignoreProps: true);
-            walkableTiles = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (int)rangeToClosestHero, ignoreProps: false);
-            walkableThisTurnTiles = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: false);
+
+            thisUnitTile = thisUnit.ActiveTile;
             targetHero = closestHero;
             finalMovePath.Clear();
+
+            accessibleTiles = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (int)rangeToClosestHero, ignoreProps: true);
+            walkableTiles = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, (int)rangeToClosestHero, ignoreProps: false);
+            //accessibleTiles = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: true);
+            //walkableTiles = Pathfinding.Pathfinding.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: false);
+            walkableThisTurnTiles = Pathfinding.Pathfinding.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: false);
+
+            PathfindingManager.Instance.ShowTilesInRange(walkableThisTurnTiles);
+
             moveAndAttack = false;
             attack = false;
             detectedStealthHero = false;
@@ -90,6 +97,7 @@ namespace NightmareEchoes.Unit
                         directionModifier = new Vector2Int(1, 0);
                         break;
                 }
+
                 OverlayTile check = OverlayTileManager.Instance.GetOverlayTile(closestHero.ActiveTile.gridLocation2D + directionModifier);
                 if (check != null)
                 {
@@ -255,6 +263,7 @@ namespace NightmareEchoes.Unit
                         {
                             continue;
                         }
+
                         if (shortestPath[i].CheckEntityGameObjectOnTile())
                         {
                             //do 2b
@@ -270,6 +279,7 @@ namespace NightmareEchoes.Unit
                             }
                         }
                     }
+
                     if (!found)
                     {
                         targetTileToAttack = targetHero.ActiveTile;

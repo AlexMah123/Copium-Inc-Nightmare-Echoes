@@ -170,10 +170,13 @@ namespace NightmareEchoes.Unit.Pathfinding
                 if (!currentHoveredOverlayTile.CheckEntityGameObjectOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
                 {
                     //Resets lastaddedtile is null
-                    lastAddedTile = null;
-                    hasMoved = true;
-                    isMoving = true;
-                    RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
+                    if(pathList.Count > 0)
+                    {
+                        lastAddedTile = null;
+                        hasMoved = true;
+                        isMoving = true;
+                        RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
+                    }
                 }
             }
             // if player dragged move, isnt moving + selected a unit, or if they move to their activetile/starting point
@@ -228,12 +231,12 @@ namespace NightmareEchoes.Unit.Pathfinding
                         {
                             pathList.RemoveAt(pathList.Count - 1);
                         }
-                    }
 
-                    RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
-                    tempPathList = new List<OverlayTile>(pathList);
-                    hasMoved = true;
-                    isMoving = true;
+                        RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
+                        tempPathList = new List<OverlayTile>(pathList);
+                        hasMoved = true;
+                        isMoving = true;
+                    }
 
                     //Resets not dragging and lastAddedTile to null
                     isDragging = false;

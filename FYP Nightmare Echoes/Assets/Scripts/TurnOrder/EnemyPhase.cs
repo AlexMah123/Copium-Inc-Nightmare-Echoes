@@ -15,7 +15,7 @@ namespace NightmareEchoes.TurnOrder
     {
         bool tempStun = false;
 
-        BasicEnemyAI enemyAI;
+        EnemyAI enemyAI;
 
         private List<Skill> aoeSkillsPassed = new();
 
@@ -28,7 +28,7 @@ namespace NightmareEchoes.TurnOrder
             if (controller.CurrentUnit != null)
             {
                 //cache enemyAI
-                enemyAI = controller.CurrentUnit.GetComponent<BasicEnemyAI>();
+                enemyAI = controller.CurrentUnit.GetComponent<EnemyAI>();
 
                 #region Tokens
                 //enable this if you want to test applying tokens manually in the editor
@@ -74,9 +74,9 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnFixedUpdate()
         {
             //start a couroutine to move
-            //if (enemyAI == null || controller.CurrentUnit == null) return;
+            if (enemyAI == null || controller.CurrentUnit == null) return;
 
-            if (enemyAI.totalPathList.Count > 0)
+            if(enemyAI.finalMovePath.Count > 0)
             {
                 enemyAI.MoveProcess(controller.CurrentUnit);
             }
@@ -90,7 +90,6 @@ namespace NightmareEchoes.TurnOrder
                     aoeSkillsPassed.Add(aoeDmg);
             }
         }
-
         protected override void OnUpdate()
         {
             
@@ -132,9 +131,9 @@ namespace NightmareEchoes.TurnOrder
                 #region Mandatory Checks
 
                 //Hide tiles only on exit
-                if (enemyAI.TilesInRange?.Count > 0)
+                if (enemyAI.walkableThisTurnTiles?.Count > 0)
                 {
-                    PathfindingManager.Instance.HideTilesInRange(enemyAI.TilesInRange);
+                    PathfindingManager.Instance.HideTilesInRange(enemyAI.walkableThisTurnTiles);
                 }
 
                 //update effects & stats
@@ -171,34 +170,37 @@ namespace NightmareEchoes.TurnOrder
         IEnumerator EnemyTurn()
         {
             yield return new WaitForSeconds(controller.enemythinkingDelay);
-            
-            if(controller.CurrentUnit != null)
+
+            if (controller.CurrentUnit != null)
             {
-                enemyAI.MakeDecision(controller.CurrentUnit);
+                enemyAI.Execute();
             }
 
-
-            yield return new WaitUntil(() => enemyAI.totalPathList.Count == 0);
+            yield return new WaitUntil(() => enemyAI.finalMovePath.Count == 0);
 
             //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.
-            if ((enemyAI.inAtkRange || enemyAI.inMoveAndAttackRange) && !enemyAI.thisUnit.HasAttacked && !enemyAI.detectedStealthHero && enemyAI.totalHeroList.Count > 0)
+            if ((enemyAI.attack || enemyAI.moveAndAttack) && !enemyAI.thisUnit.HasAttacked && !enemyAI.detectedStealthHero && enemyAI.totalHeroList.Count > 0)
             {
                 //if you are not immobilized, just attack
                 if (!controller.CurrentUnit.ImmobilizeToken)
                 {
-                    enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.tileToAttack);
+                    enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.targetTileToAttack);
                 }
                 //if you are immobilized, but your range is within your selected attack range, attack
-                else if (controller.CurrentUnit.ImmobilizeToken && enemyAI.FindDistanceBetweenUnit(controller.CurrentUnit, enemyAI.targetHero) <= enemyAI.selectedAttackRange)
+                else if (controller.CurrentUnit.ImmobilizeToken && enemyAI.FindDistanceBetweenUnit(controller.CurrentUnit, enemyAI.targetHero) <= enemyAI.currSelectedSkill.Range)
                 {
-                    enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.tileToAttack);
+                    enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.targetTileToAttack);
                 }
                 else
                 {
                     controller.StartCoroutine(controller.PassTurn());
                 }
             }
-            else if(!enemyAI.detectedStealthHero)
+            else if (!enemyAI.detectedStealthHero)
+            {
+                controller.StartCoroutine(controller.PassTurn());
+            }
+            else
             {
                 controller.StartCoroutine(controller.PassTurn());
             }

@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 5583804447610931203}
   - component: {fileID: 5583804447610931200}
   - component: {fileID: 8893637955381217503}
-  - component: {fileID: 165478112691146583}
+  - component: {fileID: 1321002866362748770}
   - component: {fileID: 4139838481242840768}
   - component: {fileID: 4212859529687142437}
+  - component: {fileID: 1429316040}
   - component: {fileID: 5583804447610931213}
   - component: {fileID: 2309720267678754650}
-  - component: {fileID: 1429316040}
   m_Layer: 6
   m_Name: MeleeEnemy
   m_TagString: Inspectable
@@ -165,7 +165,7 @@ MonoBehaviour:
   tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
   popupTextDelay: 0.6
   basicAttackRange: 0
---- !u!114 &165478112691146583
+--- !u!114 &1321002866362748770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,28 +174,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5583804447610931201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e848eb0212a90ef4c9274d2dcec21d06, type: 3}
+  m_Script: {fileID: 11500000, guid: ef43c97c1760112449f47e9bcc8c3365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   totalHeroList: []
   totalUnitList: []
-  totalPathList: []
-  attackDelay: 1
-  thisUnit: {fileID: 0}
-  targetHero: {fileID: 0}
-  closestHero: {fileID: 0}
+  shortestPath: []
+  finalMovePath: []
   pathWithoutProps: []
   pathWithProps: []
-  frontTileTemp: {fileID: 0}
-  inAtkRange: 0
-  inMoveAndAttackRange: 0
+  walkableThisTurnTiles: []
+  thisUnit: {fileID: 0}
+  targetHero: {fileID: 0}
+  targetTileToAttack: {fileID: 0}
+  currSelectedSkill: {fileID: 0}
+  attackDelay: 1
+  attack: 0
+  moveAndAttack: 0
   detectedStealthHero: 0
-  selectedAttackRange: 0
-  tilesInSightWithoutProps: []
-  tilesInSightWithProps: []
-  thisUnitTile: {fileID: 0}
-  tileToAttack: {fileID: 0}
-  aoeTargetTile: {fileID: 0}
 --- !u!114 &4139838481242840768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +272,46 @@ MonoBehaviour:
   maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: Move 1 tile and attack the tile ahead. Deal 5 Damage
+--- !u!114 &1429316040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583804447610931201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ea8151309e2ae4fb54b7851f50c194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Bash
+  damage: 4
+  heal: 0
+  cooldown: 0
+  range: 1
+  minRange: 0
+  targetType: 0
+  targetArea: 0
+  targetUnitAlignment: 0
+  aoeType: 0
+  aoeSize: 1
+  aoeOffset: 0
+  aoeDuration: 0
+  aoeColor: {r: 0, g: 0, b: 0, a: 0}
+  skillType: 0
+  secondaryDamage: 0
+  secondaryRange: 0
+  debuffChance: 0
+  hitChance: 0
+  stunChance: 0
+  inflictKnockback: 0
+  isBackstabbing: 0
+  backstabBonus: 3
+  placable: 0
+  placableCount: 0
+  maxCount: 0
+  placableGameObject: {fileID: 0}
+  skillDescription: "Deal 5 Damage and Knockback target 1 tiles\r"
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4
@@ -326,43 +362,3 @@ PolygonCollider2D:
       - {x: 0, y: -0.5}
       - {x: 1, y: 0}
       - {x: 0, y: 0.5}
---- !u!114 &1429316040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583804447610931201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ea8151309e2ae4fb54b7851f50c194, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: Bash
-  damage: 4
-  heal: 0
-  cooldown: 0
-  range: 1
-  minRange: 0
-  targetType: 0
-  targetArea: 0
-  targetUnitAlignment: 0
-  aoeType: 0
-  aoeSize: 1
-  aoeOffset: 0
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 0
-  secondaryDamage: 0
-  secondaryRange: 0
-  debuffChance: 0
-  hitChance: 0
-  stunChance: 0
-  inflictKnockback: 0
-  isBackstabbing: 0
-  backstabBonus: 3
-  placable: 0
-  placableCount: 0
-  maxCount: 0
-  placableGameObject: {fileID: 0}
-  skillDescription: "Deal 5 Damage and Knockback target 1 tiles\r"

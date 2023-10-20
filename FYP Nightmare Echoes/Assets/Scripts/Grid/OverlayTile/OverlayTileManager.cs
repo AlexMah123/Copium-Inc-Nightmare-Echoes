@@ -84,8 +84,13 @@ namespace NightmareEchoes.Grid
 
             if (searchableTiles.Count > 0)
             {
-                for(int i =0; i < searchableTiles.Count; i++)
+                for(int i = 0; i < searchableTiles.Count; i++)
                 {
+                    if(tileToSearch.ContainsKey(searchableTiles[i].gridLocation2D))
+                    {
+                        continue;
+                    }
+
                     tileToSearch.Add(searchableTiles[i].gridLocation2D, searchableTiles[i]);
                 }
             }

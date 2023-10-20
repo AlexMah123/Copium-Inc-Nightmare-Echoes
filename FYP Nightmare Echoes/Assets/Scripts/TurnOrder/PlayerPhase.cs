@@ -248,7 +248,7 @@ namespace NightmareEchoes.TurnOrder
             yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
             PathfindingManager.Instance.RevertUnitPosition = null;
             controller.CurrentUnit.HasAttacked = true;
-            controller.StartCoroutine(controller.PassTurn());
+            //controller.StartCoroutine(controller.PassTurn());
         }
     }
 }

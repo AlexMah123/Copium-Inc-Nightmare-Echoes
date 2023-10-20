@@ -615,7 +615,7 @@ namespace NightmareEchoes.Unit
                 }
                 else if (!isProp)
                 {
-                    PathfindingManager.Instance.HideTilesInRange(GetComponent<BasicEnemyAI>().TilesInRange);
+                    PathfindingManager.Instance.HideTilesInRange(GetComponent<EnemyAI>().walkableThisTurnTiles);
                 }
 
                 OnDestroyedEvent?.Invoke(this);

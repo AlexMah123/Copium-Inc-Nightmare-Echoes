@@ -77,7 +77,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
 
                 inRangeTiles.AddRange(surroundingTiles);
-                tileForPreviousStep = GetDistinctTiles(surroundingTiles);
+                tileForPreviousStep = surroundingTiles.Distinct().ToList();
                 stepCount++;
             }
 
@@ -135,7 +135,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
 
                 inRangeTiles.AddRange(surroundingTiles);
-                tileForPreviousStep = GetDistinctTiles(surroundingTiles);
+                tileForPreviousStep = surroundingTiles.Distinct().ToList();
             }
 
             if (startTile.CheckEntityGameObjectOnTile())
@@ -184,21 +184,6 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
  
             return lowestF;
-        }
-
-        private static List<OverlayTile> GetDistinctTiles(List<OverlayTile> tiles)
-        {
-            var distinctTiles = new List<OverlayTile>();
-
-            for(int i =0; i < distinctTiles.Count; i++)
-            {
-                if (!distinctTiles.Contains(distinctTiles[i]))
-                {
-                    distinctTiles.Add(distinctTiles[i]);
-                }
-            }
-
-            return distinctTiles;
         }
 
         private static int GetManhattanDistance(OverlayTile start, OverlayTile neighbour)
