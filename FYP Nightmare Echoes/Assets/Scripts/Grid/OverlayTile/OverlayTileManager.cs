@@ -100,22 +100,20 @@ namespace NightmareEchoes.Grid
 
             List<OverlayTile> neighbours = new List<OverlayTile>();
 
-            Vector3Int[] directions = {
-                new Vector3Int(0, 1, 0),  // Up
-                new Vector3Int(0, -1, 0), // Down
-                new Vector3Int(1, 0, 0),  // Right
-                new Vector3Int(-1, 0, 0)  // Left
+            Vector2Int[] directions = {
+                new Vector2Int(0, 1),  // Up
+                new Vector2Int(0, -1), // Down
+                new Vector2Int(1, 0),  // Right
+                new Vector2Int(-1, 0)  // Left
             };
 
-
-            Vector2Int currentLocation = currentOverlayTile.gridLocation2D;
-
-            foreach (var direction in directions)
+            for(int i = 0; i < directions.Length; i++)
             {
-                Vector2Int neighborLocation = currentLocation + new Vector2Int(direction.x, direction.y);
-                if (tileToSearch.TryGetValue(neighborLocation, out var neighbor))
+                Vector2Int locationToCheck = currentOverlayTile.gridLocation2D + directions[i];
+
+                if (tileToSearch.ContainsKey(locationToCheck))
                 {
-                    neighbours.Add(neighbor);
+                    neighbours.Add(tileToSearch[locationToCheck]);
                 }
             }
 
