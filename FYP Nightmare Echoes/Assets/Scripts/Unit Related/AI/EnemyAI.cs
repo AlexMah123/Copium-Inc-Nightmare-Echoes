@@ -234,7 +234,7 @@ namespace NightmareEchoes.Unit.AI
 
             #region decision making
             //checking if path is longer than move and attack range
-            if (shortestPath.Count > (thisUnit.stats.MoveRange + currSelectedSkill.Range))
+            if (shortestPath.Count >= (thisUnit.stats.MoveRange + currSelectedSkill.Range))
             {
                 //do 3a. just move, while checking for obstacles in between
                 if (shortestPath.Count >= thisUnit.stats.MoveRange)
@@ -332,7 +332,7 @@ namespace NightmareEchoes.Unit.AI
                     {
                         //do 2a. just attack normally
                         targetTileToAttack = targetHero.ActiveTile;
-                        for (int i = 0; i < shortestPath.Count - currSelectedSkill.Range; i++)
+                        for (int i = 0; i <= shortestPath.Count - currSelectedSkill.Range; i++)
                         {
                             finalMovePath.Add(shortestPath[i]);
                         }
@@ -524,15 +524,15 @@ namespace NightmareEchoes.Unit.AI
 
             if (currSelectedSkill.TargetType == TargetType.AOE)
             {
-                CombatManager.Instance.EnemyTargetGround(aoeTargetTile, currSelectedSkill);
                 targetTileToAttack.HideTile();
                 finalMovePath.Clear();
+                CombatManager.Instance.EnemyTargetGround(aoeTargetTile, currSelectedSkill);
             }
             else
             {
-                CombatManager.Instance.EnemyTargetUnit(targetTileToAttack.CheckEntityGameObjectOnTile().GetComponent<Entity>(), currSelectedSkill);
                 targetTileToAttack.HideTile();
                 finalMovePath.Clear();
+                CombatManager.Instance.EnemyTargetUnit(targetTileToAttack.CheckEntityGameObjectOnTile().GetComponent<Entity>(), currSelectedSkill);
             }
         }
 
