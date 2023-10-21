@@ -7,8 +7,6 @@ namespace NightmareEchoes.Unit
 {
     public class RuneTrap : Skill
     {
-        private bool trapsSet = false;
-
         public override bool Cast(Entity unit)
         {
             base.Cast(unit);
@@ -18,11 +16,6 @@ namespace NightmareEchoes.Unit
             unit.TakeDamage(damage, ignoreTokens: true);
 
             return true;
-        }
-
-        private bool CheckTraps()
-        {
-            return trapsSet;
         }
     }
 }

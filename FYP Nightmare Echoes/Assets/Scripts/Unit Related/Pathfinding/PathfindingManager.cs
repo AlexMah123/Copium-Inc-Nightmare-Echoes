@@ -1,13 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.Unit.Combat;
-using static UnityEditor.Progress;
 
 
 //created by Vinn, editted by Alex and Ter
@@ -462,7 +458,9 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             unit.gameObject.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
             unit.ActiveTile = tile;
-
+            
+            if (!unit.IsHostile) return;
+            
             var trapDmg = CombatManager.Instance.CheckTrap(unit);
 
             if (trapDmg)
