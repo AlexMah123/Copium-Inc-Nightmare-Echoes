@@ -22,6 +22,7 @@ namespace NightmareEchoes.Unit
             var target = OverlayTileManager.Instance.GetOverlayTileOnMouseCursor();
             if (!target) return;
             if (target.CheckEntityGameObjectOnTile()) return;
+            if (target.CheckObstacleOnTile()) return;
             
             if (tileRanges.All(tile => tile != target)) return;
 
@@ -30,7 +31,7 @@ namespace NightmareEchoes.Unit
 
         public override bool Cast(Entity target)
         {
-            if (target.IsProp || target == thisUnit) return false;
+            if (target.IsProp) return false;
 
             if (!enableTargeting)
             {
@@ -38,8 +39,7 @@ namespace NightmareEchoes.Unit
                 CombatManager.Instance.SecondaryTargeting();
                 StartCoroutine(CastTeleport(target));
             }
-
-
+            
             return GetDestination();
         }
 
