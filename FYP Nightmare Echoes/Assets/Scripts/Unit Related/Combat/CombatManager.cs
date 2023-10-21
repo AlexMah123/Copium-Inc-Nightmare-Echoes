@@ -229,6 +229,7 @@ namespace NightmareEchoes.Unit.Combat
         {
             //Clear Active Renders 
             RenderOverlayTile.Instance.ClearTargetingRenders();
+            ClearPreviews();
             
             //Stop Coroutines
             StopAllCoroutines();
