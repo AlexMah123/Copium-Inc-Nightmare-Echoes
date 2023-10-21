@@ -280,25 +280,26 @@ namespace NightmareEchoes.Unit.Pathfinding
             //Get the current position of the object to be moved
             Vector3 startPos = thisUnit.transform.position;
             Vector3 direction = targetTile.gridLocation - thisUnit.ActiveTile.gridLocation;
-            var cachedTargetTile = targetTile;
             ChangeDirection(direction, thisUnit);
 
             while (counter < duration)
             {
                 counter += Time.deltaTime;
-                if (cachedTargetTile != null)
+                if (thisUnit != null)
                 {
-                    thisUnit.transform.position = Vector3.Lerp(startPos, cachedTargetTile.transform.position, counter / duration);
+                    thisUnit.transform.position = Vector3.Lerp(startPos, targetTile.transform.position, counter / duration);
                 }
                 else
                 {
                     counter = duration;
+                    break;
                 }
 
                 yield return null;
             }
 
-            SetUnitPositionOnTile(thisUnit, cachedTargetTile);
+            if(thisUnit != null)
+                SetUnitPositionOnTile(thisUnit, targetTile);
 
             #region Triggering Movement Related BuffDebuff Effect During Movement
 
