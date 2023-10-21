@@ -491,7 +491,6 @@ namespace NightmareEchoes.Unit.Combat
                 
                 clone.SetActive(true);
                 clone.transform.position = destination;
-                //cloneSr.color = Color.white;
             }
         }
 
@@ -715,11 +714,12 @@ namespace NightmareEchoes.Unit.Combat
         {
             var trapCount = 0;
             var trapList = new List<Vector3>();
-            var trapSprite = activeSkill?.PlacableGameObject.GetComponent<SpriteRenderer>().sprite;
+            var trapSr = activeSkill?.PlacableGameObject.GetComponent<SpriteRenderer>();
+            var trapSprite = trapSr.sprite;
             while (trapCount < activeSkill?.PlacableCount)
             {
                 ClearPreviews();
-
+                
                 foreach (var placedTrapPos in trapList)
                 {
                     var placedTrapPreview = GetClone(activeSkill.PlacableGameObject);
@@ -735,9 +735,13 @@ namespace NightmareEchoes.Unit.Combat
                     if (!target.CheckEntityGameObjectOnTile() && !target.CheckObstacleOnTile() && !target.CheckTrapOnTile() && skillRangeTiles.Any(tile => tile == target))
                     {
                         var preview = GetClone(activeSkill.PlacableGameObject);
-                        preview.GetComponent<SpriteRenderer>().sprite = trapSprite;
+                        var previewSr = preview.GetComponent<SpriteRenderer>();
                         
+                        previewSr.sprite = trapSprite;
+                        previewSr.color = trapSr.color;
+
                         preview.transform.position = target.transform.position;
+                        preview.transform.localScale = activeSkill.PlacableGameObject.transform.localScale;
 
                         ghostSprites.Add(preview);
                         preview.SetActive(true);
