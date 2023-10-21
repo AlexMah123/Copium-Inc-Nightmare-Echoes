@@ -9,9 +9,6 @@ namespace NightmareEchoes.Unit.Enemy
     [RequireComponent(typeof(EnemyAI))]
     public class RangeEnemy : Entity
     {
-
-        public int basicAttackRange;
-
         protected override void Awake()
         {
             base.Awake();

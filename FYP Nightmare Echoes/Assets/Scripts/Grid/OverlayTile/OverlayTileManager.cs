@@ -101,10 +101,10 @@ namespace NightmareEchoes.Grid
             List<OverlayTile> neighbours = new List<OverlayTile>();
 
             Vector2Int[] directions = {
-                new Vector2Int(0, 1),  // Up
-                new Vector2Int(0, -1), // Down
-                new Vector2Int(1, 0),  // Right
-                new Vector2Int(-1, 0)  // Left
+                new Vector2Int(1, 0),  // N
+                new Vector2Int(-1, 0), // S
+                new Vector2Int(0, -1),  // E
+                new Vector2Int(0, 1)  // W
             };
 
             for(int i = 0; i < directions.Length; i++)

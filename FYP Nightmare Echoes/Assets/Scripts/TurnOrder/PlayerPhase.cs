@@ -69,14 +69,7 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnFixedUpdate()
         {
-            var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
-            if (aoeDmg)
-            {
-                if (aoeSkillsPassed.Contains(aoeDmg))
-                    return;
-                if (aoeDmg.Cast(controller.CurrentUnit))
-                    aoeSkillsPassed.Add(aoeDmg);
-            }
+            PathfindingManager.Instance.CheckMovement();
 
             if (PathfindingManager.Instance.isMoving)
             {
@@ -95,6 +88,15 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnUpdate()
         {
+            var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
+            if (aoeDmg)
+            {
+                if (aoeSkillsPassed.Contains(aoeDmg))
+                    return;
+                if (aoeDmg.Cast(controller.CurrentUnit))
+                    aoeSkillsPassed.Add(aoeDmg);
+            }
+
             PathfindingManager.Instance.PlayerInputPathfinding();
 
             //if you cancel movement

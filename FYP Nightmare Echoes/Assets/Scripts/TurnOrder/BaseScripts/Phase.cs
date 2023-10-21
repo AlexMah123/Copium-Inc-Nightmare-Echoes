@@ -104,7 +104,12 @@ namespace NightmareEchoes.TurnOrder
             UIManager.Instance.EnableSkillInfo(false);
 
             //reset pathfinding
+            PathfindingManager.Instance.isMoving = false;
             PathfindingManager.Instance.hasMoved = false;
+            PathfindingManager.Instance.isDragging = false;
+            PathfindingManager.Instance.lastAddedTile = null;
+            PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.pathList);
+            PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
 
             //clear all rendering 
             RenderOverlayTile.Instance.ClearTargetingRenders();

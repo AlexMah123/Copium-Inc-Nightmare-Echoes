@@ -259,7 +259,10 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
 
             #endregion
+        }
 
+        public void CheckMovement()
+        {
             //When unit is moving
             if (isMoving && currentPathfindingUnit != null)
             {

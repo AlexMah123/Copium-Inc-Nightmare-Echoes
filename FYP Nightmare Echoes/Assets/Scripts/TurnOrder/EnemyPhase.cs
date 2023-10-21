@@ -81,6 +81,12 @@ namespace NightmareEchoes.TurnOrder
                 enemyAI.MoveProcess(controller.CurrentUnit);
             }
 
+            
+        }
+        protected override void OnUpdate()
+        {
+            if (enemyAI == null || controller.CurrentUnit == null) return;
+
             var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
             if (aoeDmg)
             {
@@ -89,10 +95,6 @@ namespace NightmareEchoes.TurnOrder
                 if (aoeDmg.Cast(controller.CurrentUnit))
                     aoeSkillsPassed.Add(aoeDmg);
             }
-        }
-        protected override void OnUpdate()
-        {
-            
 
         }
 
