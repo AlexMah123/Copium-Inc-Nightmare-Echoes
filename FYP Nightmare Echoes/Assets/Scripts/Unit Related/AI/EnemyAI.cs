@@ -234,7 +234,7 @@ namespace NightmareEchoes.Unit.AI
 
             #region decision making
             //checking if path is longer than move and attack range
-            if (shortestPath.Count >= (thisUnit.stats.MoveRange + currSelectedSkill.Range))
+            if (shortestPath.Count > 0 && FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile) > (thisUnit.stats.MoveRange + currSelectedSkill.Range))
             {
                 //do 3a. just move, while checking for obstacles in between
                 if (shortestPath.Count >= thisUnit.stats.MoveRange)
@@ -285,7 +285,8 @@ namespace NightmareEchoes.Unit.AI
                     }
                 }
 
-                Vector2Int direction = finalMovePath[1].gridLocation2D - finalMovePath[0].gridLocation2D;
+                //checking if there is a prop at the end of the tile
+                Vector2Int direction = finalMovePath[0].gridLocation2D - thisUnitTile.gridLocation2D;
                 var checkTile = OverlayTileManager.Instance.GetOverlayTile(finalMovePath[finalMovePath.Count - 1].gridLocation2D + direction);
                 var checkEntity = checkTile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
 
@@ -306,13 +307,41 @@ namespace NightmareEchoes.Unit.AI
                     //do 1a, just attack
                     targetTileToAttack = targetHero.ActiveTile;
 
+                    /*var distanceToTarget = FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile);
+                    if (currSelectedSkill.Range > distanceToTarget)
+                    {
+                        //dist to move to the best possible tile
+                        var distanceToMaxRange = currSelectedSkill.Range - distanceToTarget;
+
+                        for (int i = walkableThisTurnTiles.Count - 1; i >= 0; i--)
+                        {
+                            if (walkableThisTurnTiles[i].CheckEntityGameObjectOnTile())
+                            {
+                                continue;
+                            }
+
+                            var pathFromPossibleTile = Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], walkableThisTurnTiles);
+
+                            if (pathFromPossibleTile.Count > 0)
+                            {
+                                for (int j = 0; j < distanceToMaxRange - 1; j++)
+                                {
+                                    finalMovePath.Add(pathFromPossibleTile[j]);
+                                }
+                                break;
+                            }
+
+                        }
+                    }*/
+
                     if(currSelectedSkill.TargetType == TargetType.AOE)
                     {
                         SetAOETargetTile(thisUnitTile);
                     }
+
                     attack = true;
                 }
-                else if(shortestPath.Count > 0) //path found but not within attack range
+                else if(shortestPath.Count > 0 && FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile) <= currSelectedSkill.Range + thisUnit.stats.MoveRange)
                 {
                     moveAndAttack = true;
                     bool foundProp = false;
@@ -333,7 +362,7 @@ namespace NightmareEchoes.Unit.AI
                             targetTileToAttack = shortestPath[i];
                             currSelectedSkill = thisUnit.BasicAttackSkill;
 
-                            for (int j = 0; j < i; j++)
+                            for (int j = 0; j < i - currSelectedSkill.Range; j++)
                             {
                                 finalMovePath.Add(shortestPath[j]);
                             }
@@ -358,7 +387,6 @@ namespace NightmareEchoes.Unit.AI
                 }
                 else //no path found
                 {
-                    List<OverlayTile> shortestPath = new List<OverlayTile>();
                     List<OverlayTile> newPath = new List<OverlayTile>();
                     for (int i = walkableThisTurnTiles.Count - 1; i >= 0 ; i--)
                     {

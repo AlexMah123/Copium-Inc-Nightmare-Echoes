@@ -70,11 +70,20 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 for(int i = 0; i < tileForPreviousStep.Count; i++)
                 {
-                    surroundingTiles.AddRange(overLayTileManager.GetNeighbourTiles(tileForPreviousStep[i], new List<OverlayTile>()));
+                    var neighbourTiles = overLayTileManager.GetNeighbourTiles(tileForPreviousStep[i], new List<OverlayTile>());
+
+                    for(int j = 0; j < neighbourTiles.Count; j++)
+                    {
+                        if (!inRangeTiles.Contains(neighbourTiles[j]))
+                        {
+                            surroundingTiles.Add(neighbourTiles[j]);
+                            inRangeTiles.Add(neighbourTiles[j]);
+
+                        }
+                    }
                 }
 
-                inRangeTiles.AddRange(surroundingTiles);
-                tileForPreviousStep = surroundingTiles.Distinct().ToList();
+                tileForPreviousStep = surroundingTiles;
                 stepCount++;
             }
 
@@ -128,11 +137,21 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     if (tileForPreviousStep[i] == endTile)
                         destinationFound = true;
-                    surroundingTiles.AddRange(overLayTileManager.GetNeighbourTiles(tileForPreviousStep[i], new List<OverlayTile>()));
+
+                    var neighbourTiles = overLayTileManager.GetNeighbourTiles(tileForPreviousStep[i], new List<OverlayTile>());
+
+                    for (int j = 0; j < neighbourTiles.Count; j++)
+                    {
+                        if (!inRangeTiles.Contains(neighbourTiles[j]))
+                        {
+                            surroundingTiles.Add(neighbourTiles[j]);
+                            inRangeTiles.Add(neighbourTiles[j]);
+
+                        }
+                    }
                 }
 
-                inRangeTiles.AddRange(surroundingTiles);
-                tileForPreviousStep = surroundingTiles.Distinct().ToList();
+                tileForPreviousStep = surroundingTiles;
 
                 if(inRangeTiles.Count >= TileMapManager.Instance.width * TileMapManager.Instance.length)
                 {
