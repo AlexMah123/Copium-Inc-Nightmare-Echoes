@@ -469,6 +469,7 @@ namespace NightmareEchoes.Unit.Combat
             {
                 if (tile == mainTile) continue;
                 if (!tile.CheckEntityGameObjectOnTile()) continue;
+                if (!tile.CheckObstacleOnTile()) continue;
 
                 var direction = tile.transform.position - mainTile.transform.position;
                 var destination = tile.transform.position + direction;
