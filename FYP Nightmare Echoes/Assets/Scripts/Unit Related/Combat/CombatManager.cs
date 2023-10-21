@@ -469,21 +469,29 @@ namespace NightmareEchoes.Unit.Combat
             {
                 if (tile == mainTile) continue;
                 if (!tile.CheckEntityGameObjectOnTile()) continue;
-                if (!tile.CheckObstacleOnTile()) continue;
 
                 var direction = tile.transform.position - mainTile.transform.position;
                 var destination = tile.transform.position + direction;
+                var destinationTile = OverlayTileManager.Instance.GetOverlayTileInWorldPos(destination);
                 
-                var unitSprite = tile.CheckEntityGameObjectOnTile().GetComponent<SpriteRenderer>()?.sprite;
+                if (!destinationTile) continue;
+                if (destinationTile.CheckEntityGameObjectOnTile() || destinationTile.CheckObstacleOnTile()) continue;
+
+                var entity = tile.CheckEntityGameObjectOnTile();
+                var entitySr = entity.GetComponent<SpriteRenderer>();
                 var clone = GetClone(tile.CheckEntityGameObjectOnTile());
                 var cloneSr = clone.GetComponent<SpriteRenderer>();
-                cloneSr.sprite = unitSprite;
+                
+                clone.transform.localScale = entity.transform.localScale;
+                cloneSr.sprite = entitySr.sprite;
+                var entityColor = entitySr.color;
+                cloneSr.color = new Color(entityColor.r, entityColor.g, entityColor.b, 0.5f);
                 cloneSr.sortingLayerID = SortingLayer.NameToID("Entity");
                 ghostSprites.Add(clone);
                 
                 clone.SetActive(true);
                 clone.transform.position = destination;
-                cloneSr.color = Color.white;
+                //cloneSr.color = Color.white;
             }
         }
 
@@ -810,16 +818,13 @@ namespace NightmareEchoes.Unit.Combat
 
         GameObject GetClone(GameObject gameObject)
         {
-            foreach (var clone in clonePool)
+            foreach (var clone in clonePool.Where(clone => !clone.activeInHierarchy))
             {
-                if (!clone.activeInHierarchy) 
-                { 
-                    return clone; 
-                }
+                return clone;
             } 
   
-            GameObject obj = Instantiate(gameObject);
-
+            var obj = Instantiate(gameObject);
+            
             if (obj.GetComponent<SpriteRenderer>() == null)
             {
                 obj.AddComponent<SpriteRenderer>();
