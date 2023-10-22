@@ -462,10 +462,10 @@ namespace NightmareEchoes.Unit.Pathfinding
             unit.gameObject.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
             unit.ActiveTile = tile;
 
-            var trapDmg = CombatManager.Instance.CheckTrap(this);
+            var trapDmg = CombatManager.Instance.CheckTrap(unit);
             if (trapDmg)
             {
-                trapDmg.Cast(this);
+                trapDmg.Cast(unit);
             }
         }
 

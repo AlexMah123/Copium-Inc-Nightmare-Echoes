@@ -82,9 +82,9 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected PolygonCollider2D tileSize;
 
         [Header("Popup Text Related")]
-        private Queue<PopupTextData> popupTextQueue = new Queue<PopupTextData>();
+        protected Queue<PopupTextData> popupTextQueue = new Queue<PopupTextData>();
         private bool isDisplayingPopupText = false;
-        [SerializeField] float popupTextDelay = 0.6f;
+        [SerializeField] float popupTextDelay = 0.4f;
 
         #region Class Properties
 
@@ -144,7 +144,6 @@ namespace NightmareEchoes.Unit
         }
 
         #endregion
-
 
         #region Positive Token Bool
         public bool DodgeToken
@@ -224,7 +223,6 @@ namespace NightmareEchoes.Unit
         }
         #endregion 
 
-
         #region Negative Token Bool
         public bool BlindToken
         {
@@ -284,7 +282,6 @@ namespace NightmareEchoes.Unit
             set => tokenList = value;
         }
         #endregion
-
 
         #region Unit Skill Properties
 
@@ -541,16 +538,6 @@ namespace NightmareEchoes.Unit
         }
         #endregion
 
-
-        #region Tile Related
-        public OverlayTile ActiveTile
-        {
-            get => activeTile;
-            set => activeTile = value;
-        }
-        #endregion
-
-
         #region Sprites Directions
         public GameObject FrontModel
         {
@@ -576,6 +563,22 @@ namespace NightmareEchoes.Unit
             private set => backAnimator = value;
         }
 
+        #endregion
+
+        #region Tile Related
+        public OverlayTile ActiveTile
+        {
+            get => activeTile;
+            set => activeTile = value;
+        }
+        #endregion
+
+        #region Popup Text Related
+        public Queue<PopupTextData> PopupTextQueue
+        {
+            get { return popupTextQueue; }
+            private set => popupTextQueue = value;
+        }
         #endregion
 
         #endregion

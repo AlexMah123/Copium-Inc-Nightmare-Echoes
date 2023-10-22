@@ -114,6 +114,12 @@ namespace NightmareEchoes.TurnOrder
 
         public IEnumerator PassTurn()
         {
+            //wait for all popuptext to clear before actually changing turn
+            while (CurrentUnit.PopupTextQueue.Count > 0)
+            {
+                yield return null;
+            }
+
             yield return new WaitForSeconds(passTurnDelay);
 
             //if there is at least 2 elements in queue
@@ -213,7 +219,6 @@ namespace NightmareEchoes.TurnOrder
             return _a.stats.Speed.CompareTo(_b.stats.Speed);
         }
         #endregion
-
 
         public List<Entity> FindAllHeros()
         {

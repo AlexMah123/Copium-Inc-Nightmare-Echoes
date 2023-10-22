@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using NightmareEchoes.Unit;
 using UnityEngine;
 using NightmareEchoes.Unit.AI;
@@ -96,10 +95,10 @@ namespace NightmareEchoes.TurnOrder
                     aoeSkillsPassed.Add(aoeDmg);
             }
 
-            var trapDmg = CombatManager.Instance.CheckTrap(this);
+            var trapDmg = CombatManager.Instance.CheckTrap(controller.CurrentUnit);
             if (trapDmg)
             {
-                trapDmg.Cast(this);
+                trapDmg.Cast(controller.CurrentUnit);
             }
 
         }
@@ -216,8 +215,6 @@ namespace NightmareEchoes.TurnOrder
             yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
 
             controller.StartCoroutine(controller.PassTurn());
-
-
         }
     }
 }

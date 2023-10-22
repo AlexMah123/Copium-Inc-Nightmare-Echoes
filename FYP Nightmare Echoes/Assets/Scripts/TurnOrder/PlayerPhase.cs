@@ -142,12 +142,12 @@ namespace NightmareEchoes.TurnOrder
                 var cleanedGrid = OverlayTileManager.Instance.TrimOutOfBounds(grid);
                 var enemiesInRange = new List<Entity>();
 
-                foreach (var tile in cleanedGrid)
+                for(int i = 0; i < cleanedGrid.Count; i++)
                 {
-                    if (!tile.CheckEntityGameObjectOnTile())
+                    if (!cleanedGrid[i].CheckEntityGameObjectOnTile())
                         continue;
 
-                    var target = tile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
+                    var target = cleanedGrid[i].CheckEntityGameObjectOnTile().GetComponent<Entity>();
 
                     if (!target.IsHostile || target.IsProp)
                         continue;
@@ -155,16 +155,16 @@ namespace NightmareEchoes.TurnOrder
                 }
 
                 //Check if this unit is in range of said enemies
-                foreach (var enemy in enemiesInRange)
+                for(int i = 0; i < enemiesInRange.Count; i++)
                 {
-                    grid = CombatManager.Instance.FrontalRange(enemy.ActiveTile, 1, enemy);
+                    grid = CombatManager.Instance.FrontalRange(enemiesInRange[i].ActiveTile, 1, enemiesInRange[i]);
                     cleanedGrid = OverlayTileManager.Instance.TrimOutOfBounds(grid);
 
-                    foreach (var tile in cleanedGrid)
+                    for(int j = 0; j < cleanedGrid.Count; j++)
                     {
-                        if (controller.CurrentUnit.ActiveTile == tile)
+                        if (controller.CurrentUnit.ActiveTile == cleanedGrid[j])
                         {
-                            enemy.ShowPopUpText("Detected Stealth Hero!!", Color.red);
+                            enemiesInRange[i].ShowPopUpText("Detected Stealth Hero!!", Color.red);
                             controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
                             PathfindingManager.Instance.RevertUnitPosition = null;
                         }
@@ -250,7 +250,8 @@ namespace NightmareEchoes.TurnOrder
             yield return new WaitUntil(() => CombatManager.Instance.turnEnded);
             PathfindingManager.Instance.RevertUnitPosition = null;
             controller.CurrentUnit.HasAttacked = true;
-            controller.StartCoroutine(controller.PassTurn());
+
+            //controller.StartCoroutine(controller.PassTurn());
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine.SceneManagement;
 using NightmareEchoes.Unit.Combat;
+using NightmareEchoes.Inputs;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -107,7 +108,8 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] Button guideButton;
 
         [Space(20), Header("Settings + Utility")]
-        [SerializeField] Button passTurnButton;
+        public Button passTurnButton;
+        public Button cancelActionButton;
         [SerializeField] Button settingButton;
         [SerializeField] GameObject settingsPanel;
         [SerializeField] GameObject soundPanel;
@@ -420,7 +422,56 @@ namespace NightmareEchoes.TurnOrder
         }
 
 
-        #region Hotbar Functions
+        #region Hotbar Button Functions
+        public void CancelActionButton()
+        {
+            if (PathfindingManager.Instance.CurrentPathfindingUnit != null && PathfindingManager.Instance.RevertUnitPosition != null)
+            {
+                PathfindingManager.Instance.SetUnitPositionOnTile(CurrentUnit, PathfindingManager.Instance.RevertUnitPosition);
+                PathfindingManager.Instance.CurrentPathfindingUnit.Direction = PathfindingManager.Instance.RevertUnitDirection;
+                CurrentUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
+
+                //Resets everything, not moving, not dragging, and lastaddedtile is null
+                CurrentUnit.HasMoved = false;
+                PathfindingManager.Instance.isMoving = false;
+                PathfindingManager.Instance.hasMoved = false;
+                PathfindingManager.Instance.isDragging = false;
+                PathfindingManager.Instance.lastAddedTile = null;
+
+                PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
+
+                //cancels the selected skill
+                if (CombatManager.Instance.ActiveSkill != null)
+                {
+                    CombatManager.Instance.SelectSkill(CurrentUnit, CombatManager.Instance.ActiveSkill);
+                    CombatManager.Instance.ClearPreviews();
+                }
+
+                //shows back the tiles in range
+                PathfindingManager.Instance.StartPlayerPathfinding(CurrentUnit);
+                CameraControl.Instance.UpdateCameraPan(CurrentUnit.gameObject);
+
+            }
+            else
+            {
+                CurrentUnit.ShowPopUpText("Cannot Cancel Action!", Color.red);
+            }
+        }
+
+        public void PassTurnButton()
+        {
+            if (CurrentUnit != null)
+            {
+                //show popup as well as disabling button for player
+                if (!CurrentUnit.IsHostile && !CurrentUnit.IsProp)
+                {
+                    CurrentUnit.ShowPopUpText("Passing turn", Color.magenta);
+                    passTurnButton.interactable = false;
+                    passTurnButton.gameObject.SetActive(false);
+                }
+            }
+        }
+
         public void AttackButton()
         {
             CurrentUnit.BasicAttack();
@@ -1022,7 +1073,7 @@ namespace NightmareEchoes.TurnOrder
         #endregion
 
 
-        #region Hotbar UI
+        #region Hotbar UI Function Update
         public void EnableSkillInfo(bool enable)
         {
             skillInfoPanel.gameObject.SetActive(enable);
@@ -1080,7 +1131,10 @@ namespace NightmareEchoes.TurnOrder
             //setting the pass turn button as well
             passTurnButton.interactable = enable;
             passTurnButton.gameObject.SetActive(enable);
-
+            
+            //setting the cancel button
+            cancelActionButton.interactable = enable;
+            cancelActionButton.gameObject.SetActive(enable);
 
             UpdateStatusEffectUI();
         }
