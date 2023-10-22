@@ -96,13 +96,10 @@ namespace NightmareEchoes.TurnOrder
                     aoeSkillsPassed.Add(aoeDmg);
             }
 
-            if (isHostile && !isProp)
+            var trapDmg = CombatManager.Instance.CheckTrap(this);
+            if (trapDmg)
             {
-                var trapDmg = CombatManager.Instance.CheckTrap(this);
-                if (trapDmg)
-                {
-                    trapDmg.Cast(this);
-                }
+                trapDmg.Cast(this);
             }
 
         }
