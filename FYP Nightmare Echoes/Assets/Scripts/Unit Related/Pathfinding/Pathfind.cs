@@ -117,7 +117,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
             }
 
-            return filteredTiles;
+            return GetFilteredTilesInRange(startTile, filteredTiles, range);
         }
         
         public static List<OverlayTile> FindTilesInRangeToDestination(OverlayTile startTile, OverlayTile endTile, bool ignoreProps)
@@ -214,6 +214,20 @@ namespace NightmareEchoes.Unit.Pathfinding
             finishedList.Reverse();
 
             return finishedList;
+        }
+
+        private static List<OverlayTile> GetFilteredTilesInRange(OverlayTile startTile, List<OverlayTile> tiles, int range)
+        {
+            var filteredTiles = new List<OverlayTile>();
+            foreach (var tile in tiles)
+            {
+                var path = FindPath(startTile, tile, tiles);
+                if (path.Count <= range && path.Count > 0)
+                {
+                    filteredTiles.Add(tile);
+                }
+            }
+            return filteredTiles;
         }
     }
 
