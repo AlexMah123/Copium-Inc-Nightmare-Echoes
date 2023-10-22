@@ -82,7 +82,7 @@ namespace NightmareEchoes.Unit.Combat
 
         private void Update()
         {
-            if (castGate) return;
+            //if (castGate) return;
             
             if (activeSkill && !secondaryTargeting)
             {
@@ -97,11 +97,7 @@ namespace NightmareEchoes.Unit.Combat
                             TargetGround();
                             break;
                         case TargetType.Self:
-                            castGate = true;
-                            if (activeSkill.Cast())
-                                EndTurn();
-                            else
-                                castGate = false;
+                            TargetSelf();
                             break;
                     }
                 }
@@ -354,6 +350,20 @@ namespace NightmareEchoes.Unit.Combat
             StartCoroutine(WaitForSkill(target, aoePreviewTiles));
         }
 
+        private void TargetSelf()
+        {
+            if (!Input.GetMouseButtonDown(0)) return;
+            
+            var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Entity"));
+            if (!hit) return;
+            var target = hit.collider.gameObject.GetComponent<Entity>();
+            if (!target) return;
+
+            if (!target == activeSkill.gameObject.GetComponent<Entity>()) return;
+
+            activeSkill.Cast();
+            EndTurn();
+        }
         public void SecondaryTargeting()
         {
             secondaryTargeting = true;
