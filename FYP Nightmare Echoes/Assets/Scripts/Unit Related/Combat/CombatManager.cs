@@ -82,8 +82,6 @@ namespace NightmareEchoes.Unit.Combat
 
         private void Update()
         {
-            //if (castGate) return;
-            
             if (activeSkill && !secondaryTargeting)
             {
                 if (!activeSkill.Placable)
@@ -215,7 +213,6 @@ namespace NightmareEchoes.Unit.Combat
             ClearPreviews();
 
             turnEnded = true;
-            castGate = false;
         }
         #endregion
 
