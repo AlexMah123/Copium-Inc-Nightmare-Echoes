@@ -11,6 +11,7 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(Entity target)
         {
+            if (!target.IsHostile) return false;
             base.Cast(target);
             
             if (DealDamage(target))
