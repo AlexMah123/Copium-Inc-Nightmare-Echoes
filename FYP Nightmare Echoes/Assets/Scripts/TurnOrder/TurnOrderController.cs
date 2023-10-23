@@ -115,10 +115,14 @@ namespace NightmareEchoes.TurnOrder
         public IEnumerator PassTurn()
         {
             //wait for all popuptext to clear before actually changing turn
-            while (CurrentUnit.PopupTextQueue.Count > 0)
+            if(CurrentUnit != null)
             {
-                yield return null;
+                while (CurrentUnit.PopupTextQueue.Count > 0)
+                {
+                    yield return null;
+                }
             }
+            
 
             yield return new WaitForSeconds(passTurnDelay);
 

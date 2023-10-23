@@ -6,12 +6,14 @@ using NightmareEchoes.Unit.AI;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Inputs;
+using Codice.Client.BaseCommands;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
 {
     public class EnemyPhase : Phase
     {
+        bool runOnce = false;
         bool tempStun = false;
 
         EnemyAI enemyAI;
@@ -22,6 +24,7 @@ namespace NightmareEchoes.TurnOrder
         {
             //Reseting Values
             tempStun = false;
+            runOnce = false;
 
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
@@ -63,7 +66,7 @@ namespace NightmareEchoes.TurnOrder
             #endregion
 
             //Start Turn
-            if(!tempStun)
+            if (!tempStun)
             {
                 controller.StartCoroutine(EnemyTurn());
             }
@@ -75,32 +78,32 @@ namespace NightmareEchoes.TurnOrder
             //start a couroutine to move
             if (enemyAI == null || controller.CurrentUnit == null) return;
 
-            if(enemyAI.finalMovePath.Count > 0)
+            if (enemyAI.finalMovePath.Count > 0)
             {
                 enemyAI.MoveProcess(controller.CurrentUnit);
             }
 
-            
+
         }
         protected override void OnUpdate()
         {
-            if (enemyAI == null || controller.CurrentUnit == null) return;
-
-            var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
-            if (aoeDmg)
+            if(controller.CurrentUnit != null)
             {
-                if (aoeSkillsPassed.Contains(aoeDmg))
-                    return;
-                if (aoeDmg.Cast(controller.CurrentUnit))
-                    aoeSkillsPassed.Add(aoeDmg);
-            }
+                var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
+                if (aoeDmg)
+                {
+                    if (aoeSkillsPassed.Contains(aoeDmg))
+                        return;
+                    if (aoeDmg.Cast(controller.CurrentUnit))
+                        aoeSkillsPassed.Add(aoeDmg);
+                }
 
-            var trapDmg = CombatManager.Instance.CheckTrap(controller.CurrentUnit);
-            if (trapDmg)
-            {
-                trapDmg.Cast(controller.CurrentUnit);
+                var trapDmg = CombatManager.Instance.CheckTrap(controller.CurrentUnit);
+                if (trapDmg)
+                {
+                    trapDmg.Cast(controller.CurrentUnit);
+                }
             }
-
         }
 
         protected override void OnExit()
@@ -178,9 +181,13 @@ namespace NightmareEchoes.TurnOrder
         {
             yield return new WaitForSeconds(controller.enemythinkingDelay);
 
-            if (controller.CurrentUnit != null)
+            if (controller.CurrentUnit != null && enemyAI != null)
             {
                 enemyAI.Execute();
+            }
+            else
+            {
+                controller.StartCoroutine(controller.PassTurn());
             }
 
             yield return new WaitUntil(() => enemyAI.finalMovePath.Count == 0);

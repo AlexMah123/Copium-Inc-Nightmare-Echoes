@@ -290,9 +290,14 @@ namespace NightmareEchoes.Unit.AI
                 {
                     Vector2Int direction = finalMovePath[0].gridLocation2D - thisUnitTile.gridLocation2D;
                     var checkTile = OverlayTileManager.Instance.GetOverlayTile(finalMovePath[finalMovePath.Count - 1].gridLocation2D + direction);
-                    var checkEntity = checkTile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+                    Entity checkEntity = null;
 
-                    if (checkEntity)
+                    if (checkTile != null)
+                    {
+                        checkEntity = checkTile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+                    }
+
+                    if (checkEntity != null)
                     {
                         if (checkEntity.IsProp)
                         {
@@ -424,10 +429,9 @@ namespace NightmareEchoes.Unit.AI
                                 continue;
                             }
 
-                            newPath = Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], rangeFromTileWithoutEntity);
-                            if (newPath.Count > 0)
+                            if (Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], rangeFromTileWithoutEntity).Count > 0)
                             {
-                                break;
+                                newPath = Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], rangeFromTileWithoutEntity);
                             }
                         }
                     }
@@ -561,12 +565,15 @@ namespace NightmareEchoes.Unit.AI
 
         public void AttackProcess(Entity thisUnit, OverlayTile targetTile)
         {
-            if (targetTile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>() != null)
+            if(thisUnit != null)
             {
-                targetTile.ShowEnemyTile();
-                thisUnit.HasAttacked = true;
+                if (targetTile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>() != null)
+                {
+                    targetTile.ShowEnemyTile();
+                    thisUnit.HasAttacked = true;
 
-                StartCoroutine(AttackAction(thisUnit));
+                    StartCoroutine(AttackAction(thisUnit));
+                }
             }
         }
 

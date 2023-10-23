@@ -9,6 +9,11 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(Entity unit)
         {
+            if(!unit.IsHostile)
+            {
+                return false;
+            }
+
             base.Cast(unit);
 
             unit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.IMMOBILIZE_TOKEN, 1, 2));
