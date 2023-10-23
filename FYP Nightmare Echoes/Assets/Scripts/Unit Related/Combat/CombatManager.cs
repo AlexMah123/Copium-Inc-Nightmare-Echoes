@@ -5,7 +5,6 @@ using System.Collections.Specialized;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEngine.GraphicsBuffer;
 
 //created by JH, edited by Ter
 namespace NightmareEchoes.Unit.Combat
@@ -178,16 +177,27 @@ namespace NightmareEchoes.Unit.Combat
 
         public Skill CheckTrap(Entity unit)
         {
+            if (!unit.IsHostile) 
+                return null;
+
             var hit = Physics2D.Raycast(unit.transform.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
-            if (!hit) return null;
+
+            if (!hit) 
+                return null;
+
             var target = hit.collider.gameObject.GetComponent<OverlayTile>();
             var trap = target.CheckTrapOnTile();
 
-            if (!trap) return null;
+            if (!trap) 
+                return null;
+
             var enumerator = activeTraps.GetEnumerator(); 
+
             while (enumerator.MoveNext())
             {
-                if ((GameObject)enumerator.Key != trap) continue;
+                if ((GameObject)enumerator.Key != trap) 
+                    continue;
+
                 var activatedTrap = enumerator.Key;
                 activeTraps.Remove(enumerator.Key);
                 Destroy((Object)activatedTrap);

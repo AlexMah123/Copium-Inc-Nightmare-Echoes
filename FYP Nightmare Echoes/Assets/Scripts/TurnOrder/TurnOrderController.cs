@@ -123,7 +123,6 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
             
-
             yield return new WaitForSeconds(passTurnDelay);
 
             //if there is at least 2 elements in queue
