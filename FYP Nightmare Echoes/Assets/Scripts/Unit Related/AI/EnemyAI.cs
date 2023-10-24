@@ -310,7 +310,7 @@ namespace NightmareEchoes.Unit.AI
             else
             {
                 //within attack range
-                if (shortestPath.Count <= currSelectedSkill.Range && FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile) <= currSelectedSkill.Range)
+                if (FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile) <= currSelectedSkill.Range)
                 {
                     //do 1a, just attack
                     targetTileToAttack = targetHero.ActiveTile;
