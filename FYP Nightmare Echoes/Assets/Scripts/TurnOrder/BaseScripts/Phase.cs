@@ -29,7 +29,7 @@ namespace NightmareEchoes.TurnOrder
             }
 
             //updates the current unit for turn order
-            if (controller.CurrentUnitQueue.Count > 0 ) 
+            if (controller.CurrentUnitQueue.Count > 0 )
             {
                 controller.CurrentUnit = controller.CurrentUnitQueue.Peek();
             }

@@ -179,7 +179,7 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator EnemyTurn()
         {
-            yield return new WaitForSeconds(controller.enemythinkingDelay);
+            yield return new WaitForSeconds(Random.Range(controller.enemythinkingDelay, controller.enemythinkingDelay + 2));
 
             if (controller.CurrentUnit != null && enemyAI != null)
             {
@@ -210,11 +210,11 @@ namespace NightmareEchoes.TurnOrder
                     controller.StartCoroutine(controller.PassTurn());
                 }
             }
-            else if (!enemyAI.detectedStealthHero)
+            else if (!enemyAI.detectedStealthHero) //if you are just moving normally
             {
                 controller.StartCoroutine(controller.PassTurn());
             }
-            else
+            else //default catch if nothing is happening
             {
                 controller.StartCoroutine(controller.PassTurn());
             }

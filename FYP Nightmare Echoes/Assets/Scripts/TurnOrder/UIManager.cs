@@ -468,6 +468,8 @@ namespace NightmareEchoes.TurnOrder
                     CurrentUnit.ShowPopUpText("Passing turn", Color.magenta);
                     passTurnButton.interactable = false;
                     passTurnButton.gameObject.SetActive(false);
+                    cancelActionButton.interactable = false;
+                    cancelActionButton.gameObject.SetActive(false);
                 }
             }
         }

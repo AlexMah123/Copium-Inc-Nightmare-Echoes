@@ -12,7 +12,8 @@ namespace NightmareEchoes.TurnOrder
 {
     public class PlayerPhase : Phase
     {
-        bool runOnce = false;
+        bool updateUIOnce = false;
+        bool passTurnOnce = false;
         bool tempStun = false;
         private List<Skill> aoeSkillsPassed = new();
 
@@ -20,6 +21,7 @@ namespace NightmareEchoes.TurnOrder
         {
             //Reseting Values
             tempStun = false;
+            passTurnOnce = false;
             controller.CurrentUnit.HasMoved = false;
             controller.CurrentUnit.HasAttacked = false;
 
@@ -74,14 +76,14 @@ namespace NightmareEchoes.TurnOrder
             if (PathfindingManager.Instance.isMoving)
             {
                 UIManager.Instance.EnableCurrentUI(false);
-                runOnce = false;
+                updateUIOnce = false;
             }
             else
             {
-                if (!runOnce)
+                if (!updateUIOnce)
                 {
                     UIManager.Instance.EnableCurrentUI(true);
-                    runOnce = true;
+                    updateUIOnce = true;
                 }
             }
         }
@@ -101,79 +103,19 @@ namespace NightmareEchoes.TurnOrder
 
                 PathfindingManager.Instance.PlayerInputPathfinding();
 
-                //if you cancel movement
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    if (PathfindingManager.Instance.CurrentPathfindingUnit != null && PathfindingManager.Instance.RevertUnitPosition != null)
-                    {
-                        PathfindingManager.Instance.SetUnitPositionOnTile(controller.CurrentUnit, PathfindingManager.Instance.RevertUnitPosition);
-                        PathfindingManager.Instance.CurrentPathfindingUnit.Direction = PathfindingManager.Instance.RevertUnitDirection;
-                        controller.CurrentUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
-
-                        //Resets everything, not moving, not dragging, and lastaddedtile is null
-                        controller.CurrentUnit.HasMoved = false;
-                        PathfindingManager.Instance.isMoving = false;
-                        PathfindingManager.Instance.hasMoved = false;
-                        PathfindingManager.Instance.isDragging = false;
-                        PathfindingManager.Instance.lastAddedTile = null;
-
-                        PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
-
-                        //cancels the selected skill
-                        if (CombatManager.Instance.ActiveSkill != null)
-                        {
-                            CombatManager.Instance.SelectSkill(controller.CurrentUnit, CombatManager.Instance.ActiveSkill);
-                            CombatManager.Instance.ClearPreviews();
-                        }
-
-                        //shows back the tiles in range
-                        PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
-                        CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
-
-                    }
-                    else
-                    {
-                        controller.CurrentUnit.ShowPopUpText("Cannot Cancel Action!", Color.red);
-                    }
-                }
+                CheckCancelAction();
 
                 #region stealth token check
-                if (controller.CurrentUnit.StealthToken)
-                {
-                    var grid = CombatManager.Instance.SquareRange(controller.CurrentUnit.ActiveTile, 1);
-                    var cleanedGrid = OverlayTileManager.Instance.TrimOutOfBounds(grid);
-                    var enemiesInRange = new List<Entity>();
-
-                    for (int i = 0; i < cleanedGrid.Count; i++)
-                    {
-                        if (!cleanedGrid[i].CheckEntityGameObjectOnTile())
-                            continue;
-
-                        var target = cleanedGrid[i].CheckEntityGameObjectOnTile().GetComponent<Entity>();
-
-                        if (!target.IsHostile || target.IsProp)
-                            continue;
-                        enemiesInRange.Add(target);
-                    }
-
-                    //Check if this unit is in range of said enemies
-                    for (int i = 0; i < enemiesInRange.Count; i++)
-                    {
-                        grid = CombatManager.Instance.FrontalRange(enemiesInRange[i].ActiveTile, 1, enemiesInRange[i]);
-                        cleanedGrid = OverlayTileManager.Instance.TrimOutOfBounds(grid);
-
-                        for (int j = 0; j < cleanedGrid.Count; j++)
-                        {
-                            if (controller.CurrentUnit.ActiveTile == cleanedGrid[j])
-                            {
-                                enemiesInRange[i].ShowPopUpText("Detected Stealth Hero!!", Color.red);
-                                controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
-                                PathfindingManager.Instance.RevertUnitPosition = null;
-                            }
-                        }
-                    }
-                }
+                CheckIfDetectedByEnemy();
                 #endregion
+            }
+            else
+            {
+                if(!passTurnOnce)
+                {
+                    controller.StartCoroutine(controller.PassTurn());
+                    passTurnOnce = true;
+                }
             }
 
         }
@@ -255,6 +197,84 @@ namespace NightmareEchoes.TurnOrder
             controller.CurrentUnit.HasAttacked = true;
 
             controller.StartCoroutine(controller.PassTurn());
+        }
+
+        void CheckCancelAction()
+        {
+            //if you cancel movement
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (PathfindingManager.Instance.CurrentPathfindingUnit != null && PathfindingManager.Instance.RevertUnitPosition != null)
+                {
+                    PathfindingManager.Instance.SetUnitPositionOnTile(controller.CurrentUnit, PathfindingManager.Instance.RevertUnitPosition);
+                    PathfindingManager.Instance.CurrentPathfindingUnit.Direction = PathfindingManager.Instance.RevertUnitDirection;
+                    controller.CurrentUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
+
+                    //Resets everything, not moving, not dragging, and lastaddedtile is null
+                    controller.CurrentUnit.HasMoved = false;
+                    PathfindingManager.Instance.isMoving = false;
+                    PathfindingManager.Instance.hasMoved = false;
+                    PathfindingManager.Instance.isDragging = false;
+                    PathfindingManager.Instance.lastAddedTile = null;
+
+                    PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
+
+                    //cancels the selected skill
+                    if (CombatManager.Instance.ActiveSkill != null)
+                    {
+                        CombatManager.Instance.SelectSkill(controller.CurrentUnit, CombatManager.Instance.ActiveSkill);
+                        CombatManager.Instance.ClearPreviews();
+                    }
+
+                    //shows back the tiles in range
+                    PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
+                    CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
+
+                }
+                else
+                {
+                    controller.CurrentUnit.ShowPopUpText("Cannot Cancel Action!", Color.red);
+                }
+            }
+        }
+
+        void CheckIfDetectedByEnemy()
+        {
+            if (controller.CurrentUnit.StealthToken)
+            {
+                var grid = CombatManager.Instance.SquareRange(controller.CurrentUnit.ActiveTile, 1);
+                var cleanedGrid = OverlayTileManager.Instance.TrimOutOfBounds(grid);
+                var enemiesInRange = new List<Entity>();
+
+                for (int i = 0; i < cleanedGrid.Count; i++)
+                {
+                    if (!cleanedGrid[i].CheckEntityGameObjectOnTile())
+                        continue;
+
+                    var target = cleanedGrid[i].CheckEntityGameObjectOnTile().GetComponent<Entity>();
+
+                    if (!target.IsHostile || target.IsProp)
+                        continue;
+                    enemiesInRange.Add(target);
+                }
+
+                //Check if this unit is in range of said enemies
+                for (int i = 0; i < enemiesInRange.Count; i++)
+                {
+                    grid = CombatManager.Instance.FrontalRange(enemiesInRange[i].ActiveTile, 1, enemiesInRange[i]);
+                    cleanedGrid = OverlayTileManager.Instance.TrimOutOfBounds(grid);
+
+                    for (int j = 0; j < cleanedGrid.Count; j++)
+                    {
+                        if (controller.CurrentUnit.ActiveTile == cleanedGrid[j])
+                        {
+                            enemiesInRange[i].ShowPopUpText("Detected Stealth Hero!!", Color.red);
+                            controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
+                            PathfindingManager.Instance.RevertUnitPosition = null;
+                        }
+                    }
+                }
+            }
         }
     }
 }

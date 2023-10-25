@@ -27,20 +27,13 @@ namespace NightmareEchoes.Unit
         #region Abilities()
         public override void Move()
         {
-
-            throw new System.NotImplementedException();
+            
         }
 
         public override void BasicAttack()
         {
             CombatManager.Instance.SelectSkill(this, basicAttack);
         }
-
-        public override void Passive()
-        {
-
-        }
-
         public override void Skill1()
         {
             CombatManager.Instance.SelectSkill(this, skill1);
@@ -56,13 +49,18 @@ namespace NightmareEchoes.Unit
             CombatManager.Instance.SelectSkill(this, skill3);
         }
 
+        public override void Passive()
+        {
+
+        }
+
         public override void TakeDamage(int damage, bool checkDodge = true, bool ignoreTokens = false)
         {
             base.TakeDamage(damage, checkDodge);
 
             if (DoesModifierExist(STATUS_EFFECT.WOUND_DEBUFF))
             {
-                buffDebuffList.Remove(DoesModifierExist(STATUS_EFFECT.WOUND_DEBUFF));
+                RemoveBuff(STATUS_EFFECT.WOUND_DEBUFF);
             }
         }
 
