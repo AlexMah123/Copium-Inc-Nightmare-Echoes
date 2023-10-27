@@ -114,7 +114,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 currentPathfindingUnit = hero;
 
                 //Gets the value of the start pos and the maximum range is the amount you can set
-                playerTilesInRange = Pathfind.FindTilesInRange(hero.ActiveTile, hero.stats.MoveRange, ignoreProps: false);
+                playerTilesInRange = Pathfind.FindTilesInRange(hero.ActiveTile, hero.stats.MoveRange);
 
                 //store values for players when they cancel their action
                 revertUnitPosition = hero.ActiveTile;
@@ -276,11 +276,29 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             float counter = 0;
 
-            //Get the current position of the object to be moved
+            if(thisUnit == null)
+            {
+                yield break;
+            }
+
+            //Get the current position of the object to be moved, check direction and change direction of unit
             Vector3 startPos = thisUnit.transform.position;
-            Vector3 direction = targetTile.gridLocation - thisUnit.ActiveTile.gridLocation;
+            Vector2Int direction = targetTile.gridLocation2D - thisUnit.ActiveTile.gridLocation2D;
             ChangeDirection(direction, thisUnit);
 
+            //reset all values if immobilized
+            if (thisUnit.CheckImmobilize())
+            {
+                isMoving = false;
+                revertUnitPosition = null;
+                ClearArrow(tempPathList);
+                CameraControl.Instance.isPanning = false;
+
+                thisUnit.ResetAnimator();
+                yield break;
+            }
+
+            //movement for player
             while (counter < duration)
             {
                 counter += Time.deltaTime;
@@ -290,31 +308,30 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
                 else
                 {
-                    counter = duration;
-                    break;
+                    yield break;
                 }
 
                 yield return null;
             }
 
-            if(thisUnit != null)
-                SetUnitPositionOnTile(thisUnit, targetTile);
+            //if completed movement
+            CameraControl.Instance.isPanning = false;
+            isMoving = false;
+            thisUnit.HasMoved = true;
+            SetUnitPositionOnTile(thisUnit, targetTile);
 
             #region Triggering Movement Related BuffDebuff Effect During Movement
 
-            thisUnit.CheckCrippled();
+            var distance = Vector2Int.Distance(thisUnit.ActiveTile.gridLocation2D, targetTile.gridLocation2D);
 
-            if (thisUnit.CheckImmobilize())
+            for (int i = 0; i < distance; i++)
             {
-                isMoving = false;
-                revertUnitPosition = null;
-                ClearArrow(tempPathList);
-
-                yield break;
+                thisUnit.CheckCrippled();
             }
-
-            yield break;
             #endregion
+
+            thisUnit.ResetAnimator();
+            yield break;
         }
 
         public void MoveAlongPath(Entity thisUnit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
@@ -323,7 +340,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (pathList.Count > 0 && thisUnit != null) 
             {   
                 //Setting Unit Direction
-                Vector3Int direction = pathList[0].gridLocation - thisUnit.ActiveTile.gridLocation;
+                Vector2Int direction = pathList[0].gridLocation2D - thisUnit.ActiveTile.gridLocation2D;
 
                 //setting directions as well as the moving boolean
                 ChangeDirection(direction, thisUnit);
@@ -359,13 +376,9 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
             }
 
-            if (pathList.Count <= 0 )
+            if (pathList.Count <= 0)
             {
-                if(thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
-                {
-                    thisUnit.BackAnimator.SetBool("Moving", false);
-                    thisUnit.FrontAnimator.SetBool("Moving", false);
-                }
+                thisUnit.ResetAnimator();
 
                 CameraControl.Instance.isPanning = false;
                 isMoving = false;
@@ -375,17 +388,17 @@ namespace NightmareEchoes.Unit.Pathfinding
         #endregion
 
         #region Utility for unit direction
-        public void ChangeDirection(Vector3 direction, Entity thisUnit)
+        public void ChangeDirection(Vector2Int direction, Entity thisUnit)
         {
             //reset the movements
-            if (thisUnit.BackModel != null && thisUnit.FrontModel != null && thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
+            if (thisUnit.FrontAnimator != null && thisUnit.BackAnimator != null)
             {
                 thisUnit.BackAnimator.SetBool("Moving", false);
                 thisUnit.FrontAnimator.SetBool("Moving", false);
             }
 
             //setting directions as well as the moving boolean
-            if (direction == new Vector3Int(1, 0, 0)) //back facing
+            if (direction == new Vector2Int(1, 0)) //back facing
             {
                 thisUnit.Direction = Direction.NORTH;
 
@@ -394,7 +407,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                     thisUnit.BackAnimator.SetBool("Moving", true);
                 }
             }
-            else if (direction == new Vector3Int(0, 1, 0)) //back facing
+            else if (direction == new Vector2Int(0, 1)) //back facing
             {
                 thisUnit.Direction = Direction.WEST;
 
@@ -403,7 +416,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                     thisUnit.BackAnimator.SetBool("Moving", true);
                 }
             }
-            else if (direction == new Vector3Int(-1, 0, 0)) //front facing
+            else if (direction == new Vector2Int(-1, 0)) //front facing
             {
                 thisUnit.Direction = Direction.SOUTH;
 
@@ -412,7 +425,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                     thisUnit.FrontAnimator.SetBool("Moving", true);
                 }
             }
-            else if (direction == new Vector3Int(0, -1, 0)) //front facing
+            else if (direction == new Vector2Int(0, -1)) //front facing
             {
                 thisUnit.Direction = Direction.EAST;
 

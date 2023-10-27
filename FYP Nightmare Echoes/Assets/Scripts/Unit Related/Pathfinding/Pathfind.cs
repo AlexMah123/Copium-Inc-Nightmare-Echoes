@@ -13,17 +13,17 @@ namespace NightmareEchoes.Unit.Pathfinding
         public static List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> tilesInRange)
         {
             var overLayTileManager = OverlayTileManager.Instance;
-            List<OverlayTile> currTilesToCheck = new List<OverlayTile>();
-            List<OverlayTile> prevTilesToCheck = new List<OverlayTile>();
+            List<OverlayTile> openSet = new List<OverlayTile> { start };
+            List<OverlayTile> closedSet = new List<OverlayTile>();
 
-            currTilesToCheck.Add(start);
+            start.G = 0;
+            start.H = GetManhattanDistance(start, end);
+            start.prevTile = null;
 
-            while (currTilesToCheck.Count > 0)
+            while (openSet.Count > 0)
             {
-                OverlayTile currentOverlayTile = currTilesToCheck.OrderBy(x => x.F).First();
-
-                currTilesToCheck.Remove(currentOverlayTile);
-                prevTilesToCheck.Add(currentOverlayTile);
+                //find the node with the lowest F value
+                OverlayTile currentOverlayTile = openSet.OrderBy(x => x.F).First();
 
                 if (currentOverlayTile == end)
                 {
@@ -31,23 +31,30 @@ namespace NightmareEchoes.Unit.Pathfinding
                     return GetFinishedList(start, end);
                 }
 
+                openSet.Remove(currentOverlayTile);
+                closedSet.Add(currentOverlayTile);
+
                 var neighbourTiles = overLayTileManager.GetNeighbourTiles(currentOverlayTile, tilesInRange);
 
                 for(int i = 0; i < neighbourTiles.Count; i++) 
                 {
-                    if (neighbourTiles[i].isBlocked || prevTilesToCheck.Contains(neighbourTiles[i]))
+                    if (neighbourTiles[i].isBlocked || closedSet.Contains(neighbourTiles[i]))
                     {
                         continue;
                     }
 
-                    neighbourTiles[i].G = GetManhattanDistance(start, neighbourTiles[i]);
-                    neighbourTiles[i].H = GetManhattanDistance(end, neighbourTiles[i]);
+                    int tentativeG = currentOverlayTile.G + GetManhattanDistance(currentOverlayTile, neighbourTiles[i]);
 
-                    neighbourTiles[i].prevTile = currentOverlayTile;
-
-                    if (!currTilesToCheck.Contains(neighbourTiles[i]))
+                    if (!openSet.Contains(neighbourTiles[i]) || tentativeG < neighbourTiles[i].G)
                     {
-                        currTilesToCheck.Add(neighbourTiles[i]);
+                        neighbourTiles[i].prevTile = currentOverlayTile;
+                        neighbourTiles[i].G = tentativeG;
+                        neighbourTiles[i].H = GetManhattanDistance(neighbourTiles[i], end);
+
+                        if (!openSet.Contains(neighbourTiles[i]))
+                        {
+                            openSet.Add(neighbourTiles[i]);
+                        }
                     }
                 }
             }
@@ -55,7 +62,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             return new List<OverlayTile>();
         }
 
-        public static List<OverlayTile> FindTilesInRange(OverlayTile startTile, int range, bool ignoreProps)
+        public static List<OverlayTile> FindTilesInRange(OverlayTile startTile, int range, bool ignoreProps = false, bool ignoreObstacles = false)
         {
             var overLayTileManager = OverlayTileManager.Instance;
             var inRangeTiles = new List<OverlayTile> { startTile };
@@ -99,28 +106,37 @@ namespace NightmareEchoes.Unit.Pathfinding
                 var entityOnTile = inRangeTiles[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
                 var obstacleOnTile = inRangeTiles[i].CheckObstacleOnTile();
 
+                //if there is no entity and no obstacle
                 if (!inRangeTiles[i].CheckEntityGameObjectOnTile() && !obstacleOnTile)
                 {
                     filteredTiles.Add(inRangeTiles[i]);
                 }
                 else if (entityOnTile != null)
                 {
+                    //if there is an entity but they are the same type, do not have stealth, and is not a prop
                     if (entityOnTile.IsHostile == unitAlignment && !entityOnTile.StealthToken && !entityOnTile.IsProp)
                     {
                         filteredTiles.Add(inRangeTiles[i]);
                     }
 
+                    //if ignore props and there is a prop
                     if (ignoreProps && entityOnTile.IsProp)
                     {
                         filteredTiles.Add(inRangeTiles[i]);
                     }
+                }
+
+                //if ignore obstacle and there is an obstacle
+                if (ignoreObstacles && obstacleOnTile)
+                {
+                    filteredTiles.Add(inRangeTiles[i]);
                 }
             }
 
             return GetFilteredTilesInRange(startTile, filteredTiles, range);
         }
         
-        public static List<OverlayTile> FindTilesInRangeToDestination(OverlayTile startTile, OverlayTile endTile, bool ignoreProps)
+        public static List<OverlayTile> FindTilesInRangeToDestination(OverlayTile startTile, OverlayTile endTile, bool ignoreProps = false, bool ignoreObstacles = false)
         {
             var overLayTileManager = OverlayTileManager.Instance;
             var inRangeTiles = new List<OverlayTile> { startTile };
@@ -173,30 +189,39 @@ namespace NightmareEchoes.Unit.Pathfinding
                 var entityOnTile = inRangeTiles[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
                 var obstacleOnTile = inRangeTiles[i].CheckObstacleOnTile();
 
+                //if there is no entity and no obstacle
                 if (!inRangeTiles[i].CheckEntityGameObjectOnTile() && !obstacleOnTile)
                 {
                     filteredTiles.Add(inRangeTiles[i]);
                 }
                 else if (entityOnTile != null)
                 {
+                    //if there is an entity but they are the same type, do not have stealth, and is not a prop
                     if (entityOnTile.IsHostile == unitAlignment && !entityOnTile.StealthToken && !entityOnTile.IsProp)
                     {
                         filteredTiles.Add(inRangeTiles[i]);
                     }
 
+                    //add back if it is a prop
                     if (ignoreProps && entityOnTile.IsProp)
                     {
                         filteredTiles.Add(inRangeTiles[i]);
                     }
+                }
+
+                //if ignore obstacle and there is a obstacle
+                if (ignoreObstacles && obstacleOnTile)
+                {
+                    filteredTiles.Add(inRangeTiles[i]);
                 }
             }
 
             return filteredTiles;
         }
 
-        private static int GetManhattanDistance(OverlayTile start, OverlayTile neighbour)
+        private static int GetManhattanDistance(OverlayTile start, OverlayTile end)
         {
-            return Mathf.Abs(start.gridLocation.x - neighbour.gridLocation.x) + Mathf.Abs(start.gridLocation.y - neighbour.gridLocation.y);
+            return Mathf.Abs(start.gridLocation.x - end.gridLocation.x) + Mathf.Abs(start.gridLocation.y - end.gridLocation.y);
         }
 
         private static List<OverlayTile> GetFinishedList(OverlayTile start, OverlayTile end)
@@ -219,14 +244,17 @@ namespace NightmareEchoes.Unit.Pathfinding
         private static List<OverlayTile> GetFilteredTilesInRange(OverlayTile startTile, List<OverlayTile> tiles, int range)
         {
             var filteredTiles = new List<OverlayTile>();
-            foreach (var tile in tiles)
+
+            for(int i = 0; i < tiles.Count; i++)
             {
-                var path = FindPath(startTile, tile, tiles);
+                var path = FindPath(startTile, tiles[i], tiles);
+
                 if (path.Count <= range && path.Count > 0)
                 {
-                    filteredTiles.Add(tile);
+                    filteredTiles.Add(tiles[i]);
                 }
             }
+
             return filteredTiles;
         }
     }

@@ -67,8 +67,8 @@ namespace NightmareEchoes.Unit.AI
             finalMovePath.Clear();
 
             accessibleTiles = Pathfind.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: true);
-            walkableTiles = Pathfind.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: false);
-            walkableThisTurnTiles = Pathfind.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange, ignoreProps: false);
+            walkableTiles = Pathfind.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile);
+            walkableThisTurnTiles = Pathfind.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange);
 
             PathfindingManager.Instance.ShowTilesInRange(walkableThisTurnTiles);
 
@@ -421,7 +421,7 @@ namespace NightmareEchoes.Unit.AI
                                 continue;
                             }
 
-                            var rangeFromTileWithoutEntity = Pathfind.FindTilesInRangeToDestination(walkableThisTurnTiles[i], targetHero.ActiveTile, ignoreProps: false);
+                            var rangeFromTileWithoutEntity = Pathfind.FindTilesInRangeToDestination(walkableThisTurnTiles[i], targetHero.ActiveTile);
                             var pathFromPossibleTile = Pathfind.FindPath(walkableThisTurnTiles[i], checkTileAround, rangeFromTileWithoutEntity);
 
                             if (pathFromPossibleTile.Count == 0)
@@ -496,7 +496,7 @@ namespace NightmareEchoes.Unit.AI
                             break;
                     }
 
-                    List<OverlayTile> tilesAroundTarget = new List<OverlayTile>(Pathfind.FindTilesInRange(targetTileToAttack, 1, ignoreProps: false));
+                    List<OverlayTile> tilesAroundTarget = new List<OverlayTile>(Pathfind.FindTilesInRange(targetTileToAttack, 1));
                     List<OverlayTile> possibleRedirectTiles = new List<OverlayTile>();
 
                     if (tilesAroundTarget.Count > 0)

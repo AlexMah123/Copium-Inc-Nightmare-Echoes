@@ -858,6 +858,31 @@ namespace NightmareEchoes.Unit
 
 
         #region Utility
+        public void ResetAnimator()
+        {
+            if(frontAnimator != null)
+            {
+                for (int i = 0; i < frontAnimator.parameterCount; i++)
+                {
+                    if (frontAnimator.parameters[i].type == AnimatorControllerParameterType.Bool)
+                    {
+                        frontAnimator.SetBool(frontAnimator.parameters[i].name, false);
+                    }
+                }
+            }
+            
+            if(backAnimator != null)
+            {
+                for (int i = 0; i < backAnimator.parameterCount; i++)
+                {
+                    if (backAnimator.parameters[i].type == AnimatorControllerParameterType.Bool)
+                    {
+                        backAnimator.SetBool(backAnimator.parameters[i].name, false);
+                    }
+                }
+            }
+        }
+
         public void ShowPopUpText(string text, Color color)
         {
             if (popupTextPrefab)
