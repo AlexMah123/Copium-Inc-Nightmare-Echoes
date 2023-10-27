@@ -14,16 +14,8 @@ namespace NightmareEchoes.Unit.Combat
         public static CombatManager Instance;
 
         public List<Entity> unitsInvolved;
-        public List<Entity> aliveUnits;
-        public List<Entity> deadUnits;
-        
         public List<Entity> friendlyUnits;
-        public List<Entity> aliveFriendlyUnits;
-        public List<Entity> deadFriendlyUnits;
-        
         public List<Entity> hostileUnits;
-        public List<Entity> aliveHostileUnits;
-        public List<Entity> deadHostileUnits;
 
         public bool turnEnded;
         
@@ -112,9 +104,7 @@ namespace NightmareEchoes.Unit.Combat
             {
                 unitsInvolved.Remove(unit);
             }
-            
-            aliveUnits = unitsInvolved;
-            
+
             foreach (var unit in unitsInvolved)
             {
                 if (unit.IsHostile)
@@ -123,9 +113,6 @@ namespace NightmareEchoes.Unit.Combat
                     friendlyUnits.Add(unit);
             }
 
-            aliveHostileUnits = hostileUnits;
-            aliveFriendlyUnits = friendlyUnits;
-            
             StartCoroutine(UpdateUnitPositionsAtStart());
         }
 
@@ -221,7 +208,8 @@ namespace NightmareEchoes.Unit.Combat
             
             RenderOverlayTile.Instance.ClearTargetingRenders();
             ClearPreviews();
-
+            RemoveDeadUnits();
+            
             turnEnded = true;
         }
         #endregion
@@ -431,14 +419,14 @@ namespace NightmareEchoes.Unit.Combat
             switch (activeSkill.TargetUnitAlignment)
             {
                 case TargetUnitAlignment.Hostile:
-                    RenderOverlayTile.Instance.RenderEnemyTiles(aliveHostileUnits.Select(enemy => enemy.ActiveTile).ToList());
+                    RenderOverlayTile.Instance.RenderEnemyTiles(hostileUnits.Select(enemy => enemy.ActiveTile).ToList());
                     break;
                 case TargetUnitAlignment.Friendly:
-                    RenderOverlayTile.Instance.RenderFriendlyTiles(aliveFriendlyUnits.Select(friendly => friendly.ActiveTile).ToList());
+                    RenderOverlayTile.Instance.RenderFriendlyTiles(friendlyUnits.Select(friendly => friendly.ActiveTile).ToList());
                     break;
                 case TargetUnitAlignment.Both:
-                    RenderOverlayTile.Instance.RenderEnemyTiles(aliveHostileUnits.Select(enemy => enemy.ActiveTile).ToList());
-                    RenderOverlayTile.Instance.RenderFriendlyTiles(aliveFriendlyUnits.Select(friendly => friendly.ActiveTile).ToList());
+                    RenderOverlayTile.Instance.RenderEnemyTiles(hostileUnits.Select(enemy => enemy.ActiveTile).ToList());
+                    RenderOverlayTile.Instance.RenderFriendlyTiles(friendlyUnits.Select(friendly => friendly.ActiveTile).ToList());
                     break;
             }
         }
@@ -690,7 +678,7 @@ namespace NightmareEchoes.Unit.Combat
 
         #endregion
 
-        #region Additional Mechanics
+        #region Misc Functions
         public List<Entity> IsStealthUnitInViewRange(Entity thisUnit, int range)
         {
             //declare variables and reset
@@ -714,6 +702,13 @@ namespace NightmareEchoes.Unit.Combat
             }
 
             return herosInStealth;
+        }
+
+        private void RemoveDeadUnits()
+        {
+            unitsInvolved.RemoveAll(unit => unit == null);
+            friendlyUnits.RemoveAll(unit => unit == null);
+            hostileUnits.RemoveAll(unit => unit == null);
         }
         #endregion
 
