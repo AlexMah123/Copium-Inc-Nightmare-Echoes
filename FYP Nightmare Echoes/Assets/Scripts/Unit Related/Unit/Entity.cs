@@ -8,7 +8,7 @@ using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Unit.AI;
 using NightmareEchoes.Unit.Combat;
-using UnityEngine.Pool;
+using NightmareEchoes.UI;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.Unit
@@ -883,11 +883,11 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        public void ShowPopUpText(string text, Color color)
+        public void ShowPopUpText(string text, Color color, float duration = 1)
         {
             if (popupTextPrefab)
             {
-                popupTextQueue.Enqueue(new PopupTextData(text, color));
+                popupTextQueue.Enqueue(new PopupTextData(text, color, duration));
 
                 if (!isDisplayingPopupText)
                 {
@@ -904,7 +904,8 @@ namespace NightmareEchoes.Unit
             {
                 var tempData = popupTextQueue.Dequeue();
 
-                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up + (Vector3.left * 0.25f), Quaternion.identity);
+                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up + (Vector3.left * 0.25f), Quaternion.identity, transform);
+                prefab.GetComponent<FloatingText>().destroyTime = tempData.duration;
                 prefab.hideFlags = HideFlags.HideInHierarchy;
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = tempData.popupTextData;
@@ -1300,11 +1301,13 @@ namespace NightmareEchoes.Unit
     {
         public string popupTextData;
         public Color textColor;
+        public float duration;
 
-        public PopupTextData(string textData, Color color)
+        public PopupTextData(string textData, Color color, float time = 1)
         {
             popupTextData = textData;
             textColor = color;
+            duration = time;
         }
     }
 

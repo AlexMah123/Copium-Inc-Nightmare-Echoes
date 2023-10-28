@@ -18,7 +18,6 @@ namespace NightmareEchoes.TurnOrder
     {
         public static UIManager Instance;
 
-
         [Header("Turn Order Bar")]
         [SerializeField] int initImagePool = 6;
         int capIndex = 0;
@@ -36,16 +35,26 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] List<Button> currentUnitButtonList;
         [SerializeField] GameObject currentUnitPanel;
         [SerializeField] Button currentUnitProfile;
-        [SerializeField] TextMeshProUGUI BasicAttackText;
-        [SerializeField] TextMeshProUGUI Skill1Text;
-        [SerializeField] TextMeshProUGUI Skill2Text;
-        [SerializeField] TextMeshProUGUI Skill3Text;
-        [SerializeField] TextMeshProUGUI PassiveText;
         [SerializeField] TextMeshProUGUI currentUnitNameText;
         [SerializeField] TextMeshProUGUI currentUnitHealthText;
         [SerializeField] Slider currentUnitHealth;
         [SerializeField] GameObject currentUnitStatusEffectsPanel;
         public List<Modifier> currentUnitTotalStatusEffectList = new List<Modifier>();
+
+        [Space(20), Header("Current Unit Skill")]
+        [SerializeField] TextMeshProUGUI BasicAttackText;
+        [SerializeField] TextMeshProUGUI Skill1Text;
+        [SerializeField] TextMeshProUGUI Skill2Text;
+        [SerializeField] TextMeshProUGUI Skill3Text;
+        [SerializeField] TextMeshProUGUI PassiveText;
+
+        [SerializeField] Image Skill1CooldownImage;
+        [SerializeField] Image Skill2CooldownImage;
+        [SerializeField] Image Skill3CooldownImage;
+        [SerializeField] TextMeshProUGUI Skill1CooldownText;
+        [SerializeField] TextMeshProUGUI Skill2CooldownText;
+        [SerializeField] TextMeshProUGUI Skill3CooldownText;
+
 
         [SerializeField] GameObject skillInfoPanel;
         [SerializeField] TextMeshProUGUI skillDamageText;
@@ -390,30 +399,30 @@ namespace NightmareEchoes.TurnOrder
 
             #region Phase UI
 
-            if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.startPhase)
-            {
-                phaseText.text = $"Start Phase";
-                phaseText.color = Color.black;
-            }
-            else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.planPhase)
+            if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.planPhase)
             {
                 phaseText.text = $"Plan Phase";
-                phaseText.color = Color.black;
+                phaseText.color = Color.white;
+            }
+            else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.startPhase)
+            {
+                phaseText.text = $"Start of Round";
+                phaseText.color = Color.white;
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.playerPhase)
             {
-                phaseText.text = $"Player's Phase";
-                phaseText.color = Color.black;
+                phaseText.text = $"{CurrentUnit?.Name}'s Turn";
+                phaseText.color = Color.white;
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.enemyPhase)
             {
-                phaseText.text = $"Enemy's Phase";
+                phaseText.text = $"{CurrentUnit?.Name}'s Turn";
                 phaseText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
             }
             else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.endPhase)
             {
-                phaseText.text = $"End's Phase";
-                phaseText.color = Color.black;
+                phaseText.text = $"End of Round";
+                phaseText.color = Color.white;
             }
 
 
@@ -1084,26 +1093,66 @@ namespace NightmareEchoes.TurnOrder
         public void EnableCurrentUI(bool enable)
         {
             int index = 1;
-            if (CurrentUnit.BasicAttackSkill != null)
+
+            if(!CurrentUnit.IsHostile)
             {
-                index++;
+                if (CurrentUnit.BasicAttackSkill != null)
+                {
+                    index++;
+                }
+                if (CurrentUnit.Skill1Skill != null)
+                {
+                    if (CurrentUnit.Skill1Skill.OnCooldown)
+                    {
+                        Skill1CooldownImage.gameObject.SetActive(true);
+                        Skill1CooldownImage.fillAmount = CurrentUnit.Skill1Skill.Cd / CurrentUnit.Skill1Skill.Cooldown;
+                        Skill1CooldownText.text = CurrentUnit.Skill1Skill.Cd.ToString();
+                    }
+                    else
+                    {
+                        Skill1CooldownImage.gameObject.SetActive(false);
+                    }
+
+                    index++;
+                }
+                if (CurrentUnit.Skill2Skill != null)
+                {
+                    if (CurrentUnit.Skill2Skill.OnCooldown)
+                    {
+                        Skill2CooldownImage.gameObject.SetActive(true);
+                        Skill2CooldownImage.fillAmount = CurrentUnit.Skill2Skill.Cd / CurrentUnit.Skill2Skill.Cooldown;
+                        Skill2CooldownText.text = CurrentUnit.Skill2Skill.Cd.ToString();
+
+                    }
+                    else
+                    {
+                        Skill2CooldownImage.gameObject.SetActive(false);
+                    }
+
+                    index++;
+                }
+                if (CurrentUnit.Skill3Skill != null)
+                {
+                    if (CurrentUnit.Skill3Skill.OnCooldown)
+                    {
+                        Skill3CooldownImage.gameObject.SetActive(true);
+                        Skill3CooldownImage.fillAmount = CurrentUnit.Skill3Skill.Cd / CurrentUnit.Skill3Skill.Cooldown;
+                        Skill3CooldownText.text = CurrentUnit.Skill3Skill.Cd.ToString();
+                    }
+                    else
+                    {
+                        Skill3CooldownImage.gameObject.SetActive(false);
+                    }
+
+                    index++;
+                }
+                if (CurrentUnit.PassiveSkill != null)
+                {
+                    index++;
+                }
             }
-            if (CurrentUnit.Skill1Skill != null)
-            {
-                index++;
-            }
-            if (CurrentUnit.Skill2Skill != null)
-            {
-                index++;
-            }
-            if (CurrentUnit.Skill3Skill != null)
-            {
-                index++;
-            }
-            if (CurrentUnit.PassiveSkill != null)
-            {
-                index++;
-            }
+
+            
 
             //reset all the buttons
             for (int i = 1; i < currentUnitButtonList.Count; i++)

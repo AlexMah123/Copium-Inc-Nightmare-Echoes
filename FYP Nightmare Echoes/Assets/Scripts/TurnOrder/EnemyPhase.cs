@@ -179,6 +179,7 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator EnemyTurn()
         {
+            controller.CurrentUnit.ShowPopUpText(". . .", Color.red, duration: controller.enemythinkingDelay);
             yield return new WaitForSeconds(Random.Range(controller.enemythinkingDelay, controller.enemythinkingDelay + 2));
 
             if (controller.CurrentUnit != null && enemyAI != null)

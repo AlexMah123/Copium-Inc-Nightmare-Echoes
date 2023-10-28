@@ -1,4 +1,5 @@
 using NightmareEchoes.Unit;
+using NightmareEchoes.Unit.Combat;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +33,7 @@ namespace NightmareEchoes.TurnOrder
 
             #endregion
 
+            CombatManager.Instance.IncrementCoolDowns();
             UIManager.Instance.UpdateStatusEffectUI();
             controller.StartCoroutine(newTurn());
             

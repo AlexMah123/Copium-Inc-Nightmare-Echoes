@@ -13,6 +13,16 @@ namespace NightmareEchoes.UI
         [SerializeField] Button button;
         [SerializeField] float timeToWait = 0.5f;
 
+        void OnDisable()
+        {
+            StopAllCoroutines();
+
+            if(ToolTipManager.OnMouseLoseFocusSkill != null)
+            {
+                ToolTipManager.OnMouseLoseFocusSkill();
+            }
+        }
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             StopAllCoroutines();

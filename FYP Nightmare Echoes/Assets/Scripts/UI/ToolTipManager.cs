@@ -158,11 +158,6 @@ namespace NightmareEchoes.UI
             }
             isHoveringTurnOrderUnit = false;
             hoverIndicator.SetActive(false);
-
-            //UNCOMMENT IF WE WANT TO HIDE WHEN HOVER OFF
-            /*//disable inspected unit UI
-            UIManager.Instance.inspectedUnit = null;
-            UIManager.Instance.EnableInspectedUI(false);*/
         }
 
         #endregion

@@ -432,6 +432,7 @@ namespace NightmareEchoes.Unit.AI
                             if (Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], rangeFromTileWithoutEntity).Count > 0)
                             {
                                 newPath = Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], rangeFromTileWithoutEntity);
+                                break;
                             }
                         }
                     }

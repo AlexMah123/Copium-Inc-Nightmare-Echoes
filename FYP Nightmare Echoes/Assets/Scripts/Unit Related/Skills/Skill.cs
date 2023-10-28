@@ -17,7 +17,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected string skillName;
         [SerializeField] protected int damage;
         [SerializeField] protected int heal;
-        [SerializeField] protected int cooldown;
+        [SerializeField] protected float cooldown;
         [SerializeField] protected int range;
         [SerializeField] protected int minRange;
         [SerializeField] protected TargetType targetType;
@@ -52,7 +52,7 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected GameObject placableGameObject;
 
         protected bool onCooldown;
-        protected int cd;
+        protected float cd;
         
         [field: TextArea(1,10)][SerializeField] protected string skillDescription;
 
@@ -70,7 +70,7 @@ namespace NightmareEchoes.Unit
             set => damage = value;
         }
 
-        public int Cooldown
+        public float Cooldown
         {
             get => cooldown;
             set => cooldown = value;
@@ -214,7 +214,7 @@ namespace NightmareEchoes.Unit
             set => onCooldown = value;
         }
 
-        public int Cd
+        public float Cd
         {
             get => cd;
             set => cd = value;
@@ -467,7 +467,7 @@ namespace NightmareEchoes.Unit
             else
             {
                 cd -= 1;
-                if (cd == 0)
+                if (cd <= 0)
                     onCooldown = false;
             }
         }
