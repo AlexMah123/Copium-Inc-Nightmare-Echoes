@@ -2249,6 +2249,8 @@ MonoBehaviour:
   activeTile: {fileID: 0}
   tileSize: {fileID: -9038056466487864997, guid: 0c5d2a962e2a71a429c4c9d61afd515d, type: 3}
   popupTextDelay: 0.4
+  baseMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 5231bc0164d853042a826809b98f31fc, type: 2}
 --- !u!114 &1321002866362748770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2433,7 +2435,7 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 1, y: 1.1232227}
     newSize: {x: 1, y: 1.1232227}
     adaptiveTilingThreshold: 0.5

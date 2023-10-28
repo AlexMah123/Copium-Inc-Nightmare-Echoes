@@ -6,7 +6,6 @@ using NightmareEchoes.Unit.AI;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Inputs;
-using Codice.Client.BaseCommands;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -25,6 +24,10 @@ namespace NightmareEchoes.TurnOrder
             //Reseting Values
             tempStun = false;
             runOnce = false;
+            controller.CurrentUnit.HasMoved = false;
+            controller.CurrentUnit.HasAttacked = false;
+            controller.CurrentUnit.HighlightUnit();
+
 
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
@@ -89,6 +92,8 @@ namespace NightmareEchoes.TurnOrder
         {
             if(controller.CurrentUnit != null)
             {
+                controller.CurrentUnit.UnhighlightUnit();
+
                 var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
                 if (aoeDmg)
                 {
@@ -179,7 +184,7 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator EnemyTurn()
         {
-            controller.CurrentUnit.ShowPopUpText(". . .", Color.red, duration: controller.enemythinkingDelay);
+            controller.CurrentUnit.ShowPopUpText(". . .", Color.magenta, duration: controller.enemythinkingDelay, 8);
             yield return new WaitForSeconds(Random.Range(controller.enemythinkingDelay, controller.enemythinkingDelay + 2));
 
             if (controller.CurrentUnit != null && enemyAI != null)

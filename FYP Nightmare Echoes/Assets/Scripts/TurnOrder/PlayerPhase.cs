@@ -24,6 +24,7 @@ namespace NightmareEchoes.TurnOrder
             passTurnOnce = false;
             controller.CurrentUnit.HasMoved = false;
             controller.CurrentUnit.HasAttacked = false;
+            controller.CurrentUnit.HighlightUnit();
 
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
@@ -124,6 +125,8 @@ namespace NightmareEchoes.TurnOrder
         {
             if (controller.CurrentUnit != null)
             {
+                controller.CurrentUnit.UnhighlightUnit();
+
                 #region End of Turn Effects
 
                 #region Tokens

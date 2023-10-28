@@ -86,6 +86,10 @@ namespace NightmareEchoes.Unit
         private bool isDisplayingPopupText = false;
         [SerializeField] float popupTextDelay = 0.4f;
 
+        [Header("Highlight Unit")]
+        [SerializeField] Material baseMaterial;
+        [SerializeField] Material highlightMaterial;
+
         #region Class Properties
 
         #region Unit Info Properties
@@ -858,6 +862,30 @@ namespace NightmareEchoes.Unit
 
 
         #region Utility
+        public void HighlightUnit()
+        {
+            var modelSprite = GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
+            for(int i = 0; i < modelSprite.Length; i++)
+            {
+                if (modelSprite[i].material == highlightMaterial)
+                    continue;
+
+                modelSprite[i].material = highlightMaterial;
+            }
+        }
+
+        public void UnhighlightUnit()
+        {
+            var modelSprite = GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
+            for (int i = 0; i < modelSprite.Length; i++)
+            {
+                if (modelSprite[i].material == baseMaterial)
+                    continue;
+
+                modelSprite[i].material = baseMaterial;
+            }
+        }
+
         public void ResetAnimator()
         {
             if(frontAnimator != null)
@@ -883,11 +911,11 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        public void ShowPopUpText(string text, Color color, float duration = 1)
+        public void ShowPopUpText(string text, Color color, float duration = 1, int size = 0)
         {
             if (popupTextPrefab)
             {
-                popupTextQueue.Enqueue(new PopupTextData(text, color, duration));
+                popupTextQueue.Enqueue(new PopupTextData(text, color, duration, size));
 
                 if (!isDisplayingPopupText)
                 {
@@ -904,12 +932,17 @@ namespace NightmareEchoes.Unit
             {
                 var tempData = popupTextQueue.Dequeue();
 
-                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up + (Vector3.left * 0.25f), Quaternion.identity, transform);
+                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up, Quaternion.identity, transform);
                 prefab.GetComponent<FloatingText>().destroyTime = tempData.duration;
                 prefab.hideFlags = HideFlags.HideInHierarchy;
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = tempData.popupTextData;
                 textMeshPro.color = tempData.textColor;
+
+                if(tempData.textSize > 0)
+                {
+                    textMeshPro.fontSize = tempData.textSize;
+                }
 
                 yield return new WaitForSeconds(popupTextDelay);
 
@@ -1302,12 +1335,14 @@ namespace NightmareEchoes.Unit
         public string popupTextData;
         public Color textColor;
         public float duration;
+        public int textSize;
 
-        public PopupTextData(string textData, Color color, float time = 1)
+        public PopupTextData(string textData, Color color, float time = 1, int size = 0)
         {
             popupTextData = textData;
             textColor = color;
             duration = time;
+            textSize = size;
         }
     }
 

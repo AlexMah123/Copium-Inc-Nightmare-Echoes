@@ -137,7 +137,6 @@ namespace NightmareEchoes.Inputs
             {
                 isPanning = false;
                 gameCamera.orthographicSize = defaultZoom;
-                gameCamera.transform.position = Vector3.zero + offset;
             }
         }
     }
