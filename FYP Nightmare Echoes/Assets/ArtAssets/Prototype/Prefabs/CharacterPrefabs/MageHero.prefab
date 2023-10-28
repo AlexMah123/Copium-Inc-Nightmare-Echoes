@@ -3278,7 +3278,6 @@ GameObject:
   - component: {fileID: 8121445182508319265}
   - component: {fileID: 8121445182508319270}
   - component: {fileID: 8121445182508319271}
-  - component: {fileID: 8121445182508319268}
   - component: {fileID: 8121445182508319274}
   - component: {fileID: 8121445182508319275}
   - component: {fileID: 1203696666}
@@ -3377,7 +3376,7 @@ MonoBehaviour:
   skill1: {fileID: 8121445182508319265}
   skill2: {fileID: 8121445182508319270}
   skill3: {fileID: 8121445182508319271}
-  passive: {fileID: 8121445182508319268}
+  passive: {fileID: 0}
   sprites: []
   frontModel: {fileID: 8598185888284416580}
   backModel: {fileID: 8598185887813615572}
@@ -3425,8 +3424,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: "Single Target, 4 Direction, Deal 6 Damage\r\nEmpower: Deal 9
-    Damage and Apply 1 Blind\r"
+  skillDescription: "Single Target, 4 Direction, Deal 6 Damage\r"
 --- !u!114 &8121445182508319265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3442,7 +3440,7 @@ MonoBehaviour:
   skillName: Arcane Blast
   damage: 8
   heal: 0
-  cooldown: 0
+  cooldown: 2
   range: 4
   minRange: 1
   targetType: 1
@@ -3467,8 +3465,7 @@ MonoBehaviour:
   maxCount: 0
   placableGameObject: {fileID: 0}
   skillDescription: "AOE Attack, 4 Direction, \nDeal 8 Damage in the middle and 4
-    Damage at the side, Knockback enemy 1 tile\r\nCooldown: 2 Turns\r\nEmpower: Stun
-    (80%)\r"
+    Damage at the side, Knockback enemy 1 tile\r\nCooldown: 2 Turns\r"
 --- !u!114 &8121445182508319270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3484,7 +3481,7 @@ MonoBehaviour:
   skillName: Teleport
   damage: 0
   heal: 0
-  cooldown: 0
+  cooldown: 3
   range: 2
   minRange: 1
   targetType: 0
@@ -3511,15 +3508,7 @@ MonoBehaviour:
   skillDescription: 'Target Hero or Enemy inside 2 Tiles Range, then Teleport him
     within 3 Tiles Range of Target.
 
-    Cooldown: 3 Turns
-
-    Empower:
-
-    Cast
-    on Ally: Apply 1 Protection and Heal for 5
-
-    Cast on Enemy: Apply 1 Vulnerable
-    and 1 Weaken'
+    Cooldown: 3 Turns'
 --- !u!114 &8121445182508319271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3535,7 +3524,7 @@ MonoBehaviour:
   skillName: Static Storm
   damage: 4
   heal: 0
-  cooldown: 0
+  cooldown: 3
   range: 4
   minRange: 1
   targetType: 1
@@ -3561,48 +3550,7 @@ MonoBehaviour:
   placableGameObject: {fileID: 0}
   skillDescription: "AOE, Create Static Storm that last for 2 Turns\nEnemies that
     pass through the storm take 4 Damage, Enemy that Stay in (Start Turn) take 4
-    damage and apply 1 Weaken\r\nCooldown: 3 Turns\r\nEmpower: Apply 2 Blind and
-    Interrupt enemy actions (Special Attack)\r"
---- !u!114 &8121445182508319268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8121445182508319273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ea9fdb1423da3e4f93ac4d150a168a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: Arcane Intellect
-  damage: 0
-  heal: 0
-  cooldown: 0
-  range: 0
-  minRange: 0
-  targetType: 0
-  targetArea: 2
-  targetUnitAlignment: 2
-  aoeType: 2
-  aoeSize: 1
-  aoeOffset: 0
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 2
-  secondaryDamage: 0
-  secondaryRange: 0
-  debuffChance: 0
-  hitChance: 0
-  stunChance: 0
-  inflictKnockback: 0
-  isBackstabbing: 0
-  backstabBonus: 0
-  placable: 0
-  placableCount: 0
-  maxCount: 0
-  placableGameObject: {fileID: 0}
-  skillDescription: Every 3 Turns, Empower Skills (Click to Enable)
+    damage and apply 1 Weaken\r\nCooldown: 3 Turns\r"
 --- !u!60 &8121445182508319274
 PolygonCollider2D:
   m_ObjectHideFlags: 0

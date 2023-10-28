@@ -50,6 +50,9 @@ namespace NightmareEchoes.Unit
         [SerializeField] protected int placableCount;
         [SerializeField] protected int maxCount;
         [SerializeField] protected GameObject placableGameObject;
+
+        protected bool onCooldown;
+        protected int cd;
         
         [field: TextArea(1,10)][SerializeField] protected string skillDescription;
 
@@ -203,6 +206,18 @@ namespace NightmareEchoes.Unit
         {
             get => debuffChance;
             private set => debuffChance = value;
+        }
+
+        public bool OnCooldown
+        {
+            get => onCooldown;
+            set => onCooldown = value;
+        }
+
+        public int Cd
+        {
+            get => cd;
+            set => cd = value;
         }
 
         #endregion
@@ -440,6 +455,21 @@ namespace NightmareEchoes.Unit
         public virtual void Reset()
         {
             
+        }
+
+        public void CheckCooldown(bool startCooldown)
+        {
+            if (startCooldown)
+            {
+                cd = cooldown;
+                onCooldown = true;
+            }
+            else
+            {
+                cd -= 1;
+                if (cd == 0)
+                    onCooldown = false;
+            }
         }
     }
     

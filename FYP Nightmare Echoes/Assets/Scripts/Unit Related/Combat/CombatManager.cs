@@ -17,6 +17,8 @@ namespace NightmareEchoes.Unit.Combat
         public List<Entity> friendlyUnits;
         public List<Entity> hostileUnits;
 
+        private List<Skill> friendlySkills;
+
         public bool turnEnded;
         
         [SerializeField] private Skill activeSkill;
@@ -40,6 +42,7 @@ namespace NightmareEchoes.Unit.Combat
         private bool secondaryTargeting;
         
         //To prevent update() from casting multiple times
+        //Not used at the moment
         private bool castGate = false;
 
         #region Properties
@@ -111,6 +114,11 @@ namespace NightmareEchoes.Unit.Combat
                     hostileUnits.Add(unit);
                 else
                     friendlyUnits.Add(unit);
+            }
+
+            foreach (var entity in friendlyUnits)
+            {
+                friendlySkills.AddRange(entity.gameObject.GetComponents<Skill>());
             }
 
             StartCoroutine(UpdateUnitPositionsAtStart());
@@ -199,6 +207,7 @@ namespace NightmareEchoes.Unit.Combat
             if(activeSkill.GetComponent<Entity>() != null)
             {
                 activeSkill.GetComponent<Entity>().ShowPopUpText(activeSkill.SkillName, Color.red);
+                activeSkill.CheckCooldown(true);
             }
 
             activeSkill.Reset();
@@ -212,12 +221,26 @@ namespace NightmareEchoes.Unit.Combat
             
             turnEnded = true;
         }
+
+        public void IncrementCoolDowns()
+        {
+            foreach (var skill in friendlySkills)
+            {
+                skill.CheckCooldown(false);
+            }
+        }
         #endregion
 
         #region Public Calls
 
         public void SelectSkill(Entity unit, Skill skill)
         {
+            if (skill.OnCooldown)
+            {
+                unit.ShowPopUpText("Skill on cooldown", Color.yellow);
+                return;
+            }
+            
             //Clear Active Renders 
             RenderOverlayTile.Instance.ClearTargetingRenders();
             ClearPreviews();
@@ -709,6 +732,8 @@ namespace NightmareEchoes.Unit.Combat
             unitsInvolved.RemoveAll(unit => unit == null);
             friendlyUnits.RemoveAll(unit => unit == null);
             hostileUnits.RemoveAll(unit => unit == null);
+            
+            friendlySkills.RemoveAll(skill => skill == null);
         }
         #endregion
 
