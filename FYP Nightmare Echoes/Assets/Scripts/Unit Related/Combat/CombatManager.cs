@@ -17,7 +17,7 @@ namespace NightmareEchoes.Unit.Combat
         public List<Entity> friendlyUnits;
         public List<Entity> hostileUnits;
 
-        private List<Skill> friendlySkills;
+        [SerializeField] private List<Skill> friendlySkills;
 
         public bool turnEnded;
         
@@ -118,7 +118,8 @@ namespace NightmareEchoes.Unit.Combat
 
             foreach (var entity in friendlyUnits)
             {
-                friendlySkills.AddRange(entity.gameObject.GetComponents<Skill>());
+                var skills = entity.gameObject.GetComponents<Skill>();
+                friendlySkills.AddRange(skills);
             }
 
             StartCoroutine(UpdateUnitPositionsAtStart());
