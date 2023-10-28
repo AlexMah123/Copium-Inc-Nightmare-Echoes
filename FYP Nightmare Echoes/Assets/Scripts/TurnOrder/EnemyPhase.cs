@@ -92,8 +92,6 @@ namespace NightmareEchoes.TurnOrder
         {
             if(controller.CurrentUnit != null)
             {
-                controller.CurrentUnit.UnhighlightUnit();
-
                 var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
                 if (aoeDmg)
                 {
@@ -115,6 +113,8 @@ namespace NightmareEchoes.TurnOrder
         {
             if (controller.CurrentUnit != null && enemyAI != null)
             {
+                controller.CurrentUnit.UnhighlightUnit();
+
                 #region End of Turn Effects
 
                 #region Tokens
@@ -184,7 +184,7 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator EnemyTurn()
         {
-            controller.CurrentUnit.ShowPopUpText(". . .", Color.magenta, duration: controller.enemythinkingDelay, 8);
+            controller.CurrentUnit.ShowPopUpText(". . .", Color.yellow, duration: controller.enemythinkingDelay, 15);
             yield return new WaitForSeconds(Random.Range(controller.enemythinkingDelay, controller.enemythinkingDelay + 2));
 
             if (controller.CurrentUnit != null && enemyAI != null)
