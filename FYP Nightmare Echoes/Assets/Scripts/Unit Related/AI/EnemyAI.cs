@@ -353,7 +353,7 @@ namespace NightmareEchoes.Unit.AI
 
                     attack = true;
                 }
-                else if(shortestPath.Count > 0 && FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile) <= currSelectedSkill.Range + thisUnit.stats.MoveRange)
+                else if(shortestPath.Count > 0 && FindDistanceBetweenTile(shortestPath[thisUnit.stats.MoveRange], targetHero.ActiveTile) < currSelectedSkill.Range)
                 {
                     moveAndAttack = true;
                     bool foundProp = false;
