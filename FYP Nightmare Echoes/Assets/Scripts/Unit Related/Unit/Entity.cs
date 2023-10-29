@@ -867,10 +867,8 @@ namespace NightmareEchoes.Unit
             var modelSprite = GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
             for(int i = 0; i < modelSprite.Length; i++)
             {
-                if (modelSprite[i].material == highlightMaterial)
-                    continue;
-
-                modelSprite[i].material = highlightMaterial;
+                if (modelSprite[i].material != highlightMaterial)
+                    modelSprite[i].material = highlightMaterial;
             }
         }
 
@@ -879,10 +877,8 @@ namespace NightmareEchoes.Unit
             var modelSprite = GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
             for (int i = 0; i < modelSprite.Length; i++)
             {
-                if (modelSprite[i].material == baseMaterial)
-                    continue;
-
-                modelSprite[i].material = baseMaterial;
+                if (modelSprite[i].material != baseMaterial)
+                    modelSprite[i].material = baseMaterial;
             }
         }
 
