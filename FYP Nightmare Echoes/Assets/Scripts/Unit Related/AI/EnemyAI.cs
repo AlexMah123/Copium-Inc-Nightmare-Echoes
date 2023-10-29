@@ -230,6 +230,26 @@ namespace NightmareEchoes.Unit.AI
                     currSelectedSkill = thisUnit.BasicAttackSkill;
                     break;
             }
+
+            //TEMP TEST, REMOVE AFTER DONE
+            currSelectedSkill = thisUnit.Skill1Skill;
+
+            //special case for line
+            if (currSelectedSkill.TargetArea == TargetArea.Line)
+            {
+                float yDist = shortestPath[shortestPath.Count - currSelectedSkill.Range - 1].gridLocation.y - targetHero.ActiveTile.gridLocation.y;
+                float xDist = shortestPath[shortestPath.Count - currSelectedSkill.Range - 1].gridLocation.x - targetHero.ActiveTile.gridLocation.x;
+                float yDist2 = shortestPath[shortestPath.Count - currSelectedSkill.MinRange - 1].gridLocation.y - targetHero.ActiveTile.gridLocation.y;
+                float xDist2 = shortestPath[shortestPath.Count - currSelectedSkill.MinRange - 1].gridLocation.x - targetHero.ActiveTile.gridLocation.x;
+
+                if ((xDist != 0 && yDist != 0) && (xDist2 != 0 && yDist2 != 0))
+                {
+                    //if ideal path ends in a diagonal, swap to basic
+                    Debug.Log("yo this went off");
+                    currSelectedSkill = thisUnit.BasicAttackSkill;
+                }
+            }
+
             #endregion
 
             #region decision making flowchart
