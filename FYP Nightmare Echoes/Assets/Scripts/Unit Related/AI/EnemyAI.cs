@@ -231,9 +231,6 @@ namespace NightmareEchoes.Unit.AI
                     break;
             }
 
-            //TEMP TEST, REMOVE AFTER DONE
-            currSelectedSkill = thisUnit.Skill1Skill;
-
             //special case for line
             if (currSelectedSkill.TargetArea == TargetArea.Line)
             {
