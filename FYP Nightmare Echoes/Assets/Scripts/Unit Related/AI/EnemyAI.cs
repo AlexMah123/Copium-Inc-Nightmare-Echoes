@@ -234,10 +234,11 @@ namespace NightmareEchoes.Unit.AI
             //special case for line
             if (currSelectedSkill.TargetArea == TargetArea.Line)
             {
-                float yDist = shortestPath[shortestPath.Count - currSelectedSkill.Range - 1].gridLocation.y - targetHero.ActiveTile.gridLocation.y;
-                float xDist = shortestPath[shortestPath.Count - currSelectedSkill.Range - 1].gridLocation.x - targetHero.ActiveTile.gridLocation.x;
-                float yDist2 = shortestPath[shortestPath.Count - currSelectedSkill.MinRange - 1].gridLocation.y - targetHero.ActiveTile.gridLocation.y;
-                float xDist2 = shortestPath[shortestPath.Count - currSelectedSkill.MinRange - 1].gridLocation.x - targetHero.ActiveTile.gridLocation.x;
+                int shPHelper = Mathf.Clamp(shortestPath.Count - currSelectedSkill.Range - 1, 0, 99);
+                float yDist = shortestPath[shPHelper].gridLocation.y - targetHero.ActiveTile.gridLocation.y;
+                float xDist = shortestPath[shPHelper].gridLocation.x - targetHero.ActiveTile.gridLocation.x;
+                float yDist2 = shortestPath[shPHelper].gridLocation.y - targetHero.ActiveTile.gridLocation.y;
+                float xDist2 = shortestPath[shPHelper].gridLocation.x - targetHero.ActiveTile.gridLocation.x;
 
                 if ((xDist != 0 && yDist != 0) && (xDist2 != 0 && yDist2 != 0))
                 {
@@ -371,7 +372,7 @@ namespace NightmareEchoes.Unit.AI
                     attack = true;
                 }
                 
-                else if(shortestPath.Count > 0 && shortestPath.Count < thisUnit.stats.MoveRange)
+                else if(shortestPath.Count > 0 && shortestPath.Count <= thisUnit.stats.MoveRange)
                 {
                     if (FindDistanceBetweenTile(shortestPath[shortestPath.Count - 1], targetHero.ActiveTile) < currSelectedSkill.Range)
                     {
