@@ -227,10 +227,14 @@ namespace NightmareEchoes.Unit.Pathfinding
                 {
                     if(pathList.Count > 0)
                     {
-                        if (pathList[pathList.Count - 1].CheckEntityGameObjectOnTile())
+                        for(int i = pathList.Count - 1; i >= 0; i--)
                         {
-                            pathList.RemoveAt(pathList.Count - 1);
+                            if (pathList[pathList.Count - 1].CheckEntityGameObjectOnTile())
+                            {
+                                pathList.RemoveAt(pathList.Count - 1);
+                            }
                         }
+                        
 
                         RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
                         tempPathList = new List<OverlayTile>(pathList);

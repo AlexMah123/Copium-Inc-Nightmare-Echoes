@@ -928,7 +928,7 @@ namespace NightmareEchoes.Unit
             {
                 var tempData = popupTextQueue.Dequeue();
 
-                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up, Quaternion.identity, transform);
+                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up, Quaternion.identity);
                 prefab.GetComponent<FloatingText>().destroyTime = tempData.duration;
                 prefab.hideFlags = HideFlags.HideInHierarchy;
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
