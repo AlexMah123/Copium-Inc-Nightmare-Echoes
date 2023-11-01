@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using NightmareEchoes.Unit;
 using System.Linq;
+using static PlasticPipe.PlasticProtocol.Messages.Serialization.ItemHandlerMessagesSerialization;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.VersionControl;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -115,12 +118,9 @@ namespace NightmareEchoes.TurnOrder
         public IEnumerator PassTurn()
         {
             //wait for all popuptext to clear before actually changing turn
-            if(CurrentUnit != null)
+            while (AnyUnitHasPendingPopups())
             {
-                while (CurrentUnit.PopupTextQueue.Count > 0)
-                {
-                    yield return null;
-                }
+                yield return null;
             }
             
             yield return new WaitForSeconds(passTurnDelay);
@@ -274,7 +274,16 @@ namespace NightmareEchoes.TurnOrder
             }
         }
 
-
-
+        private bool AnyUnitHasPendingPopups()
+        {
+            for(int i = CurrentUnitQueue.Count - 1; i >= 0; i--)
+            {
+                if (CurrentUnitQueue.ToArray()[i].PopupTextQueue.Count > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
