@@ -370,6 +370,54 @@ namespace NightmareEchoes.Unit.AI
 
                     attack = true;
                 }
+                
+                else if(shortestPath.Count > 0 && shortestPath.Count < thisUnit.stats.MoveRange)
+                {
+                    if (FindDistanceBetweenTile(shortestPath[shortestPath.Count - 1], targetHero.ActiveTile) < currSelectedSkill.Range)
+                    {
+                        moveAndAttack = true;
+                        bool foundProp = false;
+
+                        for (int i = 0; i < shortestPath.Count; i++)
+                        {
+                            var checkEntityOnPath = shortestPath[i].CheckEntityGameObjectOnTile()?.GetComponent<Entity>();
+
+                            if (checkEntityOnPath == null)
+                            {
+                                continue;
+                            }
+
+                            //do 2b, switch to prop to attack
+                            if (checkEntityOnPath.IsProp)
+                            {
+                                foundProp = true;
+                                targetTileToAttack = shortestPath[i];
+                                currSelectedSkill = thisUnit.BasicAttackSkill;
+
+                                for (int j = 0; j < i; j++)
+                                {
+                                    finalMovePath.Add(shortestPath[j]);
+                                }
+                                break;
+                            }
+                        }
+
+                        if (!foundProp)
+                        {
+                            //do 2a. just attack normally
+                            targetTileToAttack = targetHero.ActiveTile;
+                            for (int i = 0; i <= shortestPath.Count - currSelectedSkill.Range; i++)
+                            {
+                                finalMovePath.Add(shortestPath[i]);
+                            }
+
+                            if (currSelectedSkill.TargetType == TargetType.AOE)
+                            {
+                                SetAOETargetTile(finalMovePath[finalMovePath.Count - 1]);
+                            }
+                        }
+                    }
+                } // ^ v these two are the same, the above is just a check so it doesn't access an out of bounds index
                 else if(shortestPath.Count > 0 && FindDistanceBetweenTile(shortestPath[thisUnit.stats.MoveRange], targetHero.ActiveTile) < currSelectedSkill.Range)
                 {
                     moveAndAttack = true;
