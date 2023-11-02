@@ -334,35 +334,39 @@ namespace NightmareEchoes.Unit.AI
                     targetTileToAttack = targetHero.ActiveTile;
 
                     //check if able to kite
-                    var distanceToTarget = FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile);
-                    if (currSelectedSkill.Range > distanceToTarget)
+                    if (thisUnit.TypeOfUnit == TypeOfUnit.RANGED_UNIT)
                     {
-                        var distanceToMove = currSelectedSkill.Range - distanceToTarget;
-                        List<OverlayTile> pathToKite = new List<OverlayTile>();
-
-                        //iterate through all walkable tiles
-                        for (int i = 0; i < walkableThisTurnTiles.Count; i++)
+                        var distanceToTarget = FindDistanceBetweenTile(thisUnitTile, targetHero.ActiveTile);
+                        if (currSelectedSkill.Range > distanceToTarget)
                         {
-                            if (walkableThisTurnTiles[i].CheckEntityGameObjectOnTile())
-                            {
-                                continue;
-                            }
+                            var distanceToMove = currSelectedSkill.Range - distanceToTarget;
+                            List<OverlayTile> pathToKite = new List<OverlayTile>();
 
-                            var distanceToKiteTile = FindDistanceBetweenTile(thisUnitTile, walkableThisTurnTiles[i]);
-
-                            if (distanceToKiteTile <= distanceToMove)
+                            //iterate through all walkable tiles
+                            for (int i = 0; i < walkableThisTurnTiles.Count; i++)
                             {
-                                if(Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], walkableThisTurnTiles).Count == 0)
+                                if (walkableThisTurnTiles[i].CheckEntityGameObjectOnTile())
                                 {
                                     continue;
                                 }
 
-                                pathToKite = Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], walkableThisTurnTiles);
-                            }
-                        }
+                                var distanceToKiteTile = FindDistanceBetweenTile(thisUnitTile, walkableThisTurnTiles[i]);
 
-                        finalMovePath = pathToKite;
+                                if (distanceToKiteTile <= distanceToMove)
+                                {
+                                    if (Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], walkableThisTurnTiles).Count == 0)
+                                    {
+                                        continue;
+                                    }
+
+                                    pathToKite = Pathfind.FindPath(thisUnitTile, walkableThisTurnTiles[i], walkableThisTurnTiles);
+                                }
+                            }
+
+                            finalMovePath = pathToKite;
+                        }
                     }
+                    
 
                     if (currSelectedSkill.TargetType == TargetType.AOE)
                     {
