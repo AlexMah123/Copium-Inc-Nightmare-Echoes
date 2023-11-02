@@ -244,7 +244,6 @@ namespace NightmareEchoes.Unit.AI
                 if ((xDist != 0 && yDist != 0) && (xDist2 != 0 && yDist2 != 0))
                 {
                     //if ideal path ends in a diagonal, swap to basic
-                    Debug.Log("yo this went off");
                     currSelectedSkill = thisUnit.BasicAttackSkill;
                 }
             }
@@ -375,8 +374,11 @@ namespace NightmareEchoes.Unit.AI
                 
                 else if(shortestPath.Count > 0 && shortestPath.Count <= thisUnit.stats.MoveRange)
                 {
-                    if (FindDistanceBetweenTile(shortestPath[shortestPath.Count - 1], targetHero.ActiveTile) < currSelectedSkill.Range)
+                    Debug.Log(FindDistanceBetweenTile(shortestPath[shortestPath.Count - 1], targetHero.ActiveTile));
+                    Debug.Log(currSelectedSkill.Range);
+                    if (FindDistanceBetweenTile(shortestPath[shortestPath.Count - 1], targetHero.ActiveTile) <= currSelectedSkill.Range)
                     {
+                        Debug.Log("checker3");
                         moveAndAttack = true;
                         bool foundProp = false;
 
@@ -420,8 +422,9 @@ namespace NightmareEchoes.Unit.AI
                         }
                     }
                 } // ^ v these two are the same, the above is just a check so it doesn't access an out of bounds index
-                else if(shortestPath.Count > 0 && FindDistanceBetweenTile(shortestPath[thisUnit.stats.MoveRange], targetHero.ActiveTile) < currSelectedSkill.Range)
+                else if(shortestPath.Count > 0 && FindDistanceBetweenTile(shortestPath[thisUnit.stats.MoveRange], targetHero.ActiveTile) <= currSelectedSkill.Range)
                 {
+                    Debug.Log("checker2");
                     moveAndAttack = true;
                     bool foundProp = false;
 
