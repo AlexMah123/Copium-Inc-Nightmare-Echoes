@@ -5,7 +5,7 @@ using UnityEngine;
 //Created by JH (stolen and edited by ter)
 namespace NightmareEchoes.Unit
 {
-    public class Fireball : Skill
+    public class DarkBlast : Skill
     {
         public override bool Cast(Entity target)
         {

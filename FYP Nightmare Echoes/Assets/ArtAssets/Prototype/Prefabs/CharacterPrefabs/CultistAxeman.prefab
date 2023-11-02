@@ -2088,13 +2088,12 @@ GameObject:
   - component: {fileID: 5986006345401308091}
   - component: {fileID: 8893637955381217503}
   - component: {fileID: 1321002866362748770}
-  - component: {fileID: 4139838481242840768}
-  - component: {fileID: 4212859529687142437}
+  - component: {fileID: 1943974288487111099}
   - component: {fileID: 1429316040}
   - component: {fileID: 5583804447610931213}
   - component: {fileID: 2309720267678754650}
   m_Layer: 6
-  m_Name: MeleeEnemy
+  m_Name: CultistAxeman
   m_TagString: Inspectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2203,11 +2202,11 @@ MonoBehaviour:
   popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
   baseStats:
     _health: 0
-    _maxHealth: 18
-    _speed: 3
+    _maxHealth: 25
+    _speed: 1
     _moveRange: 3
-    _stunResist: 30
-    _resist: 30
+    _stunResist: 50
+    _resist: 20
   stats:
     _health: 0
     _maxHealth: 0
@@ -2236,9 +2235,9 @@ MonoBehaviour:
   stunToken: 0
   immobilizeToken: 0
   deathMarkToken: 0
-  basicAttack: {fileID: 4139838481242840768}
-  skill1: {fileID: 4212859529687142437}
-  skill2: {fileID: 1429316040}
+  basicAttack: {fileID: 1943974288487111099}
+  skill1: {fileID: 1429316040}
+  skill2: {fileID: 0}
   skill3: {fileID: 0}
   passive: {fileID: 0}
   sprites: []
@@ -2278,7 +2277,7 @@ MonoBehaviour:
   attack: 0
   moveAndAttack: 0
   detectedStealthHero: 0
---- !u!114 &4139838481242840768
+--- !u!114 &1943974288487111099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2287,55 +2286,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5583804447610931201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a620bb1cc8fa19b4ba3e4345c742ea07, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ff6a29ddb1c2304eaa3c97216f461e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillName: Slash
-  damage: 6
+  skillName: 
+  damage: 0
   heal: 0
   cooldown: 0
-  range: 1
-  minRange: 1
-  targetType: 0
-  targetArea: 0
-  targetUnitAlignment: 0
-  aoeType: 0
-  aoeSize: 1
-  aoeOffset: 0
-  aoeDuration: 0
-  aoeColor: {r: 0, g: 0, b: 0, a: 0}
-  skillType: 0
-  secondaryDamage: 0
-  secondaryRange: 0
-  debuffChance: 0
-  hitChance: 0
-  stunChance: 0
-  inflictKnockback: 0
-  isBackstabbing: 0
-  backstabBonus: 3
-  placable: 0
-  placableCount: 0
-  maxCount: 0
-  placableGameObject: {fileID: 0}
-  skillDescription: Single Target, Deal 6 Damage
---- !u!114 &4212859529687142437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583804447610931201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c43499a8b026834ea18ea51ba7b4afb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: Lunge
-  damage: 5
-  heal: 0
-  cooldown: 0
-  range: 2
-  minRange: 2
+  range: 0
+  minRange: 0
   targetType: 0
   targetArea: 0
   targetUnitAlignment: 0
@@ -2357,7 +2316,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: Move 1 tile and attack the tile ahead. Deal 5 Damage
+  skillDescription: 
 --- !u!114 &1429316040
 MonoBehaviour:
   m_ObjectHideFlags: 0
