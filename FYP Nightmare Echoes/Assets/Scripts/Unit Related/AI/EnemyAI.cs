@@ -399,9 +399,21 @@ namespace NightmareEchoes.Unit.AI
                             if (checkEntityOnPath.IsProp)
                             {
                                 foundProp = true;
-                                targetTileToAttack = shortestPath[i];
-                                currSelectedSkill = thisUnit.BasicAttackSkill;
-
+                                float rangeDist = FindDistanceBetweenTile(shortestPath[i - 1], targetHero.ActiveTile);
+                                Debug.Log(rangeDist);
+                                if (rangeDist <= currSelectedSkill.Range && rangeDist >= currSelectedSkill.MinRange)
+                                {
+                                    targetTileToAttack = targetHero.ActiveTile;
+                                    if (currSelectedSkill.TargetType == TargetType.AOE)
+                                    {
+                                        SetAOETargetTile(finalMovePath[finalMovePath.Count - 1]);
+                                    }
+                                }
+                                else
+                                {
+                                    targetTileToAttack = shortestPath[i];
+                                    currSelectedSkill = thisUnit.BasicAttackSkill;
+                                }
                                 for (int j = 0; j < i; j++)
                                 {
                                     finalMovePath.Add(shortestPath[j]);
@@ -445,9 +457,21 @@ namespace NightmareEchoes.Unit.AI
                         if (checkEntityOnPath.IsProp)
                         {
                             foundProp = true;
-                            targetTileToAttack = shortestPath[i];
-                            currSelectedSkill = thisUnit.BasicAttackSkill;
-
+                            float rangeDist = FindDistanceBetweenTile(shortestPath[i - 1], targetHero.ActiveTile);
+                            Debug.Log(rangeDist);
+                            if (rangeDist <= currSelectedSkill.Range && rangeDist >= currSelectedSkill.MinRange)
+                            {
+                                targetTileToAttack = targetHero.ActiveTile;
+                                if (currSelectedSkill.TargetType == TargetType.AOE)
+                                {
+                                    SetAOETargetTile(finalMovePath[finalMovePath.Count - 1]);
+                                }
+                            }
+                            else
+                            {
+                                targetTileToAttack = shortestPath[i];
+                                currSelectedSkill = thisUnit.BasicAttackSkill;
+                            }
                             for (int j = 0; j < i; j++)
                             {
                                 finalMovePath.Add(shortestPath[j]);
