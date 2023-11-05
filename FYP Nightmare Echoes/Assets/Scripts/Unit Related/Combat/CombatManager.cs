@@ -205,12 +205,8 @@ namespace NightmareEchoes.Unit.Combat
         
         private void EndTurn()
         {
-            if(activeSkill.GetComponent<Entity>() != null)
-            {
-                activeSkill.GetComponent<Entity>().ShowPopUpText(activeSkill.SkillName, Color.red);
-                activeSkill.CheckCooldown(true);
-            }
-
+            activeSkill.animationCoroutine = null;
+            activeSkill.CheckCooldown(true);
             activeSkill.Reset();
             activeSkill = null;
 
@@ -830,11 +826,36 @@ namespace NightmareEchoes.Unit.Combat
         {
             if (activeSkill.Cast(target))
             {
+                #region Animations
+                RenderOverlayTile.Instance.ClearTargetingRenders();
+                var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
+
+                //show skill name
+                activeUnit.ShowPopUpText(activeSkill.SkillName, Color.red);
+
+                yield return WaitForAnimationCompletion(activeUnit);
+                #endregion
+
                 EndTurn();
                 yield return null;
-            }else if (secondaryTargeting)
+
+            }
+            else if (secondaryTargeting)
             {
                 yield return new WaitUntil(() => activeSkill.Cast(target));
+
+                #region Animations
+                //wait for animations
+                RenderOverlayTile.Instance.ClearTargetingRenders();
+                var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
+
+                //show skill name
+                activeUnit.ShowPopUpText(activeSkill.SkillName, Color.red);
+
+                yield return WaitForAnimationCompletion(activeUnit);
+
+                #endregion
+
                 EndTurn();
             }
         }
@@ -843,15 +864,53 @@ namespace NightmareEchoes.Unit.Combat
         {
             if (activeSkill.Cast(target, aoeTiles))
             {
+                #region Animations
+                //wait for animations
+                RenderOverlayTile.Instance.ClearTargetingRenders();
+                var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
+
+                //show skill name
+                activeUnit.ShowPopUpText(activeSkill.SkillName, Color.red);
+
+                yield return WaitForAnimationCompletion(activeUnit);
+
+                #endregion
+
                 EndTurn();
                 yield return null;
             }
             else if (secondaryTargeting)
             {
                 yield return new WaitUntil(() => activeSkill.Cast(target, aoeTiles));
+
+                #region Animations
+                //wait for animations
+                RenderOverlayTile.Instance.ClearTargetingRenders();
+                var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
+
+                //show skill name
+                activeUnit.ShowPopUpText(activeSkill.SkillName, Color.red);
+
+                yield return WaitForAnimationCompletion(activeUnit);
+
+                #endregion
+
                 EndTurn();
             }
         }
+
+        IEnumerator WaitForAnimationCompletion(Entity activeUnit)
+        {
+            if (activeUnit.Direction == Direction.NORTH || activeUnit.Direction == Direction.WEST)
+            {
+                yield return new WaitUntil(() => activeUnit.BackAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1);
+            }
+            else if (activeUnit.Direction == Direction.SOUTH || activeUnit.Direction == Direction.EAST)
+            {
+                yield return new WaitUntil(() => activeUnit.FrontAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1);
+            }
+        }
+
         #endregion
 
         #region Object Pooling

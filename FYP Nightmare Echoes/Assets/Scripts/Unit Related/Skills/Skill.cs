@@ -53,7 +53,8 @@ namespace NightmareEchoes.Unit
 
         protected bool onCooldown;
         protected float cd;
-        
+        public Coroutine animationCoroutine = null;
+
         [field: TextArea(1,10)][SerializeField] protected string skillDescription;
 
         #region properties
@@ -364,7 +365,9 @@ namespace NightmareEchoes.Unit
             {
                 if (thisUnit.DoesModifierExist(STATUS_EFFECT.BLIND_TOKEN).genericValue > UnityEngine.Random.Range(0, 101))
                 {
-                    thisUnit.ShowPopUpText($"Blinded!", Color.red);
+                    thisUnit.ShowPopUpText($"Blinded, attack missed!!", Color.red);
+                    thisUnit.UpdateTokenLifeTime(STATUS_EFFECT.BLIND_TOKEN);
+
                     return false;
                 }
                 else
@@ -470,6 +473,33 @@ namespace NightmareEchoes.Unit
                 if (cd <= 0)
                     onCooldown = false;
             }
+        }
+
+        protected IEnumerator PlaySkillAnimation(Entity unit, string animBoolName, bool reset = true)
+        {
+            if (unit.Direction == Direction.NORTH || unit.Direction == Direction.WEST)
+            {
+                unit.BackAnimator.SetBool(animBoolName, true);
+
+                yield return new WaitUntil(() => unit.BackAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1);
+
+                unit.BackAnimator.SetBool(animBoolName, false);
+            }
+            else if (unit.Direction == Direction.SOUTH || unit.Direction == Direction.EAST)
+            {
+                unit.FrontAnimator.SetBool(animBoolName, true);
+                yield return new WaitUntil(() => unit.FrontAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1);
+
+                unit.FrontAnimator.SetBool(animBoolName, false);
+            }
+
+            if (reset)
+            {
+                unit.ResetAnimator();
+            }
+
+            animationCoroutine = null;
+            yield return null;
         }
     }
     

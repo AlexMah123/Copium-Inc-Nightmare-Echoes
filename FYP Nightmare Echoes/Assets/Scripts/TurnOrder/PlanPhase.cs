@@ -12,7 +12,7 @@ namespace NightmareEchoes.TurnOrder
         {
             controller.StartCoroutine(CombatManager.Instance.UpdateUnitPositionsAtStart());
 
-            UIManager.Instance.GuideButton();
+            //UIManager.Instance.GuideButton();
 
             controller.StartCoroutine(Planning());
             //insert planning faze, placing heros

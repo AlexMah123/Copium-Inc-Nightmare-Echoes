@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: 1670789331479868012}
   - component: {fileID: 1961892250}
   - component: {fileID: 1961892249}
+  - component: {fileID: 1727090108}
   m_Layer: 6
   m_Name: ArbalistFrontModel
   m_TagString: Untagged
@@ -356,6 +357,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &1727090108
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569652437285464591}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &569652437308013150
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +379,7 @@ GameObject:
   - component: {fileID: 1670789331518136893}
   - component: {fileID: 1961892248}
   - component: {fileID: 1961892247}
+  - component: {fileID: 1480256663}
   m_Layer: 6
   m_Name: ArbalistBackModel
   m_TagString: Untagged
@@ -434,6 +447,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &1480256663
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569652437308013150}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &625270984244024455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,7 +1711,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7305331337648946353}
-  - component: {fileID: 8905619706380316623}
   - component: {fileID: 1477519619}
   - component: {fileID: 8143709165264484512}
   - component: {fileID: 7936965139983551972}
@@ -1720,17 +1743,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!210 &8905619706380316623
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3376283141138650508}
-  m_Enabled: 1
-  m_SortingLayerID: -1735001907
-  m_SortingLayer: 5
-  m_SortingOrder: 0
 --- !u!212 &1477519619
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1877,7 +1889,7 @@ MonoBehaviour:
   targetHero: {fileID: 0}
   targetTileToAttack: {fileID: 0}
   currSelectedSkill: {fileID: 0}
-  attackDelay: 0.5
+  attackDelay: 0.75
   attack: 0
   moveAndAttack: 0
   detectedStealthHero: 0

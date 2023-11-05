@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Sound;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 //Created by JH
@@ -14,10 +13,22 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target);
 
-            DealDamage(target);
+            StartCoroutine(Attack(target));
 
             //AudioManager.instance.PlaySFX("ArcaneMissle");
             return true;
+        }
+
+        IEnumerator Attack(Entity target)
+        {
+            yield return new WaitForSeconds(0.1f);
+            //animation
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+
+            yield return new WaitUntil(()=> animationCoroutine == null);
+
+
+            DealDamage(target);
         }
     }
 }

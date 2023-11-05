@@ -907,6 +907,39 @@ namespace NightmareEchoes.Unit
             }
         }
 
+        public bool IsAnimatorPlaying()
+        {
+            if (frontAnimator != null)
+            {
+                for (int i = 0; i < frontAnimator.parameterCount; i++)
+                {
+                    if (frontAnimator.parameters[i].type == AnimatorControllerParameterType.Bool)
+                    {
+                        if (frontAnimator.GetBool(frontAnimator.parameters[i].name) == false)
+                            continue;
+
+                        return true;
+                    }
+                }
+            }
+
+            if (backAnimator != null)
+            {
+                for (int i = 0; i < backAnimator.parameterCount; i++)
+                {
+                    if (backAnimator.parameters[i].type == AnimatorControllerParameterType.Bool)
+                    {
+                        if (backAnimator.GetBool(backAnimator.parameters[i].name) == false)
+                            continue;
+
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public void ShowPopUpText(string text, Color color, float duration = 1, int size = 0)
         {
             if (popupTextPrefab)
@@ -928,7 +961,7 @@ namespace NightmareEchoes.Unit
             {
                 var tempData = popupTextQueue.Dequeue();
 
-                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up, Quaternion.identity);
+                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up, Quaternion.identity, transform);
                 prefab.GetComponent<FloatingText>().destroyTime = tempData.duration;
                 prefab.hideFlags = HideFlags.HideInHierarchy;
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();

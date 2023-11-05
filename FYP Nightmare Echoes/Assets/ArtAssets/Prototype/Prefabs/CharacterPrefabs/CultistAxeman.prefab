@@ -1019,6 +1019,7 @@ GameObject:
   - component: {fileID: 3705447099935310457}
   - component: {fileID: 5009164603248901311}
   - component: {fileID: 8680266902242896779}
+  - component: {fileID: 1197819895}
   m_Layer: 6
   m_Name: AxemenBackModel
   m_TagString: Untagged
@@ -1085,6 +1086,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &1197819895
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2568315494103652890}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &2639062983535142815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2084,7 +2096,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5583804447610931203}
-  - component: {fileID: 3397890836780608074}
   - component: {fileID: 5986006345401308091}
   - component: {fileID: 8893637955381217503}
   - component: {fileID: 1321002866362748770}
@@ -2116,17 +2127,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!210 &3397890836780608074
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583804447610931201}
-  m_Enabled: 1
-  m_SortingLayerID: -1735001907
-  m_SortingLayer: 5
-  m_SortingOrder: 0
 --- !u!212 &5986006345401308091
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2273,7 +2273,7 @@ MonoBehaviour:
   targetHero: {fileID: 0}
   targetTileToAttack: {fileID: 0}
   currSelectedSkill: {fileID: 0}
-  attackDelay: 0.5
+  attackDelay: 0.75
   attack: 0
   moveAndAttack: 0
   detectedStealthHero: 0
@@ -3234,6 +3234,7 @@ GameObject:
   - component: {fileID: 8650477592669706301}
   - component: {fileID: 1820092819396343554}
   - component: {fileID: 9121785384331327957}
+  - component: {fileID: 569765834}
   m_Layer: 6
   m_Name: AxemenFrontModel
   m_TagString: Untagged
@@ -3301,6 +3302,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &569765834
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549354987949031518}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &7737713427652481981
 GameObject:
   m_ObjectHideFlags: 0

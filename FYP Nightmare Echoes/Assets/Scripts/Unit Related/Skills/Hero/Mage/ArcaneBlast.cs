@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Sound;
@@ -12,6 +13,22 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target, aoeTiles);
 
+            StartCoroutine(Attack(target, new List<OverlayTile>(aoeTiles)));
+
+            
+            //AudioManager.instance.PlaySFX("ArcaneBlast");
+            return true;
+        }
+
+        IEnumerator Attack(OverlayTile target, List<OverlayTile> aoeTiles)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            //animation
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
+
             if (target.CheckEntityGameObjectOnTile())
             {
                 var unit = target.CheckEntityGameObjectOnTile().GetComponent<Entity>();
@@ -19,18 +36,16 @@ namespace NightmareEchoes.Unit
             }
 
             aoeTiles.Remove(target);
-            
+
             foreach (var tile in aoeTiles)
             {
                 if (!tile.CheckEntityGameObjectOnTile()) continue;
-  
+
                 var unit = tile.CheckEntityGameObjectOnTile().GetComponent<Entity>();
 
-                DealDamage(unit, secondaryDamage, checkBlind:false);
+                DealDamage(unit, secondaryDamage, checkBlind: false);
                 Knockback(target, unit);
             }
-            //AudioManager.instance.PlaySFX("ArcaneBlast");
-            return true;
         }
     }
 }

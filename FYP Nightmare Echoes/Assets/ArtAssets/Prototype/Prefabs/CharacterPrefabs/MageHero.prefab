@@ -3272,7 +3272,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8121445182508319272}
-  - component: {fileID: 8121445182508319266}
   - component: {fileID: 1203696666}
   - component: {fileID: 8121445182508319267}
   - component: {fileID: 8121445182508319264}
@@ -3305,17 +3304,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!210 &8121445182508319266
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8121445182508319273}
-  m_Enabled: 1
-  m_SortingLayerID: -1735001907
-  m_SortingLayer: 5
-  m_SortingOrder: 0
 --- !u!212 &1203696666
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3804,6 +3792,7 @@ GameObject:
   - component: {fileID: 7465557879595165623}
   - component: {fileID: 8121445182645513491}
   - component: {fileID: 1670789329699151563}
+  - component: {fileID: 1306400064}
   m_Layer: 6
   m_Name: MageBackModel
   m_TagString: Inspectable
@@ -3868,6 +3857,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &1306400064
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598185887813615572}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &8598185888284416580
 GameObject:
   m_ObjectHideFlags: 0
@@ -3879,6 +3879,7 @@ GameObject:
   - component: {fileID: 7465557879394877991}
   - component: {fileID: 8121445182897306612}
   - component: {fileID: 1670789329899436891}
+  - component: {fileID: 1721846491}
   m_Layer: 6
   m_Name: MageFrontModel
   m_TagString: Inspectable
@@ -3947,6 +3948,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &1721846491
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598185888284416580}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &8653741418672858316
 GameObject:
   m_ObjectHideFlags: 0

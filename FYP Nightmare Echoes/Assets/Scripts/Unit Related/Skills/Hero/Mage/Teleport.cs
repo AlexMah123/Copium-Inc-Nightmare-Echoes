@@ -39,7 +39,7 @@ namespace NightmareEchoes.Unit
                 CombatManager.Instance.SecondaryTargeting();
                 StartCoroutine(CastTeleport(target));
             }
-            
+
             return GetDestination();
         }
 
@@ -62,7 +62,11 @@ namespace NightmareEchoes.Unit
             cm.SetCustomRange(tileRanges);
 
             yield return new WaitUntil(GetDestination);
-            
+
+            //animations
+            yield return new WaitForSeconds(0.1f);
+            StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+
             targetUnit.transform.position = targetTile.transform.position;
             targetUnit.UpdateLocation();
         }

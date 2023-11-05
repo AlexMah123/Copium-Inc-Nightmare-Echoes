@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: 1670789331479868012}
   - component: {fileID: 1961892250}
   - component: {fileID: 1961892249}
+  - component: {fileID: 84313985}
   m_Layer: 6
   m_Name: ArbalistFrontModel
   m_TagString: Untagged
@@ -356,6 +357,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &84313985
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569652437285464591}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &569652437308013150
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +379,7 @@ GameObject:
   - component: {fileID: 1670789331518136893}
   - component: {fileID: 1961892248}
   - component: {fileID: 1961892247}
+  - component: {fileID: 545628355}
   m_Layer: 6
   m_Name: ArbalistBackModel
   m_TagString: Untagged
@@ -434,6 +447,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &545628355
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569652437308013150}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &625270984244024455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,11 +1711,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7305331337648946353}
-  - component: {fileID: 8905619706380316623}
   - component: {fileID: 1477519619}
   - component: {fileID: 8143709165264484512}
   - component: {fileID: 7936965139983551972}
-  - component: {fileID: 359293498}
   - component: {fileID: 964070419}
   - component: {fileID: 503955040074887315}
   - component: {fileID: 7808776287786787515}
@@ -1720,17 +1742,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!210 &8905619706380316623
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3376283141138650508}
-  m_Enabled: 1
-  m_SortingLayerID: -1735001907
-  m_SortingLayer: 5
-  m_SortingOrder: 0
 --- !u!212 &1477519619
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1772,7 +1783,7 @@ SpriteRenderer:
   m_SortingLayerID: -1735001907
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 836943ad638ee6447b085119cce72588, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f5082124ef43bea4087ebe0ef381b4a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1795,8 +1806,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c814d76c80e3cf45ae37b6cc5f8008a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Cultist Arbalist
-  sprite: {fileID: 21300000, guid: 836943ad638ee6447b085119cce72588, type: 3}
+  _name: Cultist Caster
+  sprite: {fileID: 21300000, guid: f5082124ef43bea4087ebe0ef381b4a2, type: 3}
   isProp: 0
   isHostile: 1
   direction: 0
@@ -1877,50 +1888,10 @@ MonoBehaviour:
   targetHero: {fileID: 0}
   targetTileToAttack: {fileID: 0}
   currSelectedSkill: {fileID: 0}
-  attackDelay: 0.5
+  attackDelay: 0.75
   attack: 0
   moveAndAttack: 0
   detectedStealthHero: 0
---- !u!114 &359293498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3376283141138650508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c5b208ca53480940b9b636943e91b7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillName: Watchful
-  damage: 3
-  heal: 0
-  cooldown: 0
-  range: 1
-  minRange: 1
-  targetType: 1
-  targetArea: 0
-  targetUnitAlignment: 0
-  aoeType: 1
-  aoeSize: 2
-  aoeOffset: 3
-  aoeDuration: 1
-  aoeColor: {r: 0.7877358, g: 1, b: 0.94388205, a: 0}
-  skillType: 0
-  secondaryDamage: 2
-  secondaryRange: 0
-  debuffChance: 0
-  hitChance: 100
-  stunChance: 0
-  inflictKnockback: 0
-  isBackstabbing: 0
-  backstabBonus: 3
-  placable: 0
-  placableCount: 0
-  maxCount: 0
-  placableGameObject: {fileID: 0}
-  skillDescription: 
 --- !u!60 &964070419
 PolygonCollider2D:
   m_ObjectHideFlags: 0

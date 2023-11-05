@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 1883113998076466619}
   - component: {fileID: 1018484623970284303}
   - component: {fileID: 8616171158358790739}
+  - component: {fileID: 1875795675}
   m_Layer: 0
   m_Name: SwordsmenBackModel
   m_TagString: Untagged
@@ -355,6 +356,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &1875795675
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786498126027591128}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &985139082964600274
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,6 +515,7 @@ GameObject:
   - component: {fileID: 115441552782232268}
   - component: {fileID: 1849129245295388272}
   - component: {fileID: 5623154795475380138}
+  - component: {fileID: 385903077}
   m_Layer: 0
   m_Name: SwordsmenFrontModel
   m_TagString: Untagged
@@ -569,6 +582,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &385903077
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248122374720377519}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &1366679411790004556
 GameObject:
   m_ObjectHideFlags: 0
@@ -2197,7 +2221,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5583804447610931203}
-  - component: {fileID: 3397890836780608074}
   - component: {fileID: 5986006345401308091}
   - component: {fileID: 8893637955381217503}
   - component: {fileID: 1321002866362748770}
@@ -2229,17 +2252,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!210 &3397890836780608074
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583804447610931201}
-  m_Enabled: 1
-  m_SortingLayerID: -1735001907
-  m_SortingLayer: 5
-  m_SortingOrder: 0
 --- !u!212 &5986006345401308091
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2304,7 +2316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515ddb703c702b94e8c6d348002aada4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Cultist Axeman
+  _name: Cultist Swordsman
   sprite: {fileID: 21300000, guid: e10a6e627cb4e5748a3146d52ed0e44e, type: 3}
   isProp: 0
   isHostile: 1
@@ -2386,7 +2398,7 @@ MonoBehaviour:
   targetHero: {fileID: 0}
   targetTileToAttack: {fileID: 0}
   currSelectedSkill: {fileID: 0}
-  attackDelay: 0.5
+  attackDelay: 0.75
   attack: 0
   moveAndAttack: 0
   detectedStealthHero: 0

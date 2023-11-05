@@ -10,12 +10,25 @@ namespace NightmareEchoes.Unit
         public override bool Cast(Entity target)
         {
             base.Cast(target);
+
+            StartCoroutine(Attack(target));
+
+            return true;
+        }
+
+        IEnumerator Attack(Entity target)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            //animation
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
+
             if (DealDamage(target))
             {
                 Knockback(thisUnit.ActiveTile, target);
             }
-
-            return true;
         }
     }
 }

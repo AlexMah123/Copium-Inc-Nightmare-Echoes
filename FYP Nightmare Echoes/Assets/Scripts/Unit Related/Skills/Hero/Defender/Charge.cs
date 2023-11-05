@@ -43,7 +43,8 @@ namespace NightmareEchoes.Unit
                 if (frontalTile.CheckEntityGameObjectOnTile() || frontalTile.CheckObstacleOnTile()) return false;
             }
 
-            StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, destinationTile, 0.15f));
+            //animations
+            StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, destinationTile, 0.25f));
             StartCoroutine(DelayedAttack(target));
             
             return true;
@@ -51,8 +52,13 @@ namespace NightmareEchoes.Unit
         
         IEnumerator DelayedAttack(Entity target)
         {
-            yield return new WaitForSeconds(0.16f);
             base.Cast(target);
+            yield return new WaitForSeconds(0.3f);
+            //animations
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Charge"));
+
+            yield return new WaitUntil (() => animationCoroutine == null);
+
             if (DealDamage(target))
             {
                 Knockback(thisUnit.ActiveTile, target);
