@@ -911,8 +911,10 @@ namespace NightmareEchoes.Unit.Combat
             }
             else if (activeUnit.Direction == Direction.SOUTH || activeUnit.Direction == Direction.EAST)
             {
-                yield return new WaitUntil(() => activeUnit.FrontAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 || activeUnit.BackAnimator.IsInTransition(0));
+                yield return new WaitUntil(() => activeUnit.FrontAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 || activeUnit.FrontAnimator.IsInTransition(0));
             }
+
+            yield return null;
         }
 
         #endregion
