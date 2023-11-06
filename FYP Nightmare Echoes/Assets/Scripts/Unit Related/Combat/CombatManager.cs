@@ -205,7 +205,7 @@ namespace NightmareEchoes.Unit.Combat
         
         private void EndTurn()
         {
-            activeSkill.animationCoroutine = null;
+            //activeSkill.animationCoroutine = null;
             activeSkill.CheckCooldown(true);
             activeSkill.Reset();
             activeSkill = null;
@@ -387,14 +387,22 @@ namespace NightmareEchoes.Unit.Combat
         #endregion
 
         #region Enemy Targeting
-        public void EnemyTargetUnit(Entity target, Skill skill)
+        public IEnumerator EnemyTargetUnit(Entity target, Skill skill)
         {
             activeSkill = skill;
             activeSkill.Cast(target);
+
+            #region Animations
+            RenderOverlayTile.Instance.ClearTargetingRenders();
+            var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
+
+            yield return WaitForAnimationCompletion(activeUnit);
+            #endregion
+
             EndTurn();
         }
 
-        public void EnemyTargetGround(OverlayTile targetTile, Skill skill)
+        public IEnumerator EnemyTargetGround(OverlayTile targetTile, Skill skill)
         {
             activeSkill = skill;
 
@@ -413,6 +421,14 @@ namespace NightmareEchoes.Unit.Combat
             }
 
             activeSkill.Cast(targetTile, aoePreviewTiles);
+
+            #region Animations
+            RenderOverlayTile.Instance.ClearTargetingRenders();
+            var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
+
+            yield return WaitForAnimationCompletion(activeUnit);
+            #endregion
+
             EndTurn();
         }
 
@@ -830,9 +846,6 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
 
-                //show skill name
-                activeUnit.ShowPopUpText(activeSkill.SkillName, Color.red);
-
                 yield return WaitForAnimationCompletion(activeUnit);
                 #endregion
 
@@ -848,9 +861,6 @@ namespace NightmareEchoes.Unit.Combat
                 //wait for animations
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
-
-                //show skill name
-                activeUnit.ShowPopUpText(activeSkill.SkillName, Color.red);
 
                 yield return WaitForAnimationCompletion(activeUnit);
 
@@ -869,9 +879,6 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
 
-                //show skill name
-                activeUnit.ShowPopUpText(activeSkill.SkillName, Color.red);
-
                 yield return WaitForAnimationCompletion(activeUnit);
 
                 #endregion
@@ -888,9 +895,6 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
 
-                //show skill name
-                activeUnit.ShowPopUpText(activeSkill.SkillName, Color.red);
-
                 yield return WaitForAnimationCompletion(activeUnit);
 
                 #endregion
@@ -903,11 +907,11 @@ namespace NightmareEchoes.Unit.Combat
         {
             if (activeUnit.Direction == Direction.NORTH || activeUnit.Direction == Direction.WEST)
             {
-                yield return new WaitUntil(() => activeUnit.BackAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1);
+                yield return new WaitUntil(() => activeUnit.BackAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 || activeUnit.BackAnimator.IsInTransition(0));
             }
             else if (activeUnit.Direction == Direction.SOUTH || activeUnit.Direction == Direction.EAST)
             {
-                yield return new WaitUntil(() => activeUnit.FrontAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1);
+                yield return new WaitUntil(() => activeUnit.FrontAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 || activeUnit.BackAnimator.IsInTransition(0));
             }
         }
 

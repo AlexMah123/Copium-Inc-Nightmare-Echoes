@@ -233,6 +233,8 @@ namespace NightmareEchoes.Unit
         //Directly on units
         public virtual bool Cast(Entity target)
         {
+            thisUnit.ShowPopUpText(skillName, Color.red);
+
             Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
             Vector2 CastTo = new Vector2(target.ActiveTile.gridLocation.x, target.ActiveTile.gridLocation.y);
 
@@ -288,6 +290,8 @@ namespace NightmareEchoes.Unit
         //For ground
         public virtual bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
+            thisUnit.ShowPopUpText(skillName, Color.red);
+
             Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
             Vector2 CastTo = new Vector2(target.gridLocation.x, target.gridLocation.y);
 
@@ -475,7 +479,7 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        protected IEnumerator PlaySkillAnimation(Entity unit, string animBoolName, bool reset = true)
+        public IEnumerator PlaySkillAnimation(Entity unit, string animBoolName, bool reset = true)
         {
             if (unit.Direction == Direction.NORTH || unit.Direction == Direction.WEST)
             {
@@ -483,6 +487,7 @@ namespace NightmareEchoes.Unit
 
                 yield return new WaitUntil(() => unit.BackAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1);
 
+                yield return new WaitForSeconds(0.25f);
                 unit.BackAnimator.SetBool(animBoolName, false);
             }
             else if (unit.Direction == Direction.SOUTH || unit.Direction == Direction.EAST)
@@ -490,6 +495,7 @@ namespace NightmareEchoes.Unit
                 unit.FrontAnimator.SetBool(animBoolName, true);
                 yield return new WaitUntil(() => unit.FrontAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1);
 
+                yield return new WaitForSeconds(0.25f);
                 unit.FrontAnimator.SetBool(animBoolName, false);
             }
 

@@ -1019,7 +1019,6 @@ GameObject:
   - component: {fileID: 3705447099935310457}
   - component: {fileID: 5009164603248901311}
   - component: {fileID: 8680266902242896779}
-  - component: {fileID: 1197819895}
   m_Layer: 6
   m_Name: AxemenBackModel
   m_TagString: Untagged
@@ -1034,8 +1033,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2568315494103652890}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.25, y: -0.15, z: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.25, y: -0.15000007, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1051,7 +1050,7 @@ Transform:
   - {fileID: 5497412916175637835}
   - {fileID: 1783994898458718926}
   - {fileID: 8986035123179331125}
-  m_Father: {fileID: 5583804447610931203}
+  m_Father: {fileID: 701887683760397456}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &5009164603248901311
@@ -1086,17 +1085,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!210 &1197819895
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2568315494103652890}
-  m_Enabled: 1
-  m_SortingLayerID: -1735001907
-  m_SortingLayer: 5
-  m_SortingOrder: 0
 --- !u!1 &2639062983535142815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,6 +1117,51 @@ Transform:
   m_Father: {fileID: 1151067167718823341}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2639966888129215204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 701887683760397456}
+  - component: {fileID: 8409660011005329468}
+  m_Layer: 6
+  m_Name: Models
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &701887683760397456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639966888129215204}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8650477592669706301}
+  - {fileID: 3705447099935310457}
+  m_Father: {fileID: 5583804447610931203}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &8409660011005329468
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639966888129215204}
+  m_Enabled: 1
+  m_SortingLayerID: -1735001907
+  m_SortingLayer: 5
+  m_SortingOrder: 0
 --- !u!1 &2649096976598696277
 GameObject:
   m_ObjectHideFlags: 0
@@ -2122,8 +2155,7 @@ Transform:
   m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8650477592669706301}
-  - {fileID: 3705447099935310457}
+  - {fileID: 701887683760397456}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2273,7 +2305,7 @@ MonoBehaviour:
   targetHero: {fileID: 0}
   targetTileToAttack: {fileID: 0}
   currSelectedSkill: {fileID: 0}
-  attackDelay: 0.75
+  attackDelay: 0.25
   attack: 0
   moveAndAttack: 0
   detectedStealthHero: 0
@@ -2289,12 +2321,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff6a29ddb1c2304eaa3c97216f461e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: Hack
   damage: 0
   heal: 0
   cooldown: 0
-  range: 0
-  minRange: 0
+  range: 1
+  minRange: 1
   targetType: 0
   targetArea: 0
   targetUnitAlignment: 0
@@ -2334,7 +2366,7 @@ MonoBehaviour:
   heal: 0
   cooldown: 0
   range: 1
-  minRange: 0
+  minRange: 1
   targetType: 0
   targetArea: 0
   targetUnitAlignment: 0
@@ -2349,7 +2381,7 @@ MonoBehaviour:
   debuffChance: 0
   hitChance: 0
   stunChance: 0
-  inflictKnockback: 0
+  inflictKnockback: 1
   isBackstabbing: 0
   backstabBonus: 3
   placable: 0
@@ -3234,7 +3266,6 @@ GameObject:
   - component: {fileID: 8650477592669706301}
   - component: {fileID: 1820092819396343554}
   - component: {fileID: 9121785384331327957}
-  - component: {fileID: 569765834}
   m_Layer: 6
   m_Name: AxemenFrontModel
   m_TagString: Untagged
@@ -3249,8 +3280,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7549354987949031518}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.25000006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3267,7 +3298,7 @@ Transform:
   - {fileID: 5288682861667875355}
   - {fileID: 1103165492395648355}
   - {fileID: 4022840767610422385}
-  m_Father: {fileID: 5583804447610931203}
+  m_Father: {fileID: 701887683760397456}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1820092819396343554
@@ -3302,17 +3333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b532daf4b309124ab9e672f3b0c8dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!210 &569765834
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7549354987949031518}
-  m_Enabled: 1
-  m_SortingLayerID: -1735001907
-  m_SortingLayer: 5
-  m_SortingOrder: 0
 --- !u!1 &7737713427652481981
 GameObject:
   m_ObjectHideFlags: 0

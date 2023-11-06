@@ -49,7 +49,7 @@ namespace NightmareEchoes.Unit
                     if (frontalTile.CheckEntityGameObjectOnTile() || frontalTile.CheckObstacleOnTile()) return false;
                 }
 
-                StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, destinationTile, 0.15f));
+                StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, destinationTile, 0.25f));
                 StartCoroutine(DelayedAttack(target));
             }
 
@@ -60,51 +60,18 @@ namespace NightmareEchoes.Unit
 
         IEnumerator DelayedAttack(Entity target)
         {
-            yield return new WaitForSeconds(0.16f);
             base.Cast(target);
+            yield return new WaitForSeconds(0.3f);
+
+            //animations
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Lunge"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
 
             if (DealDamage(target))
             {
                 target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
             }
         }
-
-        /*public override bool Cast(Entity target)
-        {
-
-
-            base.Cast(target);
-
-            //move towards
-            var direction = target.transform.position - thisUnit.transform.position;
-            var destination = thisUnit.transform.position + (direction/2);
-
-            var tileOccupied = false;
-
-            if (!thisUnit.CheckImmobilize())
-            {
-                var hit = Physics2D.Raycast(destination, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Overlay Tile"));
-                if (hit)
-                {
-                    var tileDestination = hit.collider.gameObject.GetComponent<OverlayTile>();
-                    if (tileDestination)
-                    {
-                        if (tileDestination.CheckEntityGameObjectOnTile() || tileDestination.CheckObstacleOnTile())
-                            tileOccupied = true;
-
-                        if (!tileOccupied)
-                        {
-                            StartCoroutine(Pathfinding.PathfindingManager.Instance.MoveTowardsTile(thisUnit, tileDestination, 0.15f));
-                            if (DealDamage(target))
-                            {
-                                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
-                            }
-                        }
-                    }
-                }
-            }
-
-            return true;
-        }*/
     }
 }

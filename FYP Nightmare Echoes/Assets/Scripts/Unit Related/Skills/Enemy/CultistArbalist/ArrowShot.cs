@@ -11,13 +11,25 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target);
 
-            if(DealDamage(target))
+
+            StartCoroutine(Attack(target));
+
+            return true;
+        }
+
+        IEnumerator Attack(Entity target)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            //animation
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
+
+            if (DealDamage(target))
             {
                 target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
             }
-
-
-            return true;
         }
     }
 }

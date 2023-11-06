@@ -684,13 +684,13 @@ namespace NightmareEchoes.Unit.AI
             {
                 targetTileToAttack.HideTile();
                 finalMovePath.Clear();
-                CombatManager.Instance.EnemyTargetGround(aoeTargetTile, currSelectedSkill);
+                StartCoroutine(CombatManager.Instance.EnemyTargetGround(aoeTargetTile, currSelectedSkill));
             }
             else
             {
                 targetTileToAttack.HideTile();
                 finalMovePath.Clear();
-                CombatManager.Instance.EnemyTargetUnit(targetTileToAttack.CheckEntityGameObjectOnTile().GetComponent<Entity>(), currSelectedSkill);
+                StartCoroutine(CombatManager.Instance.EnemyTargetUnit(targetTileToAttack.CheckEntityGameObjectOnTile().GetComponent<Entity>(), currSelectedSkill));
             }
         }
 

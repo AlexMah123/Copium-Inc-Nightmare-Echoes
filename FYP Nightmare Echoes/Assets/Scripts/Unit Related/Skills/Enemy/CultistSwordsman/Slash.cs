@@ -11,9 +11,22 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target);
 
-            DealDamage(target);
+            StartCoroutine(Attack(target));
 
             return true;
+        }
+
+
+        IEnumerator Attack(Entity target)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            //animation
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
+
+            DealDamage(target);
         }
     }
 }
