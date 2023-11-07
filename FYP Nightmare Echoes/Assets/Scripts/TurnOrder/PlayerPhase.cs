@@ -72,6 +72,11 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnFixedUpdate()
         {
+            
+        }
+
+        protected override void OnUpdate()
+        {
             PathfindingManager.Instance.CheckMovement();
 
             if (PathfindingManager.Instance.isMoving)
@@ -87,10 +92,7 @@ namespace NightmareEchoes.TurnOrder
                     updateUIOnce = true;
                 }
             }
-        }
 
-        protected override void OnUpdate()
-        {
             if (controller.CurrentUnit != null)
             {
                 var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
@@ -167,7 +169,7 @@ namespace NightmareEchoes.TurnOrder
                 //should not need this but just checking
                 //controller.CurrentUnit.ApplyAllBuffDebuffs();
                 //controller.CurrentUnit.ApplyAllTokenEffects(); 
-                controller.CurrentUnit.UpdateBuffDebuffLifeTime();
+                controller.CurrentUnit.UpdateAllBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
 
                 #endregion

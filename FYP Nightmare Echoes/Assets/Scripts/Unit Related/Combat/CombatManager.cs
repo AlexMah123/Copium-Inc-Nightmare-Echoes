@@ -400,6 +400,7 @@ namespace NightmareEchoes.Unit.Combat
             #endregion
 
             EndTurn();
+            yield break;
         }
 
         public IEnumerator EnemyTargetGround(OverlayTile targetTile, Skill skill)
@@ -430,6 +431,7 @@ namespace NightmareEchoes.Unit.Combat
             #endregion
 
             EndTurn();
+            yield break;
         }
 
         #endregion
@@ -907,11 +909,11 @@ namespace NightmareEchoes.Unit.Combat
         {
             if (activeUnit.Direction == Direction.NORTH || activeUnit.Direction == Direction.WEST)
             {
-                yield return new WaitUntil(() => activeUnit.BackAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 || activeUnit.BackAnimator.IsInTransition(0));
+                yield return new WaitUntil(() => activeUnit.BackAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 );
             }
             else if (activeUnit.Direction == Direction.SOUTH || activeUnit.Direction == Direction.EAST)
             {
-                yield return new WaitUntil(() => activeUnit.FrontAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 || activeUnit.FrontAnimator.IsInTransition(0));
+                yield return new WaitUntil(() => activeUnit.FrontAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1);
             }
 
             yield return null;

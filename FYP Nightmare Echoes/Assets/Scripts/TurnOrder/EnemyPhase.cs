@@ -78,20 +78,22 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnFixedUpdate()
         {
-            //start a couroutine to move
-            if (enemyAI == null || controller.CurrentUnit == null) return;
-
-            if (enemyAI.finalMovePath.Count > 0)
-            {
-                enemyAI.MoveProcess(controller.CurrentUnit);
-            }
+            
 
 
         }
         protected override void OnUpdate()
         {
-            if(controller.CurrentUnit != null)
+            //start a couroutine to move
+            if (enemyAI == null || controller.CurrentUnit == null) return;
+
+            if (controller.CurrentUnit != null)
             {
+                if (enemyAI.finalMovePath.Count > 0)
+                {
+                    enemyAI.MoveProcess(controller.CurrentUnit);
+                }
+
                 var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
                 if (aoeDmg)
                 {
@@ -156,7 +158,7 @@ namespace NightmareEchoes.TurnOrder
                 //should not need this but just checking
                 //controller.CurrentUnit.ApplyAllBuffDebuffs();
                 //controller.CurrentUnit.ApplyAllTokenEffects();
-                controller.CurrentUnit.UpdateBuffDebuffLifeTime();
+                controller.CurrentUnit.UpdateAllBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
 
                 #endregion

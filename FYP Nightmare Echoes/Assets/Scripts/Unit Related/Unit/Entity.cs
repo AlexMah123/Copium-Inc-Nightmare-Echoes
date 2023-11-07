@@ -1134,7 +1134,7 @@ namespace NightmareEchoes.Unit
                 case ModifierType.DEBUFF:
                     while (existingStatusEffect.ReturnLifeTime() > 0)
                     {
-                        UpdateTokenLifeTime(existingStatusEffect.statusEffect);
+                        UpdateBuffDebuffLifeTime(existingStatusEffect.statusEffect);
                     }
                     break;
 
@@ -1157,11 +1157,11 @@ namespace NightmareEchoes.Unit
             {
                 case ModifierType.BUFF:
                 case ModifierType.DEBUFF:
-                    buffDebuffList.Clear();
+                    UpdateAllBuffDebuffLifeTime();
                     break;
 
                 case ModifierType.POSITIVETOKEN:
-                    for (int i = 0; i < tokenList.Count; i++)
+                    for (int i = tokenList.Count - 1; i >= 0; i--)
                     {
                         if (tokenList[i].modifierType == ModifierType.POSITIVETOKEN)
                         {
@@ -1174,7 +1174,7 @@ namespace NightmareEchoes.Unit
                     break;
 
                 case ModifierType.NEGATIVETOKEN:
-                    for (int i = 0; i < tokenList.Count; i++)
+                    for (int i = tokenList.Count - 1; i >= 0; i--)
                     {
                         if (tokenList[i].modifierType == ModifierType.NEGATIVETOKEN)
                         {
@@ -1219,10 +1219,26 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        public void UpdateBuffDebuffLifeTime()
+        public void UpdateAllBuffDebuffLifeTime()
         {
             for (int i = BuffDebuffList.Count - 1; i >= 0 ; i--)
             {
+                BuffDebuffList[i].UpdateLifeTime();
+
+                if (BuffDebuffList[i].ReturnLifeTime() <= 0)
+                {
+                    BuffDebuffList.RemoveAt(i);
+                }
+            }
+        }
+
+        public void UpdateBuffDebuffLifeTime(STATUS_EFFECT enumIndex)
+        {
+            for (int i = BuffDebuffList.Count - 1; i >= 0; i--)
+            {
+                if (BuffDebuffList[i].statusEffect != enumIndex)
+                    continue;
+
                 BuffDebuffList[i].UpdateLifeTime();
 
                 if (BuffDebuffList[i].ReturnLifeTime() <= 0)
