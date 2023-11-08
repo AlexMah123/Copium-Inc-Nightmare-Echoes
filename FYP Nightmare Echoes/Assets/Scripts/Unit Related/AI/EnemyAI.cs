@@ -656,7 +656,10 @@ namespace NightmareEchoes.Unit.AI
                     }
                     else
                     {
-                        StartCoroutine(DetectedStealthUnit(redirectTile));
+                        if (!thisUnit.ImmobilizeToken)
+                        {
+                            StartCoroutine(DetectedStealthUnit(redirectTile));
+                        }
                     }
                 }
             }

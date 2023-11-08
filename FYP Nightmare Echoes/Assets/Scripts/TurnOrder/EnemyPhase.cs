@@ -215,6 +215,10 @@ namespace NightmareEchoes.TurnOrder
                     controller.StartCoroutine(controller.PassTurn());
                 }
             }
+            else if (enemyAI.detectedStealthHero)
+            {
+                enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.targetTileToAttack);
+            }
             else if (!enemyAI.detectedStealthHero) //if you are just moving normally
             {
                 controller.StartCoroutine(controller.PassTurn());
