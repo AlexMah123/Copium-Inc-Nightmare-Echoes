@@ -847,8 +847,11 @@ namespace NightmareEchoes.Unit.Combat
                 #region Animations
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
-
-                yield return WaitForAnimationCompletion(activeUnit);
+                
+                if(activeUnit.frontAnimator != null || activeUnit.backAnimator != null)
+                {
+                    yield return WaitForAnimationCompletion(activeUnit)
+                }
                 #endregion
 
                 EndTurn();
@@ -864,7 +867,10 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
 
-                yield return WaitForAnimationCompletion(activeUnit);
+                if (activeUnit.frontAnimator != null || activeUnit.backAnimator != null)
+                {
+                    yield return WaitForAnimationCompletion(activeUnit)
+                }
 
                 #endregion
 
@@ -881,7 +887,10 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
 
-                yield return WaitForAnimationCompletion(activeUnit);
+                if (activeUnit.frontAnimator != null || activeUnit.backAnimator != null)
+                {
+                    yield return WaitForAnimationCompletion(activeUnit)
+                }
 
                 #endregion
 
@@ -897,7 +906,10 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
 
-                yield return WaitForAnimationCompletion(activeUnit);
+                if (activeUnit.frontAnimator != null || activeUnit.backAnimator != null)
+                {
+                    yield return WaitForAnimationCompletion(activeUnit)
+                }
 
                 #endregion
 
