@@ -72,11 +72,6 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnFixedUpdate()
         {
-            
-        }
-
-        protected override void OnUpdate()
-        {
             PathfindingManager.Instance.CheckMovement();
 
             if (PathfindingManager.Instance.isMoving)
@@ -92,7 +87,10 @@ namespace NightmareEchoes.TurnOrder
                     updateUIOnce = true;
                 }
             }
+        }
 
+        protected override void OnUpdate()
+        {
             if (controller.CurrentUnit != null)
             {
                 var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
@@ -128,6 +126,7 @@ namespace NightmareEchoes.TurnOrder
             if (controller.CurrentUnit != null)
             {
                 controller.CurrentUnit.UnhighlightUnit();
+                controller.CurrentUnit.ResetAnimator();
 
                 #region End of Turn Effects
 

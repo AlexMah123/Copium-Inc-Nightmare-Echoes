@@ -480,7 +480,7 @@ namespace NightmareEchoes.Unit
         public IEnumerator PlaySkillAnimation(Entity unit, string animBoolName)
         {
             thisUnit.ShowPopUpText(skillName, Color.red);
-
+            
             if (unit.Direction == Direction.NORTH || unit.Direction == Direction.WEST)
             {
                 unit.BackAnimator.SetBool(animBoolName, true);
@@ -496,6 +496,8 @@ namespace NightmareEchoes.Unit
 
                 unit.FrontAnimator.SetBool(animBoolName, false);
             }
+
+            unit.ResetAnimator();
 
             animationCoroutine = null;
             yield return null;

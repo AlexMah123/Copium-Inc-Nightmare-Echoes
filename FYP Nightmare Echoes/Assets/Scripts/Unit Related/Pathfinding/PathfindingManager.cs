@@ -370,9 +370,12 @@ namespace NightmareEchoes.Unit.Pathfinding
                     {
                         isMoving = false;
                         revertUnitPosition = null;
+                        CameraControl.Instance.isPanning = false;
+
                         ClearArrow(pathList);
                         pathList.Clear();
 
+                        thisUnit.ResetAnimator();
                         return;
                     }
 
