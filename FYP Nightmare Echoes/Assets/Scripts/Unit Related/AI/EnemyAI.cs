@@ -399,7 +399,21 @@ namespace NightmareEchoes.Unit.AI
                             if (checkEntityOnPath.IsProp)
                             {
                                 foundProp = true;
-                                float rangeDist = FindDistanceBetweenTile(shortestPath[i - 1], targetHero.ActiveTile);
+                                float rangeDist;
+                                rangeDist = FindDistanceBetweenTile(shortestPath[i - 1], targetHero.ActiveTile);
+
+                                //unfinished, still testing and poking around
+                                /*if (shortestPath.Count <= 1)
+                                {
+                                    rangeDist = FindDistanceBetweenTile(shortestPath[0], targetHero.ActiveTile);
+                                }
+                                else
+                                {
+                                    Debug.Log("i - 1" + (i - 1));
+                                    Debug.Log("shortest path.count:" + shortestPath.Count);
+                                    rangeDist = FindDistanceBetweenTile(shortestPath[i - 1], targetHero.ActiveTile);
+                                }*/
+
                                 Debug.Log(rangeDist);
                                 if (rangeDist <= currSelectedSkill.Range && rangeDist >= currSelectedSkill.MinRange)
                                 {
@@ -539,7 +553,10 @@ namespace NightmareEchoes.Unit.AI
                     {
                         for (int i = 0; i < thisUnit.stats.MoveRange; i++)
                         {
-                            finalMovePath.Add(newPath[i]);
+                            if (i < newPath.Count())
+                            {
+                                finalMovePath.Add(newPath[i]);
+                            }
                         }
                     }
 
