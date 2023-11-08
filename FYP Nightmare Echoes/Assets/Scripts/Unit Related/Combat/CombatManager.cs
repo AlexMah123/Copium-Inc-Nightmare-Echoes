@@ -848,9 +848,9 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
                 
-                if(activeUnit.frontAnimator != null || activeUnit.backAnimator != null)
+                if(activeUnit.FrontAnimator != null || activeUnit.BackAnimator != null)
                 {
-                    yield return WaitForAnimationCompletion(activeUnit)
+                    yield return WaitForAnimationCompletion(activeUnit);
                 }
                 #endregion
 
@@ -867,9 +867,9 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
 
-                if (activeUnit.frontAnimator != null || activeUnit.backAnimator != null)
+                if (activeUnit.FrontAnimator != null || activeUnit.BackAnimator != null)
                 {
-                    yield return WaitForAnimationCompletion(activeUnit)
+                    yield return WaitForAnimationCompletion(activeUnit);
                 }
 
                 #endregion
@@ -887,9 +887,9 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
 
-                if (activeUnit.frontAnimator != null || activeUnit.backAnimator != null)
+                if (activeUnit.FrontAnimator != null || activeUnit.BackAnimator != null)
                 {
-                    yield return WaitForAnimationCompletion(activeUnit)
+                    yield return WaitForAnimationCompletion(activeUnit);
                 }
 
                 #endregion
@@ -906,9 +906,9 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
 
-                if (activeUnit.frontAnimator != null || activeUnit.backAnimator != null)
+                if (activeUnit.FrontAnimator != null || activeUnit.BackAnimator != null)
                 {
-                    yield return WaitForAnimationCompletion(activeUnit)
+                    yield return WaitForAnimationCompletion(activeUnit);
                 }
 
                 #endregion
