@@ -40,6 +40,9 @@ namespace NightmareEchoes.Unit.Combat
         private Camera cam;
 
         private bool secondaryTargeting;
+
+        //to check if skill is casting
+        public bool skillIsCasting = false;
         
         //To prevent update() from casting multiple times
         //Not used at the moment
@@ -205,10 +208,11 @@ namespace NightmareEchoes.Unit.Combat
         
         private void EndTurn()
         {
-            //activeSkill.animationCoroutine = null;
+            activeSkill.animationCoroutine = null;
             activeSkill.CheckCooldown(true);
             activeSkill.Reset();
             activeSkill = null;
+            skillIsCasting = false;
 
             secondaryTargeting = false;
             
@@ -844,6 +848,7 @@ namespace NightmareEchoes.Unit.Combat
         {
             if (activeSkill.Cast(target))
             {
+                skillIsCasting = true;
                 #region Animations
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
@@ -861,6 +866,7 @@ namespace NightmareEchoes.Unit.Combat
             else if (secondaryTargeting)
             {
                 yield return new WaitUntil(() => activeSkill.Cast(target));
+                skillIsCasting = true;
 
                 #region Animations
                 //wait for animations
@@ -882,6 +888,8 @@ namespace NightmareEchoes.Unit.Combat
         {
             if (activeSkill.Cast(target, aoeTiles))
             {
+                skillIsCasting = true;
+
                 #region Animations
                 //wait for animations
                 RenderOverlayTile.Instance.ClearTargetingRenders();
@@ -900,6 +908,7 @@ namespace NightmareEchoes.Unit.Combat
             else if (secondaryTargeting)
             {
                 yield return new WaitUntil(() => activeSkill.Cast(target, aoeTiles));
+                skillIsCasting = true;
 
                 #region Animations
                 //wait for animations

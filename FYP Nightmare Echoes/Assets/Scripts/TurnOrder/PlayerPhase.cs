@@ -13,6 +13,7 @@ namespace NightmareEchoes.TurnOrder
     public class PlayerPhase : Phase
     {
         bool updateUIOnce = false;
+        bool disableSkillOnce = false;
         bool passTurnOnce = false;
         bool tempStun = false;
         private List<Skill> aoeSkillsPassed = new();
@@ -20,8 +21,10 @@ namespace NightmareEchoes.TurnOrder
         protected override void OnEnter()
         {
             //Reseting Values
-            tempStun = false;
+            updateUIOnce = false;
+            disableSkillOnce = false;
             passTurnOnce = false;
+            tempStun = false;
             controller.CurrentUnit.HasMoved = false;
             controller.CurrentUnit.HasAttacked = false;
             controller.CurrentUnit.HighlightUnit();
@@ -91,6 +94,13 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnUpdate()
         {
+            if(CombatManager.Instance.skillIsCasting && !disableSkillOnce)
+            {
+                UIManager.Instance.EnableCurrentUI(false);
+                disableSkillOnce = true;
+            }
+
+            // unit dependant updates
             if (controller.CurrentUnit != null)
             {
                 var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);

@@ -9,6 +9,7 @@ using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Unit.AI;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.UI;
+using UnityEngine.UI;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.Unit
@@ -89,6 +90,9 @@ namespace NightmareEchoes.Unit
         [Header("Highlight Unit")]
         [SerializeField] Material baseMaterial;
         [SerializeField] Material highlightMaterial;
+
+        [Header("On Screen UI")]
+        [SerializeField] Slider healthSlider;
 
         #region Class Properties
 
@@ -614,6 +618,12 @@ namespace NightmareEchoes.Unit
 
         protected virtual void Update()
         {
+            if (healthSlider)
+            {
+                healthSlider.maxValue = stats.MaxHealth;
+                healthSlider.value = stats.Health;
+            }
+
             if (stats.Health <= 0)
             {
                 if (!IsHostile)
@@ -961,8 +971,13 @@ namespace NightmareEchoes.Unit
             {
                 var tempData = popupTextQueue.Dequeue();
 
-                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up, Quaternion.identity, transform);
-                prefab.GetComponent<FloatingText>().destroyTime = tempData.duration;
+                GameObject prefab = Instantiate(popupTextPrefab, transform.position, Quaternion.identity);
+                var textData = prefab.GetComponent<FloatingText>();
+
+                textData.destroyTime = tempData.duration;
+                textData.spawnedFrom = this.gameObject;
+                textData.offset = Vector3.up;
+
                 prefab.hideFlags = HideFlags.HideInHierarchy;
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = tempData.popupTextData;

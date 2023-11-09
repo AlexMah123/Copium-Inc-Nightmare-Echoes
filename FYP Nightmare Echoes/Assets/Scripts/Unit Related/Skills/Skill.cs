@@ -6,6 +6,7 @@ using NightmareEchoes.Grid;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Created by JH, edited by Ter
 namespace NightmareEchoes.Unit
@@ -14,6 +15,7 @@ namespace NightmareEchoes.Unit
     {
         protected Entity thisUnit;
         [Header("Skill Details")]
+        [SerializeField] protected Image skillIcon; 
         [SerializeField] protected string skillName;
         [SerializeField] protected int damage;
         [SerializeField] protected int heal;
@@ -58,6 +60,11 @@ namespace NightmareEchoes.Unit
         [field: TextArea(1,10)][SerializeField] protected string skillDescription;
 
         #region properties
+        public Image SkillIcon
+        {
+            get => skillIcon;
+            set => skillIcon = value;
+        }
 
         public string SkillName
         {
@@ -233,6 +240,8 @@ namespace NightmareEchoes.Unit
         //Directly on units
         public virtual bool Cast(Entity target)
         {
+            thisUnit.ShowPopUpText(skillName, Color.red);
+
             Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
             Vector2 CastTo = new Vector2(target.ActiveTile.gridLocation.x, target.ActiveTile.gridLocation.y);
 
@@ -288,6 +297,8 @@ namespace NightmareEchoes.Unit
         //For ground
         public virtual bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
+            thisUnit.ShowPopUpText(skillName, Color.red);
+
             Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
             Vector2 CastTo = new Vector2(target.gridLocation.x, target.gridLocation.y);
 
@@ -478,9 +489,7 @@ namespace NightmareEchoes.Unit
         }
 
         public IEnumerator PlaySkillAnimation(Entity unit, string animBoolName)
-        {
-            thisUnit.ShowPopUpText(skillName, Color.red);
-            
+        {            
             if (unit.Direction == Direction.NORTH || unit.Direction == Direction.WEST)
             {
                 unit.BackAnimator.SetBool(animBoolName, true);
