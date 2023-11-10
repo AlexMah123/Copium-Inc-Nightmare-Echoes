@@ -2345,7 +2345,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 60}
+  m_AnchoredPosition: {x: 0, y: 160}
   m_SizeDelta: {x: 100, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6708191480066388860
@@ -2602,6 +2602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a620bb1cc8fa19b4ba3e4345c742ea07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: -138827118, guid: 4e081f12db167f34c8b21336331b58c3, type: 3}
   skillName: Slash
   damage: 6
   heal: 0
@@ -2642,6 +2643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c43499a8b026834ea18ea51ba7b4afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: -1544535435, guid: 899ac045d0e44b647b3bdb38da72ac5f, type: 3}
   skillName: Lunge
   damage: 5
   heal: 0
@@ -4046,7 +4048,7 @@ RectTransform:
   m_GameObject: {fileID: 8498055646630482630}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.005, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3006220397562279098}

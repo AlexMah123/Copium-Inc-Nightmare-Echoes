@@ -15,7 +15,7 @@ namespace NightmareEchoes.Unit
     {
         protected Entity thisUnit;
         [Header("Skill Details")]
-        [SerializeField] protected Image skillIcon; 
+        [SerializeField] protected Sprite skillIcon; 
         [SerializeField] protected string skillName;
         [SerializeField] protected int damage;
         [SerializeField] protected int heal;
@@ -60,7 +60,7 @@ namespace NightmareEchoes.Unit
         [field: TextArea(1,10)][SerializeField] protected string skillDescription;
 
         #region properties
-        public Image SkillIcon
+        public Sprite SkillIcon
         {
             get => skillIcon;
             set => skillIcon = value;
@@ -507,8 +507,10 @@ namespace NightmareEchoes.Unit
             }
 
             unit.ResetAnimator();
-
             animationCoroutine = null;
+
+            yield return new WaitForSeconds(0.1f);
+
             yield return null;
         }
     }

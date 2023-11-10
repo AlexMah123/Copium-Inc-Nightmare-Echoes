@@ -1022,29 +1022,41 @@ namespace NightmareEchoes.TurnOrder
             for (int i = 0; i < index; i++)
             {
                 glossarySkills[i].interactable = enable;
+                var buttonSprite = glossarySkills[i].GetComponent<Image>();
 
-                if(CurrentUnit != null)
+
+                if (CurrentUnit != null)
                 {
                     switch(i)
                     {
                         case 0:
                             glossaryBasicAttackButtonText.text = unit.BasicAttackName;
+                            buttonSprite.sprite = unit.BasicAttackSkill.SkillIcon;
+
                             break;
 
                         case 1:
                             glossarySkill1ButtonText.text = unit.Skill1Name;
+                            buttonSprite.sprite = unit.Skill1Skill.SkillIcon;
+
                             break;
 
                         case 2:
                             glossarySkill2ButtonText.text = unit.Skill2Name;
+                            buttonSprite.sprite = unit.Skill2Skill.SkillIcon;
+
                             break;
 
                         case 3:
                             glossarySkill3ButtonText.text = unit.Skill3Name;
+                            buttonSprite.sprite = unit.Skill3Skill.SkillIcon;
+
                             break;
 
                         case 4:
                             glossaryPassiveButtonText.text = unit.PassiveName;
+                            buttonSprite.sprite = unit.PassiveSkill.SkillIcon;
+
                             break;
                     }
 
@@ -1161,16 +1173,40 @@ namespace NightmareEchoes.TurnOrder
                 currentUnitButtonList[i].interactable = true;
             }
 
+            //set button states
             for (int i = 1; i < index; i++)
             {
                 currentUnitButtonList[i].interactable = enable;
-
 
                 if (CurrentUnit != null)
                 {
                     if (!CurrentUnit.IsHostile)
                     {
                         currentUnitButtonList[i].gameObject.SetActive(true);
+                        var buttonSprite = currentUnitButtonList[i].GetComponent<Image>();
+
+                        switch (i)
+                        {
+                            case 1:
+                                buttonSprite.sprite = CurrentUnit.BasicAttackSkill.SkillIcon;
+                                break;
+
+                            case 2:
+                                buttonSprite.sprite = CurrentUnit.Skill1Skill.SkillIcon;
+                                break;
+
+                            case 3:
+                                buttonSprite.sprite = CurrentUnit.Skill2Skill.SkillIcon;
+                                break;
+
+                            case 4:
+                                buttonSprite.sprite = CurrentUnit.Skill3Skill.SkillIcon;
+                                break;
+
+                            case 5:
+                                buttonSprite.sprite = CurrentUnit.PassiveSkill.SkillIcon;
+                                break;
+                        }
                     }
                 }
                 else

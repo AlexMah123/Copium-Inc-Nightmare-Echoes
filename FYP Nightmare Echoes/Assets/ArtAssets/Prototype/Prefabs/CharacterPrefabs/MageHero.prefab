@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 349853794}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.005, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2049498985}
@@ -289,7 +289,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 60}
+  m_AnchoredPosition: {x: -10, y: 110}
   m_SizeDelta: {x: 100, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2049498986
@@ -3828,6 +3828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c2caf08c37c1f4cb2a3312f4e7dc03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: -937909535, guid: 350db03e6aadc694e98c86b130d2bec9, type: 3}
   skillName: Arcane Missiles
   damage: 5
   heal: 0
@@ -3868,6 +3869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51951608a39719848a00ca5503575cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 2130675239, guid: 350db03e6aadc694e98c86b130d2bec9, type: 3}
   skillName: Arcane Blast
   damage: 8
   heal: 0
@@ -3909,6 +3911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4827e0a29ce776a409a1f0ec3614b89a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: -2062550665, guid: 350db03e6aadc694e98c86b130d2bec9, type: 3}
   skillName: Teleport
   damage: 0
   heal: 0
@@ -3952,6 +3955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a76d7d296e3b1c8438a3665969707d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: -2143303292, guid: 350db03e6aadc694e98c86b130d2bec9, type: 3}
   skillName: Static Storm
   damage: 4
   heal: 0

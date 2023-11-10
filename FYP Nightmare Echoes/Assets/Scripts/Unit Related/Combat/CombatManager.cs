@@ -937,6 +937,8 @@ namespace NightmareEchoes.Unit.Combat
                 yield return new WaitUntil(() => activeUnit.FrontAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1);
             }
 
+            yield return new WaitForSeconds(0.1f);
+
             yield return null;
         }
 

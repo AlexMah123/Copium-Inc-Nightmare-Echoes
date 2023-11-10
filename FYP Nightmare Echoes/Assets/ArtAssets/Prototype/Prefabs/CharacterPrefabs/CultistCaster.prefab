@@ -314,7 +314,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 60}
+  m_AnchoredPosition: {x: 0, y: 150}
   m_SizeDelta: {x: 100, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6103595253229961638
@@ -1573,7 +1573,7 @@ RectTransform:
   m_GameObject: {fileID: 2774510782447530908}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.005, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6410620483578763110}
@@ -2243,6 +2243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e69d6286a65ed4b4fa04e1bfcc597427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: -561189746, guid: 3118c1dd60369c1489ca2681e88f63bf, type: 3}
   skillName: 
   damage: 0
   heal: 0
@@ -2283,6 +2284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebab4d798c751646896b951013c73e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: -1214033546, guid: 3118c1dd60369c1489ca2681e88f63bf, type: 3}
   skillName: 
   damage: 0
   heal: 0
