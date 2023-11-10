@@ -3972,7 +3972,7 @@ Transform:
   - {fileID: 160772723}
   - {fileID: 523327350}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &391452112
 GameObject:
@@ -4544,7 +4544,7 @@ Transform:
   - {fileID: 1608524741}
   - {fileID: 191219344}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &436029743
 GameObject:
@@ -4808,7 +4808,7 @@ Transform:
   - {fileID: 2139036186}
   - {fileID: 3608406644492541834}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &471899928
 GameObject:
@@ -5470,8 +5470,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1625670963}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7516,7 +7515,7 @@ Transform:
   - {fileID: 601295391118310420}
   - {fileID: 128770039}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &726693615
 GameObject:
@@ -11431,7 +11430,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dfd1f1204e8f9b46bc7c41a5e6fd2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillLayoutElement: {fileID: 0}
   tooltipWindow: {fileID: 1189676821}
   tooltipText: {fileID: 1368892381}
   hoverIndicator: {fileID: 1601978824}
@@ -12939,7 +12937,7 @@ Transform:
   - {fileID: 1288460439}
   - {fileID: 1353921414}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1263112310
 MonoBehaviour:
@@ -15744,7 +15742,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1353921413
 GameObject:
@@ -18724,8 +18722,8 @@ RectTransform:
   - {fileID: 797403945}
   - {fileID: 1647504147}
   - {fileID: 1189676821}
-  m_Father: {fileID: 519420032}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -20333,9 +20331,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
