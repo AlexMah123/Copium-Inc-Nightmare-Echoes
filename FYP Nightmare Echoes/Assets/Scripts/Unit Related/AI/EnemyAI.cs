@@ -400,19 +400,16 @@ namespace NightmareEchoes.Unit.AI
                             {
                                 foundProp = true;
                                 float rangeDist;
-                                rangeDist = FindDistanceBetweenTile(shortestPath[i - 1], targetHero.ActiveTile);
 
                                 //unfinished, still testing and poking around
-                                /*if (shortestPath.Count <= 1)
+                                if (i - 1 < 0)
                                 {
                                     rangeDist = FindDistanceBetweenTile(shortestPath[0], targetHero.ActiveTile);
                                 }
                                 else
                                 {
-                                    Debug.Log("i - 1" + (i - 1));
-                                    Debug.Log("shortest path.count:" + shortestPath.Count);
                                     rangeDist = FindDistanceBetweenTile(shortestPath[i - 1], targetHero.ActiveTile);
-                                }*/
+                                }
 
                                 Debug.Log(rangeDist);
                                 if (rangeDist <= currSelectedSkill.Range && rangeDist >= currSelectedSkill.MinRange)
@@ -454,7 +451,6 @@ namespace NightmareEchoes.Unit.AI
                 } // ^ v these two are the same, the above is just a check so it doesn't access an out of bounds index
                 else if(shortestPath.Count > 0 && FindDistanceBetweenTile(shortestPath[thisUnit.stats.MoveRange], targetHero.ActiveTile) <= currSelectedSkill.Range)
                 {
-                    Debug.Log("checker2");
                     moveAndAttack = true;
                     bool foundProp = false;
 
@@ -472,7 +468,6 @@ namespace NightmareEchoes.Unit.AI
                         {
                             foundProp = true;
                             float rangeDist = FindDistanceBetweenTile(shortestPath[i - 1], targetHero.ActiveTile);
-                            Debug.Log(rangeDist);
                             if (rangeDist <= currSelectedSkill.Range && rangeDist >= currSelectedSkill.MinRange)
                             {
                                 targetTileToAttack = targetHero.ActiveTile;
