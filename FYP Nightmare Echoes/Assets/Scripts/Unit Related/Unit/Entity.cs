@@ -303,28 +303,11 @@ namespace NightmareEchoes.Unit
                 }
                 else
                 {
-                    return basicAttack.SkillName;
+                    return basicAttack.Name;
                 }
             }
 
-            private set => basicAttack.SkillName = value;
-        }
-
-        public string BasicAttackDesc
-        {
-            get
-            {
-                if (basicAttack == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return basicAttack.SkillDescription;
-                }
-            }
-
-            private set => basicAttack.SkillDescription = value;
+            private set => basicAttack.Name = value;
         }
 
         public Skill BasicAttackSkill
@@ -354,28 +337,11 @@ namespace NightmareEchoes.Unit
                 }
                 else
                 {
-                    return skill1.SkillName;
+                    return skill1.Name;
                 }
             }
 
-            private set => skill1.SkillName = value;
-        }
-
-        public string Skill1Desc
-        {
-            get
-            {
-                if (skill1 == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return skill1.SkillDescription;
-                }
-            }
-
-            private set => skill1.SkillDescription = value;
+            private set => skill1.Name = value;
         }
         
         public Skill Skill1Skill
@@ -405,27 +371,11 @@ namespace NightmareEchoes.Unit
                 }
                 else
                 {
-                    return skill2.SkillName;
+                    return skill2.Name;
                 }
             }
 
-            private set => skill2.SkillName = value;
-        }
-
-        public string Skill2Desc
-        {
-            get
-            {
-                if (skill2 == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return skill2.SkillDescription;
-                }
-            }
-            private set => skill2.SkillDescription = value;
+            private set => skill2.Name = value;
         }
 
         public Skill Skill2Skill
@@ -455,27 +405,11 @@ namespace NightmareEchoes.Unit
                 }
                 else
                 {
-                    return skill3.SkillName;
+                    return skill3.Name;
                 }
             }
 
-            private set => skill3.SkillName = value;
-        }
-
-        public string Skill3Desc
-        {
-            get
-            {
-                if (skill3 == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return skill3.SkillDescription;
-                }
-            }
-            private set => skill3.SkillDescription = value;
+            private set => skill3.Name = value;
         }
 
         public Skill Skill3Skill
@@ -504,28 +438,11 @@ namespace NightmareEchoes.Unit
                 }
                 else
                 {
-                    return passive.SkillName;
+                    return passive.Name;
                 }
             }
 
-            private set => passive.SkillName = value;
-        }
-
-        public string PassiveDesc
-        {
-            get
-            {
-                if (passive == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return passive.SkillDescription;
-                }
-            }
-
-            private set => passive.SkillDescription = value;
+            private set => passive.Name = value;
         }
 
         public Skill PassiveSkill

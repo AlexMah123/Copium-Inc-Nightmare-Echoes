@@ -15,8 +15,9 @@ namespace NightmareEchoes.Unit
     {
         protected Entity thisUnit;
         [Header("Skill Details")]
-        [SerializeField] protected Sprite skillIcon; 
-        [SerializeField] protected string skillName;
+        [SerializeField] protected Sprite skillIcon;
+        [SerializeField] protected Sprite skillExample;
+        [SerializeField] protected string _name;
         [SerializeField] protected int damage;
         [SerializeField] protected int heal;
         [SerializeField] protected float cooldown;
@@ -57,7 +58,7 @@ namespace NightmareEchoes.Unit
         protected float cd;
         public Coroutine animationCoroutine = null;
 
-        [field: TextArea(1,10)][SerializeField] protected string skillDescription;
+        [field: TextArea(1,10)][SerializeField] protected string description;
 
         #region properties
         public Sprite SkillIcon
@@ -66,10 +67,16 @@ namespace NightmareEchoes.Unit
             set => skillIcon = value;
         }
 
-        public string SkillName
+        public Sprite SkillExample
         {
-            get => skillName;
-            set => skillName = value;
+            get => skillExample;
+            set => skillExample = value;
+        }
+
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
         }
 
         public int Damage
@@ -162,10 +169,10 @@ namespace NightmareEchoes.Unit
             set => secondaryRange = value;
         }
         
-        public string SkillDescription
+        public string Description
         {
-            get => skillDescription;
-            set => skillDescription = value;
+            get => description;
+            set => description = value;
         }
 
         public bool InflictKnockback
@@ -240,7 +247,7 @@ namespace NightmareEchoes.Unit
         //Directly on units
         public virtual bool Cast(Entity target)
         {
-            thisUnit.ShowPopUpText(skillName, Color.red);
+            thisUnit.ShowPopUpText(_name, Color.red);
 
             Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
             Vector2 CastTo = new Vector2(target.ActiveTile.gridLocation.x, target.ActiveTile.gridLocation.y);
@@ -297,7 +304,7 @@ namespace NightmareEchoes.Unit
         //For ground
         public virtual bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
-            thisUnit.ShowPopUpText(skillName, Color.red);
+            thisUnit.ShowPopUpText(_name, Color.red);
 
             Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
             Vector2 CastTo = new Vector2(target.gridLocation.x, target.gridLocation.y);

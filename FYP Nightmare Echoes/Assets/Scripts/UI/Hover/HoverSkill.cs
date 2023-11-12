@@ -45,38 +45,38 @@ namespace NightmareEchoes.UI
             switch(button)
             {
                 case Button.Basic:
-                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.BasicAttackDesc))
+                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.BasicAttackSkill.Description))
                         return;
 
-                    toolTip = TurnOrderController.Instance.CurrentUnit.BasicAttackDesc;
+                    toolTip = TurnOrderController.Instance.CurrentUnit.BasicAttackSkill.Description;
                     break;
 
                 case Button.Skill1:
-                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.Skill1Desc))
+                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.Skill1Skill.Description))
                         return;
 
-                    toolTip = TurnOrderController.Instance.CurrentUnit.Skill1Desc;
+                    toolTip = TurnOrderController.Instance.CurrentUnit.Skill1Skill.Description;
                     break;
 
                 case Button.Skill2:
-                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.Skill2Desc))
+                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.Skill2Skill.Description))
                         return;
 
-                    toolTip = TurnOrderController.Instance.CurrentUnit.Skill2Desc;
+                    toolTip = TurnOrderController.Instance.CurrentUnit.Skill2Skill.Description;
                     break;
 
                 case Button.Skill3:
-                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.Skill3Desc))
+                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.Skill3Skill.Description))
                         return;
 
-                    toolTip = TurnOrderController.Instance.CurrentUnit.Skill3Desc;
+                    toolTip = TurnOrderController.Instance.CurrentUnit.Skill3Skill.Description;
                     break;
 
                 case Button.Passive:
-                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.PassiveDesc))
+                    if (string.IsNullOrEmpty(TurnOrderController.Instance.CurrentUnit.PassiveSkill.Description))
                         return;
 
-                    toolTip = TurnOrderController.Instance.CurrentUnit.PassiveDesc;
+                    toolTip = TurnOrderController.Instance.CurrentUnit.PassiveSkill.Description;
                     break;
             }
 

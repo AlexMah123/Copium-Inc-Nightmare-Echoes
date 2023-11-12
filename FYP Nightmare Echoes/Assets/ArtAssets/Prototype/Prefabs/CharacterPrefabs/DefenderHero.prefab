@@ -4023,7 +4023,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -1258754135, guid: c9770106dd4dfe949ac371ff15ad7b5f, type: 3}
-  skillName: Strike
+  skillExample: {fileID: 0}
+  _name: Strike
   damage: 4
   heal: 0
   cooldown: 0
@@ -4050,9 +4051,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: 'Single Target, Deal 4 Damage and Knockback Target 1 Tile
-
-'
+  description: Single Target, 4 Direction, Deal 4 Damage and Knockback Target 1 Tile
 --- !u!114 &817498681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4066,7 +4065,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 1128387520, guid: c9770106dd4dfe949ac371ff15ad7b5f, type: 3}
-  skillName: Charge
+  skillExample: {fileID: 0}
+  _name: Charge
   damage: 4
   heal: 0
   cooldown: 2
@@ -4093,12 +4093,9 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: '4 Direction, Charge up to 2 tiles forward
-
-    Deal 4 Damage,
-    Knockback Target 1 Tiles and Stun (100%)
-
-    Cooldown: 2 Turns'
+  description: "Single Target, 4 Direction, Charge up to 2 tiles forward and Attack
+    the tile ahead\r\nDeal 4 Damage, Knockback Target 1 Tile and Stun (100%)\r\n\nCooldown:
+    2 Turns\r"
 --- !u!114 &817498682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4112,7 +4109,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -563390151, guid: c9770106dd4dfe949ac371ff15ad7b5f, type: 3}
-  skillName: WarCry
+  skillExample: {fileID: 0}
+  _name: War Cry
   damage: 0
   heal: 0
   cooldown: 2
@@ -4139,12 +4137,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: '(Cannot Affected by Blind & Strength)
-
-    Apply 1 Strength
-    to Ally and Apply 1 Weaken (100%) to Enemy
-
-    Cooldown: 1 Turns'
+  description: "Self Cast, AOE Buff & Debuff\r\nApply 1 Strength to Ally and Apply
+    1 Weaken (100%) and -3 Speed (100%) for 1 Turn to Enemy\r\n\nCooldown: 2 Turns\r"
 --- !u!114 &2262890932342477676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4158,7 +4152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -715440602, guid: c9770106dd4dfe949ac371ff15ad7b5f, type: 3}
-  skillName: Restructure
+  skillExample: {fileID: 0}
+  _name: Restructure
   damage: 0
   heal: 15
   cooldown: 3
@@ -4185,12 +4180,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: '(Cannot Affected by Blind & Strength)
-
-    Self Heal for 15,
-    Get 3 Restoration and Remove all negative token
-
-    Cooldown: 3 Turns'
+  description: "Self Heal for 15, Get 1 Barrier and Remove all negative token\r\n\nCooldown:
+    3 Turns\r"
 --- !u!50 &1640256430824122786
 Rigidbody2D:
   serializedVersion: 4

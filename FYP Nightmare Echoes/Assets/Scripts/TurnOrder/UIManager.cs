@@ -95,8 +95,7 @@ namespace NightmareEchoes.TurnOrder
 
         [Space(20), Header("Character Glossary Skills")]
         Entity glossaryUnit;
-        [SerializeField] List<Button> glossarySkills;
-        [SerializeField] List<Image> glossarySkillsImage;
+        [SerializeField] List<Button> glossarySkillButtons;
         [SerializeField] Slider glossaryHealth;
         [SerializeField] TextMeshProUGUI glossaryBasicAttackButtonText;
         [SerializeField] TextMeshProUGUI glossarySkill1ButtonText;
@@ -1013,17 +1012,16 @@ namespace NightmareEchoes.TurnOrder
             }
 
             //reset all the buttons
-            for(int i = 0; i < glossarySkills.Count; i++) 
+            for(int i = 0; i < glossarySkillButtons.Count; i++) 
             {
-                glossarySkills[i].gameObject.SetActive(false);
-                glossarySkills[i].interactable = true;
+                glossarySkillButtons[i].gameObject.SetActive(false);
+                glossarySkillButtons[i].interactable = true;
             }
 
             for (int i = 0; i < index; i++)
             {
-                glossarySkills[i].interactable = enable;
-                var buttonSprite = glossarySkills[i].GetComponent<Image>();
-
+                glossarySkillButtons[i].interactable = enable;
+                var buttonSprite = glossarySkillButtons[i].GetComponent<Image>();
 
                 if (CurrentUnit != null)
                 {
@@ -1060,35 +1058,44 @@ namespace NightmareEchoes.TurnOrder
                             break;
                     }
 
-                    glossarySkills[i].gameObject.SetActive(true);
+                    glossarySkillButtons[i].gameObject.SetActive(true);
                 }
             }
 
-            glossarySkillDescText.text = glossaryUnit.BasicAttackDesc;
+            glossarySkillDescText.text = glossaryUnit.BasicAttackSkill.Description;
         }
 
-        public void ShowSkillText(int num)
+        public void ShowGlossarySkillText(int num)
         {
             switch(num)
             {
                 case 0:
-                    glossarySkillDescText.text = glossaryUnit.BasicAttackDesc;
+                    glossarySkillDescText.text = glossaryUnit.BasicAttackSkill.Description;
+                    glossarySkillImage.sprite = glossaryUnit.BasicAttackSkill.SkillExample;
                     break;
 
                 case 1:
-                    glossarySkillDescText.text = glossaryUnit.Skill1Desc;
+                    glossarySkillDescText.text = glossaryUnit.Skill1Skill.Description;
+                    glossarySkillImage.sprite = glossaryUnit.Skill1Skill.SkillExample;
+
                     break;
 
                 case 2:
-                    glossarySkillDescText.text = glossaryUnit.Skill2Desc;
+                    glossarySkillDescText.text = glossaryUnit.Skill2Skill.Description;
+                    glossarySkillImage.sprite = glossaryUnit.Skill2Skill.SkillExample;
+
                     break;
 
                 case 3:
-                    glossarySkillDescText.text = glossaryUnit.Skill3Desc;
+                    glossarySkillDescText.text = glossaryUnit.Skill3Skill.Description;
+                    glossarySkillImage.sprite = glossaryUnit.Skill3Skill.SkillExample;
+
                     break;
 
                 case 4:
-                    glossarySkillDescText.text = glossaryUnit.PassiveDesc;
+                    glossarySkillDescText.text = glossaryUnit.PassiveSkill.Description;
+                    glossarySkillImage.sprite = glossaryUnit.PassiveSkill.SkillExample;
+
                     break;
             }
         }

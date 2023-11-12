@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NightmareEchoes.Grid;
 using UnityEngine;
@@ -9,6 +10,22 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(Entity target)
         {
+            base.Cast(target);
+
+            StartCoroutine(Attack(target));
+
+            return true;
+        }
+
+        IEnumerator Attack(Entity target)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            //animation
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
+
             OverlayTile targetTile = target.ActiveTile;
             List<Vector2Int> tilesToCheck = new List<Vector2Int>();
 
@@ -18,8 +35,6 @@ namespace NightmareEchoes.Unit
             tilesToCheck.Add(new Vector2Int((targetTile.gridLocation.x + 1), (targetTile.gridLocation.y)));
 
             List<OverlayTile> aoeTiles = OverlayTileManager.Instance.TrimOutOfBounds(tilesToCheck);
-
-            base.Cast(targetTile, aoeTiles);
 
             DealDamage(target, default, checkBlind: false);
 
@@ -34,8 +49,6 @@ namespace NightmareEchoes.Unit
                 DealDamage(unit, secondaryDamage, checkBlind: false);
                 Knockback(targetTile, unit);
             }
-
-            return true;
         }
     }
 }

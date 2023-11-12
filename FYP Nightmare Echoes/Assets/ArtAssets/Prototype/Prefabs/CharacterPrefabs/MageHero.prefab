@@ -3829,7 +3829,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -937909535, guid: 350db03e6aadc694e98c86b130d2bec9, type: 3}
-  skillName: Arcane Missiles
+  skillExample: {fileID: 0}
+  _name: Arcane Missile
   damage: 5
   heal: 0
   cooldown: 0
@@ -3856,7 +3857,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: "Single Target, 4 Direction, Deal 6 Damage\r"
+  description: Single Target, Deal 5 Damage
 --- !u!114 &8121445182508319265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3870,7 +3871,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 2130675239, guid: 350db03e6aadc694e98c86b130d2bec9, type: 3}
-  skillName: Arcane Blast
+  skillExample: {fileID: 0}
+  _name: Arcane Blast
   damage: 8
   heal: 0
   cooldown: 2
@@ -3897,8 +3899,11 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: "AOE Attack, 4 Direction, \nDeal 8 Damage in the middle and 4
-    Damage at the side, Knockback enemy 1 tile\r\nCooldown: 2 Turns\r"
+  description: 'AOE Attack, Deal 8 Damage in the middle and 4 Damage at the side,
+    also knockback enemy 1 tiles at the side.
+
+
+    Cooldown: 2 Turns'
 --- !u!114 &8121445182508319270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3912,7 +3917,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -2062550665, guid: 350db03e6aadc694e98c86b130d2bec9, type: 3}
-  skillName: Teleport
+  skillExample: {fileID: 0}
+  _name: Teleport
   damage: 0
   heal: 0
   cooldown: 3
@@ -3939,10 +3945,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: 'Target Hero or Enemy inside 2 Tiles Range, then Teleport him
-    within 3 Tiles Range of Target.
-
-    Cooldown: 3 Turns'
+  description: "Target Hero or Enemy inside 2 Tiles Range, then Teleport him within
+    3 Tiles Range of Target.\r\n\nCooldown: 3 Turns\r"
 --- !u!114 &8121445182508319271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3956,7 +3960,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -2143303292, guid: 350db03e6aadc694e98c86b130d2bec9, type: 3}
-  skillName: Static Storm
+  skillExample: {fileID: 0}
+  _name: Static Storm
   damage: 4
   heal: 0
   cooldown: 3
@@ -3983,9 +3988,9 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: "AOE, Create Static Storm that last for 2 Turns\nEnemies that
-    pass through the storm take 4 Damage, Enemy that Stay in (Start Turn) take 4
-    damage and apply 1 Weaken\r\nCooldown: 3 Turns\r"
+  description: "AOE, Create Static Storm that last for 2 cycle, Deal 4 Damage and
+    Apply 1 Weaken (80%), Enemy that stay in (Start Turn) take 4 Damage\r\n\nCooldown:
+    3 Turns\r"
 --- !u!60 &8121445182508319274
 PolygonCollider2D:
   m_ObjectHideFlags: 0

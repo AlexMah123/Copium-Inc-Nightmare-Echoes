@@ -1836,7 +1836,7 @@ SpriteRenderer:
   m_SortingLayerID: -1735001907
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 836943ad638ee6447b085119cce72588, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cfb9539ddc9b0c94798f8022e538d3a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1860,7 +1860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Cultist Arbalist
-  sprite: {fileID: 21300000, guid: 836943ad638ee6447b085119cce72588, type: 3}
+  sprite: {fileID: 21300000, guid: cfb9539ddc9b0c94798f8022e538d3a2, type: 3}
   isProp: 0
   isHostile: 1
   direction: 0
@@ -1959,7 +1959,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 1615403911, guid: ec2aaf2a6f5704d45848a250429eb6c8, type: 3}
-  skillName: Arrow Shot
+  skillExample: {fileID: 0}
+  _name: Arrow Shot
   damage: 3
   heal: 0
   cooldown: 0
@@ -1986,7 +1987,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: Single Target, Deal 3 Damage and 2 Wound
+  description: Single Target, Deal 3 Damage and Apply 2 Wound
 --- !u!114 &1076513885083324510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2000,7 +2001,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 1617280432, guid: ec2aaf2a6f5704d45848a250429eb6c8, type: 3}
-  skillName: Kick
+  skillExample: {fileID: 0}
+  _name: Kick
   damage: 2
   heal: 0
   cooldown: 0
@@ -2027,7 +2029,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: Deal 2 Damage and Knockback target 1 tile
+  description: Single Target, 4 Direction, Deal 2 Damage and Knockback target 1 tile
 --- !u!114 &359293498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2041,7 +2043,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 732477111, guid: ec2aaf2a6f5704d45848a250429eb6c8, type: 3}
-  skillName: Watchful
+  skillExample: {fileID: 0}
+  _name: Watchful
   damage: 3
   heal: 0
   cooldown: 0
@@ -2068,7 +2071,16 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: 
+  description: 'Watch over an area and go into a stance.
+
+    - Attack Enemy that
+    Move in range for 2 Damage
+
+    - Attack Enemy that Attack in range for 3 Damage
+
+
+    Last
+    for 1 turn.'
 --- !u!60 &964070419
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2085,8 +2097,8 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1, y: 1.1232227}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.22, y: 4.74}
     newSize: {x: 1, y: 1.1232227}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

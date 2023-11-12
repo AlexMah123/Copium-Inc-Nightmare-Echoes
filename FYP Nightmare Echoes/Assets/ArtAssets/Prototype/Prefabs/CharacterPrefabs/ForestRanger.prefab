@@ -181,7 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -1907697791, guid: 59fb15f225d1fca498c2def8283ca844, type: 3}
-  skillName: ArrowShot
+  skillExample: {fileID: 0}
+  _name: Arrow Show
   damage: 4
   heal: 0
   cooldown: 0
@@ -208,7 +209,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: Single Target, Deal 4 Damage and 3 Wound
+  description: Single Target, Deal 4 Damage and Apply 3 Wound
 --- !u!114 &601295391118310427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +223,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -793594965, guid: 59fb15f225d1fca498c2def8283ca844, type: 3}
-  skillName: Suppressing Shot
+  skillExample: {fileID: 0}
+  _name: 
   damage: 5
   heal: 0
   cooldown: 2
@@ -249,7 +251,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: Single Target, 3 Tiles Range, Deal 4 Damage and Stun (80%)
+  description: "Single Target, Deal 5 Damage and Stun (80%)\r\n\nCooldown: 2 Turns\r"
 --- !u!114 &837001683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +265,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 739640421, guid: 59fb15f225d1fca498c2def8283ca844, type: 3}
-  skillName: Nature Embrace
+  skillExample: {fileID: 0}
+  _name: Nature's Embrace
   damage: 0
   heal: 10
   cooldown: 2
@@ -290,8 +293,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: "Nature\u2019s Embrace (Cannot Affected by Blind & Strength)\r\nSingle
-    target, 2 Tiles Range, Self Heal or Ally for 10 HP\r\n"
+  description: "Single Target, Heal for 10 HP\r\n\nCooldown: 2 Turns\r"
 --- !u!114 &1863292055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +307,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -888793772, guid: 59fb15f225d1fca498c2def8283ca844, type: 3}
-  skillName: Hunter Instinct
+  skillExample: {fileID: 0}
+  _name: 
   damage: 3
   heal: 0
   cooldown: 0
@@ -332,9 +335,16 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: "Enter A Stance that oversees a region.\nAttack Enemy that \u2018Move\u2019
-    in range for 3 Damage\r\nAttack Enemy that \u2018Attack\u2019 in range for 5
-    Damage\r\n*Only Trigger once\r\n*Enemy that move by Ally trigger attack"
+  description: 'Watch over an area and go into a stance.
+
+    - Attack Enemy that
+    Move in range for 3 Damage
+
+    - Attack Enemy that Attack in range for 5 Damage
+
+
+    Last
+    for 1 turn.'
 --- !u!60 &136229569
 PolygonCollider2D:
   m_ObjectHideFlags: 0

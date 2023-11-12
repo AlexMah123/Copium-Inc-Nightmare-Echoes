@@ -2425,8 +2425,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -138827118, guid: 4e081f12db167f34c8b21336331b58c3, type: 3}
-  skillName: Hack
-  damage: 0
+  skillExample: {fileID: 0}
+  _name: Hack
+  damage: 5
   heal: 0
   cooldown: 0
   range: 1
@@ -2452,7 +2453,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: 
+  description: Single Target, 4 Direction, Deal 5 Damage and 2 Wound
 --- !u!114 &1429316040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2466,7 +2467,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -1544535435, guid: 899ac045d0e44b647b3bdb38da72ac5f, type: 3}
-  skillName: Bash
+  skillExample: {fileID: 0}
+  _name: Knockback
   damage: 4
   heal: 0
   cooldown: 0
@@ -2493,7 +2495,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  skillDescription: "Deal 5 Damage and Knockback target 1 tiles\r"
+  description: "Single Target, 4 Direction, Deal 4 Damage, Knockback target 1 tile\r\n\nCooldown:
+    1 Turns\r"
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4
