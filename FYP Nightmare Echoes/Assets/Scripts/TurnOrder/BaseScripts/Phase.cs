@@ -37,11 +37,11 @@ namespace NightmareEchoes.TurnOrder
             #region UI
             if ((controller.currentPhase == controller.playerPhase) && !controller.CurrentUnit.StunToken && !controller.CurrentUnit.IsHostile)
             {
-                UIManager.Instance.EnableCurrentUI(true);
+                GameUIManager.Instance.EnableCurrentUI(true);
             }
             else
             {
-                UIManager.Instance.EnableCurrentUI(false);
+                GameUIManager.Instance.EnableCurrentUI(false);
             }
 
             #endregion
@@ -57,14 +57,17 @@ namespace NightmareEchoes.TurnOrder
             }
 
             //updates the UI during each phase & updates status effect 
-            UIManager.Instance.UpdateTurnOrderUI();
-            UIManager.Instance.UpdateStatusEffectUI();
+            GameUIManager.Instance.UpdateTurnOrderUI();
+            GameUIManager.Instance.UpdateStatusEffectUI();
 
             OnEnter();
         }
 
         public void OnFixedUpdatePhase()
         {
+            if (Time.timeScale == 0)
+                return;
+
             if (controller.gameOver)
                 return;
 
@@ -79,7 +82,7 @@ namespace NightmareEchoes.TurnOrder
                 {
                     //Game Over
                     controller.gameOver = true;
-                    UIManager.Instance.GameOver();
+                    GeneralUIController.Instance.GameOver();
                 }
             }
 
@@ -93,6 +96,11 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnUpdatePhase()
         {
+            if(GeneralUIController.gameIsPaused)
+            {
+                return;
+            }
+
             OnUpdate();
         }
 
@@ -101,7 +109,7 @@ namespace NightmareEchoes.TurnOrder
             OnExit();
 
             //disable skill info
-            UIManager.Instance.EnableSkillInfo(false);
+            GameUIManager.Instance.EnableSkillInfo(false);
 
             //reset pathfinding
             PathfindingManager.Instance.isMoving = false;

@@ -20,6 +20,9 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnEnter()
         {
+            GameUIManager.Instance.phaseText.text = $"Player's Turn";
+            GameUIManager.Instance.phaseText.color = Color.white;
+
             //Reseting Values
             updateUIOnce = false;
             disableSkillOnce = false;
@@ -41,7 +44,7 @@ namespace NightmareEchoes.TurnOrder
                     tempStun = true;
                     controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
 
-                    UIManager.Instance.EnableCurrentUI(false);
+                    GameUIManager.Instance.EnableCurrentUI(false);
                     controller.StartCoroutine(controller.PassTurn());
                 }
                 #endregion
@@ -59,7 +62,7 @@ namespace NightmareEchoes.TurnOrder
                 #endregion
 
 
-                UIManager.Instance.UpdateStatusEffectUI();
+                GameUIManager.Instance.UpdateStatusEffectUI();
                 controller.CurrentUnit.UpdateStatusEffectEvent();
             }
             #endregion
@@ -79,14 +82,14 @@ namespace NightmareEchoes.TurnOrder
 
             if (PathfindingManager.Instance.isMoving)
             {
-                UIManager.Instance.EnableCurrentUI(false);
+                GameUIManager.Instance.EnableCurrentUI(false);
                 updateUIOnce = false;
             }
             else
             {
                 if (!updateUIOnce)
                 {
-                    UIManager.Instance.EnableCurrentUI(true);
+                    GameUIManager.Instance.EnableCurrentUI(true);
                     updateUIOnce = true;
                 }
             }
@@ -96,7 +99,7 @@ namespace NightmareEchoes.TurnOrder
         {
             if(CombatManager.Instance.skillIsCasting && !disableSkillOnce)
             {
-                UIManager.Instance.EnableCurrentUI(false);
+                GameUIManager.Instance.EnableCurrentUI(false);
                 disableSkillOnce = true;
             }
 
@@ -195,7 +198,7 @@ namespace NightmareEchoes.TurnOrder
                 #endregion
             }
 
-            UIManager.Instance.UpdateStatusEffectUI();
+            GameUIManager.Instance.UpdateStatusEffectUI();
 
             //when you change phases, change the current unit to the next unit
             if (controller.CurrentUnitQueue.Count > 0)

@@ -14,9 +14,10 @@ using NightmareEchoes.Inputs;
 //created by Alex
 namespace NightmareEchoes.TurnOrder
 {
-    public class UIManager : MonoBehaviour
+    public class GameUIManager : MonoBehaviour
     {
-        public static UIManager Instance;
+        public static GameUIManager Instance;
+        Entity CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
 
         [Header("Turn Order Bar")]
         [SerializeField] int initImagePool = 6;
@@ -25,7 +26,7 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] GameObject turnIndicator;
         [SerializeField] GameObject currentTurnOrderPanel;
         [SerializeField] TextMeshProUGUI currentTurnNum;
-        [SerializeField] TextMeshProUGUI phaseText;
+        public TextMeshProUGUI phaseText;
 
         public List<GameObject> turnOrderSpritePool = new List<GameObject>();
         [SerializeField] Color playerTurn;
@@ -55,14 +56,13 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI Skill2CooldownText;
         [SerializeField] TextMeshProUGUI Skill3CooldownText;
 
-
+        [Space(20), Header("Skill Info")]
         [SerializeField] GameObject skillInfoPanel;
         [SerializeField] TextMeshProUGUI skillDamageText;
         [SerializeField] TextMeshProUGUI skillHitChanceText;
         [SerializeField] TextMeshProUGUI skillStunChanceText;
         [SerializeField] TextMeshProUGUI skillDebuffChanceText;
 
-        Entity CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
 
         [Space(20), Header("Inspectable Info")]
         public Entity inspectedUnit;
@@ -111,32 +111,16 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] int initGlossaryPool = 5;
         List<GameObject> glossaryPrefabPool = new List<GameObject>();
 
-        [Space(20), Header("Guide")]
-        [SerializeField] GameObject guidePanel;
-        [SerializeField] Button guideButton;
 
-        [Space(20), Header("Settings + Utility")]
+        [Space(20), Header("Utility")]
         public Button passTurnButton;
         public Button cancelActionButton;
-        [SerializeField] Button settingButton;
-        [SerializeField] GameObject settingsPanel;
-        [SerializeField] GameObject soundPanel;
-        [SerializeField] GameObject GeneralSettingsPanel;
-        [NonSerialized] public bool gameIsPaused = false;
-
-        [Header("Game Over")]
-        [SerializeField] GameObject gameOverPanel;
-
 
         [Space(20), Header("Current Unit Indicator")]
         [SerializeField] GameObject unitIndicator;
         [SerializeField] private float frequency = 2.0f;
         [SerializeField] private float magnitude = 0.05f;
         [SerializeField] private float offset = 0.75f;
-
-        [Space(20), Header("Resolution")]
-        Resolution[] Resolutions;
-        [SerializeField] private  Dropdown _resDropDown;
 
         int unitMask;
 
@@ -167,19 +151,6 @@ namespace NightmareEchoes.TurnOrder
             inspectedUnitPanel.SetActive(false);
             currentUnitPanel.SetActive(false);
             glossaryPanel.SetActive(false);
-
-            /*Resolutions = Screen.resolutions;
-
-            _resDropDown.ClearOptions();
-
-            List<string> ResOptions = new List<string>();
-            for (int i = 0; i < Resolutions.Length; i++)
-            {
-                string resOption = Resolutions[i].width + " X " + Resolutions[i].height;
-                ResOptions.Add(resOption);
-            }
-
-            _resDropDown.AddOptions(ResOptions);*/
         }
 
         private void Update()
@@ -395,38 +366,6 @@ namespace NightmareEchoes.TurnOrder
                     turnIndicator.SetActive(false);
             }
             #endregion
-
-            #region Phase UI
-
-            if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.planPhase)
-            {
-                phaseText.text = $"Plan Phase";
-                phaseText.color = Color.white;
-            }
-            else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.startPhase)
-            {
-                phaseText.text = $"Start of Round";
-                phaseText.color = Color.white;
-            }
-            else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.playerPhase)
-            {
-                phaseText.text = $"{CurrentUnit?.Name}'s Turn";
-                phaseText.color = Color.white;
-            }
-            else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.enemyPhase)
-            {
-                phaseText.text = $"{CurrentUnit?.Name}'s Turn";
-                phaseText.color = new Color(enemyTurn.r, enemyTurn.g, enemyTurn.b);
-            }
-            else if (TurnOrderController.Instance.currentPhase == TurnOrderController.Instance.endPhase)
-            {
-                phaseText.text = $"End of Round";
-                phaseText.color = Color.white;
-            }
-
-
-            #endregion
-
         }
 
 
@@ -815,15 +754,19 @@ namespace NightmareEchoes.TurnOrder
         {
             if (!glossaryPanel.activeSelf)
             {
-                PauseGame(true);
-                settingButton.gameObject.SetActive(false);
+                GeneralUIController.Instance.PauseGame(true);
+                GeneralUIController.Instance.pauseButton.gameObject.SetActive(false);
+                GeneralUIController.Instance.guideButton.gameObject.SetActive(false);
+
                 glossaryPanel.SetActive(true);
                 UpdateGlossaryUI(text);
             }
             else
             {
-                PauseGame(false);
-                settingButton.gameObject.SetActive(true);
+                GeneralUIController.Instance.PauseGame(false);
+                GeneralUIController.Instance.pauseButton.gameObject.SetActive(true);
+                GeneralUIController.Instance.guideButton.gameObject.SetActive(true);
+
                 glossaryPanel.SetActive(false);
             }
         }
@@ -1063,6 +1006,7 @@ namespace NightmareEchoes.TurnOrder
             }
 
             glossarySkillDescText.text = glossaryUnit.BasicAttackSkill.Description;
+            glossarySkillImage.sprite = glossaryUnit.BasicAttackSkill.SkillExample;
         }
 
         public void ShowGlossarySkillText(int num)
@@ -1243,92 +1187,6 @@ namespace NightmareEchoes.TurnOrder
             inspectedUnitPanel.SetActive(enable);
             UpdateStatusEffectUI();
         }
-        #endregion
-
-
-        #region Buttons
-        public void GuideButton()
-        {
-            if (!guidePanel.activeSelf)
-            {
-                PauseGame(true);
-                settingButton.gameObject.SetActive(false);
-                guideButton.gameObject.SetActive(false);
-                guidePanel.SetActive(true);
-            }
-            else
-            {
-                PauseGame(false);
-                settingButton.gameObject.SetActive(true);
-                guideButton.gameObject.SetActive(true);
-                guidePanel.SetActive(false);
-            }
-        }
-
-        public void SettingsButton()
-        {
-            //if its active == paused, unpause
-            if(!settingsPanel.activeSelf)
-            {
-                PauseGame(true);
-                settingsPanel.SetActive(true);
-            }
-            else
-            {
-                PauseGame(false);
-                settingsPanel.SetActive(false);
-            }
-        }
-
-        public void GeneralSettingsButton()
-        {
-            if (!GeneralSettingsPanel.activeSelf)
-            {
-                settingsPanel.SetActive(false);
-                settingButton.gameObject.SetActive(false);
-                GeneralSettingsPanel.SetActive(true);
-            }
-        }
-
-        public void GeneralBackButton()
-        {
-            if (GeneralSettingsPanel.activeSelf)
-            {
-                settingsPanel.SetActive(true);
-                settingButton.gameObject.SetActive(true);
-                GeneralSettingsPanel.SetActive(false);
-            }
-        }
-
-
-        public void MainMenuButton(int sceneIndex)
-        {
-            PauseGame(false);
-            gameOverPanel.SetActive(false);
-
-            SceneManager.LoadScene(sceneIndex);
-        }
-
-        public void GameOver()
-        {
-            PauseGame(true);
-            gameOverPanel.SetActive(true);
-        }
-
-        public void PauseGame(bool state)
-        {
-            if (state)
-            {
-                gameIsPaused = true;
-                Time.timeScale = 0;
-            }
-            else
-            {
-                gameIsPaused = false;
-                Time.timeScale = 1;
-            }
-        }
-
         #endregion
 
     }

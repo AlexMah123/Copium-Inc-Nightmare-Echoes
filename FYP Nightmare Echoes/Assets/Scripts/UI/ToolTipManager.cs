@@ -89,7 +89,7 @@ namespace NightmareEchoes.UI
 
             tooltipWindow.gameObject.SetActive(true);
 
-            Vector2 newPosition = mousePos + new Vector2(10, tooltipWindow.sizeDelta.y); // Add an offset for spacing
+            Vector2 newPosition = mousePos + new Vector2(10, tooltipWindow.sizeDelta.y * 0.5f); // Add an offset for spacing
 
             Vector2 tooltipPositionRelativeToCenter = new Vector2(
                 newPosition.x - tooltipWindow.sizeDelta.x * 0.5f,
@@ -122,7 +122,11 @@ namespace NightmareEchoes.UI
         private void HideToolTip()
         {
             tooltipText.text = default;
-            tooltipWindow.gameObject.SetActive(false);
+
+            if(tooltipWindow != null)
+            {
+                tooltipWindow.gameObject.SetActive(false);
+            }
         }
         #endregion
 
@@ -143,8 +147,8 @@ namespace NightmareEchoes.UI
 
 
                 //enable inspected unit UI
-                UIManager.Instance.inspectedUnit = TurnOrderController.Instance.CurrentUnitQueue.ToArray()[order];
-                UIManager.Instance.EnableInspectedUI(true);
+                GameUIManager.Instance.inspectedUnit = TurnOrderController.Instance.CurrentUnitQueue.ToArray()[order];
+                GameUIManager.Instance.EnableInspectedUI(true);
 
                 CameraControl.Instance.UpdateCameraPan(hoveredTurnOrderUnit);
             }
@@ -168,11 +172,11 @@ namespace NightmareEchoes.UI
         {
             if (panel.gameObject == currentUnitPanel)
             {
-                hoveredStatusEffect = UIManager.Instance.currentUnitTotalStatusEffectList[order];
+                hoveredStatusEffect = GameUIManager.Instance.currentUnitTotalStatusEffectList[order];
             }
             else if(panel.gameObject == inspectedUnitPanel)
             {
-                hoveredStatusEffect = UIManager.Instance.inspectedUnitTotalStatusEffectList[order];
+                hoveredStatusEffect = GameUIManager.Instance.inspectedUnitTotalStatusEffectList[order];
 
             }
 

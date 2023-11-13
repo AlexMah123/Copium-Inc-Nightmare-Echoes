@@ -12,8 +12,11 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
+            GameUIManager.Instance.phaseText.text = $"End of Round";
+            GameUIManager.Instance.phaseText.color = Color.white;
+
             #region End of Cycle Effects
-            for(int i = controller.turnOrderList.Count - 1; i >= 0; i--)
+            for (int i = controller.turnOrderList.Count - 1; i >= 0; i--)
             {
                 if (controller.turnOrderList[i].HasteToken)
                 {
@@ -34,7 +37,7 @@ namespace NightmareEchoes.TurnOrder
             #endregion
 
             CombatManager.Instance.IncrementCoolDowns();
-            UIManager.Instance.UpdateStatusEffectUI();
+            GameUIManager.Instance.UpdateStatusEffectUI();
             controller.StartCoroutine(newTurn());
             
         }

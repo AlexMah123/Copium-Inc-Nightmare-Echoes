@@ -10,6 +10,9 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
+            GameUIManager.Instance.phaseText.text = $"Start of Round";
+            GameUIManager.Instance.phaseText.color = Color.white;
+
             controller.StartCoroutine(Start());
             //check for any effects
             CombatManager.Instance.OnTurnStart();

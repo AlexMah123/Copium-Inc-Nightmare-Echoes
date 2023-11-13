@@ -88,6 +88,9 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         private void Update()
         {
+            if (Time.timeScale == 0)
+                return;
+
             //Check HoverTile based on mouse pos if its on the map
             hoveredTile = GetFocusedTile();
 

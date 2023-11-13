@@ -10,11 +10,10 @@ namespace NightmareEchoes.UI
         int order;
         [SerializeField] float timeToWait = 0.2f;
 
-
         public void OnPointerEnter(PointerEventData eventData)
         {
             StopAllCoroutines();
-            StartCoroutine(StartTimer());
+            StartCoroutine(ShowStatusEffectTip());
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -23,15 +22,9 @@ namespace NightmareEchoes.UI
             ToolTipManager.OnMouseLoseFocusStatusEffect();
         }
 
-        IEnumerator StartTimer()
+        IEnumerator ShowStatusEffectTip()
         {
             yield return new WaitForSeconds(timeToWait);
-            ShowStatusEffectTip();
-
-        }
-
-        private void ShowStatusEffectTip()
-        {
             Transform panel = gameObject.transform.parent;
             order = gameObject.transform.GetSiblingIndex();
             ToolTipManager.OnMouseHoverStatusEffect(order, Input.mousePosition, panel);

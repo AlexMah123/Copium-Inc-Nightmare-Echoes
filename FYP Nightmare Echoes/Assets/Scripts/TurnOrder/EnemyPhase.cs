@@ -21,6 +21,9 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnEnter()
         {
+            GameUIManager.Instance.phaseText.text = $"Enemy's Turn";
+            GameUIManager.Instance.phaseText.color = Color.white;
+
             //Reseting Values
             tempStun = false;
             runOnce = false;
@@ -44,7 +47,7 @@ namespace NightmareEchoes.TurnOrder
                     tempStun = true;
                     controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
 
-                    UIManager.Instance.EnableCurrentUI(false);
+                    GameUIManager.Instance.EnableCurrentUI(false);
                     controller.StartCoroutine(controller.PassTurn());
                 }
 
@@ -63,7 +66,7 @@ namespace NightmareEchoes.TurnOrder
                 #endregion
 
 
-                UIManager.Instance.UpdateStatusEffectUI();
+                GameUIManager.Instance.UpdateStatusEffectUI();
                 controller.CurrentUnit.UpdateStatusEffectEvent();
             }
             #endregion
@@ -172,7 +175,7 @@ namespace NightmareEchoes.TurnOrder
             }
 
 
-            UIManager.Instance.UpdateStatusEffectUI();
+            GameUIManager.Instance.UpdateStatusEffectUI();
 
             //when you change phases, change the current unit to the next unit
             if (controller.CurrentUnitQueue.Count > 0)

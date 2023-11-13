@@ -10,6 +10,9 @@ namespace NightmareEchoes.TurnOrder
     {
         protected override void OnEnter()
         {
+            GameUIManager.Instance.phaseText.text = $"Plan Phase";
+            GameUIManager.Instance.phaseText.color = Color.white;
+
             controller.StartCoroutine(CombatManager.Instance.UpdateUnitPositionsAtStart());
 
             //UIManager.Instance.GuideButton();

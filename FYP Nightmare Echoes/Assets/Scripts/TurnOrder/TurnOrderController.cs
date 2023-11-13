@@ -74,7 +74,8 @@ namespace NightmareEchoes.TurnOrder
 
         void Start()
         {
-            Invoke("StartGame", 1f);
+            cycleCount = 1;
+            ChangePhase(planPhase);
         }
 
         void Update()
@@ -91,12 +92,6 @@ namespace NightmareEchoes.TurnOrder
             {
                 currentPhase.OnFixedUpdatePhase();
             }
-        }
-
-        void StartGame()
-        {
-            cycleCount = 1;
-            ChangePhase(planPhase);
         }
 
         public void ChangePhase(Phase newPhase)
@@ -171,7 +166,7 @@ namespace NightmareEchoes.TurnOrder
             {
                 CurrentUnitQueue.Enqueue(turnOrderList[i]);
                 turnOrderList[i].OnDestroyedEvent += OnUnitDestroy;
-                turnOrderList[i].OnAddBuffEvent += UIManager.Instance.UpdateStatusEffectUI;
+                turnOrderList[i].OnAddBuffEvent += GameUIManager.Instance.UpdateStatusEffectUI;
             }
         }
 
@@ -188,14 +183,14 @@ namespace NightmareEchoes.TurnOrder
 
             //unsub the destroyed unit's events
             destroyedUnit.OnDestroyedEvent -= OnUnitDestroy;
-            destroyedUnit.OnAddBuffEvent -= UIManager.Instance.UpdateStatusEffectUI;
+            destroyedUnit.OnAddBuffEvent -= GameUIManager.Instance.UpdateStatusEffectUI;
 
 
-            if (UIManager.Instance != null) 
+            if (GameUIManager.Instance != null) 
             {
-                if(UIManager.Instance.turnOrderSpritePool.Count > 0)
+                if(GameUIManager.Instance.turnOrderSpritePool.Count > 0)
                 {
-                    UIManager.Instance.UpdateTurnOrderUI();
+                    GameUIManager.Instance.UpdateTurnOrderUI();
                 }
             }
         }
