@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 namespace NightmareEchoes.Sound
 {
     public class AudioManager : MonoBehaviour
     {
-        public static AudioManager instance;
+        public static AudioManager Instance;
 
+        [Header("Sound List")]
         public Sound[] musicSounds;
         public Sound[] sfxSounds;
+
+        [Header("Audio Sources")]
         public AudioSource musicSource, sfxSource;
         public AudioMixer audioMixer;
-        public float VolumeControl;
+
+        [Header("Sound Sliders")]
+        public Slider masterSlider, musicSlider, sfxSlider;
 
         private void Awake()
         {
-            if (instance == null)
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -31,10 +37,21 @@ namespace NightmareEchoes.Sound
 
         private void Start()
         {
-            PlayMusic("BgSoundTest");
-            MasterVolume(0);
+            musicSource.volume = 1;
+            sfxSource.volume = 0.5f;
         }
 
+        public void DefaultSoundSetting()
+        {
+            PlayMusic("BgSoundTest");
+
+            //audio is from -80 to 0 db
+            SetMasterVolume(-40f);
+            SetSFXVolume(0);
+            SetMusicVolume(0);
+        }
+
+        #region public functions to call for sound
         public void PlayMusic(string Name)
         {
             Sound Musicsound = Array.Find(musicSounds, x => x.Name == Name);
@@ -63,21 +80,27 @@ namespace NightmareEchoes.Sound
                 sfxSource.PlayOneShot(SFXSound.clip);
             }
         }
+        #endregion
 
-        public void MasterVolume(float Volume)
+        #region Slider Functions
+        public void SetMasterVolume(float volume)
         {
-            musicSource.volume = Volume;
-            sfxSource.volume = Volume;
+            audioMixer.SetFloat("MasterVolume", volume);
+            masterSlider.value = volume;
         }
 
-        public void MusicVolume(float Volume)
+        public void SetSFXVolume(float volume)
         {
-            musicSource.volume = Volume;
+            audioMixer.SetFloat("SoundVolume", volume);
+            sfxSlider.value = volume;
         }
 
-        public void SFXVolume(float Volume)
+        public void SetMusicVolume(float volume)
         {
-            sfxSource.volume = Volume;
+            audioMixer.SetFloat("MusicVolume", volume);
+            musicSlider.value = volume;
         }
+        #endregion
+
     }
 }

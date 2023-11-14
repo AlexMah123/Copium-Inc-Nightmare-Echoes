@@ -146,8 +146,6 @@ namespace NightmareEchoes.TurnOrder
 
         private void Start()
         {
-            Application.targetFrameRate = 60;
-
             inspectedUnitPanel.SetActive(false);
             currentUnitPanel.SetActive(false);
             glossaryPanel.SetActive(false);

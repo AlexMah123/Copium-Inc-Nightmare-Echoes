@@ -11,9 +11,11 @@ namespace NightmareEchoes.Sound
         public Slider _MasterSlider, _MusicSlider, _SFXSlider;
         public AudioMixer _AudioMixer;
 
-        public void MasterVolume()
+        /*public void MasterVolume()
         {
-            AudioManager.instance.MasterVolume(_MasterSlider.value);
+            Debug.Log("here");
+
+            AudioManager.instance.SetMasterVolume(_MasterSlider.value);
 
             if (_MasterSlider.value == 0)
             {
@@ -24,19 +26,22 @@ namespace NightmareEchoes.Sound
 
         public void MusicVolume()
         {
-            AudioManager.instance.MusicVolume(_MusicSlider.value);
+            Debug.Log("here");
+            AudioManager.instance.SetMusicVolume(_MusicSlider.value);
 
             _MusicSlider.value = _MasterSlider.value;
 
             if (_MasterSlider.value == 0)
             {
-                AudioManager.instance.MusicVolume(0);
+                AudioManager.instance.SetMusicVolume(0);
             }
         }
 
         public void SfxVolume()
         {
-            AudioManager.instance.SFXVolume(_SFXSlider.value);
+            Debug.Log("here");
+
+            AudioManager.instance.SetSFXVolume(_SFXSlider.value);
 
             _SFXSlider.value = _MasterSlider.value;
 
@@ -44,6 +49,6 @@ namespace NightmareEchoes.Sound
             {
                 _SFXSlider.value = 0;
             }
-        }
+        }*/
     }
 }

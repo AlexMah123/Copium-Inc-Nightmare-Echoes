@@ -19,6 +19,7 @@ namespace NightmareEchoes.Inputs
         [SerializeField] float zoomMulitplier = 1;
 
         [Header("Camera Panning")]
+        public static bool autoCenter;
         public Vector3 offset = new Vector3(0, 0, -10f);
         public float smoothTime = 0.25f;
         public Vector3 velocity = Vector3.zero;
@@ -68,7 +69,7 @@ namespace NightmareEchoes.Inputs
             IfCameraZoomReset();
 
             //pans to the targetUnit till it reaches it and stops
-            if (isPanning && targetUnit != null)
+            if (autoCenter && isPanning && targetUnit != null)
             {
                 targetPosition = targetUnit.transform.position + offset;
                 gameCamera.transform.position = Vector3.SmoothDamp(
