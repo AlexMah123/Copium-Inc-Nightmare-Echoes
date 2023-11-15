@@ -473,6 +473,10 @@ namespace NightmareEchoes.Unit
             StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
             target.Direction = prevDir;
             target.CheckCrippled();
+
+            var back = target.transform.position + direction;
+            if (OverlayTileManager.Instance.GetOverlayTileInWorldPos(back))
+                target.TakeDamage(3);
         }
 
         public virtual void Reset()
