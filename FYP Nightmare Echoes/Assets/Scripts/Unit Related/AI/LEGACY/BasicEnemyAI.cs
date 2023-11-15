@@ -562,7 +562,7 @@ namespace NightmareEchoes.Unit.AI
                 if (!detectedStealthHero)
                 {
                     thisUnit.HasMoved = true;
-                    PathfindingManager.Instance.MoveAlongPath(thisUnit, totalPathList, tilesInRangeWithoutProps);
+                    PathfindingManager.Instance.MoveAlongPath(thisUnit, totalPathList);
                 }
             }
 

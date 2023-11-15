@@ -19,6 +19,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         [Header("Current Unit")]
         Entity currentPathfindingUnit;
         [SerializeField] float movingSpeed;
+        public static float combatSpeed;
 
         [Header("Path list + Tiles in Range")]
         public List<OverlayTile> pathList = new List<OverlayTile>();
@@ -274,7 +275,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             if (isMoving && currentPathfindingUnit != null)
             {
                 CameraControl.Instance.UpdateCameraPan(currentPathfindingUnit.gameObject);
-                MoveAlongPath(currentPathfindingUnit, pathList, playerTilesInRange);
+                MoveAlongPath(currentPathfindingUnit, pathList);
             }
         }
 
@@ -341,7 +342,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             yield break;
         }
 
-        public void MoveAlongPath(Entity thisUnit, List<OverlayTile> pathList, List<OverlayTile> tilesInRange)
+        public void MoveAlongPath(Entity thisUnit, List<OverlayTile> pathList)
         {
             //units movement
             if (pathList.Count > 0 && thisUnit != null) 
@@ -352,7 +353,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 //setting directions as well as the moving boolean
                 ChangeDirection(direction, thisUnit);
 
-                var step = movingSpeed * Time.deltaTime;
+                var step = movingSpeed * combatSpeed * Time.deltaTime;
                 var targetPosition = pathList[0].transform.position;
 
                 thisUnit.transform.position = Vector2.MoveTowards(thisUnit.transform.position, targetPosition, step);
