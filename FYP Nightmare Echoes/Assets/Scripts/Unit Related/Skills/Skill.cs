@@ -470,6 +470,7 @@ namespace NightmareEchoes.Unit
 
             if (tileDestination.CheckEntityGameObjectOnTile() || tileDestination.CheckObstacleOnTile())
             {
+                StartCoroutine(KnockbackCollisionAnimation(false, target, tileDestination));
                 if (tileDestination.CheckObstacleOnTile())
                     target.TakeDamage(3);
                 else if (tileDestination.CheckEntityGameObjectOnTile())
@@ -486,20 +487,22 @@ namespace NightmareEchoes.Unit
             target.CheckCrippled();
 
             var back = target.transform.position + direction + direction;
-            if (OverlayTileManager.Instance.GetOverlayTileInWorldPos(back))
+            var backTile = OverlayTileManager.Instance.GetOverlayTileInWorldPos(back);
+            if (backTile)
             {
-                var tile = OverlayTileManager.Instance.GetOverlayTileInWorldPos(back);
-                if (tile.CheckObstacleOnTile())
-                    target.TakeDamage(3);
-                else if (tile.CheckEntityGameObjectOnTile())
+                if (backTile.CheckEntityGameObjectOnTile() || backTile.CheckObstacleOnTile())
                 {
-                    target.TakeDamage(3);
-                    var go = tile.CheckEntityGameObjectOnTile();
-                    go.GetComponent<Entity>().TakeDamage(3);
+                    StartCoroutine(KnockbackCollisionAnimation(true, target, backTile));
+                    if (backTile.CheckObstacleOnTile())
+                        target.TakeDamage(3);
+                    else if (backTile.CheckEntityGameObjectOnTile())
+                    {
+                        target.TakeDamage(3);
+                        var go = backTile.CheckEntityGameObjectOnTile();
+                        go.GetComponent<Entity>().TakeDamage(3);
+                    }
                 }
-                
             }
-                
         }
 
         public virtual void Reset()
@@ -545,6 +548,21 @@ namespace NightmareEchoes.Unit
 
             yield return new WaitForSeconds(0.1f);
 
+            yield return null;
+        }
+
+        private IEnumerator KnockbackCollisionAnimation(bool waitKnockback, Entity target, OverlayTile destination)
+        {
+            if (waitKnockback)
+                yield return new WaitForSeconds(0.2f); 
+            
+            var startTile = target.ActiveTile;
+            var coroutine = PathfindingManager.Instance.MoveTowardsTile(target, destination, 0.15f);
+            StartCoroutine(coroutine);
+            yield return new WaitForSeconds(0.075f);
+            StopCoroutine(coroutine);
+            yield return new WaitForSeconds(0.075f);
+            StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(target, startTile, 0.15f));
             yield return null;
         }
     }
