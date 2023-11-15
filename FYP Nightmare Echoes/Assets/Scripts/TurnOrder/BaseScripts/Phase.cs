@@ -7,6 +7,7 @@ using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine.SceneManagement;
 using NightmareEchoes.Grid;
+using NightmareEchoes.UI;
 
 
 //created by Alex
@@ -96,7 +97,27 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnUpdatePhase()
         {
-            if(GeneralUIController.gameIsPaused)
+            //if you want to pause
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if(GeneralUIController.Instance.guidePanel.activeSelf)
+                {
+                    GeneralUIController.Instance.GuideButton();
+                }
+                else
+                {
+                    GeneralUIController.Instance.PauseButton();
+
+                }
+            }
+
+            // if you want to open up the guide
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                GeneralUIController.Instance.GuideButton();
+            }
+
+            if (GeneralUIController.gameIsPaused)
             {
                 return;
             }

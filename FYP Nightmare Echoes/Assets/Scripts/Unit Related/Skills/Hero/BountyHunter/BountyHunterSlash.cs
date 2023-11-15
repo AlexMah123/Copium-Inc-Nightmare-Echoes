@@ -13,9 +13,16 @@ namespace NightmareEchoes.Unit
         {
             if (!target.IsHostile) return false;
             base.Cast(target);
-            
+
+            var cacheHealth = target.stats.Health;
+
             if (DealDamage(target))
-                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+            {
+                if (cacheHealth != target.stats.Health)
+                {
+                    target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+                }
+            }
 
             return true;
         }

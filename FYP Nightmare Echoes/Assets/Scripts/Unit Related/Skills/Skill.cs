@@ -6,6 +6,7 @@ using NightmareEchoes.Grid;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 //Created by JH, edited by Ter
@@ -361,11 +362,15 @@ namespace NightmareEchoes.Unit
         //For specials
         public virtual bool Cast()
         {
-            throw new System.NotImplementedException();
+            thisUnit.ShowPopUpText(_name, Color.red);
+
+            return false;
         }
 
         public virtual bool SecondaryCast()
         {
+            thisUnit.ShowPopUpText(_name, Color.red);
+
             return false;
         }
 
@@ -468,14 +473,21 @@ namespace NightmareEchoes.Unit
             var tileDestination = OverlayTileManager.Instance.GetOverlayTileInWorldPos(destination);
             if (!tileDestination) return;
 
+            //collision happens
             if (tileDestination.CheckEntityGameObjectOnTile() || tileDestination.CheckObstacleOnTile())
             {
                 StartCoroutine(KnockbackCollisionAnimation(false, target, tileDestination));
                 if (tileDestination.CheckObstacleOnTile())
+                {
                     target.TakeDamage(3);
+                    target.Direction = prevDir;
+
+                }
                 else if (tileDestination.CheckEntityGameObjectOnTile())
                 {
                     target.TakeDamage(3);
+                    target.Direction = prevDir;
+
                     var go = tileDestination.CheckEntityGameObjectOnTile();
                     go.GetComponent<Entity>().TakeDamage(3);
                 }
@@ -485,24 +497,6 @@ namespace NightmareEchoes.Unit
             StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
             target.Direction = prevDir;
             target.CheckCrippled();
-
-            var back = target.transform.position + direction + direction;
-            var backTile = OverlayTileManager.Instance.GetOverlayTileInWorldPos(back);
-            if (backTile)
-            {
-                if (backTile.CheckEntityGameObjectOnTile() || backTile.CheckObstacleOnTile())
-                {
-                    StartCoroutine(KnockbackCollisionAnimation(true, target, backTile));
-                    if (backTile.CheckObstacleOnTile())
-                        target.TakeDamage(3);
-                    else if (backTile.CheckEntityGameObjectOnTile())
-                    {
-                        target.TakeDamage(3);
-                        var go = backTile.CheckEntityGameObjectOnTile();
-                        go.GetComponent<Entity>().TakeDamage(3);
-                    }
-                }
-            }
         }
 
         public virtual void Reset()
@@ -546,8 +540,6 @@ namespace NightmareEchoes.Unit
             unit.ResetAnimator();
             animationCoroutine = null;
 
-            yield return new WaitForSeconds(0.1f);
-
             yield return null;
         }
 
@@ -558,11 +550,16 @@ namespace NightmareEchoes.Unit
             
             var startTile = target.ActiveTile;
             var coroutine = PathfindingManager.Instance.MoveTowardsTile(target, destination, 0.15f);
+            target.GetComponentInChildren<SortingGroup>().sortingOrder = 1;
+
             StartCoroutine(coroutine);
             yield return new WaitForSeconds(0.075f);
             StopCoroutine(coroutine);
+
             yield return new WaitForSeconds(0.075f);
             StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(target, startTile, 0.15f));
+            target.GetComponentInChildren<SortingGroup>().sortingOrder = 0;
+
             yield return null;
         }
     }

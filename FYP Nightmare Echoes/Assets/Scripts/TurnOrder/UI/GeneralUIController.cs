@@ -8,12 +8,16 @@ using NightmareEchoes.Sound;
 using TMPro;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.Unit.Pathfinding;
+using NightmareEchoes.Unit;
+using System.Linq;
 
 namespace NightmareEchoes.TurnOrder
 {
     public class GeneralUIController : MonoBehaviour
     {
         public static GeneralUIController Instance;
+
+        Entity CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
 
         [Header("Game Over Related")]
         [SerializeField] GameObject gameOverPanel;
@@ -24,35 +28,35 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] GameObject settingPanel;
         [NonSerialized] public static bool gameIsPaused = false;
 
-        [Space(20), Header("Guide")]
-        [SerializeField] GameObject guidePanel;
+        [Space(20), Header("Guide Related")]
+        public GameObject guidePanel;
         public Button guideButton;
 
         [Space(20), Header("In Game Settings")]
         [SerializeField] Slider combatSpeedSlider;
-        //public static float combatSpeed;
+        [SerializeField] TextMeshProUGUI combatSpeedText;
+
+        public static float originalEnemyDelay;
+        public static float originalPhaseDelay;
+        public static float originalPassTurnDelay;
+
         [SerializeField] Toggle autoCenterToggle;
-        //public static bool autoCenter;
         [SerializeField] Toggle runInBGToggle;
+
 
         [Space(20), Header("Screen/UI Settings")]
         [SerializeField] TMP_Dropdown resDropDown;
         [SerializeField] TMP_Dropdown screenDropDown;
+
+        [Space(20)]
+        [SerializeField] List<CanvasGroup> hotkeyCanvasList = new List<CanvasGroup>();
         [SerializeField] Toggle showHotKeyToggle;
 
+        [Space(20)]
         [SerializeField] List<CanvasGroup> uiCanvasList = new List<CanvasGroup>();
         [SerializeField] Slider uiTransparencySlider;
-        static FullScreenMode screenMode = FullScreenMode.ExclusiveFullScreen;
-
-
-
-
-
-        Resolution[] Resolutions;
-
-        
-
-        
+        [SerializeField] TextMeshProUGUI uiTransparencyText;
+        static FullScreenMode screenMode = FullScreenMode.ExclusiveFullScreen;    
 
         private void Awake()
         {
@@ -64,48 +68,58 @@ namespace NightmareEchoes.TurnOrder
             {
                 Instance = this;
             }
-
         }
 
         void Start()
         {
+            originalPhaseDelay = TurnOrderController.Instance.phaseDelay;
+            originalEnemyDelay = TurnOrderController.Instance.enemythinkingDelay;
+            originalPassTurnDelay = TurnOrderController.Instance.passTurnDelay;
+
             LoadSettings();
-            /*Resolutions = Screen.resolutions;
-
-            resDropDown.ClearOptions();
-
-            List<string> ResOptions = new List<string>();
-            for (int i = 0; i < Resolutions.Length; i++)
-            {
-                string resOption = Resolutions[i].width + " X " + Resolutions[i].height;
-                ResOptions.Add(resOption);
-            }
-
-            resDropDown.AddOptions(ResOptions);*/
         }
 
-        void Update()
-        {
-
-        }
 
         public void LoadSettings()
         {
-            AudioManager.Instance.DefaultSoundSetting();
+            AudioManager.Instance.LoadSoundSettings();
+            
+            SetCombatSpeed(PlayerPrefs.GetFloat("CombatSpeed", 1f)); //1x speed
+            SetAutoCenterUnit(IntToBool(PlayerPrefs.GetInt("AutoCenterUnit", 1)));
+            SetRunInBG(IntToBool(PlayerPrefs.GetInt("RunInBG", 0)));
 
-            SetCombatSpeed(1f); //1x speed
-            SetAutoCenterUnit(true);
-            SetRunInBG(false);
+            SetResolution(PlayerPrefs.GetInt("Resolution", 2)); // 1920 x 1080
+            SetScreenMode(PlayerPrefs.GetInt("ScreenMode", 0)); // Fullscreen
+            SetShowHotKeys(IntToBool(PlayerPrefs.GetInt("ShowHotKey", 1)));
+            SetUITransparency(PlayerPrefs.GetFloat("UITransparency", 1f)); //1x transparency
 
-            SetResolution(2); // 1920 x 1080
-            SetScreenMode(0); // Fullscreen
-            SetShowHotKeys(true);
-            SetUITransparency(1f); //1x transparency
+            PlayerPrefs.Save();
         }
 
         public void SaveSettings()
         {
+            AudioManager.Instance.SaveSoundSettings();
 
+            PlayerPrefs.SetFloat("CombatSpeed", combatSpeedSlider.value);
+            PlayerPrefs.SetInt("AutoCenterUnit", BoolToInt(autoCenterToggle.isOn));
+            PlayerPrefs.SetInt("RunInBG", BoolToInt(runInBGToggle.isOn));
+
+            PlayerPrefs.SetInt("Resolution", resDropDown.value);
+            PlayerPrefs.SetInt("ScreenMode", screenDropDown.value);
+            PlayerPrefs.SetInt("ShowHotKey", BoolToInt(showHotKeyToggle.isOn));
+            PlayerPrefs.SetFloat("UITransparency", uiTransparencySlider.value);
+
+            PlayerPrefs.Save();
+        }
+
+        int BoolToInt(bool val)
+        {
+            return val ? 1 : 0;
+        }
+
+        bool IntToBool(int val)
+        {
+            return val != 0 ?  true : false;
         }
 
         public void PauseGame(bool state)
@@ -126,7 +140,26 @@ namespace NightmareEchoes.TurnOrder
         public void SetCombatSpeed(float speed)
         {
             PathfindingManager.combatSpeed = speed;
+            TurnOrderController.Instance.phaseDelay = originalPhaseDelay / speed;
+            TurnOrderController.Instance.enemythinkingDelay = originalEnemyDelay / speed;
+            TurnOrderController.Instance.passTurnDelay = originalPassTurnDelay / speed;
+
+            var totalHero = TurnOrderController.Instance.FindAllHeros();
+            var totalEnemies = TurnOrderController.Instance.FindAllEnemies();
+
+            List<Entity> allEntity = totalHero.Union(totalEnemies).ToList();
+
+            for (int i = 0; i < allEntity.Count; i++)
+            {
+                if (allEntity[i].FrontAnimator && allEntity[i].BackAnimator)
+                {
+                    allEntity[i].FrontAnimator.speed = speed;
+                    allEntity[i].BackAnimator.speed = speed;
+                }
+            }
+
             combatSpeedSlider.value = speed;
+            combatSpeedText.text = $"{Mathf.Round(speed * 100f) / 100f}x";
         }
 
         public void SetAutoCenterUnit(bool state)
@@ -136,9 +169,9 @@ namespace NightmareEchoes.TurnOrder
 
             if(state)
             {
-                if(TurnOrderController.Instance.CurrentUnit)
+                if (CurrentUnit)
                 {
-                    CameraControl.Instance.UpdateCameraPan(TurnOrderController.Instance.CurrentUnit.gameObject);
+                    CameraControl.Instance.UpdateCameraPan(CurrentUnit.gameObject);
                 }
             }
         }
@@ -194,6 +227,10 @@ namespace NightmareEchoes.TurnOrder
 
         public void SetShowHotKeys(bool state)
         {
+            for (int i = 0; i < hotkeyCanvasList.Count; i++)
+            {
+                hotkeyCanvasList[i].alpha = state ? 1 : 0;
+            }
 
             showHotKeyToggle.isOn = state;
         }
@@ -206,6 +243,7 @@ namespace NightmareEchoes.TurnOrder
             }
 
             uiTransparencySlider.value = transparency;
+            uiTransparencyText.text = $"{Mathf.Round(transparency * 100f)}%";
         }
 
         #endregion
@@ -213,16 +251,10 @@ namespace NightmareEchoes.TurnOrder
         #region General Button Functions
         public void PauseButton()
         {
-            if (!pausePanel.activeSelf)
-            {
-                PauseGame(true);
-                pausePanel.SetActive(true);
-            }
-            else
-            {
-                PauseGame(false);
-                pausePanel.SetActive(false);
-            }
+            bool isPaused = pausePanel.activeSelf;
+
+            PauseGame(!isPaused);
+            pausePanel.SetActive(!isPaused);
         }
 
         public void SettingsButton()
@@ -247,32 +279,17 @@ namespace NightmareEchoes.TurnOrder
 
         public void GuideButton()
         {
-            if (!guidePanel.activeSelf)
+            bool isGuideActive = guidePanel.activeSelf;
+
+            if (!pausePanel.activeSelf)
             {
-                if (!pausePanel.activeSelf)
-                {
-                    PauseGame(true);
-                    pausePanel.SetActive(true);
-                }
-
-                guideButton.gameObject.SetActive(false);
-                pauseButton.gameObject.SetActive(false);
-
-                guidePanel.SetActive(true);
+                PauseGame(!isGuideActive);
+                pausePanel.SetActive(!isGuideActive);
             }
-            else
-            {
-                if(!pausePanel.activeSelf)
-                {
-                    PauseGame(false);
-                    pausePanel.SetActive(false);
-                }
-
-                guideButton.gameObject.SetActive(true);
-                pauseButton.gameObject.SetActive(true);
-
-                guidePanel.SetActive(false);
-            }
+            
+            guideButton.gameObject.SetActive(isGuideActive);
+            pauseButton.gameObject.SetActive(isGuideActive);
+            guidePanel.SetActive(!isGuideActive);
         }
 
         public void MainMenuButton(int sceneIndex)

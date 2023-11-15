@@ -10,7 +10,7 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast(OverlayTile target, List<OverlayTile> aoeTiles)
         {
-
+            base.Cast(target, aoeTiles);
             StartCoroutine(Attack(target, new List<OverlayTile>(aoeTiles)));
 
             return true;

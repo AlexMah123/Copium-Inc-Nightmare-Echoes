@@ -4,6 +4,9 @@ using UnityEngine;
 using System;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using TMPro;
+using static System.Net.Mime.MediaTypeNames;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 namespace NightmareEchoes.Sound
 {
@@ -21,6 +24,9 @@ namespace NightmareEchoes.Sound
 
         [Header("Sound Sliders")]
         public Slider masterSlider, musicSlider, sfxSlider;
+        [SerializeField] TextMeshProUGUI masterVolumeText;
+        [SerializeField] TextMeshProUGUI sfxVolumeText;
+        [SerializeField] TextMeshProUGUI musicVolumeText;
 
         private void Awake()
         {
@@ -37,8 +43,27 @@ namespace NightmareEchoes.Sound
 
         private void Start()
         {
-            musicSource.volume = 1;
+            PlayMusic("BgSoundTest");
+
+            musicSource.volume = 0.5f;
             sfxSource.volume = 0.5f;
+        }
+
+        public void SaveSoundSettings()
+        {
+            PlayerPrefs.SetFloat("MasterVolume", masterSlider.value);
+            PlayerPrefs.SetFloat("SoundVolume", sfxSlider.value);
+            PlayerPrefs.SetFloat("MusicVolume", musicSlider.value);
+
+            PlayerPrefs.Save();
+        }
+
+        public void LoadSoundSettings()
+        {
+
+            SetMasterVolume(PlayerPrefs.GetFloat("MasterVolume", -40f));
+            SetSFXVolume(PlayerPrefs.GetFloat("SoundVolume", 0));
+            SetMusicVolume(PlayerPrefs.GetFloat("MusicVolume", 0));
         }
 
         public void DefaultSoundSetting()
@@ -85,20 +110,31 @@ namespace NightmareEchoes.Sound
         #region Slider Functions
         public void SetMasterVolume(float volume)
         {
+            float ratio = 1 - Mathf.Abs(volume / 80f);
+            masterVolumeText.text = string.Format("{0:P0}", ratio);
+
             audioMixer.SetFloat("MasterVolume", volume);
             masterSlider.value = volume;
+
         }
 
         public void SetSFXVolume(float volume)
         {
+            float ratio = 1 - Mathf.Abs(volume / 80f);
+            sfxVolumeText.text = string.Format("{0:P0}", ratio);
+
             audioMixer.SetFloat("SoundVolume", volume);
             sfxSlider.value = volume;
         }
 
         public void SetMusicVolume(float volume)
         {
+            float ratio = 1 - Mathf.Abs(volume / 80f);
+            musicVolumeText.text = string.Format("{0:P0}", ratio);
+
             audioMixer.SetFloat("MusicVolume", volume);
             musicSlider.value = volume;
+
         }
         #endregion
 

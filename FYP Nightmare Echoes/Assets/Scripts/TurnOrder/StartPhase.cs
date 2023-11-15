@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using NightmareEchoes.Unit.Combat;
 using UnityEngine;
+using NightmareEchoes.UI;
+
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder

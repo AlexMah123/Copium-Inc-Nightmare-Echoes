@@ -4,12 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using NightmareEchoes.Unit;
-using NightmareEchoes.TurnOrder;
 using System.Linq;
 using NightmareEchoes.Unit.Pathfinding;
-using UnityEngine.SceneManagement;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Inputs;
+using NightmareEchoes.TurnOrder;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -17,6 +16,7 @@ namespace NightmareEchoes.TurnOrder
     public class GameUIManager : MonoBehaviour
     {
         public static GameUIManager Instance;
+
         Entity CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
 
         [Header("Turn Order Bar")]
@@ -246,16 +246,6 @@ namespace NightmareEchoes.TurnOrder
                 currentUnitNameText.text = $"{CurrentUnit.Name}";
                 currentUnitHealthText.text = $"{CurrentUnit.stats.Health}/{CurrentUnit.stats.MaxHealth}";
 
-
-                if (!CurrentUnit.IsHostile)
-                {
-                    BasicAttackText.text = CurrentUnit.BasicAttackName;
-                    Skill1Text.text = CurrentUnit.Skill1Name;
-                    Skill2Text.text = CurrentUnit.Skill2Name;
-                    Skill3Text.text = CurrentUnit.Skill3Name;
-                    PassiveText.text = CurrentUnit.PassiveName;
-                }
-
                 currentUnitHealth.maxValue = CurrentUnit.stats.MaxHealth;
                 currentUnitHealth.value = CurrentUnit.stats.Health;
 
@@ -375,6 +365,7 @@ namespace NightmareEchoes.TurnOrder
                 PathfindingManager.Instance.SetUnitPositionOnTile(CurrentUnit, PathfindingManager.Instance.RevertUnitPosition);
                 PathfindingManager.Instance.CurrentPathfindingUnit.Direction = PathfindingManager.Instance.RevertUnitDirection;
                 CurrentUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
+                CurrentUnit.ResetAnimator();
 
                 //Resets everything, not moving, not dragging, and lastaddedtile is null
                 CurrentUnit.HasMoved = false;
@@ -415,12 +406,17 @@ namespace NightmareEchoes.TurnOrder
                     passTurnButton.gameObject.SetActive(false);
                     cancelActionButton.interactable = false;
                     cancelActionButton.gameObject.SetActive(false);
+
+                    EnableCurrentUI(false);
                 }
             }
         }
 
         public void AttackButton()
         {
+            if (CurrentUnit.BasicAttackSkill == null)
+                return;
+
             CurrentUnit.BasicAttack();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.playerTilesInRange.Clear();
@@ -437,6 +433,9 @@ namespace NightmareEchoes.TurnOrder
 
         public void Skill1Button()
         {
+            if (CurrentUnit.Skill1Skill == null)
+                return;
+
             CurrentUnit.Skill1();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.playerTilesInRange.Clear();
@@ -453,6 +452,9 @@ namespace NightmareEchoes.TurnOrder
 
         public void Skill2Button()
         {
+            if (CurrentUnit.Skill2Skill == null)
+                return;
+
             CurrentUnit.Skill2();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.playerTilesInRange.Clear();
@@ -469,6 +471,9 @@ namespace NightmareEchoes.TurnOrder
 
         public void Skill3Button()
         {
+            if (CurrentUnit.Skill3Skill == null)
+                return;
+
             CurrentUnit.Skill3();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
             PathfindingManager.Instance.playerTilesInRange.Clear();
@@ -1112,8 +1117,6 @@ namespace NightmareEchoes.TurnOrder
                     index++;
                 }
             }
-
-            
 
             //reset all the buttons
             for (int i = 1; i < currentUnitButtonList.Count; i++)

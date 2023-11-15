@@ -10,6 +10,8 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast()
         {
+            base.Cast();
+
             if (thisUnit.DoesModifierExist(STATUS_EFFECT.STEALTH_TOKEN))
             {
                 thisUnit.ShowPopUpText("Already In Stealth!!", Color.red);

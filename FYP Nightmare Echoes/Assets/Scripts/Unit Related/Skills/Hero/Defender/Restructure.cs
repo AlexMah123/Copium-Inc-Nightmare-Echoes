@@ -8,6 +8,7 @@ namespace NightmareEchoes.Unit
     {
         public override bool Cast()
         {
+            base.Cast();
             StartCoroutine(Attack());
 
             return true;
@@ -19,8 +20,7 @@ namespace NightmareEchoes.Unit
             //animation
             animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Restructure"));
 
-            yield return new WaitUntil(() => animationCoroutine == null);
-
+            yield return new WaitForSeconds(0.1f);
             thisUnit.stats.Health += heal;
             thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.BARRIER_TOKEN, 1, 1));
             thisUnit.ClearAllStatusEffectOfType(ModifierType.NEGATIVETOKEN);

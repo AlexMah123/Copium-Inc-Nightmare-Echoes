@@ -18,9 +18,14 @@ namespace NightmareEchoes.Unit
             {
                 base.Cast(target);
 
+                var cacheHealth = target.stats.Health;
+
                 if (DealDamage(target))
                 {
-                    target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+                    if (cacheHealth != target.stats.Health)
+                    {
+                        target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+                    }
                 }
                 return true;
             }
@@ -68,9 +73,14 @@ namespace NightmareEchoes.Unit
 
             yield return new WaitUntil(() => animationCoroutine == null);
 
+            var cacheHealth = target.stats.Health;
+
             if (DealDamage(target))
             {
-                target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+                if (cacheHealth != target.stats.Health)
+                {
+                    target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+                }
             }
         }
     }

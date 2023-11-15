@@ -36,12 +36,14 @@ namespace NightmareEchoes.Unit
             
             if (target.HasMoved)
             {
+                base.Cast(target);
                 DealDamage(target);
                 return true;
             }
             
             if (target.HasAttacked)
             {
+                base.Cast(target);
                 DealDamage(target, secondaryDamage);
                 return true;
             }
@@ -54,6 +56,7 @@ namespace NightmareEchoes.Unit
             var copy = new List<OverlayTile>(aoeTiles);
             CombatManager.Instance.SetActiveAoe(this, copy);
             base.Cast(target, aoeTiles);
+
             currentPos = unit.ActiveTile;
             return true;
         }

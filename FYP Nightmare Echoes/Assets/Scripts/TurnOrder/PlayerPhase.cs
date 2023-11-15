@@ -6,6 +6,7 @@ using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.Grid;
+using NightmareEchoes.UI;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.TurnOrder
@@ -117,11 +118,11 @@ namespace NightmareEchoes.TurnOrder
 
                 PathfindingManager.Instance.PlayerInputPathfinding();
 
-                CheckCancelAction();
+                //check inputs
+                CheckHotkeyInputs();
 
-                #region stealth token check
+                // stealth token check
                 CheckIfDetectedByEnemy();
-                #endregion
             }
             else
             {
@@ -216,42 +217,36 @@ namespace NightmareEchoes.TurnOrder
             controller.StartCoroutine(controller.PassTurn());
         }
 
-        void CheckCancelAction()
+        void CheckHotkeyInputs()
         {
-            //if you cancel movement
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Z) && !PathfindingManager.Instance.isMoving)
             {
-                if (PathfindingManager.Instance.CurrentPathfindingUnit != null && PathfindingManager.Instance.RevertUnitPosition != null)
-                {
-                    PathfindingManager.Instance.SetUnitPositionOnTile(controller.CurrentUnit, PathfindingManager.Instance.RevertUnitPosition);
-                    PathfindingManager.Instance.CurrentPathfindingUnit.Direction = PathfindingManager.Instance.RevertUnitDirection;
-                    controller.CurrentUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
+                controller.SkipTurn();
+            }
 
-                    //Resets everything, not moving, not dragging, and lastaddedtile is null
-                    controller.CurrentUnit.HasMoved = false;
-                    PathfindingManager.Instance.isMoving = false;
-                    PathfindingManager.Instance.hasMoved = false;
-                    PathfindingManager.Instance.isDragging = false;
-                    PathfindingManager.Instance.lastAddedTile = null;
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                GameUIManager.Instance.CancelActionButton();
+            }
 
-                    PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !PathfindingManager.Instance.isMoving)
+            {
+                GameUIManager.Instance.AttackButton();
+            }
 
-                    //cancels the selected skill
-                    if (CombatManager.Instance.ActiveSkill != null)
-                    {
-                        CombatManager.Instance.SelectSkill(controller.CurrentUnit, CombatManager.Instance.ActiveSkill);
-                        CombatManager.Instance.ClearPreviews();
-                    }
+            if (Input.GetKeyDown(KeyCode.Alpha2) && !PathfindingManager.Instance.isMoving)
+            {
+                GameUIManager.Instance.Skill1Button();
+            }
 
-                    //shows back the tiles in range
-                    PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
-                    CameraControl.Instance.UpdateCameraPan(controller.CurrentUnit.gameObject);
+            if (Input.GetKeyDown(KeyCode.Alpha3) && !PathfindingManager.Instance.isMoving)
+            {
+                GameUIManager.Instance.Skill2Button();
+            }
 
-                }
-                else
-                {
-                    controller.CurrentUnit.ShowPopUpText("Cannot Cancel Action!", Color.red);
-                }
+            if (Input.GetKeyDown(KeyCode.Alpha4) && !PathfindingManager.Instance.isMoving)
+            {
+                GameUIManager.Instance.Skill3Button();
             }
         }
 

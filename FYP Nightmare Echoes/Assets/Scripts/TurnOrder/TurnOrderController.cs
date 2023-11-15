@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using NightmareEchoes.Unit;
 using System.Linq;
+using NightmareEchoes.UI;
+using System;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -106,6 +108,12 @@ namespace NightmareEchoes.TurnOrder
         }
 
         #region Utility
+        [ContextMenu("Skip Turn")]
+        public void SkipTurn()
+        {
+            StartCoroutine(PassTurn());
+            GameUIManager.Instance.PassTurnButton();
+        }
 
         public IEnumerator PassTurn()
         {
@@ -136,12 +144,68 @@ namespace NightmareEchoes.TurnOrder
             }
         }
 
-        [ContextMenu("Skip turn")]
-        public void SkipTurn()
+        public List<Entity> FindAllHeros()
         {
-            StartCoroutine(PassTurn());
+            //check if any hero exist
+            totalHeroList.Clear();
+            totalUnitList = FindObjectsOfType<Entity>().ToList();
+
+            //filter by heroes
+            for (int i = totalUnitList.Count - 1; i >= 0; i--)
+            {
+                if (!totalUnitList[i].IsHostile && !totalUnitList[i].IsProp)
+                {
+                    totalHeroList.Add(totalUnitList[i]);
+                }
+            }
+
+            if (totalHeroList.Count > 0)
+            {
+                return totalUnitList;
+            }
+            else
+            {
+                return null;
+            }
         }
 
+        public List<Entity> FindAllEnemies()
+        {
+            //check if any hero exist
+            totalEnemiesList.Clear();
+            totalUnitList = FindObjectsOfType<Entity>().ToList();
+
+            //filter by heroes
+
+            for (int i = totalUnitList.Count - 1; i >= 0; i--)
+            {
+                if (totalUnitList[i].IsHostile && !totalUnitList[i].IsProp)
+                {
+                    totalEnemiesList.Add(totalUnitList[i]);
+                }
+            }
+
+            if (totalEnemiesList.Count > 0)
+            {
+                return totalEnemiesList;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private bool AnyUnitHasPendingPopups()
+        {
+            for (int i = CurrentUnitQueue.Count - 1; i >= 0; i--)
+            {
+                if (CurrentUnitQueue.ToArray()[i].PopupTextQueue.Count > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         #endregion
 
         #region Turn Order Calculations
@@ -200,7 +264,7 @@ namespace NightmareEchoes.TurnOrder
         {
             if (_a.stats.Speed == _b.stats.Speed)
             {
-                int rand = Random.Range(0, 2);
+                int rand = UnityEngine.Random.Range(0, 2);
 
                 switch (rand)
                 {
@@ -214,68 +278,5 @@ namespace NightmareEchoes.TurnOrder
             return _a.stats.Speed.CompareTo(_b.stats.Speed);
         }
         #endregion
-
-        public List<Entity> FindAllHeros()
-        {
-            //check if any hero exist
-            totalHeroList.Clear();
-            totalUnitList = FindObjectsOfType<Entity>().ToList();
-
-            //filter by heroes
-            for(int i = totalUnitList.Count - 1; i >= 0; i--)
-            {
-                if (!totalUnitList[i].IsHostile && !totalUnitList[i].IsProp)
-                {
-                    totalHeroList.Add(totalUnitList[i]);
-                }
-            }
-
-            if (totalHeroList.Count > 0) 
-            {
-                return totalUnitList;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public List<Entity> FindAllEnemies()
-        {
-            //check if any hero exist
-            totalEnemiesList.Clear();
-            totalUnitList = FindObjectsOfType<Entity>().ToList();
-
-            //filter by heroes
-
-            for (int i = totalUnitList.Count - 1; i >= 0; i--)
-            {
-                if (totalUnitList[i].IsHostile && !totalUnitList[i].IsProp)
-                {
-                    totalEnemiesList.Add(totalUnitList[i]);
-                }
-            }
-
-            if (totalEnemiesList.Count > 0)
-            {
-                return totalEnemiesList;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private bool AnyUnitHasPendingPopups()
-        {
-            for(int i = CurrentUnitQueue.Count - 1; i >= 0; i--)
-            {
-                if (CurrentUnitQueue.ToArray()[i].PopupTextQueue.Count > 0)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }

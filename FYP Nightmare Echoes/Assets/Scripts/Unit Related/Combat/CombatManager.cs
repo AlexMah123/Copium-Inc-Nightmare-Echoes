@@ -380,6 +380,7 @@ namespace NightmareEchoes.Unit.Combat
 
             if (!target == activeSkill.gameObject.GetComponent<Entity>()) return;
 
+
             activeSkill.Cast();
             EndTurn();
         }

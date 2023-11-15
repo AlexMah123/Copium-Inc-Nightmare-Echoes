@@ -63,12 +63,16 @@ namespace NightmareEchoes.Unit
 
             yield return new WaitUntil(GetDestination);
 
-            targetUnit.transform.position = targetTile.transform.position;
-            targetUnit.UpdateLocation();
+
+            base.Cast(targetUnit);
 
             //animations
             yield return new WaitForSeconds(0.1f);
-            StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
+            targetUnit.transform.position = targetTile.transform.position;
+            targetUnit.UpdateLocation();
         }
     }
 }
