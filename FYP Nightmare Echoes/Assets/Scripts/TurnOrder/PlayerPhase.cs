@@ -4,9 +4,7 @@ using UnityEngine;
 using NightmareEchoes.Unit;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
-using NightmareEchoes.Inputs;
 using NightmareEchoes.Grid;
-using NightmareEchoes.UI;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.TurnOrder

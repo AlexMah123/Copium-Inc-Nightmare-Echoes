@@ -5,8 +5,6 @@ using UnityEngine;
 using NightmareEchoes.Unit.AI;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
-using NightmareEchoes.Inputs;
-using NightmareEchoes.UI;
 
 
 //created by Alex

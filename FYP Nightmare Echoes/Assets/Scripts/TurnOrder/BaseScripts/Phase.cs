@@ -7,7 +7,6 @@ using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine.SceneManagement;
 using NightmareEchoes.Grid;
-using NightmareEchoes.UI;
 
 
 //created by Alex

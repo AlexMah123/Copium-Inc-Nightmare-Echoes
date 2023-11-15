@@ -2,7 +2,6 @@ using NightmareEchoes.Unit.Combat;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NightmareEchoes.UI;
 
 
 //created by Alex
