@@ -468,7 +468,18 @@ namespace NightmareEchoes.Unit
             var tileDestination = OverlayTileManager.Instance.GetOverlayTileInWorldPos(destination);
             if (!tileDestination) return;
 
-            if (tileDestination.CheckEntityGameObjectOnTile() || tileDestination.CheckObstacleOnTile()) return;
+            if (tileDestination.CheckEntityGameObjectOnTile() || tileDestination.CheckObstacleOnTile())
+            {
+                if (tileDestination.CheckObstacleOnTile())
+                    target.TakeDamage(3);
+                else if (tileDestination.CheckEntityGameObjectOnTile())
+                {
+                    target.TakeDamage(3);
+                    var go = tileDestination.CheckEntityGameObjectOnTile();
+                    go.GetComponent<Entity>().TakeDamage(3);
+                }
+                return;
+            }
             
             StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(target, tileDestination, 0.15f));
             target.Direction = prevDir;
@@ -478,7 +489,6 @@ namespace NightmareEchoes.Unit
             if (OverlayTileManager.Instance.GetOverlayTileInWorldPos(back))
             {
                 var tile = OverlayTileManager.Instance.GetOverlayTileInWorldPos(back);
-                Debug.Log(tile);
                 if (tile.CheckObstacleOnTile())
                     target.TakeDamage(3);
                 else if (tile.CheckEntityGameObjectOnTile())
