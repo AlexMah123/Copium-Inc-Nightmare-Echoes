@@ -474,9 +474,22 @@ namespace NightmareEchoes.Unit
             target.Direction = prevDir;
             target.CheckCrippled();
 
-            var back = target.transform.position + direction;
+            var back = target.transform.position + direction + direction;
             if (OverlayTileManager.Instance.GetOverlayTileInWorldPos(back))
-                target.TakeDamage(3);
+            {
+                var tile = OverlayTileManager.Instance.GetOverlayTileInWorldPos(back);
+                Debug.Log(tile);
+                if (tile.CheckObstacleOnTile())
+                    target.TakeDamage(3);
+                else if (tile.CheckEntityGameObjectOnTile())
+                {
+                    target.TakeDamage(3);
+                    var go = tile.CheckEntityGameObjectOnTile();
+                    go.GetComponent<Entity>().TakeDamage(3);
+                }
+                
+            }
+                
         }
 
         public virtual void Reset()
