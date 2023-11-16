@@ -167,7 +167,7 @@ namespace NightmareEchoes.TurnOrder
             }
             else
             {
-                return null;
+                return new List<Entity>();
             }
         }
 
@@ -193,7 +193,7 @@ namespace NightmareEchoes.TurnOrder
             }
             else
             {
-                return null;
+                return new List<Entity>();
             }
         }
 

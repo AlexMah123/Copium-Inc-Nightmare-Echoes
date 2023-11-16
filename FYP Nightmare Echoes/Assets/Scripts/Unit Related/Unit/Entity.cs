@@ -863,7 +863,7 @@ namespace NightmareEchoes.Unit
                 textData.spawnedFrom = this.gameObject;
                 textData.offset = Vector3.up;
 
-                //prefab.hideFlags = HideFlags.HideInHierarchy;
+                prefab.hideFlags = HideFlags.HideInHierarchy;
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();
                 textMeshPro.text = tempData.popupTextData;
                 textMeshPro.color = tempData.textColor;

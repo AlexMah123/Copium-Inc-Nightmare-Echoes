@@ -86,9 +86,9 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 
-            if (controller.FindAllEnemies() == null)
+            if (controller.FindAllEnemies().Count == 0)
             {
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene((int)SCENEINDEX.TITLE_SCENE);
             }
 
             OnFixedUpdate();
