@@ -63,7 +63,6 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] TextMeshProUGUI skillStunChanceText;
         [SerializeField] TextMeshProUGUI skillDebuffChanceText;
 
-
         [Space(20), Header("Inspectable Info")]
         public Entity inspectedUnit;
         [SerializeField] List<Button> inspectedUnitButtonList;
@@ -80,7 +79,6 @@ namespace NightmareEchoes.TurnOrder
         [SerializeField] GameObject statusEffectPrefab;
         List<GameObject> inspectedUnitStatusEffectPool = new List<GameObject>();
         List<GameObject> currentUnitStatusEffectPool = new List<GameObject>();
-
 
         [Space(20), Header("Character Glossary Related")]
         [SerializeField] GameObject glossaryPanel;
@@ -666,7 +664,9 @@ namespace NightmareEchoes.TurnOrder
                         Modifier modifier = currentUnitTotalStatusEffectList[i];
 
                         //sets image to icon
-                        //statusEffectImage.sprite = modifier.icon;
+                        var image = statusEffectImage.transform.GetChild(0).GetComponent<Image>();
+                        image.sprite = modifier.icon;
+                        image.color = Color.white;
 
                         //sets image color to respective color
                         switch (modifier.modifierType)
@@ -712,7 +712,6 @@ namespace NightmareEchoes.TurnOrder
                 {
                     //get obj from pool
                     var statusEffectImage = GetStatusEffectObject(inspectedUnitStatusEffectsPanel)?.GetComponent<Image>();
-                    //Image statusEffectImage = statusEffectObj.GetComponent<Image>();
 
                     if (statusEffectImage != null)
                     {
@@ -720,7 +719,9 @@ namespace NightmareEchoes.TurnOrder
                         Modifier modifier = inspectedUnitTotalStatusEffectList[i];
 
                         //sets image to icon
-                        //statusEffectImage.sprite = modifier.icon;
+                        var image = statusEffectImage.transform.GetChild(0).GetComponent<Image>();
+                        image.sprite = modifier.icon;
+                        image.color = Color.white;
 
                         //sets image color to respective color
                         switch (modifier.modifierType)

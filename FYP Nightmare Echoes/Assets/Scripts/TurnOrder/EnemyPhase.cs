@@ -47,7 +47,6 @@ namespace NightmareEchoes.TurnOrder
                     tempStun = true;
                     controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
 
-                    GameUIManager.Instance.EnableCurrentUI(false);
                     controller.StartCoroutine(controller.PassTurn());
                 }
 

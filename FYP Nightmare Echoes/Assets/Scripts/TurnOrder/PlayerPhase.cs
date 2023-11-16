@@ -5,6 +5,7 @@ using NightmareEchoes.Unit;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Grid;
+using System;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.TurnOrder
@@ -34,6 +35,14 @@ namespace NightmareEchoes.TurnOrder
             #region Insert Start of Turn Effects/Checks
             if (controller.CurrentUnit != null)
             {
+                /*foreach (STATUS_EFFECT statusEffect in Enum.GetValues(typeof(STATUS_EFFECT)))
+                {
+                    if (statusEffect == STATUS_EFFECT.NONE)
+                        continue;
+
+                    controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(statusEffect, 1, 1));
+                }*/
+
                 #region Tokens
                 //enable this if you want to test applying tokens manually in the editor
                 //controller.CurrentUnit.ApplyAllTokenEffects();
@@ -43,7 +52,6 @@ namespace NightmareEchoes.TurnOrder
                     tempStun = true;
                     controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
 
-                    GameUIManager.Instance.EnableCurrentUI(false);
                     controller.StartCoroutine(controller.PassTurn());
                 }
                 #endregion

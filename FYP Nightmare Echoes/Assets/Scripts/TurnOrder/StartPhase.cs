@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using NightmareEchoes.Unit.Combat;
 using UnityEngine;
 
-
 //created by Alex
 namespace NightmareEchoes.TurnOrder
 {

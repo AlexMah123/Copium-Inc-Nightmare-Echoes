@@ -134,6 +134,11 @@ namespace NightmareEchoes.Unit.Pathfinding
         //Called in Player Phase
         public void PlayerInputPathfinding()
         {
+            if(currentPathfindingUnit == null)
+            {
+                return;
+            }
+
             #region Check for types of input
             //if player clicks
             if (Input.GetMouseButtonDown(0))
@@ -168,7 +173,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             //currentHoverOverlayTile wont be null because you always are on the map
             if (Input.GetMouseButtonDown(0) && !hasMoved && (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentPathfindingUnit?.ActiveTile))
             {
-                pathList = Pathfind.FindPath(currentPathfindingUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
+                pathList = Pathfind.FindPath(currentPathfindingUnit?.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
                 tempPathList = new List<OverlayTile>(pathList);
 
                 if (!currentHoveredOverlayTile.CheckEntityGameObjectOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())

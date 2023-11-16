@@ -117,6 +117,8 @@ namespace NightmareEchoes.TurnOrder
 
         public IEnumerator PassTurn()
         {
+            GameUIManager.Instance.EnableCurrentUI(false);
+
             //wait for all popuptext to clear before actually changing turn
             while (AnyUnitHasPendingPopups())
             {

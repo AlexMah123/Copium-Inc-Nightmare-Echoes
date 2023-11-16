@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0286ae026952e9b439a215b392ed6e3b, type: 3}
   m_Name: StunToken
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 22dcfa517fdf2184689b0ac0f498eaca, type: 3}
+  icon: {fileID: 21300000, guid: eac988217736bd84894f64bf5388b5aa, type: 3}
   name: Stun Token
   description: 'This unit loses their action on their next turn. (Limit: 1)'
   statusEffect: 10
   modifierType: 3
   genericValue: 1
   modifierDuration: 1
+  limitStack: 1
   tokenStack: 0

@@ -66,6 +66,11 @@ namespace NightmareEchoes.Unit.AI
             targetHero = closestHero;
             finalMovePath.Clear();
 
+            if(closestHero == null)
+            {
+                return;
+            }
+
             accessibleTiles = Pathfind.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile, ignoreProps: true);
             walkableTiles = Pathfind.FindTilesInRangeToDestination(thisUnitTile, closestHero.ActiveTile);
             walkableThisTurnTiles = Pathfind.FindTilesInRange(thisUnitTile, thisUnit.stats.MoveRange);

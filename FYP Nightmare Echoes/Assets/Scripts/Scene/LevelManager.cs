@@ -34,7 +34,8 @@ namespace NightmareEchoes.Scene
 public enum SCENEINDEX
 {
     TITLE_SCENE = 0,
-    GAME_SCENE = 1,
-    END_SCENE = 2,
+    TUTORIAL_SCENE = 1,
+    GAME_SCENE = 2,
+    END_SCENE = 3,
 }
 
