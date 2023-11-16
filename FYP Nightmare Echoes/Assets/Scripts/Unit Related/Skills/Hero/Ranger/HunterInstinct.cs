@@ -60,5 +60,15 @@ namespace NightmareEchoes.Unit
             currentPos = unit.ActiveTile;
             return true;
         }
+
+        IEnumerator Attack(Entity target)
+        {
+            yield return new WaitForSeconds(0.1f);
+            //animation
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Hunter's Instinct Start"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
+
+        }
     }
 }

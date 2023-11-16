@@ -186,7 +186,9 @@ namespace NightmareEchoes.TurnOrder
         #region Screen/UI Settings 
         public void SetResolution(int val)
         {
-            switch(val)
+            Application.targetFrameRate = 60;
+
+            switch (val)
             {
                 case 0:
                     Screen.SetResolution(1280, 720, screenMode, 60);

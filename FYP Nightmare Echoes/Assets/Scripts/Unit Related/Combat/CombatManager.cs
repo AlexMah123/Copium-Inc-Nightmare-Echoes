@@ -806,6 +806,7 @@ namespace NightmareEchoes.Unit.Combat
 
                         if (Input.GetMouseButtonDown(0) && !trapList.Contains(preview.transform.position))
                         {
+                            activeSkill.StartCoroutine(activeSkill.PlaySkillAnimation(activeSkill.gameObject.GetComponent<Entity>(), "RuneTrap"));
                             trapList.Add(preview.transform.position);
                             trapCount++;
                         }

@@ -14,6 +14,19 @@ namespace NightmareEchoes.Unit
             if (!target.IsHostile) return false;
             base.Cast(target);
 
+            StartCoroutine(Attack(target));
+
+            return true;
+        }
+
+        IEnumerator Attack(Entity target)
+        {
+            yield return new WaitForSeconds(0.1f);
+            //animation
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
+
             var cacheHealth = target.stats.Health;
 
             if (DealDamage(target))
@@ -23,8 +36,6 @@ namespace NightmareEchoes.Unit
                     target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
                 }
             }
-
-            return true;
         }
     }
 }

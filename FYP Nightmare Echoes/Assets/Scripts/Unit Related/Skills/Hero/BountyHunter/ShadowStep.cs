@@ -51,11 +51,22 @@ namespace NightmareEchoes.Unit
                     }
                 }
             }
-            
-            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
-            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STEALTH_TOKEN, 1, 1));
+
+            StartCoroutine(Attack());
             
             return true;
+        }
+
+        IEnumerator Attack()
+        {
+            yield return new WaitForSeconds(0.1f);
+            //animation
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "ShadowStep"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
+
+            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
+            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STEALTH_TOKEN, 1, 1));
         }
     }
 }

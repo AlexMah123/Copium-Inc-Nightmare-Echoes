@@ -10,10 +10,22 @@ namespace NightmareEchoes.Unit
         {
             base.Cast(target);
 
-            target.stats.Health += heal;
+            StartCoroutine(Attack(target));
 
             return true;
         }
 
+        IEnumerator Attack(Entity target)
+        {
+            yield return new WaitForSeconds(0.1f);
+            //animation
+            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Heal"));
+
+            yield return new WaitUntil(() => animationCoroutine == null);
+
+            target.stats.Health += heal;
+
+
+        }
     }
 }
