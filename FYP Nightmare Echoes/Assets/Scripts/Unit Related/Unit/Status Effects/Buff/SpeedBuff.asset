@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14aec3c1cbc0749419d3146a614cffbf, type: 3}
   m_Name: SpeedBuff
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: ef6a8235702b503439567fc5830c0560, type: 3}
+  icon: {fileID: 21300000, guid: 5a1e803e363f21c40b72483ec17b338f, type: 3}
   name: Speed Buff
   description: Increases the speed of this unit.
   statusEffect: 14
   modifierType: 0
   genericValue: 10
   modifierDuration: 1
+  limitStack: 1
   speedBuff: 10
   buffDuration: 1

@@ -250,55 +250,21 @@ namespace NightmareEchoes.Unit
         {
             thisUnit.ShowPopUpText(_name, Color.red);
 
-            Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
-            Vector2 CastTo = new Vector2(target.ActiveTile.gridLocation.x, target.ActiveTile.gridLocation.y);
+            Vector2 castFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
+            Vector2 castTo = new Vector2(target.ActiveTile.gridLocation.x, target.ActiveTile.gridLocation.y);
 
-            float xDist = CastFrom.x - CastTo.x;
-            float yDist = CastFrom.y - CastTo.y;
+            Vector2 castDirection = (castTo - castFrom).normalized;
 
-            if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
+            if (Mathf.Abs(castDirection.x) > Mathf.Abs(castDirection.y))
             {
-                if (xDist < 0)
-                {
-                    //north
-                    thisUnit.Direction = Direction.NORTH;
-                    if (target.Direction == Direction.NORTH) 
-                    {
-                        isBackstabbing = true;
-                    }
-                }
-                else
-                {
-                    //south
-                    thisUnit.Direction = Direction.SOUTH;
-                    if (target.Direction == Direction.SOUTH)
-                    {
-                        isBackstabbing = true;
-                    }
-                }
+                thisUnit.Direction = castDirection.x > 0 ? Direction.NORTH : Direction.SOUTH;
+                isBackstabbing = thisUnit.Direction == target.Direction;
             }
             else
             {
-                if (yDist > 0)
-                {
-                    //east
-                    thisUnit.Direction = Direction.EAST;
-                    if (target.Direction == Direction.EAST)
-                    {
-                        isBackstabbing = true;
-                    }
-                }
-                else
-                {
-                    //west
-                    thisUnit.Direction = Direction.WEST;
-                    if (target.Direction == Direction.WEST)
-                    {
-                        isBackstabbing = true;
-                    }
-                }
+                thisUnit.Direction = castDirection.y < 0 ? Direction.EAST : Direction.WEST;
+                isBackstabbing = thisUnit.Direction == target.Direction;
             }
-
             return false;
         }
 
@@ -307,55 +273,24 @@ namespace NightmareEchoes.Unit
         {
             thisUnit.ShowPopUpText(_name, Color.red);
 
-            Vector2 CastFrom = new Vector2(thisUnit.ActiveTile.gridLocation.x, thisUnit.ActiveTile.gridLocation.y);
-            Vector2 CastTo = new Vector2(target.gridLocation.x, target.gridLocation.y);
+            Vector2 castFrom = thisUnit.ActiveTile.gridLocation2D;
+            Vector2 castTo = target.gridLocation2D;
 
-            float xDist = CastFrom.x - CastTo.x;
-            float yDist = CastFrom.y - CastTo.y;
+            Vector2 castDirection = (castTo - castFrom).normalized;
 
-            if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
+            //if value is null then assign direction to none
+            Direction targetDirection = target.CheckEntityGameObjectOnTile()?.GetComponent<Entity>().Direction ?? Direction.NONE;
+
+            if (Mathf.Abs(castDirection.x) > Mathf.Abs(castDirection.y))
             {
-                if (xDist < 0)
-                {
-                    //north
-                    thisUnit.Direction = Direction.NORTH;
-                    if (target.CheckEntityGameObjectOnTile()?.GetComponent<Entity>().Direction == Direction.NORTH)
-                    {
-                        isBackstabbing = true;
-                    }
-                }
-                else
-                {
-                    //south
-                    thisUnit.Direction = Direction.SOUTH;
-                    if (target.CheckEntityGameObjectOnTile()?.GetComponent<Entity>().Direction == Direction.SOUTH)
-                    {
-                        isBackstabbing = true;
-                    }
-                }
+                thisUnit.Direction = castDirection.x > 0 ? Direction.NORTH : Direction.SOUTH;
             }
             else
             {
-                if (yDist > 0)
-                {
-                    //east
-                    thisUnit.Direction = Direction.EAST;
-                    if (target.CheckEntityGameObjectOnTile()?.GetComponent<Entity>().Direction == Direction.EAST)
-                    {
-                        isBackstabbing = true;
-                    }
-                }
-                else
-                {
-                    //west
-                    thisUnit.Direction = Direction.WEST;
-                    if (target.CheckEntityGameObjectOnTile()?.GetComponent<Entity>().Direction == Direction.WEST)
-                    {
-                        isBackstabbing = true;
-                    }
-                }
+                thisUnit.Direction = castDirection.y < 0 ? Direction.EAST : Direction.WEST;
             }
 
+            isBackstabbing = thisUnit.Direction == targetDirection;
             return false;
         }
         

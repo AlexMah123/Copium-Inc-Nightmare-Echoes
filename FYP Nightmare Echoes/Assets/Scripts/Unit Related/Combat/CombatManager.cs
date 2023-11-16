@@ -101,7 +101,7 @@ namespace NightmareEchoes.Unit.Combat
         }
 
         //Init
-        void OnBattleStart()
+        public void OnBattleStart()
         {
             unitsInvolved = FindObjectsOfType<Entity>().ToList();
 
@@ -774,6 +774,9 @@ namespace NightmareEchoes.Unit.Combat
             var trapList = new List<Vector3>();
             var trapSr = activeSkill?.PlacableGameObject.GetComponent<SpriteRenderer>();
             var trapSprite = trapSr.sprite;
+
+            var thisUnit = activeSkill.gameObject.GetComponent<Entity>();
+
             while (trapCount < activeSkill?.PlacableCount)
             {
                 ClearPreviews();
@@ -806,7 +809,19 @@ namespace NightmareEchoes.Unit.Combat
 
                         if (Input.GetMouseButtonDown(0) && !trapList.Contains(preview.transform.position))
                         {
-                            activeSkill.StartCoroutine(activeSkill.PlaySkillAnimation(activeSkill.gameObject.GetComponent<Entity>(), "RuneTrap"));
+                            Vector2 direction = preview.transform.position - thisUnit.transform.position;
+
+                            if (direction.x > direction.y)
+                            {
+                                thisUnit.Direction = direction.x > 0 ? Direction.NORTH : Direction.SOUTH;
+                            }
+                            else
+                            {
+                                thisUnit.Direction = direction.y > 0 ? Direction.WEST : Direction.EAST;
+                            }
+
+
+                            activeSkill.StartCoroutine(activeSkill.PlaySkillAnimation(thisUnit, "RuneTrap"));
                             trapList.Add(preview.transform.position);
                             trapCount++;
                         }

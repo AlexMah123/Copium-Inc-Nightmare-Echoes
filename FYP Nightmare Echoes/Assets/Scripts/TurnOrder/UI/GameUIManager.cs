@@ -663,33 +663,7 @@ namespace NightmareEchoes.TurnOrder
                         //sets image component and scriptable object component
                         Modifier modifier = currentUnitTotalStatusEffectList[i];
 
-                        //sets image to icon
-                        var image = statusEffectImage.transform.GetChild(0).GetComponent<Image>();
-                        image.sprite = modifier.icon;
-                        image.color = Color.white;
-
-                        //sets image color to respective color
-                        switch (modifier.modifierType)
-                        {
-                            case ModifierType.BUFF:
-                                statusEffectImage.color = Color.green;
-                                break;
-
-                            case ModifierType.DEBUFF:
-                                statusEffectImage.color = Color.red;
-
-                                break;
-
-                            case ModifierType.POSITIVETOKEN:
-                                statusEffectImage.color = new Color(0, 0.7f, 1, 1);
-                                break;
-
-                            case ModifierType.NEGATIVETOKEN:
-                                statusEffectImage.color = Color.yellow;
-                                break;
-                        }
-
-
+                        statusEffectImage.sprite = modifier.icon;
                         statusEffectImage.gameObject.SetActive(true);
                     }
                 }
@@ -718,33 +692,7 @@ namespace NightmareEchoes.TurnOrder
                         //sets image component and scriptable object component
                         Modifier modifier = inspectedUnitTotalStatusEffectList[i];
 
-                        //sets image to icon
-                        var image = statusEffectImage.transform.GetChild(0).GetComponent<Image>();
-                        image.sprite = modifier.icon;
-                        image.color = Color.white;
-
-                        //sets image color to respective color
-                        switch (modifier.modifierType)
-                        {
-                            case ModifierType.BUFF:
-                                statusEffectImage.color = Color.green;
-                                break;
-
-                            case ModifierType.DEBUFF:
-                                statusEffectImage.color = Color.red;
-
-                                break;
-
-                            case ModifierType.POSITIVETOKEN:
-                                statusEffectImage.color = new Color(0, 0.7f, 1, 1);
-                                break;
-
-                            case ModifierType.NEGATIVETOKEN:
-                                statusEffectImage.color = Color.yellow;
-                                break;
-                        }
-
-
+                        statusEffectImage.sprite = modifier.icon;
                         statusEffectImage.gameObject.SetActive(true);
                     }
                 }
@@ -1060,6 +1008,9 @@ namespace NightmareEchoes.TurnOrder
         public void EnableCurrentUI(bool enable)
         {
             int index = 1;
+
+            if (CurrentUnit == null)
+                return;
 
             if(!CurrentUnit.IsHostile)
             {

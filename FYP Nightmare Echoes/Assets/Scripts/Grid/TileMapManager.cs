@@ -30,16 +30,6 @@ namespace NightmareEchoes.Grid
             }
         }
 
-        private void Start()
-        {
-
-        }
-
-        public void Update()
-        {
-            
-        }
-
         //Source: https://blog.unity.com/engine-platform/procedural-patterns-you-can-use-with-tilemaps-part-1
         public int[,] GenerateArray(int width, int length, bool empty)
         {
@@ -81,8 +71,6 @@ namespace NightmareEchoes.Grid
                 }
             }
         }
-
-
 
         public void UpdateMap(int[,] map, Tilemap tilemap) //Takes in our map and tilemap, setting null tiles where needed
         {

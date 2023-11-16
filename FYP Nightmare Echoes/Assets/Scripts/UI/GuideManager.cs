@@ -18,33 +18,10 @@ namespace NightmareEchoes.UI
         {
             currentGuide.sprite = guideList[0];
             currentGuideIndex = 0;
-        }
 
-        public void Update()
-        {
-            if(currentGuideIndex == 0 && prevGuideButton.gameObject.activeSelf && prevGuideButton.interactable) 
-            {
-                prevGuideButton.interactable = false;
-            }
-            else
-            {
-                if(!prevGuideButton.interactable)
-                {
-                    prevGuideButton.interactable = true;
-                }
-            }
-
-            if (currentGuideIndex == 11 && nextGuideButton.gameObject.activeSelf && nextGuideButton.interactable)
-            {
-                nextGuideButton.interactable = false;
-            }
-            else
-            {
-                if(!nextGuideButton.interactable)
-                {
-                    nextGuideButton.interactable = true;
-                }
-            }
+            //disable the interaction for prev button
+            prevGuideButton.interactable = false;
+            nextGuideButton.interactable = true;
         }
 
         public void NextGuideButton()
@@ -54,6 +31,9 @@ namespace NightmareEchoes.UI
                 currentGuideIndex++;
                 currentGuide.sprite = guideList[currentGuideIndex];
             }
+
+            UpdateButtonState();
+
         }
 
         public void PrevGuideButton()
@@ -62,6 +42,33 @@ namespace NightmareEchoes.UI
             {
                 currentGuideIndex--;
                 currentGuide.sprite = guideList[currentGuideIndex];
+            }
+
+            UpdateButtonState();
+        }
+
+        void UpdateButtonState()
+        {
+            //if the index is 0, disable the prev button
+            if (currentGuideIndex == 0 && prevGuideButton.gameObject.activeSelf && prevGuideButton.interactable)
+            {
+                prevGuideButton.interactable = false;
+            }
+            else
+            {
+                //enable otherwise
+                prevGuideButton.interactable = true;
+            }
+
+            //if the index is the child count - 1, disable the next button
+            if (currentGuideIndex >= guideList.Count - 1 && nextGuideButton.gameObject.activeSelf && nextGuideButton.interactable)
+            {
+                nextGuideButton.interactable = false;
+            }
+            else
+            {
+                //enable otherwise
+                nextGuideButton.interactable = true;
             }
         }
     }

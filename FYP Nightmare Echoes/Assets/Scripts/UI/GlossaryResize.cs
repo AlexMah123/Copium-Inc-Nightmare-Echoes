@@ -49,6 +49,8 @@ namespace NightmareEchoes.UI
             {
                 rectTransform.sizeDelta = startSize;
             }
+
+            rectTransform.anchoredPosition = Vector3.zero;
         }
     }
 }

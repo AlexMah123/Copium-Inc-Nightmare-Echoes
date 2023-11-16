@@ -208,22 +208,23 @@ namespace NightmareEchoes.Unit
                     if (value == true)
                     {
                         var modelSprite = GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
-                        foreach (var spriteRenderer in modelSprite)
+                        
+                        for(int i = 0; i < modelSprite.Length; i++)
                         {
-                            if (spriteRenderer.color.a != 0.5f)
+                            if (modelSprite[i].color.a != 0.75f)
                             {
-                                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);
+                                spriteRenderer.color = new Color(modelSprite[i].color.r, modelSprite[i].color.g, modelSprite[i].color.b, 0.75f);
                             }
                         }
                     }
                     else
                     {
                         var modelSprite = GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
-                        foreach (var spriteRenderer in modelSprite)
+                        for (int i = 0; i < modelSprite.Length; i++)
                         {
-                            if (spriteRenderer.color.a != 1.0f)
+                            if (modelSprite[i].color.a != 1.0f)
                             {
-                                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
+                                spriteRenderer.color = new Color(modelSprite[i].color.r, modelSprite[i].color.g, modelSprite[i].color.b, 1f);
                             }
                         }
                     }

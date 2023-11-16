@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using NightmareEchoes.Unit;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using NightmareEchoes.UI;
-using System;
+using NightmareEchoes.Grid;
+using NightmareEchoes.Unit;
+using NightmareEchoes.Unit.Combat;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -40,6 +43,7 @@ namespace NightmareEchoes.TurnOrder
 
         public List<Entity> cachedHeroesList = null;
 
+        public TutorialPart tutorialPart;
         #region Class Properties
         public Entity CurrentUnit
         {
@@ -78,6 +82,15 @@ namespace NightmareEchoes.TurnOrder
         {
             cycleCount = 1;
             ChangePhase(planPhase);
+
+            //if you are in the tutorial level but tutorial hasnt started
+            if(InTutorialLevel() && TutorialUIManager.Instance.InTutorialState() == false)
+            {
+                tutorialPart = TutorialPart.Part1;
+
+                TutorialUIManager.Instance.StartCoroutine(TutorialUIManager.Instance.StartTutorial());
+                TutorialUIManager.Instance.StartCoroutine(TutorialSteps());
+            }
         }
 
         void Update()
@@ -106,6 +119,14 @@ namespace NightmareEchoes.TurnOrder
             currentPhase = newPhase;
             currentPhase.OnEnterPhase(this);
         }
+
+        #region Tutorial Section
+        public bool InTutorialLevel()
+        {
+            return SceneManager.GetActiveScene().buildIndex == (int)SCENEINDEX.TUTORIAL_SCENE ? true : false;
+        }
+
+        #endregion
 
         #region Utility
         [ContextMenu("Skip Turn")]
@@ -280,5 +301,55 @@ namespace NightmareEchoes.TurnOrder
             return _a.stats.Speed.CompareTo(_b.stats.Speed);
         }
         #endregion
+
+        public IEnumerator TutorialSteps()
+        {
+            //waiting for part 1 to be completed
+            yield return new WaitUntil(() => tutorialPart == TutorialPart.Part2);
+
+            //reset for part 2
+            TutorialUIManager.Instance.currentTutorialGuideCap = 3;
+            ResetStage();
+
+            yield return new WaitUntil(() => tutorialPart == TutorialPart.Part3);
+
+            //reset for part 3
+            TutorialUIManager.Instance.currentTutorialGuideCap = 4;
+            ResetStage();
+
+
+            yield return new WaitUntil(() => tutorialPart == TutorialPart.Part4);
+
+            //reset for part 4
+            TutorialUIManager.Instance.currentTutorialGuideCap = 5;
+            ResetStage();
+
+            yield return new WaitUntil(() => tutorialPart == TutorialPart.COMPLETED);
+            SceneManager.LoadScene((int)SCENEINDEX.GAME_SCENE);
+
+        }
+
+        //mostly used for tutorial
+        public void ResetStage()
+        {
+            OverlayTileManager.Instance.InitOverlayTiles(OverlayTileManager.Instance.tileMapList[1]);
+            CombatManager.Instance.OnBattleStart();
+
+            //reset
+            runOnce = false;
+            cycleCount = 1;
+            ChangePhase(planPhase);
+        }
+    }
+
+   
+
+    public enum TutorialPart
+    {
+        Part1 = 0,
+        Part2 = 1,
+        Part3 = 2,
+        Part4 = 3,
+        COMPLETED = 4,
     }
 }

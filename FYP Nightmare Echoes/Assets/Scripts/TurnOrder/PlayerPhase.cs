@@ -20,6 +20,17 @@ namespace NightmareEchoes.TurnOrder
 
         protected override void OnEnter()
         {
+            if(TutorialUIManager.Instance != null)
+            {
+                if(TutorialUIManager.Instance.InTutorialState())
+                {
+                    if (TutorialUIManager.Instance.currentPanelIndex <= TutorialUIManager.Instance.currentTutorialGuideCap)
+                    {
+                        TutorialUIManager.Instance.EnableTutorialCanvas();
+                    }
+                }
+            }
+
             GameUIManager.Instance.phaseText.text = $"Player's Turn";
             GameUIManager.Instance.phaseText.color = Color.white;
 
@@ -43,7 +54,7 @@ namespace NightmareEchoes.TurnOrder
                     controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(statusEffect, 1, 1));
                 }*/
 
-                controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.MOVERANGE_BUFF, 1, 1));
+                //controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.MOVERANGE_BUFF, 1, 1));
 
                 #region Tokens
                 //enable this if you want to test applying tokens manually in the editor

@@ -11,6 +11,8 @@ namespace NightmareEchoes.Grid
         private int childCount = 0;
         public static OverlayTileManager Instance;
 
+        public List<Tilemap> tileMapList;
+        Tilemap currentTileMap;
         public OverlayTile overlaytilePrefab;
         public GameObject overlayContainer;
 
@@ -18,26 +20,37 @@ namespace NightmareEchoes.Grid
         public Dictionary<Vector2Int, OverlayTile> gridDictionary;
 
         private Camera cam;
+        private Vector3 startPosition;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
             else
             {
                 Instance = this;
             }
-            
-            InitOverlayTiles();
-            
+
+            startPosition = tileMapList[0].transform.position;
+            InitOverlayTiles(tileMapList[0]);
+
             cam = Camera.main;
         }
 
-        void InitOverlayTiles()
+        public void InitOverlayTiles(Tilemap tileMap)
         {
+
+            for (int i = 0; i < tileMapList.Count; i++)
+            {
+                tileMapList[i].gameObject.SetActive(false);
+            }
+
+            tileMap.gameObject.transform.position = startPosition;
+            tileMap.gameObject.SetActive(true);
+
             //generating the grid
-            var tileMap = gameObject.GetComponentInChildren<Tilemap>();
             gridDictionary = new Dictionary<Vector2Int, OverlayTile>();
             //getting the bounds of the map
             BoundsInt bounds = tileMap.cellBounds;
@@ -118,6 +131,11 @@ namespace NightmareEchoes.Grid
             }
 
             return neighbours;
+        }
+
+        public void SetCurrentTileMap()
+        {
+
         }
 
         #region Utility for Getting Specific Tiles based on pos

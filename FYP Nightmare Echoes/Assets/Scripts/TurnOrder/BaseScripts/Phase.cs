@@ -15,11 +15,18 @@ namespace NightmareEchoes.TurnOrder
     public abstract class Phase
     {
         protected TurnOrderController controller;
+        bool progressTutorial = false;
+
 
         public void OnEnterPhase(TurnOrderController turnOrderController)
         {
             //assigns the controller as reference
             controller = turnOrderController;
+
+            if (progressTutorial)
+            {
+                progressTutorial = false;
+            }
 
             //only run once to calculate the turn order and enqueue till the endPhase
             if (!controller.runOnce)
@@ -65,7 +72,7 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnFixedUpdatePhase()
         {
-            if (Time.timeScale == 0)
+            if (GeneralUIController.gameIsPaused)
                 return;
 
             if (controller.gameOver)
@@ -78,7 +85,8 @@ namespace NightmareEchoes.TurnOrder
 
             if (controller.currentPhase != controller.planPhase && controller.currentPhase != controller.startPhase && !controller.gameOver)
             {
-                if (controller.FindAllHeros().Count == 0)
+                //checking for players
+                if (controller.FindAllHeros().Count == 0 && !controller.InTutorialLevel())
                 {
                     //Game Over
                     controller.gameOver = true;
@@ -86,9 +94,15 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 
-            if (controller.FindAllEnemies().Count == 0)
+            //checking for enemies to progress
+            if (controller.FindAllEnemies().Count == 0 && !controller.InTutorialLevel())
             {
                 SceneManager.LoadScene((int)SCENEINDEX.TITLE_SCENE);
+            }
+            else if (controller.FindAllEnemies().Count == 0 && controller.InTutorialLevel() && !progressTutorial)
+            {
+                controller.tutorialPart = (TutorialPart)((int)(controller.tutorialPart + 1));
+                progressTutorial = true;
             }
 
             OnFixedUpdate();

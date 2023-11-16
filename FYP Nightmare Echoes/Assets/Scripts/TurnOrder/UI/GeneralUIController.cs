@@ -26,7 +26,7 @@ namespace NightmareEchoes.TurnOrder
         public Button pauseButton;
         [SerializeField] GameObject pausePanel;
         [SerializeField] GameObject settingPanel;
-        [NonSerialized] public static bool gameIsPaused = false;
+        public static bool gameIsPaused = false;
 
         [Space(20), Header("Guide Related")]
         public GameObject guidePanel;
@@ -119,7 +119,7 @@ namespace NightmareEchoes.TurnOrder
 
         bool IntToBool(int val)
         {
-            return val != 0 ?  true : false;
+            return val != 0;
         }
 
         public void PauseGame(bool state)
