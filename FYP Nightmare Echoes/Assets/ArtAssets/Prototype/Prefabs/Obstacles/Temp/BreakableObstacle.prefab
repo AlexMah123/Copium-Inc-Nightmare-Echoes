@@ -104,7 +104,7 @@ MonoBehaviour:
   isProp: 1
   isHostile: 1
   direction: -1
-  typeOfUnit: 0
+  typeOfUnit: 1
   hasAttacked: 0
   hasMoved: 0
   popupTextPrefab: {fileID: 6045939641622712432, guid: 6909f650f958a3c4bad4e2a9d2cc05c9, type: 3}
@@ -149,6 +149,7 @@ MonoBehaviour:
   skill3: {fileID: 0}
   passive: {fileID: 0}
   sprites: []
+  modelContainer: {fileID: 0}
   frontModel: {fileID: 0}
   backModel: {fileID: 0}
   frontAnimator: {fileID: 0}
