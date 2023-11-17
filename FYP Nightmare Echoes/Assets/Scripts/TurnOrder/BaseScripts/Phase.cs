@@ -72,9 +72,6 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnFixedUpdatePhase()
         {
-            if (GeneralUIController.gameIsPaused)
-                return;
-
             if (controller.gameOver)
                 return;
 
@@ -97,7 +94,7 @@ namespace NightmareEchoes.TurnOrder
             //checking for enemies to progress
             if (controller.FindAllEnemies().Count == 0 && !controller.InTutorialLevel())
             {
-                SceneManager.LoadScene((int)SCENEINDEX.TITLE_SCENE);
+                GeneralUIController.Instance.GameVictory();
             }
             else if (controller.FindAllEnemies().Count == 0 && controller.InTutorialLevel() && !progressTutorial)
             {
@@ -127,12 +124,7 @@ namespace NightmareEchoes.TurnOrder
             // if you want to open up the guide
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                GeneralUIController.Instance.GuideButton();
-            }
-
-            if (GeneralUIController.gameIsPaused)
-            {
-                return;
+                //GeneralUIController.Instance.GuideButton();
             }
 
             OnUpdate();

@@ -54,8 +54,6 @@ namespace NightmareEchoes.TurnOrder
                     controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(statusEffect, 1, 1));
                 }*/
 
-                //controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.MOVERANGE_BUFF, 1, 1));
-
                 #region Tokens
                 //enable this if you want to test applying tokens manually in the editor
                 //controller.CurrentUnit.ApplyAllTokenEffects();
@@ -211,7 +209,7 @@ namespace NightmareEchoes.TurnOrder
                 {
                     tempStun = false;
 
-                    controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_RESISTANCE_BUFF, 50, 1));
+                    controller.CurrentUnit.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STUN_RESISTANCE_BUFF, 50, 1));
                     controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
                 }
 

@@ -27,9 +27,9 @@ namespace NightmareEchoes.Unit
             }
         }
 
-        public Modifier CreateModifier(STATUS_EFFECT enumIndex, int value, int duration)
+        public static Modifier CreateModifier(STATUS_EFFECT enumIndex, int value, int duration)
         {
-            foreach(ModifierDictionary modifier in totalPossibleModifiers) 
+            foreach(ModifierDictionary modifier in Instance.totalPossibleModifiers) 
             {
                 if(modifier.statusEffect == enumIndex)
                 {

@@ -48,7 +48,7 @@ namespace NightmareEchoes.Unit
                 {
                     if ((DebuffChance - unit.stats.Resist) > Random.Range(0, 101))
                     {
-                        unit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1));
+                        unit.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1));
                     }
                 }
             }

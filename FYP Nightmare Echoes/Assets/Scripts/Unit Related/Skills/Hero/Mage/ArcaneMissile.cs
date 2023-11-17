@@ -27,6 +27,7 @@ namespace NightmareEchoes.Unit
 
             yield return new WaitUntil(()=> animationCoroutine == null);
 
+            yield return new WaitForSeconds(0.75f);
 
             DealDamage(target);
         }

@@ -8,6 +8,7 @@ using NightmareEchoes.UI;
 using NightmareEchoes.Grid;
 using NightmareEchoes.Unit;
 using NightmareEchoes.Unit.Combat;
+using NightmareEchoes.Scene;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -44,6 +45,7 @@ namespace NightmareEchoes.TurnOrder
         public List<Entity> cachedHeroesList = null;
 
         public TutorialPart tutorialPart;
+
         #region Class Properties
         public Entity CurrentUnit
         {
@@ -84,7 +86,7 @@ namespace NightmareEchoes.TurnOrder
             ChangePhase(planPhase);
 
             //if you are in the tutorial level but tutorial hasnt started
-            if(InTutorialLevel() && TutorialUIManager.Instance.InTutorialState() == false)
+            if (InTutorialLevel() && TutorialUIManager.Instance.InTutorialState() == false)
             {
                 tutorialPart = TutorialPart.Part1;
 
@@ -317,6 +319,16 @@ namespace NightmareEchoes.TurnOrder
             TutorialUIManager.Instance.currentTutorialGuideCap = 4;
             ResetStage(TutorialPart.Part3);
 
+            //in part 3, find bounty hunter and add buffs
+            for(int i = 0; i < CurrentUnitQueue.Count; i++)
+            {
+                if (CurrentUnitQueue.ToList()[i].GetComponent<BountyHunter>())
+                {
+                    CurrentUnitQueue.ToList()[i].AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STEALTH_TOKEN, 1, 1));
+                    CurrentUnitQueue.ToList()[i].AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
+                    break;
+                }
+            }
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.Part4);
 
@@ -325,7 +337,9 @@ namespace NightmareEchoes.TurnOrder
             ResetStage(TutorialPart.Part4);
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.COMPLETED);
-            SceneManager.LoadScene((int)SCENEINDEX.GAME_SCENE);
+            OverlayTileManager.Instance.tileMapList.Last().gameObject.SetActive(false);
+
+            LevelManager.Instance.LoadScene((int)SCENEINDEX.GAME_SCENE);
 
         }
 

@@ -211,21 +211,16 @@ namespace NightmareEchoes.Unit
                         
                         for(int i = 0; i < modelSprite.Length; i++)
                         {
-                            if (modelSprite[i].color.a != 0.75f)
-                            {
-                                spriteRenderer.color = new Color(modelSprite[i].color.r, modelSprite[i].color.g, modelSprite[i].color.b, 0.75f);
-                            }
+                            modelSprite[i].color = new Color(modelSprite[i].color.r, modelSprite[i].color.g, modelSprite[i].color.b, 0.75f);
                         }
                     }
                     else
                     {
                         var modelSprite = GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
+
                         for (int i = 0; i < modelSprite.Length; i++)
                         {
-                            if (modelSprite[i].color.a != 1.0f)
-                            {
-                                spriteRenderer.color = new Color(modelSprite[i].color.r, modelSprite[i].color.g, modelSprite[i].color.b, 1f);
-                            }
+                            modelSprite[i].color = new Color(modelSprite[i].color.r, modelSprite[i].color.g, modelSprite[i].color.b, 1f);
                         }
                     }
                 }
@@ -857,12 +852,12 @@ namespace NightmareEchoes.Unit
             {
                 var tempData = popupTextQueue.Dequeue();
 
-                GameObject prefab = Instantiate(popupTextPrefab, transform.position + Vector3.up, Quaternion.identity);
+                GameObject prefab = Instantiate(popupTextPrefab, transform.position + new Vector3(0, 1.25f, 0), Quaternion.identity);
                 var textData = prefab.GetComponent<FloatingText>();
 
                 textData.destroyTime = tempData.duration;
                 textData.spawnedFrom = this.gameObject;
-                textData.offset = Vector3.up;
+                textData.offset = new Vector3(0, 1.25f, 0);
 
                 prefab.hideFlags = HideFlags.HideInHierarchy;
                 TextMeshPro textMeshPro = prefab.GetComponentInChildren<TextMeshPro>();

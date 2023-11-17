@@ -27,6 +27,11 @@ namespace NightmareEchoes.Scene
         {
             SceneManager.LoadScene(sceneIndex);
         }
+
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     }
 }
 

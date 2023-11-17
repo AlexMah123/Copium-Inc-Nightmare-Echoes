@@ -387,7 +387,9 @@ namespace NightmareEchoes.Unit
         {
             if (isBackstabbing && targetType == TargetType.Single)
             {
-                target.TakeDamage(damage + backstabBonus, checkDodge);
+                target.TakeDamage(damage, checkDodge);
+                target.ShowPopUpText("Backstab!", Color.magenta);
+                target.TakeDamage(backstabBonus);
             }
             else
             {
@@ -414,12 +416,14 @@ namespace NightmareEchoes.Unit
                 StartCoroutine(KnockbackCollisionAnimation(false, target, tileDestination));
                 if (tileDestination.CheckObstacleOnTile())
                 {
+                    target.ShowPopUpText("Collision!", Color.magenta);
                     target.TakeDamage(3);
                     target.Direction = prevDir;
 
                 }
                 else if (tileDestination.CheckEntityGameObjectOnTile())
                 {
+                    target.ShowPopUpText("Collision!", Color.magenta);
                     target.TakeDamage(3);
                     target.Direction = prevDir;
 
@@ -474,7 +478,6 @@ namespace NightmareEchoes.Unit
 
             unit.ResetAnimator();
             animationCoroutine = null;
-
             yield return null;
         }
 

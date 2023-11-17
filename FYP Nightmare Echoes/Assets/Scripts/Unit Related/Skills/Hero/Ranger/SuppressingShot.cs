@@ -27,7 +27,7 @@ namespace NightmareEchoes.Unit
             {
                 if ((stunChance - target.stats.StunResist) > (Random.Range(0, 101)))
                 {
-                    target.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
+                    target.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STUN_TOKEN, 1, 1));
                 }
             }
         }

@@ -14,7 +14,7 @@ namespace NightmareEchoes.Unit
 
             if (thisUnit.DoesModifierExist(STATUS_EFFECT.STEALTH_TOKEN))
             {
-                thisUnit.ShowPopUpText("Already In Stealth!!", Color.red);
+                thisUnit.ShowPopUpText("Already In Stealth!!", Color.red, 2);
                 CombatManager.Instance.SelectSkill(thisUnit, this);
                 return false;
             }
@@ -45,7 +45,7 @@ namespace NightmareEchoes.Unit
                 {
                     if (thisUnit.ActiveTile == tile)
                     {
-                        thisUnit.ShowPopUpText("Cannot Go Into Stealth, Too Close to Enemy!!", Color.red);
+                        thisUnit.ShowPopUpText("Cant Stealth, Too Close to Enemy!!", Color.red, 2);
                         CombatManager.Instance.SelectSkill(thisUnit, this);
                         return false;
                     }
@@ -65,8 +65,8 @@ namespace NightmareEchoes.Unit
 
             yield return new WaitUntil(() => animationCoroutine == null);
 
-            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
-            thisUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STEALTH_TOKEN, 1, 1));
+            thisUnit.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
+            thisUnit.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STEALTH_TOKEN, 1, 1));
         }
     }
 }

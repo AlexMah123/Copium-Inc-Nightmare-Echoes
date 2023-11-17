@@ -167,7 +167,7 @@ namespace NightmareEchoes.TurnOrder
                 {
                     tempStun = false;
 
-                    controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(STATUS_EFFECT.STUN_RESISTANCE_BUFF, 50, 1));
+                    controller.CurrentUnit.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STUN_RESISTANCE_BUFF, 50, 1));
                     controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
                 }
                 #endregion

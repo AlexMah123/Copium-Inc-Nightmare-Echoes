@@ -24,6 +24,8 @@ namespace NightmareEchoes.Unit
             yield return new WaitUntil(() => animationCoroutine == null);
 
             target.stats.Health += heal;
+            target.ShowPopUpText("Healed!", Color.green);
+            target.ShowPopUpText($"{heal}", Color.green);
 
 
         }

@@ -10,6 +10,7 @@ using NightmareEchoes.Inputs;
 using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Unit;
 using System.Linq;
+using NightmareEchoes.Scene;
 
 namespace NightmareEchoes.TurnOrder
 {
@@ -19,8 +20,9 @@ namespace NightmareEchoes.TurnOrder
 
         Entity CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
 
-        [Header("Game Over Related")]
+        [Header("Game Over + Win Related")]
         [SerializeField] GameObject gameOverPanel;
+        [SerializeField] GameObject winPanel;
 
         [Header("Pause + Settings UI")]
         public Button pauseButton;
@@ -77,6 +79,9 @@ namespace NightmareEchoes.TurnOrder
             originalPassTurnDelay = TurnOrderController.Instance.passTurnDelay;
 
             LoadSettings();
+
+            //just a bandaid to disable
+            guideButton.gameObject.SetActive(false);
         }
 
 
@@ -273,7 +278,7 @@ namespace NightmareEchoes.TurnOrder
             {
                 pausePanel.SetActive(true);
                 pauseButton.gameObject.SetActive(true);
-                guideButton.gameObject.SetActive(true);
+                //guideButton.gameObject.SetActive(true);
 
                 settingPanel.SetActive(false);
             }
@@ -289,7 +294,7 @@ namespace NightmareEchoes.TurnOrder
                 pausePanel.SetActive(!isGuideActive);
             }
             
-            guideButton.gameObject.SetActive(isGuideActive);
+            //guideButton.gameObject.SetActive(isGuideActive);
             pauseButton.gameObject.SetActive(isGuideActive);
             guidePanel.SetActive(!isGuideActive);
         }
@@ -298,8 +303,9 @@ namespace NightmareEchoes.TurnOrder
         {
             PauseGame(false);
             gameOverPanel.SetActive(false);
+            winPanel.SetActive(false);
 
-            SceneManager.LoadScene(sceneIndex);
+            LevelManager.Instance.LoadScene(sceneIndex);
         }
 
         public void GameOver()
@@ -308,6 +314,14 @@ namespace NightmareEchoes.TurnOrder
             pauseButton.gameObject.SetActive(false);
             guideButton.gameObject.SetActive(false);
             gameOverPanel.SetActive(true);
+        }
+
+        public void GameVictory()
+        {
+            PauseGame(true);
+            pauseButton.gameObject.SetActive(false);
+            guideButton.gameObject.SetActive(false);
+            winPanel.SetActive(true);
         }
         #endregion
 

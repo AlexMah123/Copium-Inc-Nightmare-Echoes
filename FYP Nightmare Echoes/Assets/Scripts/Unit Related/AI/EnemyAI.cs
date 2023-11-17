@@ -383,11 +383,11 @@ namespace NightmareEchoes.Unit.AI
                 
                 else if(shortestPath.Count > 0 && shortestPath.Count <= thisUnit.stats.MoveRange)
                 {
-                    Debug.Log(FindDistanceBetweenTile(shortestPath[shortestPath.Count - 1], targetHero.ActiveTile));
-                    Debug.Log(currSelectedSkill.Range);
+                    //Debug.Log(FindDistanceBetweenTile(shortestPath[shortestPath.Count - 1], targetHero.ActiveTile));
+                    //Debug.Log(currSelectedSkill.Range);
                     if (FindDistanceBetweenTile(shortestPath[shortestPath.Count - 1], targetHero.ActiveTile) <= currSelectedSkill.Range)
                     {
-                        Debug.Log("checker3");
+                        //Debug.Log("checker3");
                         moveAndAttack = true;
                         bool foundProp = false;
 

@@ -2577,12 +2577,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -561189746, guid: 3118c1dd60369c1489ca2681e88f63bf, type: 3}
   skillExample: {fileID: 21300000, guid: 8c1abeb32897393418e46f963a40e5ce, type: 3}
-  _name: 
-  damage: 0
+  _name: Dark Volt
+  damage: 5
   heal: 0
   cooldown: 0
-  range: 2
-  minRange: 2
+  range: 4
+  minRange: 4
   targetType: 0
   targetArea: 4
   targetUnitAlignment: 0
@@ -2594,7 +2594,7 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
-  debuffChance: 0
+  debuffChance: 70
   hitChance: 100
   stunChance: 0
   inflictKnockback: 0
@@ -2604,7 +2604,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: 
+  description: Single Target, Deal 5 Damage and Apply 1 Weaken
 --- !u!114 &6295657691645105034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2619,23 +2619,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -1214033546, guid: 3118c1dd60369c1489ca2681e88f63bf, type: 3}
   skillExample: {fileID: 21300000, guid: 0e8e652a9d6c8704bb3726f9b80e1f1d, type: 3}
-  _name: 
-  damage: 0
+  _name: Dark Volt
+  damage: 6
   heal: 0
   cooldown: 0
-  range: 2
-  minRange: 2
+  range: 4
+  minRange: 4
   targetType: 0
-  targetArea: 4
+  targetArea: 5
   targetUnitAlignment: 0
-  aoeType: 0
+  aoeType: 2
   aoeSize: 1
   aoeOffset: 0
   aoeDuration: 0
   aoeColor: {r: 0, g: 0, b: 0, a: 0}
   skillType: 0
-  secondaryDamage: 0
-  secondaryRange: 0
+  secondaryDamage: 3
+  secondaryRange: 1
   debuffChance: 0
   hitChance: 100
   stunChance: 0
@@ -2646,7 +2646,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: 
+  description: AOE Attack, Deal 6 Damage in the middle and 3 Damage at the side,
+    also knockback enemy 1 tiles at the side.
 --- !u!1 &3506516799890633164
 GameObject:
   m_ObjectHideFlags: 0

@@ -208,7 +208,6 @@ namespace NightmareEchoes.Unit.Combat
         
         private void EndTurn()
         {
-            activeSkill.animationCoroutine = null;
             activeSkill.CheckCooldown(true);
             activeSkill.Reset();
             activeSkill = null;
@@ -381,8 +380,8 @@ namespace NightmareEchoes.Unit.Combat
             if (!target == activeSkill.gameObject.GetComponent<Entity>()) return;
 
 
-            activeSkill.Cast();
-            EndTurn();
+            if (activeSkill.Cast())
+                EndTurn();
         }
         public void SecondaryTargeting()
         {
@@ -875,6 +874,7 @@ namespace NightmareEchoes.Unit.Combat
                     yield return WaitForAnimationCompletion(activeUnit);
                 }
                 #endregion
+                yield return new WaitForSeconds(0.1f);
 
                 EndTurn();
                 yield return null;
@@ -896,6 +896,7 @@ namespace NightmareEchoes.Unit.Combat
                 }
 
                 #endregion
+                yield return new WaitForSeconds(0.1f);
 
                 EndTurn();
             }
@@ -919,6 +920,8 @@ namespace NightmareEchoes.Unit.Combat
 
                 #endregion
 
+                yield return new WaitForSeconds(0.1f);
+
                 EndTurn();
                 yield return null;
             }
@@ -938,6 +941,7 @@ namespace NightmareEchoes.Unit.Combat
                 }
 
                 #endregion
+                yield return new WaitForSeconds(0.1f);
 
                 EndTurn();
             }
