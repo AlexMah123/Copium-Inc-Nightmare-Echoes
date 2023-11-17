@@ -33,8 +33,8 @@ namespace NightmareEchoes.Grid
                 Instance = this;
             }
 
-            startPosition = tileMapList[0].transform.position;
-            InitOverlayTiles(tileMapList[0]);
+            startPosition = tileMapList.First().transform.position;
+            InitOverlayTiles(tileMapList.First());
 
             cam = Camera.main;
         }

@@ -309,20 +309,20 @@ namespace NightmareEchoes.TurnOrder
 
             //reset for part 2
             TutorialUIManager.Instance.currentTutorialGuideCap = 3;
-            ResetStage();
+            ResetStage(TutorialPart.Part2);
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.Part3);
 
             //reset for part 3
             TutorialUIManager.Instance.currentTutorialGuideCap = 4;
-            ResetStage();
+            ResetStage(TutorialPart.Part3);
 
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.Part4);
 
             //reset for part 4
             TutorialUIManager.Instance.currentTutorialGuideCap = 5;
-            ResetStage();
+            ResetStage(TutorialPart.Part4);
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.COMPLETED);
             SceneManager.LoadScene((int)SCENEINDEX.GAME_SCENE);
@@ -330,9 +330,9 @@ namespace NightmareEchoes.TurnOrder
         }
 
         //mostly used for tutorial
-        public void ResetStage()
+        public void ResetStage(TutorialPart part)
         {
-            OverlayTileManager.Instance.InitOverlayTiles(OverlayTileManager.Instance.tileMapList[1]);
+            OverlayTileManager.Instance.InitOverlayTiles(OverlayTileManager.Instance.tileMapList[(int)part]);
             CombatManager.Instance.OnBattleStart();
 
             //reset
