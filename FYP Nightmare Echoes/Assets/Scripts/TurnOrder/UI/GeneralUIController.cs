@@ -74,14 +74,19 @@ namespace NightmareEchoes.TurnOrder
 
         void Start()
         {
-            originalPhaseDelay = TurnOrderController.Instance.phaseDelay;
-            originalEnemyDelay = TurnOrderController.Instance.enemythinkingDelay;
-            originalPassTurnDelay = TurnOrderController.Instance.passTurnDelay;
+            if(TurnOrderController.Instance)
+            {
+                originalPhaseDelay = TurnOrderController.Instance.phaseDelay;
+                originalEnemyDelay = TurnOrderController.Instance.enemythinkingDelay;
+                originalPassTurnDelay = TurnOrderController.Instance.passTurnDelay;
+            }
+            
 
             LoadSettings();
 
             //just a bandaid to disable
-            guideButton.gameObject.SetActive(false);
+            if(guideButton)
+                guideButton.gameObject.SetActive(false);
         }
 
 
@@ -144,24 +149,30 @@ namespace NightmareEchoes.TurnOrder
         #region In Game Settings
         public void SetCombatSpeed(float speed)
         {
-            PathfindingManager.combatSpeed = speed;
-            TurnOrderController.Instance.phaseDelay = originalPhaseDelay / speed;
-            TurnOrderController.Instance.enemythinkingDelay = originalEnemyDelay / speed;
-            TurnOrderController.Instance.passTurnDelay = originalPassTurnDelay / speed;
+            if(PathfindingManager.Instance != null)
+                PathfindingManager.combatSpeed = speed;
 
-            var totalHero = TurnOrderController.Instance.FindAllHeros();
-            var totalEnemies = TurnOrderController.Instance.FindAllEnemies();
-
-            List<Entity> allEntity = totalHero.Union(totalEnemies).ToList();
-
-            for (int i = 0; i < allEntity.Count; i++)
+            if(TurnOrderController.Instance != null)
             {
-                if (allEntity[i].FrontAnimator && allEntity[i].BackAnimator)
+                TurnOrderController.Instance.phaseDelay = originalPhaseDelay / speed;
+                TurnOrderController.Instance.enemythinkingDelay = originalEnemyDelay / speed;
+                TurnOrderController.Instance.passTurnDelay = originalPassTurnDelay / speed;
+
+                var totalHero = TurnOrderController.Instance.FindAllHeros();
+                var totalEnemies = TurnOrderController.Instance.FindAllEnemies();
+
+                List<Entity> allEntity = totalHero.Union(totalEnemies).ToList();
+
+                for (int i = 0; i < allEntity.Count; i++)
                 {
-                    allEntity[i].FrontAnimator.speed = speed;
-                    allEntity[i].BackAnimator.speed = speed;
+                    if (allEntity[i].FrontAnimator && allEntity[i].BackAnimator)
+                    {
+                        allEntity[i].FrontAnimator.speed = speed;
+                        allEntity[i].BackAnimator.speed = speed;
+                    }
                 }
             }
+            
 
             combatSpeedSlider.value = speed;
             combatSpeedText.text = $"{Mathf.Round(speed * 100f) / 100f}x";
@@ -268,18 +279,23 @@ namespace NightmareEchoes.TurnOrder
         {
             if (!settingPanel.activeSelf)
             {
-                pausePanel.SetActive(false);
-                pauseButton.gameObject.SetActive(false);
-                guideButton.gameObject.SetActive(false);
-
+                if(SceneManager.GetActiveScene().buildIndex != (int)SCENEINDEX.TITLE_SCENE)
+                {
+                    pausePanel.SetActive(false);
+                    pauseButton.gameObject.SetActive(false);
+                    guideButton.gameObject.SetActive(false);
+                }
+                
                 settingPanel.SetActive(true);
             }
             else
             {
-                pausePanel.SetActive(true);
-                pauseButton.gameObject.SetActive(true);
-                //guideButton.gameObject.SetActive(true);
-
+                if (SceneManager.GetActiveScene().buildIndex != (int)SCENEINDEX.TITLE_SCENE)
+                {
+                    pausePanel.SetActive(true);
+                    pauseButton.gameObject.SetActive(true);
+                    //guideButton.gameObject.SetActive(true);
+                }
                 settingPanel.SetActive(false);
             }
         }
