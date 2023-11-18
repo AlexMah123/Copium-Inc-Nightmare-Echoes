@@ -41,14 +41,16 @@ namespace NightmareEchoes.Grid
 
         public void InitOverlayTiles(Tilemap tileMap)
         {
-
             for (int i = 0; i < tileMapList.Count; i++)
             {
+                if (tileMapList[i] == tileMap)
+                    continue;
+
                 tileMapList[i].gameObject.SetActive(false);
             }
 
-            tileMap.gameObject.transform.position = startPosition;
             tileMap.gameObject.SetActive(true);
+            tileMap.gameObject.transform.position = startPosition;
 
             //generating the grid
             gridDictionary = new Dictionary<Vector2Int, OverlayTile>();

@@ -413,23 +413,27 @@ namespace NightmareEchoes.Unit
             //collision happens
             if (tileDestination.CheckEntityGameObjectOnTile() || tileDestination.CheckObstacleOnTile())
             {
-                StartCoroutine(KnockbackCollisionAnimation(false, target, tileDestination));
-                if (tileDestination.CheckObstacleOnTile())
+                if(target != null)
                 {
-                    target.ShowPopUpText("Collision!", Color.magenta);
-                    target.TakeDamage(3);
-                    target.Direction = prevDir;
+                    StartCoroutine(KnockbackCollisionAnimation(false, target, tileDestination));
+                    if (tileDestination.CheckObstacleOnTile())
+                    {
+                        target.ShowPopUpText("Collision!", Color.magenta);
+                        target.TakeDamage(3);
+                        target.Direction = prevDir;
 
-                }
-                else if (tileDestination.CheckEntityGameObjectOnTile())
-                {
-                    target.ShowPopUpText("Collision!", Color.magenta);
-                    target.TakeDamage(3);
-                    target.Direction = prevDir;
+                    }
+                    else if (tileDestination.CheckEntityGameObjectOnTile())
+                    {
+                        target.ShowPopUpText("Collision!", Color.magenta);
+                        target.TakeDamage(3);
+                        target.Direction = prevDir;
 
-                    var go = tileDestination.CheckEntityGameObjectOnTile();
-                    go.GetComponent<Entity>().TakeDamage(3);
+                        var go = tileDestination.CheckEntityGameObjectOnTile();
+                        go.GetComponent<Entity>().TakeDamage(3);
+                    }
                 }
+                
                 return;
             }
             
@@ -483,10 +487,12 @@ namespace NightmareEchoes.Unit
 
         private IEnumerator KnockbackCollisionAnimation(bool waitKnockback, Entity target, OverlayTile destination)
         {
+            OverlayTile startTile = null;
+
             if (waitKnockback)
-                yield return new WaitForSeconds(0.2f); 
-            
-            var startTile = target.ActiveTile;
+                yield return new WaitForSeconds(0.2f);
+
+            startTile = target.ActiveTile;
             var coroutine = PathfindingManager.Instance.MoveTowardsTile(target, destination, 0.15f);
             target.GetComponentInChildren<SortingGroup>().sortingOrder = 1;
 
@@ -495,9 +501,13 @@ namespace NightmareEchoes.Unit
             StopCoroutine(coroutine);
 
             yield return new WaitForSeconds(0.075f);
-            StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(target, startTile, 0.15f));
-            target.GetComponentInChildren<SortingGroup>().sortingOrder = 0;
 
+            if(target != null && startTile != null)
+            {
+                StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(target, startTile, 0.15f));
+                target.GetComponentInChildren<SortingGroup>().sortingOrder = 0;
+            }
+            
             yield return null;
         }
     }

@@ -64,8 +64,6 @@ namespace NightmareEchoes.TurnOrder
             //the current index for guide to show that is based on a list
             currentPanelIndex = 0;
             currentTutorialGuideCap = 1;
-            //yield return new WaitForSecondsRealtime(2f);
-
             //EnableTutorialCanvas();
             yield break;
         }

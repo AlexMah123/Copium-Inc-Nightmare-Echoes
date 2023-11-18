@@ -18,7 +18,7 @@ namespace NightmareEchoes.TurnOrder
     {
         public static GeneralUIController Instance;
 
-        Entity CurrentUnit { get => TurnOrderController.Instance.CurrentUnit; }
+        Entity CurrentUnit { get => TurnOrderController.Instance != null ? TurnOrderController.Instance.CurrentUnit : null; }
 
         [Header("Game Over + Win Related")]
         [SerializeField] GameObject gameOverPanel;
@@ -185,7 +185,7 @@ namespace NightmareEchoes.TurnOrder
 
             if(state)
             {
-                if (CurrentUnit)
+                if (CurrentUnit != null)
                 {
                     CameraControl.Instance.UpdateCameraPan(CurrentUnit.gameObject);
                 }

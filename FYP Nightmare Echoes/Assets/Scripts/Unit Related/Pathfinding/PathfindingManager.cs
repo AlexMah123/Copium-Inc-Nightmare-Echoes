@@ -171,21 +171,25 @@ namespace NightmareEchoes.Unit.Pathfinding
 
             //if player clicked and isnt moving + selected a unit or if they move to their activetile/starting point
             //currentHoverOverlayTile wont be null because you always are on the map
-            if (Input.GetMouseButtonDown(0) && !hasMoved && (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentPathfindingUnit?.ActiveTile))
+            if (Input.GetMouseButtonDown(0) && !hasMoved && playerTilesInRange.Contains(currentHoveredOverlayTile))
             {
-                pathList = Pathfind.FindPath(currentPathfindingUnit?.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
-                tempPathList = new List<OverlayTile>(pathList);
-
                 if (!currentHoveredOverlayTile.CheckEntityGameObjectOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
                 {
+                    pathList = Pathfind.FindPath(currentPathfindingUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
+                    tempPathList = new List<OverlayTile>(pathList);
+
                     //Resets lastaddedtile is null
-                    if(pathList.Count > 0)
+                    if (pathList.Count > 0)
                     {
                         lastAddedTile = null;
                         hasMoved = true;
                         isMoving = true;
                         RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
                     }
+                }
+                else
+                {
+                    pathList.Clear();
                 }
             }
             // if player dragged move, isnt moving + selected a unit, or if they move to their activetile/starting point

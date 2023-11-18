@@ -14,6 +14,7 @@ namespace NightmareEchoes.TurnOrder
     {
         bool runOnce = false;
         bool tempStun = false;
+        bool passTurnOnce = false;
 
         EnemyAI enemyAI;
 
@@ -27,6 +28,7 @@ namespace NightmareEchoes.TurnOrder
             //Reseting Values
             tempStun = false;
             runOnce = false;
+            passTurnOnce = false;
             controller.CurrentUnit.HasMoved = false;
             controller.CurrentUnit.HasAttacked = false;
             controller.CurrentUnit.HighlightUnit();
@@ -64,17 +66,21 @@ namespace NightmareEchoes.TurnOrder
                 }
                 #endregion
 
-
                 GameUIManager.Instance.UpdateStatusEffectUI();
-                controller.CurrentUnit.UpdateStatusEffectEvent();
             }
             #endregion
 
             //Start Turn
-            if (!tempStun)
+            if (!tempStun && controller.CurrentUnit != null)
             {
+                controller.CurrentUnit.UpdateStatusEffectEvent();
                 controller.StartCoroutine(EnemyTurn());
             }
+            else if(controller.CurrentUnit != null)
+            {
+                controller.StartCoroutine(controller.PassTurn());
+            }
+
             aoeSkillsPassed.Clear();
         }
 

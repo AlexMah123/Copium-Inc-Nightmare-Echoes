@@ -81,17 +81,23 @@ namespace NightmareEchoes.TurnOrder
 
 
                 GameUIManager.Instance.UpdateStatusEffectUI();
-                controller.CurrentUnit.UpdateStatusEffectEvent();
             }
             #endregion
 
             //Start Turn
-            if(!tempStun)
+            if (!tempStun && controller.CurrentUnit != null)
             {
+                controller.CurrentUnit.UpdateStatusEffectEvent();
+
                 PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
                 controller.StartCoroutine(WaitForTurnEnd());
             }
-            
+            else if(controller.CurrentUnit != null)
+            {
+                controller.StartCoroutine(controller.PassTurn());
+                passTurnOnce = true;
+            }
+
         }
 
         protected override void OnFixedUpdate()

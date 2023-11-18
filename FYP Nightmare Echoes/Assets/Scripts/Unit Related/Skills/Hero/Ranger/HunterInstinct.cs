@@ -21,7 +21,8 @@ namespace NightmareEchoes.Unit
 
         private void Update()
         {
-            isActive = CombatManager.Instance.ActiveAoes.ContainsKey(this);
+            if(CombatManager.Instance)
+                isActive = CombatManager.Instance.ActiveAoes.ContainsKey(this);
 
             if (!isActive) return;
             if (unit.ActiveTile != currentPos)

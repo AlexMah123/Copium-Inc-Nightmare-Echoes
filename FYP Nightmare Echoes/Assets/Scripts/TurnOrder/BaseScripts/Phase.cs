@@ -83,7 +83,7 @@ namespace NightmareEchoes.TurnOrder
             if (controller.currentPhase != controller.planPhase && controller.currentPhase != controller.startPhase && !controller.gameOver)
             {
                 //checking for players
-                if (controller.FindAllHeros().Count == 0 && !controller.InTutorialLevel())
+                if (controller.FindAllHeros().Count == 0)
                 {
                     //Game Over
                     controller.gameOver = true;
