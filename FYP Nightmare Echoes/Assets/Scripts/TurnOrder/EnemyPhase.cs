@@ -168,10 +168,6 @@ namespace NightmareEchoes.TurnOrder
                 }
 
                 //update effects & stats
-
-                //should not need this but just checking
-                //controller.CurrentUnit.ApplyAllBuffDebuffs();
-                //controller.CurrentUnit.ApplyAllTokenEffects();
                 controller.CurrentUnit.UpdateAllBuffDebuffLifeTime();
                 controller.CurrentUnit.UpdateStatsWithoutEndCycleEffect();
 

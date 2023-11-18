@@ -38,7 +38,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
                 for(int i = 0; i < neighbourTiles.Count; i++) 
                 {
-                    if (neighbourTiles[i].isBlocked || closedSet.Contains(neighbourTiles[i]))
+                    if (closedSet.Contains(neighbourTiles[i]))
                     {
                         continue;
                     }

@@ -85,7 +85,7 @@ namespace NightmareEchoes.TurnOrder
             tutorialCanvas.SetActive(true);
 
             //check if the current index has exceed
-            if (currentPanelIndex >= 0 && currentPanelIndex < tutorialPanels.Count)
+            if (currentPanelIndex < tutorialPanels.Count)
             {
                 //enable the guide based on the index and cache it.
                 tutorialPanels[currentPanelIndex].gameObject.SetActive(true);
@@ -119,7 +119,7 @@ namespace NightmareEchoes.TurnOrder
         public void ExitTutorialButton()
         {
             //increment the next guide to show when exiting
-            if(currentPanelIndex < tutorialPanels.Count - 1)
+            if(currentPanelIndex < tutorialPanels.Count)
             {
                 currentPanelIndex++;
             }

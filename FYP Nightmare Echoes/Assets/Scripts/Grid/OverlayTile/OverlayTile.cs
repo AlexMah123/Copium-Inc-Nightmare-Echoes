@@ -13,7 +13,6 @@ namespace NightmareEchoes.Grid
 
         public int F { get { return G + H; } }
 
-        public bool isBlocked;
         public OverlayTile prevTile;
         public Vector3Int gridLocation;
         public Vector2Int gridLocation2D { get { return new Vector2Int(gridLocation.x, gridLocation.y); } }

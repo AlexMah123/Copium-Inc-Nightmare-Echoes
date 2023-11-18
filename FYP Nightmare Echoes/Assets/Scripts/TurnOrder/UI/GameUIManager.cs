@@ -360,35 +360,38 @@ namespace NightmareEchoes.TurnOrder
         {
             if (PathfindingManager.Instance.CurrentPathfindingUnit != null && PathfindingManager.Instance.RevertUnitPosition != null)
             {
-                PathfindingManager.Instance.SetUnitPositionOnTile(CurrentUnit, PathfindingManager.Instance.RevertUnitPosition);
+                PathfindingManager.Instance.SetUnitPositionOnTile(PathfindingManager.Instance.CurrentPathfindingUnit, PathfindingManager.Instance.RevertUnitPosition);
                 PathfindingManager.Instance.CurrentPathfindingUnit.Direction = PathfindingManager.Instance.RevertUnitDirection;
-                CurrentUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
-                CurrentUnit.ResetAnimator();
+                PathfindingManager.Instance.CurrentPathfindingUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
+                PathfindingManager.Instance.CurrentPathfindingUnit.ResetAnimator();
 
                 //Resets everything, not moving, not dragging, and lastaddedtile is null
-                CurrentUnit.HasMoved = false;
+                PathfindingManager.Instance.CurrentPathfindingUnit.HasMoved = false;
                 PathfindingManager.Instance.isMoving = false;
                 PathfindingManager.Instance.hasMoved = false;
                 PathfindingManager.Instance.isDragging = false;
+                PathfindingManager.Instance.isDraggingFromPlayer = false;
                 PathfindingManager.Instance.lastAddedTile = null;
+                
 
                 PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
+                PathfindingManager.Instance.pathList.Clear();
 
                 //cancels the selected skill
                 if (CombatManager.Instance.ActiveSkill != null)
                 {
-                    CombatManager.Instance.SelectSkill(CurrentUnit, CombatManager.Instance.ActiveSkill);
+                    CombatManager.Instance.SelectSkill(PathfindingManager.Instance.CurrentPathfindingUnit, CombatManager.Instance.ActiveSkill);
                     CombatManager.Instance.ClearPreviews();
                 }
 
                 //shows back the tiles in range
-                PathfindingManager.Instance.StartPlayerPathfinding(CurrentUnit);
-                CameraControl.Instance.UpdateCameraPan(CurrentUnit.gameObject);
 
+                PathfindingManager.Instance.ShowTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+                CameraControl.Instance.UpdateCameraPan(PathfindingManager.Instance.CurrentPathfindingUnit.gameObject);
             }
             else
             {
-                CurrentUnit.ShowPopUpText("Cannot Cancel Action!", Color.red);
+                PathfindingManager.Instance.CurrentPathfindingUnit.ShowPopUpText("Cannot Cancel Action!", Color.red);
             }
         }
 

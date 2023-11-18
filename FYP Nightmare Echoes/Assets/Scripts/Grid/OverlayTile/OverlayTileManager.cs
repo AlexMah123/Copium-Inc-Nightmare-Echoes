@@ -41,6 +41,19 @@ namespace NightmareEchoes.Grid
 
         public void InitOverlayTiles(Tilemap tileMap)
         {
+            if (overlayContainer.transform.childCount > 0)
+            {
+                while(overlayContainer.transform.childCount > 0)
+                {
+                    var child = overlayContainer.transform.GetChild(0);
+                    child.parent = null;
+                    DestroyImmediate(child.gameObject);
+                }
+            }
+
+            tileMap.gameObject.SetActive(true);
+            tileMap.gameObject.transform.position = startPosition;
+
             for (int i = 0; i < tileMapList.Count; i++)
             {
                 if (tileMapList[i] == tileMap)
@@ -48,9 +61,6 @@ namespace NightmareEchoes.Grid
 
                 tileMapList[i].gameObject.SetActive(false);
             }
-
-            tileMap.gameObject.SetActive(true);
-            tileMap.gameObject.transform.position = startPosition;
 
             //generating the grid
             gridDictionary = new Dictionary<Vector2Int, OverlayTile>();
@@ -133,11 +143,6 @@ namespace NightmareEchoes.Grid
             }
 
             return neighbours;
-        }
-
-        public void SetCurrentTileMap()
-        {
-
         }
 
         #region Utility for Getting Specific Tiles based on pos

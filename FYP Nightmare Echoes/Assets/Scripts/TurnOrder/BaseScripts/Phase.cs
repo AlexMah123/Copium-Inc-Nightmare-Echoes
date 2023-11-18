@@ -144,6 +144,8 @@ namespace NightmareEchoes.TurnOrder
             PathfindingManager.Instance.lastAddedTile = null;
             PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.pathList);
             PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
+            PathfindingManager.Instance.pathList.Clear();
+            PathfindingManager.Instance.tempPathList.Clear();
 
             //clear all rendering 
             RenderOverlayTile.Instance.ClearTargetingRenders();
