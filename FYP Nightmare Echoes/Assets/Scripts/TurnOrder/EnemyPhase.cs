@@ -40,6 +40,18 @@ namespace NightmareEchoes.TurnOrder
                 //cache enemyAI
                 enemyAI = controller.CurrentUnit.GetComponent<EnemyAI>();
 
+                #region BuffDebuff
+                for (int i = controller.CurrentUnit.BuffDebuffList.Count - 1; i >= 0; i--)
+                {
+                    switch (controller.CurrentUnit.BuffDebuffList[i].statusEffect)
+                    {
+                        case STATUS_EFFECT.WOUND_DEBUFF:
+                            controller.CurrentUnit.BuffDebuffList[i].TriggerEffect(controller.CurrentUnit);
+                            break;
+                    }
+                }
+                #endregion
+
                 #region Tokens
                 //enable this if you want to test applying tokens manually in the editor
                 //controller.CurrentUnit.ApplyAllTokenEffects();
@@ -54,18 +66,6 @@ namespace NightmareEchoes.TurnOrder
 
                 #endregion
 
-                #region BuffDebuff
-                for (int i = controller.CurrentUnit.BuffDebuffList.Count - 1; i >= 0; i--)
-                {
-                    switch (controller.CurrentUnit.BuffDebuffList[i].statusEffect)
-                    {
-                        case STATUS_EFFECT.WOUND_DEBUFF:
-                            controller.CurrentUnit.BuffDebuffList[i].TriggerEffect(controller.CurrentUnit);
-                            break;
-                    }
-                }
-                #endregion
-
                 GameUIManager.Instance.UpdateStatusEffectUI();
             }
             #endregion
@@ -76,7 +76,7 @@ namespace NightmareEchoes.TurnOrder
                 controller.CurrentUnit.UpdateStatusEffectEvent();
                 controller.StartCoroutine(EnemyTurn());
             }
-            else if (controller.CurrentUnit != null)
+            else if (controller.CurrentUnit == null)
             {
                 controller.StartCoroutine(controller.PassTurn());
                 passTurnOnce = true;
@@ -114,7 +114,7 @@ namespace NightmareEchoes.TurnOrder
                     trapDmg.Cast(controller.CurrentUnit);
                 }
             }
-            else
+            else if(controller.CurrentUnit == null || enemyAI == null)
             {
                 if (!passTurnOnce)
                 {
@@ -200,7 +200,7 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator EnemyTurn()
         {
-            
+            yield return new WaitForSeconds(1f);
 
             if (controller.CurrentUnit != null && enemyAI != null)
             {
@@ -208,20 +208,12 @@ namespace NightmareEchoes.TurnOrder
                 yield return new WaitForSeconds(Random.Range(controller.enemythinkingDelay, controller.enemythinkingDelay + 2));
 
                 enemyAI.Execute();
-            }
-            else
-            {
-                controller.StartCoroutine(controller.PassTurn());
+
+                yield return new WaitUntil(() => enemyAI.finalMovePath.Count == 0);
             }
 
-            yield return new WaitUntil(() => enemyAI.finalMovePath.Count == 0);
-
-            if(enemyAI == null || controller.CurrentUnit == null)
-            {
-                controller.StartCoroutine(controller.PassTurn());
-            }
             //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.
-            else if ((enemyAI.attack || enemyAI.moveAndAttack) && !enemyAI.detectedStealthHero)
+            if ((enemyAI.attack || enemyAI.moveAndAttack) && !enemyAI.detectedStealthHero)
             {
                 //if you are not immobilized, just attack
                 if (!controller.CurrentUnit.ImmobilizeToken)

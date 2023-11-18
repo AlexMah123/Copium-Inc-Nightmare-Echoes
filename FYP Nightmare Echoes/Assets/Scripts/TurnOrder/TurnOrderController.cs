@@ -224,6 +224,9 @@ namespace NightmareEchoes.TurnOrder
         {
             for (int i = CurrentUnitQueue.Count - 1; i >= 0; i--)
             {
+                if(CurrentUnitQueue.ToArray()[i] == null)
+                    continue;
+
                 if (CurrentUnitQueue.ToArray()[i].PopupTextQueue.Count > 0)
                 {
                     return true;
@@ -263,6 +266,7 @@ namespace NightmareEchoes.TurnOrder
         {
             if(destroyedUnit == currentUnit)
             {
+                CurrentUnitQueue = new Queue<Entity>(CurrentUnitQueue.Where(x => x != destroyedUnit));
                 StartCoroutine(PassTurn());
             }
             else
@@ -282,6 +286,8 @@ namespace NightmareEchoes.TurnOrder
                     GameUIManager.Instance.UpdateTurnOrderUI();
                 }
             }
+
+            Destroy(destroyedUnit.gameObject);
         }
 
         //delegate for sort()

@@ -54,19 +54,6 @@ namespace NightmareEchoes.TurnOrder
                     controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(statusEffect, 1, 1));
                 }*/
 
-                #region Tokens
-                //enable this if you want to test applying tokens manually in the editor
-                //controller.CurrentUnit.ApplyAllTokenEffects();
-
-                if (controller.CurrentUnit.StunToken)
-                {
-                    tempStun = true;
-                    controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
-
-                    controller.StartCoroutine(controller.PassTurn());
-                }
-                #endregion
-
                 #region BuffDebuff
                 for (int i = controller.CurrentUnit.BuffDebuffList.Count - 1; i >= 0; i--)
                 {
@@ -79,6 +66,21 @@ namespace NightmareEchoes.TurnOrder
                 }
                 #endregion
 
+                #region Tokens
+                //enable this if you want to test applying tokens manually in the editor
+                //controller.CurrentUnit.ApplyAllTokenEffects();
+
+                if(controller.CurrentUnit != null)
+                {
+                    if (controller.CurrentUnit.StunToken)
+                    {
+                        tempStun = true;
+                        controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STUN_TOKEN);
+
+                        controller.StartCoroutine(controller.PassTurn());
+                    }
+                }
+                #endregion
 
                 GameUIManager.Instance.UpdateStatusEffectUI();
             }
@@ -92,7 +94,7 @@ namespace NightmareEchoes.TurnOrder
                 PathfindingManager.Instance.StartPlayerPathfinding(controller.CurrentUnit);
                 controller.StartCoroutine(WaitForTurnEnd());
             }
-            else if(controller.CurrentUnit != null)
+            else if(controller.CurrentUnit == null)
             {
                 controller.StartCoroutine(controller.PassTurn());
                 passTurnOnce = true;

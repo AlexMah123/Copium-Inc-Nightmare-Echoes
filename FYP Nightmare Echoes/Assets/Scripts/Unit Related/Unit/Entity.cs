@@ -550,7 +550,6 @@ namespace NightmareEchoes.Unit
                 }
 
                 OnDestroyedEvent?.Invoke(this);
-                Destroy(gameObject);
             }
 
             #region Sprite/Animation Updates

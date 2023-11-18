@@ -59,6 +59,11 @@ namespace NightmareEchoes.Unit.AI
 
         public void Execute()
         {
+            if(thisUnit == null)
+            {
+                return;
+            }
+
             //reset values
             SortHeroesByDistance();
 
