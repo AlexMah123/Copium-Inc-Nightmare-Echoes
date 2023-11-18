@@ -76,9 +76,10 @@ namespace NightmareEchoes.TurnOrder
                 controller.CurrentUnit.UpdateStatusEffectEvent();
                 controller.StartCoroutine(EnemyTurn());
             }
-            else if(controller.CurrentUnit != null)
+            else if (controller.CurrentUnit != null)
             {
                 controller.StartCoroutine(controller.PassTurn());
+                passTurnOnce = true;
             }
 
             aoeSkillsPassed.Clear();
@@ -111,6 +112,14 @@ namespace NightmareEchoes.TurnOrder
                 if (trapDmg)
                 {
                     trapDmg.Cast(controller.CurrentUnit);
+                }
+            }
+            else
+            {
+                if (!passTurnOnce)
+                {
+                    controller.StartCoroutine(controller.PassTurn());
+                    passTurnOnce = true;
                 }
             }
         }
@@ -191,11 +200,13 @@ namespace NightmareEchoes.TurnOrder
 
         IEnumerator EnemyTurn()
         {
-            controller.CurrentUnit.ShowPopUpText(". . .", Color.yellow, duration: controller.enemythinkingDelay, 20);
-            yield return new WaitForSeconds(Random.Range(controller.enemythinkingDelay, controller.enemythinkingDelay + 2));
+            
 
             if (controller.CurrentUnit != null && enemyAI != null)
             {
+                controller.CurrentUnit.ShowPopUpText(". . .", Color.yellow, duration: controller.enemythinkingDelay, 20);
+                yield return new WaitForSeconds(Random.Range(controller.enemythinkingDelay, controller.enemythinkingDelay + 2));
+
                 enemyAI.Execute();
             }
             else
@@ -205,8 +216,12 @@ namespace NightmareEchoes.TurnOrder
 
             yield return new WaitUntil(() => enemyAI.finalMovePath.Count == 0);
 
+            if(enemyAI == null || controller.CurrentUnit == null)
+            {
+                controller.StartCoroutine(controller.PassTurn());
+            }
             //if you have reached the end, and are suppose to attack, havent attacked, havent foundStealthHero and there is a target.
-            if ((enemyAI.attack || enemyAI.moveAndAttack) && !enemyAI.detectedStealthHero)
+            else if ((enemyAI.attack || enemyAI.moveAndAttack) && !enemyAI.detectedStealthHero)
             {
                 //if you are not immobilized, just attack
                 if (!controller.CurrentUnit.ImmobilizeToken)
