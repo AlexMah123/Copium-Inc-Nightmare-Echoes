@@ -242,7 +242,7 @@ namespace NightmareEchoes.Unit.AI
             }
 
             //special case for line
-            if (currSelectedSkill.TargetArea == TargetArea.Line)
+            if (currSelectedSkill.TargetArea == TargetArea.Line && shortestPath.Count > 0)
             {
                 int shPHelper1 = Mathf.Clamp(shortestPath.Count - currSelectedSkill.Range - 1, 0, 99);
                 int shPHelper2 = Mathf.Clamp(shortestPath.Count - currSelectedSkill.MinRange - 1, 0, 99);

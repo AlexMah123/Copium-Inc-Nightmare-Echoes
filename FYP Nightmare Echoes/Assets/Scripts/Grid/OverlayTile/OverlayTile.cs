@@ -130,6 +130,7 @@ namespace NightmareEchoes.Grid
         public void SetArrowSprite(ArrowDirections d)
         {
             var arrow = GetComponentsInChildren<SpriteRenderer>()[1];
+
             if (d == ArrowDirections.None)
             {
                 arrow.color = new Color(1, 1, 1, 0);

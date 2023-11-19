@@ -549,7 +549,14 @@ namespace NightmareEchoes.Unit
                     PathfindingManager.Instance.HideTilesInRange(GetComponent<EnemyAI>().walkableThisTurnTiles);
                 }
 
-                OnDestroyedEvent?.Invoke(this);
+                if(OnDestroyedEvent != null)
+                {
+                    OnDestroyedEvent.Invoke(this);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
 
             #region Sprite/Animation Updates

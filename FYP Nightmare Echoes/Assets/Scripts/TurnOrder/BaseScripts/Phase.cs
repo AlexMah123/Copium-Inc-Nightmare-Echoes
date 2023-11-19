@@ -142,8 +142,17 @@ namespace NightmareEchoes.TurnOrder
             PathfindingManager.Instance.hasMoved = false;
             PathfindingManager.Instance.isDragging = false;
             PathfindingManager.Instance.lastAddedTile = null;
-            PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.pathList);
-            PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
+
+            if (PathfindingManager.Instance.tempPathList.Count > 0)
+            {
+                PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.pathList);
+            }
+
+            if (PathfindingManager.Instance.tempPathList.Count > 0)
+            {
+                PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
+            }
+            
             PathfindingManager.Instance.pathList.Clear();
             PathfindingManager.Instance.tempPathList.Clear();
 

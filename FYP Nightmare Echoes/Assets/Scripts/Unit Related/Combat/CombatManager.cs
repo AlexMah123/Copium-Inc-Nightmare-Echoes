@@ -808,9 +808,9 @@ namespace NightmareEchoes.Unit.Combat
 
                         if (Input.GetMouseButtonDown(0) && !trapList.Contains(preview.transform.position))
                         {
-                            Vector2 direction = preview.transform.position - thisUnit.transform.position;
+                            Vector2 direction = OverlayTileManager.Instance.GetOverlayTileInWorldPos(preview.transform.position).gridLocation2D - thisUnit.ActiveTile.gridLocation2D;
 
-                            if (direction.x > direction.y)
+                            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
                             {
                                 thisUnit.Direction = direction.x > 0 ? Direction.NORTH : Direction.SOUTH;
                             }

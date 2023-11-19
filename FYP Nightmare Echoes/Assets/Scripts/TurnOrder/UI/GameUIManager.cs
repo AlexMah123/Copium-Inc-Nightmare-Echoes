@@ -304,7 +304,7 @@ namespace NightmareEchoes.TurnOrder
             }
             #endregion
 
-            #region current unit indicator 
+            #region Current unit indicator 
             if (CurrentUnit != null)
             {
                 if (!unitIndicator.activeSelf)
@@ -385,7 +385,6 @@ namespace NightmareEchoes.TurnOrder
                 }
 
                 //shows back the tiles in range
-
                 PathfindingManager.Instance.ShowTilesInRange(PathfindingManager.Instance.playerTilesInRange);
                 CameraControl.Instance.UpdateCameraPan(PathfindingManager.Instance.CurrentPathfindingUnit.gameObject);
             }
@@ -420,7 +419,6 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.BasicAttack();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
@@ -439,7 +437,6 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.Skill1();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
@@ -458,7 +455,6 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.Skill2();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
@@ -477,7 +473,6 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.Skill3();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
@@ -960,8 +955,8 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 
-            glossarySkillDescText.text = glossaryUnit.BasicAttackSkill.Description;
-            glossarySkillImage.sprite = glossaryUnit.BasicAttackSkill.SkillExample;
+            glossarySkillDescText.text = glossaryUnit.BasicAttackSkill?.Description;
+            glossarySkillImage.sprite = glossaryUnit.BasicAttackSkill?.SkillExample;
         }
 
         public void ShowGlossarySkillText(int num)

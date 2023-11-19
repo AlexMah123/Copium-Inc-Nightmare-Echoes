@@ -135,7 +135,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         //Called in Player Phase
         public void PlayerInputPathfinding()
         {
-            if (currentPathfindingUnit == null || Time.timeScale == 0)
+            if (currentPathfindingUnit == null || Time.timeScale == 0 || CombatManager.Instance.ActiveSkill)
             {
                 return;
             }
@@ -541,6 +541,9 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             for(int i = 0; i < pathList.Count; i++)
             {
+                if (pathList[i] == null)
+                    continue;
+
                 pathList[i].SetArrowSprite(ArrowDirections.None);
             }
 
