@@ -405,6 +405,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                 CameraControl.Instance.isPanning = false;
                 isMoving = false;
                 thisUnit.HasMoved = true;
+                thisUnit.UpdateLocation();
+
                 HideTilesInRange(tilesInRange);
             }
         }

@@ -415,7 +415,6 @@ namespace NightmareEchoes.Unit
             {
                 if(target != null)
                 {
-                    StartCoroutine(KnockbackCollisionAnimation(false, target, tileDestination));
                     if (tileDestination.CheckObstacleOnTile())
                     {
                         target.ShowPopUpText("Collision!", Color.magenta);
@@ -432,6 +431,7 @@ namespace NightmareEchoes.Unit
                         var go = tileDestination.CheckEntityGameObjectOnTile();
                         go.GetComponent<Entity>().TakeDamage(3);
                     }
+                    StartCoroutine(KnockbackCollisionAnimation(false, target, tileDestination));
                 }
                 
                 return;

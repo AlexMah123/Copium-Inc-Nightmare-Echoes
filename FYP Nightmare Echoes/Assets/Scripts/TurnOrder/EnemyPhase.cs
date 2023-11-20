@@ -5,6 +5,7 @@ using UnityEngine;
 using NightmareEchoes.Unit.AI;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Unit.Pathfinding;
+using System.Linq;
 
 
 //created by Alex
@@ -200,10 +201,17 @@ namespace NightmareEchoes.TurnOrder
 
             if (controller.CurrentUnit != null && enemyAI != null)
             {
-                controller.CurrentUnit.ShowPopUpText(". . .", Color.yellow, duration: controller.enemythinkingDelay, 20);
-                yield return new WaitForSeconds(Random.Range(controller.enemythinkingDelay, controller.enemythinkingDelay + 2));
+                controller.CurrentUnit.ShowPopUpText(". . .", Color.yellow, duration: controller.enemythinkingDelay, 40);
+                yield return new WaitForSeconds(controller.enemythinkingDelay);
 
                 enemyAI.Execute();
+                if(enemyAI.finalMovePath.Count > 0)
+                {
+                    if(enemyAI.finalMovePath.Last().GetComponent<Entity>())
+                    {
+                        enemyAI.finalMovePath.RemoveAt(enemyAI.finalMovePath.Count - 1);
+                    }
+                }
 
                 yield return new WaitUntil(() => enemyAI.finalMovePath.Count == 0);
             }

@@ -1,10 +1,12 @@
 using NightmareEchoes.Grid;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 //created by JH, edited by Ter
 namespace NightmareEchoes.Unit.Combat
@@ -43,10 +45,14 @@ namespace NightmareEchoes.Unit.Combat
 
         //to check if skill is casting
         public bool skillIsCasting = false;
-        
+
+        //used for end of turn
+        private Direction chosenDirection;
+
         //To prevent update() from casting multiple times
         //Not used at the moment
         private bool castGate = false;
+
 
         #region Properties
         public Skill ActiveSkill
@@ -199,7 +205,7 @@ namespace NightmareEchoes.Unit.Combat
 
                 var activatedTrap = enumerator.Key;
                 activeTraps.Remove(enumerator.Key);
-                Destroy((Object)activatedTrap);
+                Destroy((GameObject)activatedTrap);
                 return enumerator.Value as Skill;
             }
 
@@ -754,6 +760,11 @@ namespace NightmareEchoes.Unit.Combat
             
             friendlySkills.RemoveAll(skill => skill == null);
         }
+
+        private void ChooseDirection(Direction direction)
+        {
+            chosenDirection = direction;
+        }
         #endregion
 
         #region Coroutine
@@ -853,7 +864,7 @@ namespace NightmareEchoes.Unit.Combat
                 foreach (var trap in trapsToRemove)
                 {
                     activeTraps.Remove(trap);
-                    Destroy((Object)trap);
+                    Destroy((GameObject)trap);
                 }
             }
             
@@ -865,15 +876,17 @@ namespace NightmareEchoes.Unit.Combat
             if (activeSkill.Cast(target))
             {
                 skillIsCasting = true;
+
                 #region Animations
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
                 
                 if(activeUnit.FrontAnimator != null || activeUnit.BackAnimator != null)
                 {
-                    yield return WaitForAnimationCompletion(activeUnit);
+                    yield return StartCoroutine(WaitForAnimationCompletion(activeUnit));
                 }
                 #endregion
+
                 yield return new WaitForSeconds(0.1f);
 
                 EndTurn();
@@ -892,10 +905,11 @@ namespace NightmareEchoes.Unit.Combat
 
                 if (activeUnit.FrontAnimator != null || activeUnit.BackAnimator != null)
                 {
-                    yield return WaitForAnimationCompletion(activeUnit);
+                    yield return StartCoroutine(WaitForAnimationCompletion(activeUnit));
                 }
 
                 #endregion
+                
                 yield return new WaitForSeconds(0.1f);
 
                 EndTurn();
@@ -915,14 +929,15 @@ namespace NightmareEchoes.Unit.Combat
 
                 if (activeUnit.FrontAnimator != null || activeUnit.BackAnimator != null)
                 {
-                    yield return WaitForAnimationCompletion(activeUnit);
+                    yield return StartCoroutine(WaitForAnimationCompletion(activeUnit));
                 }
 
                 #endregion
-
+                
                 yield return new WaitForSeconds(0.1f);
 
                 EndTurn();
+
                 yield return null;
             }
             else if (secondaryTargeting)
@@ -937,10 +952,11 @@ namespace NightmareEchoes.Unit.Combat
 
                 if (activeUnit.FrontAnimator != null || activeUnit.BackAnimator != null)
                 {
-                    yield return WaitForAnimationCompletion(activeUnit);
+                    yield return StartCoroutine(WaitForAnimationCompletion(activeUnit));
                 }
 
                 #endregion
+                
                 yield return new WaitForSeconds(0.1f);
 
                 EndTurn();
@@ -961,6 +977,49 @@ namespace NightmareEchoes.Unit.Combat
             yield return new WaitForSeconds(0.1f);
 
             yield return null;
+        }
+
+        public IEnumerator ChooseFacingDirection(Entity activeUnit)
+        {
+            chosenDirection = Direction.NONE;
+            var directionButton = activeUnit.GetComponentsInChildren<Button>(includeInactive: true);
+
+            for (int i = 0; i < directionButton.Length; i++)
+            {
+                if (directionButton[i].onClick.GetPersistentEventCount() == 0)
+                {
+                    Direction directionEnum = (Direction)i;
+                    directionButton[i].onClick.AddListener(() => ChooseDirection(directionEnum));
+                }
+            }
+
+            Vector2Int[] directions = {
+                new Vector2Int(1, 0),  // N
+                new Vector2Int(-1, 0), // S
+                new Vector2Int(0, -1),  // E
+                new Vector2Int(0, 1)  // W
+            };
+
+            for(int i = 0; i< directions.Length; i++)
+            {
+                var chooseTile = OverlayTileManager.Instance.GetOverlayTile(activeUnit.ActiveTile.gridLocation2D + directions[i]);
+                
+                if(chooseTile == null)
+                {
+                    continue;
+                }
+
+                directionButton[i].gameObject.SetActive(true);
+            }
+
+            yield return new WaitUntil(() => chosenDirection != Direction.NONE);
+
+            activeUnit.Direction = chosenDirection;
+
+            for(int i = 0; i < directionButton.Length; i++)
+            {
+                directionButton[i].gameObject.SetActive(false);
+            }
         }
 
         #endregion

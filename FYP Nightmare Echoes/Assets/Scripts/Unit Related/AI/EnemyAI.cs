@@ -421,7 +421,6 @@ namespace NightmareEchoes.Unit.AI
                                     rangeDist = FindDistanceBetweenTile(shortestPath[i - 1], targetHero.ActiveTile);
                                 }
 
-                                Debug.Log(rangeDist);
                                 if (rangeDist <= currSelectedSkill.Range && rangeDist >= currSelectedSkill.MinRange)
                                 {
                                     targetTileToAttack = targetHero.ActiveTile;

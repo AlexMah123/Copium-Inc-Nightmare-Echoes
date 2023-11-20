@@ -152,6 +152,12 @@ namespace NightmareEchoes.UI
 
                 CameraControl.Instance.UpdateCameraPan(hoveredTurnOrderUnit);
             }
+            else
+            {
+                GameUIManager.Instance.EnableInspectedUI(false);
+                isHoveringTurnOrderUnit = false;
+                hoverIndicator.SetActive(false);
+            }
         }
 
         private void HideTurnOrderToolTip()

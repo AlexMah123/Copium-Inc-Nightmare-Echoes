@@ -81,12 +81,7 @@ namespace NightmareEchoes.TurnOrder
                 originalPassTurnDelay = TurnOrderController.Instance.passTurnDelay;
             }
             
-
             LoadSettings();
-
-            //just a bandaid to disable
-            if(guideButton)
-                guideButton.gameObject.SetActive(false);
         }
 
 
@@ -294,7 +289,7 @@ namespace NightmareEchoes.TurnOrder
                 {
                     pausePanel.SetActive(true);
                     pauseButton.gameObject.SetActive(true);
-                    //guideButton.gameObject.SetActive(true);
+                    guideButton.gameObject.SetActive(true);
                 }
                 settingPanel.SetActive(false);
             }
@@ -310,7 +305,7 @@ namespace NightmareEchoes.TurnOrder
                 pausePanel.SetActive(!isGuideActive);
             }
             
-            //guideButton.gameObject.SetActive(isGuideActive);
+            guideButton.gameObject.SetActive(isGuideActive);
             pauseButton.gameObject.SetActive(isGuideActive);
             guidePanel.SetActive(!isGuideActive);
         }

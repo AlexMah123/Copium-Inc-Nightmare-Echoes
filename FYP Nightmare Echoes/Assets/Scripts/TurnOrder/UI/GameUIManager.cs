@@ -360,33 +360,35 @@ namespace NightmareEchoes.TurnOrder
         {
             if (PathfindingManager.Instance.CurrentPathfindingUnit != null && PathfindingManager.Instance.RevertUnitPosition != null)
             {
-                PathfindingManager.Instance.SetUnitPositionOnTile(PathfindingManager.Instance.CurrentPathfindingUnit, PathfindingManager.Instance.RevertUnitPosition);
-                PathfindingManager.Instance.CurrentPathfindingUnit.Direction = PathfindingManager.Instance.RevertUnitDirection;
-                PathfindingManager.Instance.CurrentPathfindingUnit.stats.Health = PathfindingManager.Instance.RevertUnitHealth;
-                PathfindingManager.Instance.CurrentPathfindingUnit.ResetAnimator();
+                PathfindingManager pathfindingManager = PathfindingManager.Instance;
+
+                pathfindingManager.SetUnitPositionOnTile(pathfindingManager.CurrentPathfindingUnit, pathfindingManager.RevertUnitPosition);
+                pathfindingManager.CurrentPathfindingUnit.Direction = pathfindingManager.RevertUnitDirection;
+                pathfindingManager.CurrentPathfindingUnit.stats.Health = pathfindingManager.RevertUnitHealth;
+                pathfindingManager.CurrentPathfindingUnit.ResetAnimator();
 
                 //Resets everything, not moving, not dragging, and lastaddedtile is null
-                PathfindingManager.Instance.CurrentPathfindingUnit.HasMoved = false;
-                PathfindingManager.Instance.isMoving = false;
-                PathfindingManager.Instance.hasMoved = false;
-                PathfindingManager.Instance.isDragging = false;
-                PathfindingManager.Instance.isDraggingFromPlayer = false;
-                PathfindingManager.Instance.lastAddedTile = null;
+                pathfindingManager.CurrentPathfindingUnit.HasMoved = false;
+                pathfindingManager.isMoving = false;
+                pathfindingManager.hasMoved = false;
+                pathfindingManager.isDragging = false;
+                pathfindingManager.isDraggingFromPlayer = false;
+                pathfindingManager.lastAddedTile = null;
                 
 
-                PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
-                PathfindingManager.Instance.pathList.Clear();
+                pathfindingManager.ClearArrow(pathfindingManager.tempPathList);
+                pathfindingManager.pathList.Clear();
 
                 //cancels the selected skill
                 if (CombatManager.Instance.ActiveSkill != null)
                 {
-                    CombatManager.Instance.SelectSkill(PathfindingManager.Instance.CurrentPathfindingUnit, CombatManager.Instance.ActiveSkill);
+                    CombatManager.Instance.SelectSkill(pathfindingManager.CurrentPathfindingUnit, CombatManager.Instance.ActiveSkill);
                     CombatManager.Instance.ClearPreviews();
                 }
 
                 //shows back the tiles in range
-                PathfindingManager.Instance.ShowTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-                CameraControl.Instance.UpdateCameraPan(PathfindingManager.Instance.CurrentPathfindingUnit.gameObject);
+                pathfindingManager.ShowTilesInRange(pathfindingManager.playerTilesInRange);
+                CameraControl.Instance.UpdateCameraPan(pathfindingManager.CurrentPathfindingUnit.gameObject);
             }
             else
             {
@@ -483,7 +485,6 @@ namespace NightmareEchoes.TurnOrder
                 EnableSkillInfo(true);
             }
         }
-
         #endregion
 
 

@@ -9,6 +9,7 @@ using NightmareEchoes.Grid;
 using NightmareEchoes.Unit;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Scene;
+using NightmareEchoes.Unit.Pathfinding;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -149,6 +150,17 @@ namespace NightmareEchoes.TurnOrder
             }
             
             yield return new WaitForSeconds(passTurnDelay);
+
+            if(CurrentUnit != null)
+            {
+                if (!CurrentUnit.IsHostile)
+                {
+                    PathfindingManager.Instance.playerTilesInRange.Clear();
+                    yield return CombatManager.Instance.StartCoroutine(CombatManager.Instance.ChooseFacingDirection(CurrentUnit));
+                }
+            }
+
+            yield return new WaitForSeconds(0.5f);
 
             //if there is at least 2 elements in queue
             if (CurrentUnitQueue.Count > 1)
@@ -315,18 +327,20 @@ namespace NightmareEchoes.TurnOrder
             //waiting for part 1 to be completed
             yield return new WaitUntil(() => tutorialPart == TutorialPart.Part2);
 
+            #region Part 2
             //reset for part 2
             TutorialUIManager.Instance.currentTutorialGuideCap = 3;
             ResetStage(TutorialPart.Part2);
+            #endregion
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.Part3);
 
+            #region Part 3
             //reset for part 3
             TutorialUIManager.Instance.currentTutorialGuideCap = 4;
-            ResetStage(TutorialPart.Part3);
 
             //in part 3, find bounty hunter and add buffs
-            for(int i = 0; i < CurrentUnitQueue.Count; i++)
+            for (int i = 0; i < CurrentUnitQueue.Count; i++)
             {
                 if (CurrentUnitQueue.ToList()[i].GetComponent<BountyHunter>())
                 {
@@ -335,18 +349,22 @@ namespace NightmareEchoes.TurnOrder
                     break;
                 }
             }
+            #endregion
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.Part4);
 
+            #region Part 4
             //reset for part 4
             TutorialUIManager.Instance.currentTutorialGuideCap = 5;
             ResetStage(TutorialPart.Part4);
+            #endregion
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.COMPLETED);
+
+            #region Load Level 1
             OverlayTileManager.Instance.tileMapList.Last().gameObject.SetActive(false);
-
             LevelManager.Instance.LoadScene((int)SCENEINDEX.GAME_SCENE);
-
+            #endregion
         }
 
         //mostly used for tutorial

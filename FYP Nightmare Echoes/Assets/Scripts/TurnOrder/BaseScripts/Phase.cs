@@ -91,16 +91,6 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 
-            //checking for enemies to progress
-            if (controller.FindAllEnemies().Count == 0 && !controller.InTutorialLevel())
-            {
-                GeneralUIController.Instance.GameVictory();
-            }
-            else if (controller.FindAllEnemies().Count == 0 && controller.InTutorialLevel() && !progressTutorial)
-            {
-                controller.tutorialPart = (TutorialPart)((int)(controller.tutorialPart + 1));
-                progressTutorial = true;
-            }
 
             OnFixedUpdate();
         }
@@ -124,7 +114,7 @@ namespace NightmareEchoes.TurnOrder
             // if you want to open up the guide
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                //GeneralUIController.Instance.GuideButton();
+                GeneralUIController.Instance.GuideButton();
             }
 
             OnUpdate();
@@ -132,6 +122,17 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnExitPhase()
         {
+            //checking for enemies to progress
+            if (controller.FindAllEnemies().Count == 0 && !controller.InTutorialLevel())
+            {
+                GeneralUIController.Instance.GameVictory();
+            }
+            else if (controller.FindAllEnemies().Count == 0 && controller.InTutorialLevel() && !progressTutorial)
+            {
+                controller.tutorialPart = (TutorialPart)((int)(controller.tutorialPart + 1));
+                progressTutorial = true;
+            }
+
             OnExit();
 
             //disable skill info
