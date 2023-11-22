@@ -179,7 +179,7 @@ namespace NightmareEchoes.Unit.Pathfinding
             //currentHoverOverlayTile wont be null because you always are on the map
             if (Input.GetMouseButtonDown(0) && !hasMoved && playerTilesInRange.Contains(currentHoveredOverlayTile))
             {
-                if (!currentHoveredOverlayTile.CheckEntityGameObjectOnTile() || !currentHoveredOverlayTile.CheckObstacleOnTile())
+                if (!currentHoveredOverlayTile.CheckEntityGameObjectOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
                 {
                     pathList = Pathfind.FindPath(currentPathfindingUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
                     tempPathList = new List<OverlayTile>(pathList);
