@@ -511,18 +511,12 @@ namespace NightmareEchoes.Unit.Pathfinding
         {
             HideTilesInRange(tilesInRange);
 
-            for(int i = 0; i < tilesInRange.Count; i++)
-            {
-                tilesInRange[i].ShowMoveTile();
-            }
+            CombatManager.Instance.movementTiles.AddRange(tilesInRange);
         }
 
         public void HideTilesInRange(List<OverlayTile> tilesInRange)
         {
-            for (int i = 0; i < tilesInRange.Count; i++)
-            {
-                tilesInRange[i].HideTile();
-            }
+            CombatManager.Instance.RenderMovementTiles(true);
         }
 
         public void ClearUnitPosition()

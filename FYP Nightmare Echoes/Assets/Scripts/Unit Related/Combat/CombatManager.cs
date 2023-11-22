@@ -53,7 +53,9 @@ namespace NightmareEchoes.Unit.Combat
         //To prevent update() from casting multiple times
         //Not used at the moment
         private bool castGate = false;
-
+        
+        //Movement Tiles to Render
+        public List<OverlayTile> movementTiles = new();
 
         #region Properties
         public Skill ActiveSkill
@@ -459,6 +461,7 @@ namespace NightmareEchoes.Unit.Combat
                 if (activeSkill.TargetType == TargetType.AOE)
                     RenderAOETarget();
             }
+            RenderMovementTiles();
         }
         
         //Attack Range and Units in Range
@@ -495,7 +498,26 @@ namespace NightmareEchoes.Unit.Combat
                 RenderOverlayTile.Instance.RenderCustomColor(kvp.Value, kvp.Key.AoeColor);
             }
         }
-        
+
+        public void RenderMovementTiles(bool clear = false)
+        {
+            if (clear)
+            {
+                foreach (var tile in movementTiles)
+                {
+                    tile.HideTile();
+                }
+                movementTiles.Clear();
+                
+                return;
+            }
+            
+            foreach (var tile in movementTiles)
+            {
+                tile.ShowMoveTile();
+            }
+        }
+
         //Set Custom Range
         public void SetCustomRange(List<OverlayTile> tiles)
         {

@@ -31,11 +31,9 @@ namespace NightmareEchoes.Grid
                 }
 
                 targetingRenders = tiles;
-
             }
-
         }
-
+        
         public void RenderAoeTiles(List<OverlayTile> tiles)
         {
             foreach (var tile in aoePreviewRenders)
