@@ -229,7 +229,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 if (currentHoveredOverlayTile == currentPathfindingUnit.ActiveTile || currentHoveredOverlayTile == revertUnitPosition)
                 {
                     //if the currenthovered tile is the active tile or the reverted position or if you drag out of range resets not dragging 
-                    isDragging = false;
+                    isDraggingFromPlayer = false;
                     pathList.Clear();
                     RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
                     ClearArrow(tempPathList);
