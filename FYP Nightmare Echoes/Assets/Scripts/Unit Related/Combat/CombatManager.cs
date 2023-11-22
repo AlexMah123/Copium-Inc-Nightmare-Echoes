@@ -45,6 +45,7 @@ namespace NightmareEchoes.Unit.Combat
 
         //to check if skill is casting
         public bool skillIsCasting = false;
+        public bool lockInput = false;
 
         //used for end of turn
         private Direction chosenDirection;
@@ -218,6 +219,7 @@ namespace NightmareEchoes.Unit.Combat
             activeSkill.Reset();
             activeSkill = null;
             skillIsCasting = false;
+            lockInput = false;
 
             secondaryTargeting = false;
             
@@ -876,6 +878,7 @@ namespace NightmareEchoes.Unit.Combat
             if (activeSkill.Cast(target))
             {
                 skillIsCasting = true;
+                lockInput = true;
 
                 #region Animations
                 RenderOverlayTile.Instance.ClearTargetingRenders();
@@ -897,6 +900,7 @@ namespace NightmareEchoes.Unit.Combat
             {
                 yield return new WaitUntil(() => activeSkill.Cast(target));
                 skillIsCasting = true;
+                lockInput = true;
 
                 #region Animations
                 //wait for animations
@@ -921,6 +925,8 @@ namespace NightmareEchoes.Unit.Combat
             if (activeSkill.Cast(target, aoeTiles))
             {
                 skillIsCasting = true;
+                lockInput = true;
+                
 
                 #region Animations
                 //wait for animations
@@ -944,6 +950,7 @@ namespace NightmareEchoes.Unit.Combat
             {
                 yield return new WaitUntil(() => activeSkill.Cast(target, aoeTiles));
                 skillIsCasting = true;
+                lockInput = true;
 
                 #region Animations
                 //wait for animations

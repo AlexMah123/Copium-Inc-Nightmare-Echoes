@@ -240,6 +240,8 @@ namespace NightmareEchoes.TurnOrder
 
         void CheckHotkeyInputs()
         {
+            if (CombatManager.Instance.lockInput) return;
+            
             if (Input.GetKeyDown(KeyCode.Z) && !PathfindingManager.Instance.isMoving)
             {
                 controller.SkipTurn();
