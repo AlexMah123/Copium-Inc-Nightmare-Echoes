@@ -22,10 +22,7 @@ namespace NightmareEchoes.Unit
         {
             yield return new WaitForSeconds(0.1f);
 
-            //animation
-            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Knockback"));
-
-            yield return new WaitUntil(() => animationCoroutine == null);
+            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Knockback"));
 
             if (DealDamage(target))
             {

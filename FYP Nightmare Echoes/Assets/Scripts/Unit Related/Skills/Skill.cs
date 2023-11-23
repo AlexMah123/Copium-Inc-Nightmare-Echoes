@@ -57,7 +57,6 @@ namespace NightmareEchoes.Unit
 
         protected bool onCooldown;
         protected float cd;
-        public Coroutine animationCoroutine = null;
 
         [field: TextArea(1,10)][SerializeField] protected string description;
 
@@ -479,9 +478,9 @@ namespace NightmareEchoes.Unit
 
                 unit.FrontAnimator.SetBool(animBoolName, false);
             }
+            yield return new WaitForSeconds(0.25f);
 
             unit.ResetAnimator();
-            animationCoroutine = null;
             yield return null;
         }
 

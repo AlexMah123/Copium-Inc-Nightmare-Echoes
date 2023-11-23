@@ -155,7 +155,6 @@ namespace NightmareEchoes.Unit.Pathfinding
                 else
                 {
                     isDraggingFromPlayer = false;
-
                 }
             }
 
@@ -181,10 +180,11 @@ namespace NightmareEchoes.Unit.Pathfinding
             {
                 if (!currentHoveredOverlayTile.CheckEntityGameObjectOnTile() && !currentHoveredOverlayTile.CheckObstacleOnTile())
                 {
+                    //find path
                     pathList = Pathfind.FindPath(currentPathfindingUnit.ActiveTile, currentHoveredOverlayTile, playerTilesInRange);
                     tempPathList = new List<OverlayTile>(pathList);
 
-                    //Resets lastaddedtile is null
+                    //Resets lastaddedtile is null after finding path
                     if (pathList.Count > 0)
                     {
                         lastAddedTile = null;
@@ -195,7 +195,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
             }
             // if player dragged move, isnt moving + selected a unit, or if they move to their activetile/starting point
-            else if (isDragging && !hasMoved &&
+            else if (isDragging && !hasMoved && 
                 (playerTilesInRange.Contains(currentHoveredOverlayTile) || currentHoveredOverlayTile == currentPathfindingUnit.ActiveTile || currentHoveredOverlayTile == revertUnitPosition))
             {
                 //if the first tile is diagonal or is the same tile on the player, just return and ignore it
@@ -205,7 +205,7 @@ namespace NightmareEchoes.Unit.Pathfinding
                 }
 
                 // if initial tile added or the lastadded tile is adjacent and if the dragtile != the starting tile
-                if (lastAddedTile == null || AreTilesAdjacent(lastAddedTile, currentHoveredOverlayTile) && currentHoveredOverlayTile != revertUnitPosition)
+                if (lastAddedTile == null || (AreTilesAdjacent(lastAddedTile, currentHoveredOverlayTile) && currentHoveredOverlayTile != revertUnitPosition))
                 {
                     //if path doesnt contain the hovered tile, add it
                     if (!pathList.Contains(currentHoveredOverlayTile))
@@ -220,18 +220,13 @@ namespace NightmareEchoes.Unit.Pathfinding
                         lastAddedTile = pathList.Count > 0 ? pathList[pathList.Count - 1] : null;
                     }
                 }
-                else if (currentHoveredOverlayTile == revertUnitPosition || currentHoveredOverlayTile == currentPathfindingUnit.ActiveTile)
-                {
-                    //if you moved back to your starting position or activetile, reset
-                    lastAddedTile = pathList.Count > 0 ? pathList[pathList.Count - 1] : null;
-                }
 
                 if (currentHoveredOverlayTile == currentPathfindingUnit.ActiveTile || currentHoveredOverlayTile == revertUnitPosition)
                 {
-                    //if the currenthovered tile is the active tile or the reverted position or if you drag out of range resets not dragging 
+                    //if the currenthovered tile is the active tile or the reverted position or if you drag out of range resets not dragging
+                    lastAddedTile = null;
                     isDraggingFromPlayer = false;
                     pathList.Clear();
-                    RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
                     ClearArrow(tempPathList);
                 }
 
@@ -269,9 +264,10 @@ namespace NightmareEchoes.Unit.Pathfinding
             }
             else if(isDragging && !hasMoved && !playerTilesInRange.Contains(currentHoveredOverlayTile))
             {
-                Debug.Log("Dragged out of range");
-                //if the currenthovered tile is the active tile or the reverted position or if you drag out of range resets not dragging 
+                //if the currenthovered tile is the active tile or the reverted position or if you drag out of range resets not dragging
+                lastAddedTile = null;
                 isDragging = false;
+                isDraggingFromPlayer = false;
                 pathList.Clear();
                 RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
                 ClearArrow(tempPathList);
@@ -467,8 +463,8 @@ namespace NightmareEchoes.Unit.Pathfinding
         bool AreTilesAdjacent(OverlayTile tile1, OverlayTile tile2)
         {
             // Check if the tiles are adjacent horizontally or vertically (not diagonally)
-            return (Mathf.Abs(tile2.gridLocation2D.x - tile1.gridLocation2D.x) >= 1 && tile1.gridLocation2D.y == tile2.gridLocation2D.y) ||
-                   (Mathf.Abs(tile2.gridLocation2D.y - tile1.gridLocation2D.y) >= 1 && tile1.gridLocation2D.x == tile2.gridLocation2D.x);
+            return (Mathf.Abs(tile2.gridLocation2D.x - tile1.gridLocation2D.x) == 1 && tile1.gridLocation2D.y == tile2.gridLocation2D.y) ||
+                   (Mathf.Abs(tile2.gridLocation2D.y - tile1.gridLocation2D.y) == 1 && tile1.gridLocation2D.x == tile2.gridLocation2D.x);
         }
 
         public void RenderArrow(List<OverlayTile> tilesInRange, List<OverlayTile> pathList, Entity thisUnit)

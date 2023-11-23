@@ -15,18 +15,11 @@ namespace NightmareEchoes.TurnOrder
     public abstract class Phase
     {
         protected TurnOrderController controller;
-        bool progressTutorial = false;
-
 
         public void OnEnterPhase(TurnOrderController turnOrderController)
         {
             //assigns the controller as reference
             controller = turnOrderController;
-
-            if (progressTutorial)
-            {
-                progressTutorial = false;
-            }
 
             //only run once to calculate the turn order and enqueue till the endPhase
             if (!controller.runOnce)
@@ -66,11 +59,20 @@ namespace NightmareEchoes.TurnOrder
             //updates the UI during each phase & updates status effect 
             GameUIManager.Instance.UpdateTurnOrderUI();
             GameUIManager.Instance.UpdateStatusEffectUI();
+            CombatManager.Instance.lockInput = false;
 
             OnEnter();
         }
 
         public void OnFixedUpdatePhase()
+        {
+            
+
+
+            OnFixedUpdate();
+        }
+
+        public void OnUpdatePhase()
         {
             if (controller.gameOver)
                 return;
@@ -89,14 +91,19 @@ namespace NightmareEchoes.TurnOrder
                     controller.gameOver = true;
                     GeneralUIController.Instance.GameOver();
                 }
+
+                //checking for enemies to progress
+                if (controller.FindAllEnemies().Count == 0 && !controller.InTutorialLevel())
+                {
+                    GeneralUIController.Instance.GameVictory();
+                }
+                else if (controller.FindAllEnemies().Count == 0 && controller.InTutorialLevel() && !controller.progressTutorial)
+                {
+                    controller.tutorialPart = (TutorialPart)((int)(controller.tutorialPart + 1));
+                    controller.progressTutorial = true;
+                }
             }
 
-
-            OnFixedUpdate();
-        }
-
-        public void OnUpdatePhase()
-        {
             //if you want to pause
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -107,7 +114,6 @@ namespace NightmareEchoes.TurnOrder
                 else
                 {
                     GeneralUIController.Instance.PauseButton();
-
                 }
             }
 
@@ -122,17 +128,6 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnExitPhase()
         {
-            //checking for enemies to progress
-            if (controller.FindAllEnemies().Count == 0 && !controller.InTutorialLevel())
-            {
-                GeneralUIController.Instance.GameVictory();
-            }
-            else if (controller.FindAllEnemies().Count == 0 && controller.InTutorialLevel() && !progressTutorial)
-            {
-                controller.tutorialPart = (TutorialPart)((int)(controller.tutorialPart + 1));
-                progressTutorial = true;
-            }
-
             OnExit();
 
             //disable skill info

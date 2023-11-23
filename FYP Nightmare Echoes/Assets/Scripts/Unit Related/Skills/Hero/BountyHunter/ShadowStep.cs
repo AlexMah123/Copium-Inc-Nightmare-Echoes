@@ -61,9 +61,7 @@ namespace NightmareEchoes.Unit
         {
             yield return new WaitForSeconds(0.1f);
             //animation
-            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "ShadowStep"));
-
-            yield return new WaitUntil(() => animationCoroutine == null);
+            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "ShadowStep"));
 
             thisUnit.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
             thisUnit.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STEALTH_TOKEN, 1, 1));

@@ -66,9 +66,7 @@ namespace NightmareEchoes.Unit
         {
             yield return new WaitForSeconds(0.1f);
             //animation
-            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Hunter's Instinct Start"));
-
-            yield return new WaitUntil(() => animationCoroutine == null);
+            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Hunter's Instinct Start"));
 
         }
     }

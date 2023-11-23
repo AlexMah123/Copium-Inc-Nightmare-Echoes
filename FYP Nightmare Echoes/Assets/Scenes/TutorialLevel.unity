@@ -4076,7 +4076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7904244744492314586, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
       propertyPath: baseStats._maxHealth
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 9088455817183482634, guid: 1c1d191d30260e340bf82a649293d577, type: 3}
       propertyPath: m_Name
@@ -40673,6 +40673,8 @@ MonoBehaviour:
   turnEnded: 0
   activeSkill: {fileID: 0}
   skillIsCasting: 0
+  lockInput: 0
+  movementTiles: []
 --- !u!1 &1648466874
 GameObject:
   m_ObjectHideFlags: 0

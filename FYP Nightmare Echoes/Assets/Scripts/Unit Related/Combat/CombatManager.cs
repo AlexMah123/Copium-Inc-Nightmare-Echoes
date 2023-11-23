@@ -221,7 +221,6 @@ namespace NightmareEchoes.Unit.Combat
             activeSkill.Reset();
             activeSkill = null;
             skillIsCasting = false;
-            lockInput = false;
 
             secondaryTargeting = false;
             
@@ -873,7 +872,6 @@ namespace NightmareEchoes.Unit.Combat
             
             //Check for extras
             var count = activeTraps.Values.Cast<object>().Count(skill => skill as Skill == activeSkill);
-            //Debug.Log(count);
             if (count > activeSkill.MaxCount)
             {
                 var enumerator = activeTraps.GetEnumerator();
@@ -1043,12 +1041,13 @@ namespace NightmareEchoes.Unit.Combat
 
             yield return new WaitUntil(() => chosenDirection != Direction.NONE);
 
-            activeUnit.Direction = chosenDirection;
-
-            for(int i = 0; i < directionButton.Length; i++)
+            for (int i = 0; i < directionButton.Length; i++)
             {
                 directionButton[i].gameObject.SetActive(false);
             }
+
+            activeUnit.Direction = chosenDirection;
+            activeUnit.UpdateLocation();
         }
 
         #endregion

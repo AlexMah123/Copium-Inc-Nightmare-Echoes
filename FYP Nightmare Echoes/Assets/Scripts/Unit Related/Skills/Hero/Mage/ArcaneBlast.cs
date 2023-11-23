@@ -25,9 +25,7 @@ namespace NightmareEchoes.Unit
             yield return new WaitForSeconds(0.1f);
 
             //animation
-            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
-
-            yield return new WaitUntil(() => animationCoroutine == null);
+            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
 
             if (target.CheckEntityGameObjectOnTile())
             {

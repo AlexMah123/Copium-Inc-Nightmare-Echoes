@@ -68,7 +68,7 @@ namespace NightmareEchoes.Unit
 
             //animations
             yield return new WaitForSeconds(0.1f);
-            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+            StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
 
             targetUnit.transform.position = targetTile.transform.position;
             targetUnit.UpdateLocation();

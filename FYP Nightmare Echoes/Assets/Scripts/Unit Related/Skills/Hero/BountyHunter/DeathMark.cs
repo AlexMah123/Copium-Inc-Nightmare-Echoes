@@ -23,9 +23,7 @@ namespace NightmareEchoes.Unit
         {
             yield return new WaitForSeconds(0.1f);
             //animation
-            animationCoroutine = StartCoroutine(PlaySkillAnimation(thisUnit, "DeathMark"));
-
-            yield return new WaitUntil(() => animationCoroutine == null);
+            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "DeathMark"));
 
             target.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.BLIND_TOKEN, 1, 1));
             target.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.VULNERABLE_TOKEN, 2, 1));

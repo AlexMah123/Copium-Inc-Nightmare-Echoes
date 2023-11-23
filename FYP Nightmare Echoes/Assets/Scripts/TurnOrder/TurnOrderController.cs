@@ -46,6 +46,7 @@ namespace NightmareEchoes.TurnOrder
         public List<Entity> cachedHeroesList = null;
 
         public TutorialPart tutorialPart;
+        public bool progressTutorial = false;
 
         #region Class Properties
         public Entity CurrentUnit
@@ -141,6 +142,7 @@ namespace NightmareEchoes.TurnOrder
 
         public IEnumerator PassTurn()
         {
+            CombatManager.Instance.lockInput = true;
             GameUIManager.Instance.EnableCurrentUI(false);
 
             //wait for all popuptext to clear before actually changing turn
@@ -326,6 +328,7 @@ namespace NightmareEchoes.TurnOrder
         {
             //waiting for part 1 to be completed
             yield return new WaitUntil(() => tutorialPart == TutorialPart.Part2);
+            yield return new WaitForSecondsRealtime(2f);
 
             #region Part 2
             //reset for part 2
@@ -334,10 +337,12 @@ namespace NightmareEchoes.TurnOrder
             #endregion
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.Part3);
+            yield return new WaitForSecondsRealtime(2f);
 
             #region Part 3
             //reset for part 3
             TutorialUIManager.Instance.currentTutorialGuideCap = 4;
+            ResetStage(TutorialPart.Part3);
 
             //in part 3, find bounty hunter and add buffs
             for (int i = 0; i < CurrentUnitQueue.Count; i++)
@@ -352,6 +357,7 @@ namespace NightmareEchoes.TurnOrder
             #endregion
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.Part4);
+            yield return new WaitForSecondsRealtime(2f);
 
             #region Part 4
             //reset for part 4
@@ -360,6 +366,7 @@ namespace NightmareEchoes.TurnOrder
             #endregion
 
             yield return new WaitUntil(() => tutorialPart == TutorialPart.COMPLETED);
+            yield return new WaitForSecondsRealtime(2f);
 
             #region Load Level 1
             OverlayTileManager.Instance.tileMapList.Last().gameObject.SetActive(false);
@@ -376,6 +383,7 @@ namespace NightmareEchoes.TurnOrder
             //reset
             runOnce = false;
             cycleCount = 1;
+            progressTutorial = false;
             ChangePhase(planPhase);
         }
     }
