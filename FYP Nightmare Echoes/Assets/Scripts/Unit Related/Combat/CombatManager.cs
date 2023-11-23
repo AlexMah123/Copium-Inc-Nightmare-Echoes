@@ -15,16 +15,16 @@ namespace NightmareEchoes.Unit.Combat
     {
         public static CombatManager Instance;
 
-        public List<Entity> unitsInvolved;
-        public List<Entity> friendlyUnits;
-        public List<Entity> hostileUnits;
+        public List<Entity> unitsInvolved = new ();
+        public List<Entity> friendlyUnits = new ();
+        public List<Entity> hostileUnits = new();
 
-        [SerializeField] private List<Skill> friendlySkills;
+        [SerializeField] private List<Skill> friendlySkills = new List<Skill>();
 
         public bool turnEnded;
         
         [SerializeField] private Skill activeSkill;
-        private List<OverlayTile> skillRangeTiles;
+        private List<OverlayTile> skillRangeTiles = new();
         private List<OverlayTile> aoePreviewTiles = new();
         private OverlayTile mainTile;
         
@@ -61,7 +61,7 @@ namespace NightmareEchoes.Unit.Combat
         public Skill ActiveSkill
         {
             get => activeSkill;
-            private set => activeSkill = value;
+            set => activeSkill = value;
         }
 
         public Dictionary<Skill, List<OverlayTile>> ActiveAoes
@@ -88,6 +88,10 @@ namespace NightmareEchoes.Unit.Combat
 
         private void Update()
         {
+            //only render when not paused
+            if (Time.timeScale == 0) return;
+
+
             if (activeSkill && !secondaryTargeting)
             {
                 if (!activeSkill.Placable)
@@ -115,10 +119,11 @@ namespace NightmareEchoes.Unit.Combat
             unitsInvolved = FindObjectsOfType<Entity>().ToList();
 
             var iterator = new List<Entity>(unitsInvolved);
-            foreach (var unit in iterator.Where(unit => unit.IsProp))
+
+            /*foreach (var unit in iterator.Where(unit => unit.IsProp))
             {
                 unitsInvolved.Remove(unit);
-            }
+            }*/
 
             foreach (var unit in unitsInvolved)
             {
@@ -372,15 +377,16 @@ namespace NightmareEchoes.Unit.Combat
             {
                 PreviewKnockback();
             }
-            
+
             if (!Input.GetMouseButtonDown(0)) return;
+
             StartCoroutine(WaitForSkill(target, aoePreviewTiles));
         }
 
         private void TargetSelf()
         {
             if (!Input.GetMouseButtonDown(0)) return;
-            
+
             var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Entity"));
             if (!hit) return;
             var target = hit.collider.gameObject.GetComponent<Entity>();
@@ -558,7 +564,13 @@ namespace NightmareEchoes.Unit.Combat
                 var entitySr = entity.GetComponent<SpriteRenderer>();
                 var clone = GetClone(tile.CheckEntityGameObjectOnTile());
                 var cloneSr = clone.GetComponent<SpriteRenderer>();
-                
+
+                //only for models, re-enable all the child objects
+                foreach (Transform transform in clone.transform)
+                {
+                    transform.gameObject.SetActive(true);
+                }
+
                 clone.transform.localScale = entity.transform.localScale;
                 cloneSr.sprite = entitySr.sprite;
                 var entityColor = entitySr.color;
@@ -567,7 +579,7 @@ namespace NightmareEchoes.Unit.Combat
                 ghostSprites.Add(clone);
                 
                 clone.SetActive(true);
-                clone.transform.position = destination;
+                clone.transform.position = destinationTile.transform.position;
             }
         }
 
@@ -775,12 +787,12 @@ namespace NightmareEchoes.Unit.Combat
             return herosInStealth;
         }
 
-        private void RemoveDeadUnits()
+        public void RemoveDeadUnits()
         {
             unitsInvolved.RemoveAll(unit => unit == null);
             friendlyUnits.RemoveAll(unit => unit == null);
             hostileUnits.RemoveAll(unit => unit == null);
-            
+
             friendlySkills.RemoveAll(skill => skill == null);
         }
 
@@ -852,7 +864,6 @@ namespace NightmareEchoes.Unit.Combat
                             {
                                 thisUnit.Direction = direction.y > 0 ? Direction.WEST : Direction.EAST;
                             }
-
 
                             activeSkill.StartCoroutine(activeSkill.PlaySkillAnimation(thisUnit, "RuneTrap"));
                             trapList.Add(preview.transform.position);
@@ -1061,6 +1072,14 @@ namespace NightmareEchoes.Unit.Combat
         {
             foreach (var clone in clonePool.Where(clone => !clone.activeInHierarchy))
             {
+                //disable all child objects
+                foreach(Transform transform in  clone.transform) 
+                {
+                    transform.gameObject.SetActive(false);
+                }
+
+                //enable spriterenderer by default
+                clone.GetComponent<SpriteRenderer>().enabled = true;
                 return clone;
             } 
   

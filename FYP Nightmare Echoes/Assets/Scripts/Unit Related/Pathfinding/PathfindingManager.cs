@@ -18,7 +18,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] GameObject overlayTileContainer; 
 
         [Header("Current Unit")]
-        Entity currentPathfindingUnit;
+        public Entity currentPathfindingUnit;
         [SerializeField] float movingSpeed;
         public static float combatSpeed;
 

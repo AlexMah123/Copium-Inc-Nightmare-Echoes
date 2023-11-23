@@ -128,7 +128,7 @@ namespace NightmareEchoes.Inputs
             if (Input.GetAxis("Mouse ScrollWheel") != 0f)
             {
                 isPanning = false;
-                gameCamera.orthographicSize = Mathf.Clamp(gameCamera.orthographicSize + Input.GetAxis("Mouse ScrollWheel") * zoomMulitplier, minZoom, maxZoom);
+                gameCamera.orthographicSize = Mathf.Clamp(gameCamera.orthographicSize + -Input.GetAxis("Mouse ScrollWheel") * zoomMulitplier, minZoom, maxZoom);
             }
         }
 

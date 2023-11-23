@@ -607,7 +607,8 @@ namespace NightmareEchoes.Unit
                             backModel.SetActive(true);
                         }
 
-                        modelContainer.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        if (modelContainer != null)
+                            modelContainer.transform.localRotation = Quaternion.Euler(0, 0, 0);
                         break;
 
                     case Direction.SOUTH: //front facing
@@ -617,7 +618,8 @@ namespace NightmareEchoes.Unit
                             backModel.SetActive(false);
                         }
 
-                        modelContainer.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        if (modelContainer != null)
+                            modelContainer.transform.localRotation = Quaternion.Euler(0, 0, 0);
                         break;
 
                     case Direction.EAST: //front facing
@@ -627,7 +629,8 @@ namespace NightmareEchoes.Unit
                             backModel.SetActive(false);
                         }
 
-                        modelContainer.transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        if(modelContainer != null)
+                            modelContainer.transform.localRotation = Quaternion.Euler(0, 180, 0);
                         break;
 
                     case Direction.WEST: //back facing
@@ -637,7 +640,8 @@ namespace NightmareEchoes.Unit
                             backModel.SetActive(true);
                         }
 
-                        modelContainer.transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        if (modelContainer != null)
+                            modelContainer.transform.localRotation = Quaternion.Euler(0, 180, 0);
                         break;
 
                 }

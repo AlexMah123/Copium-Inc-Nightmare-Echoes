@@ -155,6 +155,7 @@ namespace NightmareEchoes.TurnOrder
             //clear all rendering 
             RenderOverlayTile.Instance.ClearTargetingRenders();
             CombatManager.Instance.ClearPreviews();
+            CombatManager.Instance.RemoveDeadUnits();
             CombatManager.Instance.turnEnded = false;
 
             //reset camera panning

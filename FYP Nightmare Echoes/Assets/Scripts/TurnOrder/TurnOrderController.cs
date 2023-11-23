@@ -136,8 +136,8 @@ namespace NightmareEchoes.TurnOrder
         [ContextMenu("Skip Turn")]
         public void SkipTurn()
         {
-            StartCoroutine(PassTurn());
             GameUIManager.Instance.PassTurnButton();
+            StartCoroutine(PassTurn());
         }
 
         public IEnumerator PassTurn()

@@ -383,7 +383,6 @@ namespace NightmareEchoes.TurnOrder
                 if (CombatManager.Instance.ActiveSkill != null)
                 {
                     CombatManager.Instance.SelectSkill(pathfindingManager.CurrentPathfindingUnit, CombatManager.Instance.ActiveSkill);
-                    CombatManager.Instance.ClearPreviews();
                 }
 
                 //shows back the tiles in range
@@ -403,11 +402,18 @@ namespace NightmareEchoes.TurnOrder
                 //show popup as well as disabling button for player
                 if (!CurrentUnit.IsHostile && !CurrentUnit.IsProp)
                 {
+                    if (CombatManager.Instance.ActiveSkill != null)
+                    {
+                        CombatManager.Instance.SelectSkill(CurrentUnit, CombatManager.Instance.ActiveSkill);
+                    }
+
                     CurrentUnit.ShowPopUpText("Passing turn", Color.magenta);
                     passTurnButton.interactable = false;
                     passTurnButton.gameObject.SetActive(false);
                     cancelActionButton.interactable = false;
                     cancelActionButton.gameObject.SetActive(false);
+
+                    PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
 
                     EnableCurrentUI(false);
                 }

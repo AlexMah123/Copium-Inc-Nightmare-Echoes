@@ -430,6 +430,7 @@ namespace NightmareEchoes.Unit
                         var go = tileDestination.CheckEntityGameObjectOnTile();
                         go.GetComponent<Entity>().TakeDamage(3);
                     }
+
                     StartCoroutine(KnockbackCollisionAnimation(false, target, tileDestination));
                 }
                 
@@ -493,7 +494,13 @@ namespace NightmareEchoes.Unit
 
             startTile = target.ActiveTile;
             var coroutine = PathfindingManager.Instance.MoveTowardsTile(target, destination, 0.15f);
-            target.GetComponentInChildren<SortingGroup>().sortingOrder = 1;
+
+            var sortingGroup = target.GetComponentInChildren<SortingGroup>();
+
+            if(sortingGroup)
+            {
+                sortingGroup.sortingOrder = 1;
+            }
 
             StartCoroutine(coroutine);
             yield return new WaitForSeconds(0.075f);
@@ -504,7 +511,13 @@ namespace NightmareEchoes.Unit
             if(target != null && startTile != null)
             {
                 StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(target, startTile, 0.15f));
-                target.GetComponentInChildren<SortingGroup>().sortingOrder = 0;
+
+                var sortingGroupAfter = target.GetComponentInChildren<SortingGroup>();
+
+                if (sortingGroup)
+                {
+                    sortingGroupAfter.sortingOrder = 0;
+                }
             }
             
             yield return null;
