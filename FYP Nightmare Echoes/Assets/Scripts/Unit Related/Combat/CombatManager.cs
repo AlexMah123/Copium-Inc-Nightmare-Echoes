@@ -921,6 +921,13 @@ namespace NightmareEchoes.Unit.Combat
                     yield return StartCoroutine(WaitForAnimationCompletion(activeUnit));
                 }
                 #endregion
+                
+                if (activeSkill.VFXGraph)
+                {
+                    var vfx = GetVfx(activeSkill.VFXGraph);
+                    vfx.transform.position = target.transform.position;
+                    vfx.SetActive(true);
+                }
 
                 yield return new WaitForSeconds(0.1f);
 
@@ -945,6 +952,13 @@ namespace NightmareEchoes.Unit.Combat
                 }
 
                 #endregion
+                
+                if (activeSkill.VFXGraph)
+                {
+                    var vfx = GetVfx(activeSkill.VFXGraph);
+                    vfx.transform.position = target.transform.position;
+                    vfx.SetActive(true);
+                }
                 
                 yield return new WaitForSeconds(0.1f);
 
@@ -1001,6 +1015,13 @@ namespace NightmareEchoes.Unit.Combat
                 }
 
                 #endregion
+                
+                if (activeSkill.VFXGraph)
+                {
+                    var vfx = GetVfx(activeSkill.VFXGraph);
+                    vfx.transform.position = target.transform.position;
+                    vfx.SetActive(true);
+                }
                 
                 yield return new WaitForSeconds(0.1f);
 
