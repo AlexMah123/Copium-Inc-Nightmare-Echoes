@@ -8,6 +8,7 @@ using NightmareEchoes.Unit.Pathfinding;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 //Created by JH, edited by Ter
 namespace NightmareEchoes.Unit
@@ -18,6 +19,7 @@ namespace NightmareEchoes.Unit
         [Header("Skill Details")]
         [SerializeField] protected Sprite skillIcon;
         [SerializeField] protected Sprite skillExample;
+        [SerializeField] protected VisualEffectAsset vfxGraph;
         [SerializeField] protected string _name;
         [SerializeField] protected int damage;
         [SerializeField] protected int heal;
@@ -71,6 +73,12 @@ namespace NightmareEchoes.Unit
         {
             get => skillExample;
             set => skillExample = value;
+        }
+
+        public VisualEffectAsset VFXGraph
+        {
+            get => vfxGraph;
+            set => vfxGraph = value;
         }
 
         public string Name

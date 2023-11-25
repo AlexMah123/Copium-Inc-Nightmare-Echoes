@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 //created by JH, edited by Ter
 namespace NightmareEchoes.Unit.Combat
@@ -958,7 +959,6 @@ namespace NightmareEchoes.Unit.Combat
                 skillIsCasting = true;
                 lockInput = true;
                 
-
                 #region Animations
                 //wait for animations
                 RenderOverlayTile.Instance.ClearTargetingRenders();
@@ -970,6 +970,13 @@ namespace NightmareEchoes.Unit.Combat
                 }
 
                 #endregion
+
+                if (activeSkill.VFXGraph)
+                {
+                    var vfx = GetVfx(activeSkill.VFXGraph);
+                    vfx.transform.position = target.transform.position;
+                    vfx.SetActive(true);
+                }
                 
                 yield return new WaitForSeconds(0.1f);
 
@@ -1119,6 +1126,30 @@ namespace NightmareEchoes.Unit.Combat
 
             return tile; 
         }
+        
+        private List<GameObject> vfxPool = new();
+        private int vfxCount = 0;
+        
+        GameObject GetVfx(VisualEffectAsset vfx)
+        {
+            foreach (var freeVfx in vfxPool.Where(clone => !clone.activeInHierarchy))
+            {
+                freeVfx.GetComponent<VisualEffect>().visualEffectAsset = vfx;
+                freeVfx.SetActive(false);
+                return freeVfx;
+            }
+
+            var vfxObj = Instantiate(gameObject);
+            vfxObj.name = $"VFX Container {vfxCount++}";
+            vfxObj.SetActive(false);
+            var vfxComponent = vfxObj.AddComponent<VisualEffect>();
+            vfxComponent.visualEffectAsset = vfx;
+            vfxComponent.GetComponent<Renderer>().sortingLayerID = SortingLayer.NameToID("UI");
+    
+            vfxPool.Add(vfxObj); 
+            return vfxObj; 
+        }
+        
         #endregion
     }
 }
