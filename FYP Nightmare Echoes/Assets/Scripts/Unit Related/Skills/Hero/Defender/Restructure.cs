@@ -18,7 +18,7 @@ namespace NightmareEchoes.Unit
         {
             yield return new WaitForSeconds(0.1f);
             //animation
-            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Restructure"));
+            StartCoroutine(PlaySkillAnimation(thisUnit, "Restructure"));
 
             thisUnit.ShowPopUpText("Healed!", Color.green);
             thisUnit.ShowPopUpText($"{heal}", Color.green);

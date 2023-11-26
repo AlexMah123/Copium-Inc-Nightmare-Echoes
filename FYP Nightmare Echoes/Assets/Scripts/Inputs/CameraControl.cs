@@ -66,7 +66,6 @@ namespace NightmareEchoes.Inputs
 
             IfCameraDrag();
             IfCameraZoom();
-            IfCameraZoomReset();
 
             //pans to the targetUnit till it reaches it and stops
             if (autoCenter && isPanning && targetUnit != null)
@@ -97,7 +96,8 @@ namespace NightmareEchoes.Inputs
 
         void IfCameraDrag()
         {
-            if (Input.GetMouseButton(1))
+            //middle mouse button
+            if (Input.GetMouseButton(2))
             {
                 isPanning = false;
                 dragDelta = gameCamera.ScreenToWorldPoint(Input.mousePosition) - gameCamera.transform.position;
@@ -129,15 +129,6 @@ namespace NightmareEchoes.Inputs
             {
                 isPanning = false;
                 gameCamera.orthographicSize = Mathf.Clamp(gameCamera.orthographicSize + -Input.GetAxis("Mouse ScrollWheel") * zoomMulitplier, minZoom, maxZoom);
-            }
-        }
-
-        void IfCameraZoomReset()
-        {
-            if (Input.GetMouseButtonDown(2))
-            {
-                isPanning = false;
-                gameCamera.orthographicSize = defaultZoom;
             }
         }
     }

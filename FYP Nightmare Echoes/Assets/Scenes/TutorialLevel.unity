@@ -3180,7 +3180,7 @@ MonoBehaviour:
   runOnce: 0
   gameOver: 0
   cachedHeroesList: []
-  tutorialPart: 0
+  tutorialPart: 1
   progressTutorial: 0
 --- !u!4 &128566637
 Transform:
@@ -5778,7 +5778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8893637955381217503, guid: d7ea2aceefc7b174c8da0443528ccc75, type: 3}
       propertyPath: baseStats._maxHealth
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ea2aceefc7b174c8da0443528ccc75, type: 3}
@@ -6358,7 +6358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8893637955381217503, guid: d7ea2aceefc7b174c8da0443528ccc75, type: 3}
       propertyPath: baseStats._maxHealth
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ea2aceefc7b174c8da0443528ccc75, type: 3}
@@ -9706,8 +9706,8 @@ Tilemap:
   - first: {x: 6, y: 3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 2
-      m_TileSpriteIndex: 2
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -9716,8 +9716,8 @@ Tilemap:
   - first: {x: 7, y: 3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 2
-      m_TileSpriteIndex: 2
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -10335,18 +10335,18 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 57
+  - m_RefCount: 59
     m_Data: {fileID: 11400000, guid: 5db9348060ae5bd4c969c7f119a20c51, type: 2}
   - m_RefCount: 9
     m_Data: {fileID: 11400000, guid: b3d2743344d07ab44ac7f67e8caf179c, type: 2}
-  - m_RefCount: 12
+  - m_RefCount: 10
     m_Data: {fileID: 11400000, guid: 720681321158ad94795f1e0c625277df, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 57
+  - m_RefCount: 59
     m_Data: {fileID: 846878542, guid: 0d6f65ae7951db4428c730d6af698c99, type: 3}
   - m_RefCount: 9
     m_Data: {fileID: 1295899500, guid: 0d6f65ae7951db4428c730d6af698c99, type: 3}
-  - m_RefCount: 12
+  - m_RefCount: 10
     m_Data: {fileID: 903904696, guid: 0d6f65ae7951db4428c730d6af698c99, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 78

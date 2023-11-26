@@ -19,7 +19,7 @@ namespace NightmareEchoes.Unit
         {
             yield return new WaitForSeconds(0.1f);
             //animation
-            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+            StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
 
             if (DealDamage(target))
             {

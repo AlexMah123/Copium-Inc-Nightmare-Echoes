@@ -247,7 +247,8 @@ namespace NightmareEchoes.TurnOrder
                 controller.SkipTurn();
             }
 
-            if (Input.GetKeyDown(KeyCode.X))
+            //right click to cancel
+            if (Input.GetMouseButtonDown(1))
             {
                 GameUIManager.Instance.CancelActionButton();
             }

@@ -19,7 +19,7 @@ namespace NightmareEchoes.Unit
         {
             yield return new WaitForSeconds(0.1f);
             //animation
-            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Heal"));
+            StartCoroutine(PlaySkillAnimation(thisUnit, "Heal"));
 
             target.stats.Health += heal;
             target.ShowPopUpText("Healed!", Color.green);

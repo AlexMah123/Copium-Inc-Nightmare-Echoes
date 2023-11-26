@@ -22,15 +22,16 @@ namespace NightmareEchoes.Unit
             yield return new WaitForSeconds(0.1f);
 
             //animation
-            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+            StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
 
             OverlayTile targetTile = target.ActiveTile;
-            List<Vector2Int> tilesToCheck = new List<Vector2Int>();
-
-            tilesToCheck.Add(new Vector2Int((targetTile.gridLocation.x), (targetTile.gridLocation.y - 1)));
-            tilesToCheck.Add(new Vector2Int((targetTile.gridLocation.x), (targetTile.gridLocation.y + 1)));
-            tilesToCheck.Add(new Vector2Int((targetTile.gridLocation.x - 1), (targetTile.gridLocation.y)));
-            tilesToCheck.Add(new Vector2Int((targetTile.gridLocation.x + 1), (targetTile.gridLocation.y)));
+            List<Vector2Int> tilesToCheck = new List<Vector2Int>
+            {
+                new Vector2Int((targetTile.gridLocation.x), (targetTile.gridLocation.y - 1)),
+                new Vector2Int((targetTile.gridLocation.x), (targetTile.gridLocation.y + 1)),
+                new Vector2Int((targetTile.gridLocation.x - 1), (targetTile.gridLocation.y)),
+                new Vector2Int((targetTile.gridLocation.x + 1), (targetTile.gridLocation.y))
+            };
 
             List<OverlayTile> aoeTiles = OverlayTileManager.Instance.TrimOutOfBounds(tilesToCheck);
 

@@ -9,6 +9,7 @@ using NightmareEchoes.Unit.Pathfinding;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.Inputs;
 using NightmareEchoes.TurnOrder;
+using NightmareEchoes.Grid;
 
 //created by Alex
 namespace NightmareEchoes.TurnOrder
@@ -288,8 +289,8 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 
-
-            if(Input.GetMouseButtonDown(1))
+            //left click
+            if(Input.GetMouseButtonDown(0))
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, unitMask);
 
@@ -358,10 +359,10 @@ namespace NightmareEchoes.TurnOrder
         #region Hotbar Button Functions
         public void CancelActionButton()
         {
-            if (PathfindingManager.Instance.CurrentPathfindingUnit != null && PathfindingManager.Instance.RevertUnitPosition != null)
-            {
-                PathfindingManager pathfindingManager = PathfindingManager.Instance;
+            PathfindingManager pathfindingManager = PathfindingManager.Instance;
 
+            if (pathfindingManager.CurrentPathfindingUnit != null && pathfindingManager.RevertUnitPosition != null)
+            {
                 pathfindingManager.SetUnitPositionOnTile(pathfindingManager.CurrentPathfindingUnit, pathfindingManager.RevertUnitPosition);
                 pathfindingManager.CurrentPathfindingUnit.Direction = pathfindingManager.RevertUnitDirection;
                 pathfindingManager.CurrentPathfindingUnit.stats.Health = pathfindingManager.RevertUnitHealth;
@@ -378,6 +379,7 @@ namespace NightmareEchoes.TurnOrder
 
                 pathfindingManager.ClearArrow(pathfindingManager.tempPathList);
                 pathfindingManager.pathList.Clear();
+                pathfindingManager.playerTilesInRange.Clear();
 
                 //cancels the selected skill
                 if (CombatManager.Instance.ActiveSkill != null)
@@ -386,7 +388,12 @@ namespace NightmareEchoes.TurnOrder
                 }
 
                 //shows back the tiles in range
-                pathfindingManager.ShowTilesInRange(pathfindingManager.playerTilesInRange);
+                //pathfindingManager.ShowTilesInRange(pathfindingManager.playerTilesInRange);
+
+                Debug.Log($"before calculation {pathfindingManager.CurrentPathfindingUnit.ActiveTile.gridLocation}");
+                pathfindingManager.StartPlayerPathfinding(pathfindingManager.CurrentPathfindingUnit);
+                Debug.Log($"after calculation {pathfindingManager.CurrentPathfindingUnit.ActiveTile.gridLocation}");
+
                 CameraControl.Instance.UpdateCameraPan(pathfindingManager.CurrentPathfindingUnit.gameObject);
             }
             else
@@ -427,10 +434,14 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.BasicAttack();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
-                EnableSkillInfo(false);
+                if(!CombatManager.Instance.ActiveSkill)
+                    EnableSkillInfo(false);
+                else
+                    EnableSkillInfo(true);
             }
             else
             {
@@ -445,10 +456,14 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.Skill1();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
-                EnableSkillInfo(false);
+                if (!CombatManager.Instance.ActiveSkill)
+                    EnableSkillInfo(false);
+                else
+                    EnableSkillInfo(true);
             }
             else
             {
@@ -463,10 +478,14 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.Skill2();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
-                EnableSkillInfo(false);
+                if (!CombatManager.Instance.ActiveSkill)
+                    EnableSkillInfo(false);
+                else
+                    EnableSkillInfo(true);
             }
             else
             {
@@ -481,10 +500,14 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.Skill3();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
-                EnableSkillInfo(false);
+                if (!CombatManager.Instance.ActiveSkill)
+                    EnableSkillInfo(false);
+                else
+                    EnableSkillInfo(true);
             }
             else
             {

@@ -61,6 +61,30 @@ namespace NightmareEchoes.TurnOrder
             GameUIManager.Instance.UpdateStatusEffectUI();
             CombatManager.Instance.lockInput = false;
 
+            #region reset skills and pathfinding
+            //disable skill info
+            GameUIManager.Instance.EnableSkillInfo(false);
+
+            //reset pathfinding
+            PathfindingManager.Instance.isMoving = false;
+            PathfindingManager.Instance.hasMoved = false;
+            PathfindingManager.Instance.isDragging = false;
+            PathfindingManager.Instance.lastAddedTile = null;
+
+            if (PathfindingManager.Instance.tempPathList.Count > 0)
+            {
+                PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.pathList);
+            }
+
+            if (PathfindingManager.Instance.tempPathList.Count > 0)
+            {
+                PathfindingManager.Instance.ClearArrow(PathfindingManager.Instance.tempPathList);
+            }
+
+            PathfindingManager.Instance.pathList.Clear();
+            PathfindingManager.Instance.tempPathList.Clear();
+            #endregion
+
             OnEnter();
         }
 

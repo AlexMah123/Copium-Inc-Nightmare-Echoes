@@ -32,7 +32,7 @@ namespace NightmareEchoes.Unit
             yield return new WaitForSeconds(0.1f);
 
             //animations
-            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
+            StartCoroutine(PlaySkillAnimation(thisUnit, "Attacking"));
 
             var copy = new List<OverlayTile>(aoeTiles);
 

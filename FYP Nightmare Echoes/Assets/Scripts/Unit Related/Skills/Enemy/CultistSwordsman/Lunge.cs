@@ -69,7 +69,7 @@ namespace NightmareEchoes.Unit
             yield return new WaitForSeconds(0.3f);
 
             //animations
-            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Lunge"));
+            StartCoroutine(PlaySkillAnimation(thisUnit, "Lunge"));
 
             var cacheHealth = target.stats.Health;
 

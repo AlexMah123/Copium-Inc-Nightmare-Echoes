@@ -55,7 +55,7 @@ namespace NightmareEchoes.Unit
             base.Cast(target);
             yield return new WaitForSeconds(0.3f);
             //animations
-            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Charge"));
+            StartCoroutine(PlaySkillAnimation(thisUnit, "Charge"));
 
             if (DealDamage(target))
             {

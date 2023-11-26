@@ -39,6 +39,8 @@ namespace NightmareEchoes.Unit
             {
                 base.Cast(target);
                 DealDamage(target);
+                StartCoroutine(PlaySkillAnimation(thisUnit, "Hunter's Instinct Shoot"));
+
                 return true;
             }
             
@@ -46,6 +48,8 @@ namespace NightmareEchoes.Unit
             {
                 base.Cast(target);
                 DealDamage(target, secondaryDamage);
+                StartCoroutine(PlaySkillAnimation(thisUnit, "Hunter's Instinct Shoot"));
+
                 return true;
             }
 
@@ -57,16 +61,17 @@ namespace NightmareEchoes.Unit
             var copy = new List<OverlayTile>(aoeTiles);
             CombatManager.Instance.SetActiveAoe(this, copy);
             base.Cast(target, aoeTiles);
+            StartCoroutine(StartStance());
 
             currentPos = unit.ActiveTile;
             return true;
         }
 
-        IEnumerator Attack(Entity target)
+        IEnumerator StartStance()
         {
             yield return new WaitForSeconds(0.1f);
             //animation
-            yield return StartCoroutine(PlaySkillAnimation(thisUnit, "Hunter's Instinct Start"));
+            StartCoroutine(PlaySkillAnimation(thisUnit, "Hunter's Instinct Start"));
 
         }
     }

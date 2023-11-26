@@ -18,7 +18,7 @@ namespace NightmareEchoes.Unit.Pathfinding
         [SerializeField] GameObject overlayTileContainer; 
 
         [Header("Current Unit")]
-        public Entity currentPathfindingUnit;
+        [SerializeField] Entity currentPathfindingUnit;
         [SerializeField] float movingSpeed;
         public static float combatSpeed;
 
@@ -119,7 +119,8 @@ namespace NightmareEchoes.Unit.Pathfinding
                 currentPathfindingUnit = hero;
 
                 //Gets the value of the start pos and the maximum range is the amount you can set
-                playerTilesInRange = Pathfind.FindTilesInRange(hero.ActiveTile, hero.stats.MoveRange);
+                playerTilesInRange.Clear();
+                playerTilesInRange = new List<OverlayTile>(Pathfind.FindTilesInRange(hero.ActiveTile, hero.stats.MoveRange));
 
                 //store values for players when they cancel their action
                 revertUnitPosition = hero.ActiveTile;
@@ -245,7 +246,6 @@ namespace NightmareEchoes.Unit.Pathfinding
                             }
                         }
                         
-
                         RenderArrow(playerTilesInRange, pathList, currentPathfindingUnit);
                         tempPathList = new List<OverlayTile>(pathList);
                         hasMoved = true;

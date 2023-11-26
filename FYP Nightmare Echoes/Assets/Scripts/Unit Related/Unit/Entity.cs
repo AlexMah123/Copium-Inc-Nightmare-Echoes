@@ -555,7 +555,7 @@ namespace NightmareEchoes.Unit
                 }
                 else
                 {
-                    Destroy(gameObject);
+                    Destroy(gameObject, 0.75f);
                 }
             }
 

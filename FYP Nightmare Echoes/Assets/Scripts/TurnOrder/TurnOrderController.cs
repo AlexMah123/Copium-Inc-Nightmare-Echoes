@@ -301,7 +301,7 @@ namespace NightmareEchoes.TurnOrder
                 }
             }
 
-            Destroy(destroyedUnit.gameObject);
+            Destroy(destroyedUnit.gameObject, 0.75f);
         }
 
         //delegate for sort()
