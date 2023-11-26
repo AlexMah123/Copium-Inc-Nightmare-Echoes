@@ -27,7 +27,7 @@ namespace NightmareEchoes.Unit
             }
             else if (unit.HasteToken)
             {
-                unit.ShowPopUpText("Negated Haste!", Color.blue);
+                unit.ShowPopUpText("Negated Haste!", Color.magenta);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.HASTE_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.VERTIGO_TOKEN);
             }
@@ -55,7 +55,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Vertigo token reached max limit!", Color.blue);
+                unit.ShowPopUpText("Vertigo token reached max limit!", Color.magenta);
             }
         }
 

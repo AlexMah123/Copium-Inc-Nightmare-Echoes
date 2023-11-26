@@ -42,7 +42,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Death Mark reached max limit!", Color.blue);
+                unit.ShowPopUpText("Death Mark reached max limit!", Color.magenta);
             }
         }
 

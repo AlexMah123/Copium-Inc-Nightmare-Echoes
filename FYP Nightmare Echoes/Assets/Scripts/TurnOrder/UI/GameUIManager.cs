@@ -379,7 +379,6 @@ namespace NightmareEchoes.TurnOrder
 
                 pathfindingManager.ClearArrow(pathfindingManager.tempPathList);
                 pathfindingManager.pathList.Clear();
-                pathfindingManager.playerTilesInRange.Clear();
 
                 //cancels the selected skill
                 if (CombatManager.Instance.ActiveSkill != null)
@@ -388,12 +387,7 @@ namespace NightmareEchoes.TurnOrder
                 }
 
                 //shows back the tiles in range
-                //pathfindingManager.ShowTilesInRange(pathfindingManager.playerTilesInRange);
-
-                Debug.Log($"before calculation {pathfindingManager.CurrentPathfindingUnit.ActiveTile.gridLocation}");
-                pathfindingManager.StartPlayerPathfinding(pathfindingManager.CurrentPathfindingUnit);
-                Debug.Log($"after calculation {pathfindingManager.CurrentPathfindingUnit.ActiveTile.gridLocation}");
-
+                pathfindingManager.ShowTilesInRange(pathfindingManager.playerTilesInRange);
                 CameraControl.Instance.UpdateCameraPan(pathfindingManager.CurrentPathfindingUnit.gameObject);
             }
             else
@@ -434,14 +428,21 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.BasicAttack();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
-                if(!CombatManager.Instance.ActiveSkill)
+                if (!CombatManager.Instance.ActiveSkill)
+                {
+                    if (!PathfindingManager.Instance.hasMoved)
+                    {
+                        PathfindingManager.Instance.ShowTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+                    }
                     EnableSkillInfo(false);
+                }
                 else
+                {
                     EnableSkillInfo(true);
+                }
             }
             else
             {
@@ -456,14 +457,21 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.Skill1();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
                 if (!CombatManager.Instance.ActiveSkill)
+                {
+                    if (!PathfindingManager.Instance.hasMoved)
+                    {
+                        PathfindingManager.Instance.ShowTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+                    }
                     EnableSkillInfo(false);
+                }
                 else
+                {
                     EnableSkillInfo(true);
+                }
             }
             else
             {
@@ -478,14 +486,21 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.Skill2();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
                 if (!CombatManager.Instance.ActiveSkill)
+                {
+                    if (!PathfindingManager.Instance.hasMoved)
+                    {
+                        PathfindingManager.Instance.ShowTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+                    }
                     EnableSkillInfo(false);
+                }
                 else
+                {
                     EnableSkillInfo(true);
+                }
             }
             else
             {
@@ -500,14 +515,21 @@ namespace NightmareEchoes.TurnOrder
 
             CurrentUnit.Skill3();
             PathfindingManager.Instance.HideTilesInRange(PathfindingManager.Instance.playerTilesInRange);
-            PathfindingManager.Instance.playerTilesInRange.Clear();
 
             if (skillInfoPanel.activeSelf)
             {
                 if (!CombatManager.Instance.ActiveSkill)
+                {
+                    if(!PathfindingManager.Instance.hasMoved)
+                    {
+                        PathfindingManager.Instance.ShowTilesInRange(PathfindingManager.Instance.playerTilesInRange);
+                    }
                     EnableSkillInfo(false);
+                }
                 else
+                {
                     EnableSkillInfo(true);
+                }
             }
             else
             {

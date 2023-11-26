@@ -43,7 +43,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Immobilized token reached max limit!", Color.blue);
+                unit.ShowPopUpText("Immobilized token reached max limit!", Color.magenta);
             }
         }
 

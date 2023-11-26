@@ -295,14 +295,18 @@ namespace NightmareEchoes.TurnOrder
             }
         }
 
-        public void GuideButton()
+        public void GuideButton(bool pauseGame = true)
         {
             bool isGuideActive = guidePanel.activeSelf;
 
             if (!pausePanel.activeSelf)
             {
                 PauseGame(!isGuideActive);
-                pausePanel.SetActive(!isGuideActive);
+
+                if (pauseGame)
+                {
+                    pausePanel.SetActive(!isGuideActive);
+                }
             }
             
             guideButton.gameObject.SetActive(isGuideActive);

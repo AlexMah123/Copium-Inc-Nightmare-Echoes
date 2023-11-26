@@ -19,7 +19,7 @@ namespace NightmareEchoes.Unit
         #region Effects Related
         public override void ApplyEffect(Entity unit)
         {
-            unit.ShowPopUpText("Gained Dodge!", Color.blue);
+            unit.ShowPopUpText("Gained Dodge!", Color.magenta);
             unit.DodgeToken = true;
         }
 
@@ -43,7 +43,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Dodge reached max limit!", Color.blue);
+                unit.ShowPopUpText("Dodge reached max limit!", Color.magenta);
             }
         }
 

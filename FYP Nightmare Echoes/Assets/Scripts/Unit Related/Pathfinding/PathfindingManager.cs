@@ -211,8 +211,11 @@ namespace NightmareEchoes.Unit.Pathfinding
                     //if path doesnt contain the hovered tile, add it
                     if (!pathList.Contains(currentHoveredOverlayTile))
                     {
-                        pathList.Add(currentHoveredOverlayTile);
-                        lastAddedTile = currentHoveredOverlayTile;
+                        if(pathList.Count <= currentPathfindingUnit.stats.MoveRange)
+                        {
+                            pathList.Add(currentHoveredOverlayTile);
+                            lastAddedTile = currentHoveredOverlayTile;
+                        }
                     }
                     else if (pathList.Contains(currentHoveredOverlayTile) && lastAddedTile == pathList[pathList.Count - 1])
                     {
@@ -512,7 +515,7 @@ namespace NightmareEchoes.Unit.Pathfinding
 
         public void HideTilesInRange(List<OverlayTile> tilesInRange)
         {
-            CombatManager.Instance.RenderMovementTiles(true);
+            CombatManager.Instance.RenderMovementTiles(clear:true);
         }
 
         public void ClearUnitPosition()

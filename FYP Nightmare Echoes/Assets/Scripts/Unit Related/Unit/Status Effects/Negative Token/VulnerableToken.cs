@@ -26,7 +26,7 @@ namespace NightmareEchoes.Unit
             }
             else if (unit.BlockToken)
             {
-                unit.ShowPopUpText("Negated Block!", Color.blue);
+                unit.ShowPopUpText("Negated Block!", Color.magenta);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.BLOCK_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.VULNERABLE_TOKEN);
             }
@@ -52,7 +52,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Vulnerable token reached max limit!", Color.blue);
+                unit.ShowPopUpText("Vulnerable token reached max limit!", Color.magenta);
             }
         }
 

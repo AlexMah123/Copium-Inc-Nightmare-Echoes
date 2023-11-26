@@ -62,7 +62,7 @@ namespace NightmareEchoes.TurnOrder
             yield return new WaitForSeconds(controller.phaseDelay);
 
             //resets
-            controller.runOnce = false;
+            controller.calTurnOrderOnce = false;
             controller.ChangePhase(controller.startPhase);
         }
     }

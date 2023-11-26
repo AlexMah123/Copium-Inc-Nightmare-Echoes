@@ -26,7 +26,7 @@ namespace NightmareEchoes.Unit
             }
             else if (unit.StrengthToken)
             {
-                unit.ShowPopUpText("Negated Strength!", Color.blue);
+                unit.ShowPopUpText("Negated Strength!", Color.magenta);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
             }
@@ -52,7 +52,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Weaken token reached max limit!", Color.blue);
+                unit.ShowPopUpText("Weaken token reached max limit!", Color.magenta);
             }
         }
 

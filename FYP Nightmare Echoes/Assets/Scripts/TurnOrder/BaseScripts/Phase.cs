@@ -22,9 +22,9 @@ namespace NightmareEchoes.TurnOrder
             controller = turnOrderController;
 
             //only run once to calculate the turn order and enqueue till the endPhase
-            if (!controller.runOnce)
+            if (!controller.calTurnOrderOnce)
             {
-                controller.runOnce = true;
+                controller.calTurnOrderOnce = true;
                 controller.CalculateTurnOrder();
             }
 
@@ -90,9 +90,6 @@ namespace NightmareEchoes.TurnOrder
 
         public void OnFixedUpdatePhase()
         {
-            
-
-
             OnFixedUpdate();
         }
 

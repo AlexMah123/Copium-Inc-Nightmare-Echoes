@@ -42,7 +42,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Blind token reached max limit!", Color.blue);
+                unit.ShowPopUpText("Blind token reached max limit!", Color.magenta);
             }
         }
 

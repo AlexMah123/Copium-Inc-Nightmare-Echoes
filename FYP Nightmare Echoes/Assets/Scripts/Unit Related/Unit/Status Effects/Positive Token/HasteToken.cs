@@ -55,7 +55,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Haste reached max limit!", Color.blue);
+                unit.ShowPopUpText("Haste reached max limit!", Color.magenta);
             }
         }
 

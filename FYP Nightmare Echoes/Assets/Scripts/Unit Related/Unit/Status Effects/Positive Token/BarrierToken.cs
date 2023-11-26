@@ -18,7 +18,7 @@ namespace NightmareEchoes.Unit
         #region Effects Related
         public override void ApplyEffect(Entity unit)
         {
-            unit.ShowPopUpText("Gained Barrier!", Color.blue);
+            unit.ShowPopUpText("Gained Barrier!", Color.magenta);
             unit.BarrierToken = true;
         }
 
@@ -42,7 +42,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Barrier reached max limit!", Color.blue);
+                unit.ShowPopUpText("Barrier reached max limit!", Color.magenta);
             }
         }
 

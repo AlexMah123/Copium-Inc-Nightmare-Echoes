@@ -35,8 +35,9 @@ namespace NightmareEchoes.TurnOrder
         public float passTurnDelay;
 
         [SerializeField] Entity currentUnit;
-        public bool runOnce = false;
+        public bool calTurnOrderOnce = false;
         public bool gameOver = false;
+        public bool runGuideOnce = false;
 
         [Header("Hero List")]
         List<Entity> totalUnitList = new List<Entity>();
@@ -381,7 +382,7 @@ namespace NightmareEchoes.TurnOrder
             CombatManager.Instance.OnBattleStart();
 
             //reset
-            runOnce = false;
+            calTurnOrderOnce = false;
             cycleCount = 1;
             progressTutorial = false;
             ChangePhase(planPhase);

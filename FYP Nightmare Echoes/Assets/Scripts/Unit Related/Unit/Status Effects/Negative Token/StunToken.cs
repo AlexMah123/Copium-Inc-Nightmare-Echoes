@@ -45,7 +45,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Stun token reached max limit!", Color.blue);
+                unit.ShowPopUpText("Stun token reached max limit!", Color.magenta);
             }
         }
 

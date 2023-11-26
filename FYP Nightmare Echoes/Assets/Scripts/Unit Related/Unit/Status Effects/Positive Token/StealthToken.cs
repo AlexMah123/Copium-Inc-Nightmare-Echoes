@@ -18,7 +18,7 @@ namespace NightmareEchoes.Unit
         #region Effects Related
         public override void ApplyEffect(Entity unit)
         {
-            unit.ShowPopUpText("Stealth!", Color.blue);
+            unit.ShowPopUpText("Stealth!", Color.magenta);
             unit.StealthToken = true;
         }
 
@@ -42,7 +42,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Stealth reached max limit!", Color.blue);
+                unit.ShowPopUpText("Stealth reached max limit!", Color.magenta);
             }
         }
 

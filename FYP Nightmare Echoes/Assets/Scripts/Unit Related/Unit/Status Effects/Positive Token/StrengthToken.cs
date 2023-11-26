@@ -22,11 +22,11 @@ namespace NightmareEchoes.Unit
             if (!unit.WeakenToken)
             {
                 unit.StrengthToken = true;
-                unit.ShowPopUpText("Gained Strength!", Color.blue);
+                unit.ShowPopUpText("Gained Strength!", Color.magenta);
             }
             else if (unit.WeakenToken)
             {
-                unit.ShowPopUpText("Negated Weaken!", Color.blue);
+                unit.ShowPopUpText("Negated Weaken!", Color.magenta);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.WEAKEN_TOKEN);
                 unit.UpdateTokenLifeTime(STATUS_EFFECT.STRENGTH_TOKEN);
             }
@@ -52,7 +52,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Strength reached max limit!", Color.blue);
+                unit.ShowPopUpText("Strength reached max limit!", Color.magenta);
             }
         }
 

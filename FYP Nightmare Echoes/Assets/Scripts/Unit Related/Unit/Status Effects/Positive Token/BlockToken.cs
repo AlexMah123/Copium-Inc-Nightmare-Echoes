@@ -57,7 +57,7 @@ namespace NightmareEchoes.Unit
             }
             else
             {
-                unit.ShowPopUpText("Block reached max limit!", Color.blue);
+                unit.ShowPopUpText("Block reached max limit!", Color.magenta);
             }
         }
 
