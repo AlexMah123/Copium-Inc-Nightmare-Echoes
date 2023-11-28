@@ -51,7 +51,7 @@ namespace NightmareEchoes.TurnOrder
                     if (statusEffect == STATUS_EFFECT.NONE)
                         continue;
 
-                    controller.CurrentUnit.AddBuff(GetStatusEffect.Instance.CreateModifier(statusEffect, 1, 1));
+                    controller.CurrentUnit.AddBuff(GetStatusEffect.CreateModifier(statusEffect, 1, 1));
                 }*/
 
                 #region BuffDebuff

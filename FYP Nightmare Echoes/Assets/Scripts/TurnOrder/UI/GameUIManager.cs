@@ -767,7 +767,7 @@ namespace NightmareEchoes.TurnOrder
             {
                 GeneralUIController.Instance.PauseGame(false);
                 GeneralUIController.Instance.pauseButton.gameObject.SetActive(true);
-                //GeneralUIController.Instance.guideButton.gameObject.SetActive(true);
+                GeneralUIController.Instance.guideButton.gameObject.SetActive(true);
 
                 glossaryPanel.SetActive(false);
             }
