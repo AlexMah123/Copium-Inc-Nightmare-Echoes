@@ -65,6 +65,7 @@ namespace NightmareEchoes.Unit
 
             thisUnit.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STRENGTH_TOKEN, 1, 1));
             thisUnit.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.STEALTH_TOKEN, 1, 1));
+            thisUnit.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.SPEED_BUFF, 1, 2));
         }
     }
 }

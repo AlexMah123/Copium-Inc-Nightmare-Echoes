@@ -4619,7 +4619,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: Single Target, 4 Direction, Deal 4 Damage and Knockback Target 1 Tile
+  description: Deal <color=red>4 Damage</color> and <color=yellow>Knockback</color>
+    target by <color=#ff00ffff>1 tile</color>
 --- !u!114 &817498681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4654,7 +4655,7 @@ MonoBehaviour:
   secondaryRange: 0
   debuffChance: 0
   hitChance: 100
-  stunChance: 100
+  stunChance: 80
   inflictKnockback: 1
   isBackstabbing: 0
   backstabBonus: 3
@@ -4662,9 +4663,15 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "Single Target, 4 Direction, Charge up to 2 tiles forward and Attack
-    the tile ahead\r\nDeal 4 Damage, Knockback Target 1 Tile and Stun (100%)\r\n\nCooldown:
-    2 Turns\r"
+  description: 'Attack target <color=red>enemy</color>, moving up to 2 tiles forward.
+
+    Deal
+    <color=red>4 Damage</color>, <color=yellow>Knockback</color> target <color=#ff00ffff>1
+    tile</color> and <color=red>Stun</color> (80%)
+
+
+    Cooldown: <color=yellow>2
+    Rounds</color>'
 --- !u!114 &817498682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4697,7 +4704,7 @@ MonoBehaviour:
   skillType: 2
   secondaryDamage: 0
   secondaryRange: 0
-  debuffChance: 100
+  debuffChance: 80
   hitChance: 100
   stunChance: 0
   inflictKnockback: 0
@@ -4707,8 +4714,10 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "Self Cast, AOE Buff & Debuff\r\nApply 1 Strength to Ally and Apply
-    1 Weaken (100%) and -3 Speed (100%) for 1 Turn to Enemy\r\n\nCooldown: 2 Turns\r"
+  description: "Roars and <color=green>buff</color> & <color=red>debuff</color> targets
+    within range.\r\nApply <color=green>1 Strength</color> to Ally and \nApply <color=red>1
+    Weaken</color> (80%, reduce next attack by 50%) and <color=red>-3 Speed</color>
+    (80%) for 1 Round to Enemy\r\n\nCooldown: <color=yellow>2 Round</color>"
 --- !u!114 &2262890932342477676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4751,8 +4760,9 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "Self Heal for 15, Get 1 Barrier and Remove all negative token\r\n\nCooldown:
-    3 Turns\r"
+  description: "<color=green>Heal</color> self for 15 hp. \nGain 1 <color=green>Barrier
+    token</color> \n(negates the next attack received) and remove all <color=red>negative
+    token</color> on self.\n\nCooldown: <color=yellow>3 Round</color>"
 --- !u!50 &1640256430824122786
 Rigidbody2D:
   serializedVersion: 4

@@ -4304,7 +4304,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: Single Target, Deal 5 Damage
+  description: Deal <color=red>5 Damage</color> to target within range
 --- !u!114 &8121445182508319265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4347,11 +4347,10 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: 'AOE Attack, Deal 8 Damage in the middle and 4 Damage at the side,
-    also knockback enemy 1 tiles at the side.
-
-
-    Cooldown: 2 Turns'
+  description: "Deal <color=red>8 Damage</color> to the target at the center \nand
+    <color=red>4 Damage</color> to the targets at the side.\nTargets hit around the
+    center are also <color=yellow>knockbacked</color> <color=#ff00ffff>1 tiles</color>\n\nCooldown:
+    <color=yellow>2 Rounds</color>"
 --- !u!114 &8121445182508319270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4394,8 +4393,10 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "Target Hero or Enemy inside 2 Tiles Range, then Teleport him within
-    3 Tiles Range of Target.\r\n\nCooldown: 3 Turns\r"
+  description: "Target <color=green>hero</color> or <color=red>enemy</color> inside
+    <color=#ff00ffff>2 tiles range</color>.\nThen teleport him to a target tile within
+    <color=#ff00ffff>3 tiles range</color> of target.\r\n\nCooldown: <color=yellow>3
+    Rounds</color>\r"
 --- !u!114 &8121445182508319271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4438,9 +4439,11 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "AOE, Create Static Storm that last for 2 cycle, Deal 4 Damage and
-    Apply 1 Weaken (80%), Enemy that stay in (Start Turn) take 4 Damage\r\n\nCooldown:
-    3 Turns\r"
+  description: "Create <color=red>Aoe effect</color> that last for <color=yellow>2
+    round</color>.\n Deal <color=red>4 Damage</color>. \nApply <color=red>1 Weaken
+    token</color> (reduces next attack by 50%). \nAt the start of the round, enemy
+    that stay in take <color=red>4 Damage\r</color>\n\nCooldown: <color=yellow>3
+    Rounds\r</color>"
 --- !u!60 &8121445182508319274
 PolygonCollider2D:
   m_ObjectHideFlags: 0

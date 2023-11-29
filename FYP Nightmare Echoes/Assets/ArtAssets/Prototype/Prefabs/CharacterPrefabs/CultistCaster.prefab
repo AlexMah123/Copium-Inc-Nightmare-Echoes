@@ -2606,7 +2606,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: Single Target, Deal 5 Damage and Apply 1 Weaken
+  description: Deal <color=red>5 Damage</color> to target and Apply <color=red>1
+    Weaken token</color> (70%, reduce 50% of next attack)
 --- !u!114 &6295657691645105034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2649,8 +2650,11 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: AOE Attack, Deal 6 Damage in the middle and 3 Damage at the side,
-    also knockback enemy 1 tiles at the side.
+  description: 'Deal <color=red>6 Damage</color> to the target at the center and
+
+    <color=red>3
+    Damage</color> to the targets at the side, also <color=yellow>knockback</color>
+    enemy 1 tiles at the side.'
 --- !u!1 &3506516799890633164
 GameObject:
   m_ObjectHideFlags: 0

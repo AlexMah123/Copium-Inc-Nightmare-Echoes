@@ -22,6 +22,7 @@ namespace NightmareEchoes.Unit
             StartCoroutine(PlaySkillAnimation(thisUnit, "Heal"));
 
             target.stats.Health += heal;
+            target.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.RESTORATION_BUFF, 1, 2));
             target.ShowPopUpText("Healed!", Color.green);
             target.ShowPopUpText($"{heal}", Color.green);
 

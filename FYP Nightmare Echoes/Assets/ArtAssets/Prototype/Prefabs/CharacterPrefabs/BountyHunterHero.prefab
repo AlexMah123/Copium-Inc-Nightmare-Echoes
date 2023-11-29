@@ -687,8 +687,8 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
-  debuffChance: 100
-  hitChance: 100
+  debuffChance: 90
+  hitChance: 90
   stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
@@ -697,7 +697,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: Single Target, 4 Direction, Deal 5 Damage and Apply 2 Wound
+  description: "Deal <color=red>5 Damage</color> to target and \nApply <color=red>2
+    Wound</color> (lose 1 hp per stack at the start of the round)"
 --- !u!114 &223763885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,7 +731,7 @@ MonoBehaviour:
   skillType: 2
   secondaryDamage: 0
   secondaryRange: 0
-  debuffChance: 100
+  debuffChance: 90
   hitChance: 100
   stunChance: 0
   inflictKnockback: 0
@@ -740,8 +741,14 @@ MonoBehaviour:
   placableCount: 2
   maxCount: 4
   placableGameObject: {fileID: 5842767986387668200, guid: 0f88a485a85ac2244a18d50f1cc13fd4, type: 3}
-  description: "Place 2 Trap. When an enemy stepped on, Deal 3 Damage, Apply 2 Immobilize
-    (100%) and 2 Wound\r\n\nCooldown: 2 Turns\r"
+  description: 'Place 2 Trap. When an enemy stepped on, Deal <color=red>3 Damage</color>.
+
+    Apply
+    <color=red>2 Immobilize</color> (cannot move) and <color=red>2 Crippled</color>
+    (lose 1 hp per tile move)
+
+
+    Cooldown: <color=yellow>2 Rounds</color>'
 --- !u!114 &247799077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -774,8 +781,8 @@ MonoBehaviour:
   skillType: 0
   secondaryDamage: 0
   secondaryRange: 0
-  debuffChance: 100
-  hitChance: 100
+  debuffChance: 90
+  hitChance: 90
   stunChance: 0
   inflictKnockback: 0
   isBackstabbing: 0
@@ -784,9 +791,16 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "Single Target, Apply 1 Blind and 2 Vulnerable (100% Each)\r\nRemove
-    Block token and prevent target to get Block token for 2 Turns\r\n\nCooldown:
-    3 Turns\r"
+  description: 'Apply <color=red>1 Blind token</color> (50% to miss next attack)
+    and <color=red>2 Vulnerable token</color> (receives additional 50% on the next
+    attack) to target.
+
+    Remove all <color=red>block token</color> and <color=#ff00ffff>prevent</color>
+    target to get Block token (reduce 50% of the next attack) for 2 Turns
+
+
+    Cooldown:
+    <color=yellow>3 Rounds</color>'
 --- !u!114 &2924613594053572864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,9 +843,11 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "Self Cast, Become Stealth and Gain 1 Strength\r\n*can\u2019t cast
-    if it will break stealth instantly (3 Tiles horizontal in front of enemy)\n\nCooldown:
-    3 Turns\r"
+  description: "Gain <color=green>1 stealth token</color> and <color=green>1 strength
+    token</color> (deal additional 50% on the next attack). Gains <color=#ff00ffff>1
+    tile</color> move range <color=green>buff</color>\n\n*can\u2019t cast if it will
+    break stealth instantly (<color=#ff00ffff>3 Tiles horizontal</color> in front
+    of enemy)\n\nCooldown: <color=yellow>3 Rounds</color>"
 --- !u!60 &5105758200137203564
 PolygonCollider2D:
   m_ObjectHideFlags: 0

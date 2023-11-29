@@ -457,7 +457,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: Single Target, Deal 4 Damage and Apply 3 Wound
+  description: Deal <color=red>4 Damage</color> target and Apply 2 <color=red>Crippled</color>
+    (loses 1 hp per tile move)
 --- !u!114 &601295391118310427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,7 +501,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "Single Target, Deal 5 Damage and Stun (80%)\r\n\nCooldown: 2 Turns\r"
+  description: "Deal <color=red>5 Damage</color> and <color=red>stuns</color> target
+    (80%, target skips their turn)\r\n\nCooldown: <color=yellow>2 Rounds</color>\r"
 --- !u!114 &837001683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,7 +520,7 @@ MonoBehaviour:
   vfxGraph: {fileID: 0}
   _name: Nature's Embrace
   damage: 0
-  heal: 10
+  heal: 8
   cooldown: 2
   range: 2
   minRange: 1
@@ -543,7 +545,9 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "Single Target, Heal for 10 HP\r\n\nCooldown: 2 Turns\r"
+  description: "<color=green>Heals</color> target for 8 HP. \nTarget gains <color=green>2
+    restoration</color>. (heals 1 hp per stack at the end of the round)\n\nCooldown:
+    <color=yellow>2 Rounds</color>"
 --- !u!114 &1863292055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,16 +590,19 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: 'Watch over an area and go into a stance.
+  description: 'Watch over an area and go into a <color=#ff00ffff>stance</color>.
 
-    - Attack Enemy that
-    Move in range for 3 Damage
+    -
+    Attack <color=red>enemy</color> that Move in range for <color=red>3 Damage</color>
 
-    - Attack Enemy that Attack in range for 5 Damage
+    -
+    Attack <color=red>enemy</color> that Attack in range for <color=red>5 Damage</color>
 
 
     Last
-    for 1 turn.'
+    for 1 turn.
+
+    Cooldown: <color=yellow>2 Rounds</color>'
 --- !u!60 &136229569
 PolygonCollider2D:
   m_ObjectHideFlags: 0

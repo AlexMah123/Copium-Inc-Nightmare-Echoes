@@ -2015,7 +2015,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: Single Target, Deal 3 Damage and Apply 2 Wound
+  description: Deal <color=red>3 Damage</color> to target and Apply <color=red>2
+    Crippled</color> (lose 1 hp per tile move).
 --- !u!114 &1076513885083324510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2032,7 +2033,7 @@ MonoBehaviour:
   skillExample: {fileID: 21300000, guid: f876bb21a7966194eb9deab6671da817, type: 3}
   vfxGraph: {fileID: 8926484042661614526, guid: 373bec9dc208704448a160c510f07996, type: 3}
   _name: Kick
-  damage: 2
+  damage: 3
   heal: 0
   cooldown: 0
   range: 1
@@ -2058,7 +2059,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: Single Target, 4 Direction, Deal 2 Damage and Knockback target 1 tile
+  description: Deal <color=red>3 Damage</color> to target and <color=yellow>Knockback</color>
+    <color=#ff00ffff>1 tile</color>
 --- !u!114 &359293498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2077,7 +2079,7 @@ MonoBehaviour:
   _name: Watchful
   damage: 3
   heal: 0
-  cooldown: 0
+  cooldown: 2
   range: 1
   minRange: 1
   targetType: 1
@@ -2101,16 +2103,20 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: 'Watch over an area and go into a stance.
+  description: 'Watch over an area and go into a <color=#ff00ffff>stance.</color>
 
-    - Attack Enemy that
-    Move in range for 2 Damage
+    -
+    Attack <color=red>enemy</color> that Move in range for <color=red>2 Damage</color>
 
-    - Attack Enemy that Attack in range for 3 Damage
+    -
+    Attack <color=red>enemy</color> that Attack in range for <color=red>3 Damage</color>
 
 
     Last
-    for 1 turn.'
+    for <color=yellow>1 Round.</color>
+
+
+    Cooldown: <color=yellow>2 Rounds</color>'
 --- !u!60 &964070419
 PolygonCollider2D:
   m_ObjectHideFlags: 0

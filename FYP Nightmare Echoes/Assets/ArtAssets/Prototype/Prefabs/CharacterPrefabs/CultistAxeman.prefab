@@ -2522,7 +2522,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: Single Target, 4 Direction, Deal 5 Damage and 2 Wound
+  description: Deal <color=red>5 Damage</color> to target and <color=red>2 Wound</color>.
 --- !u!114 &1429316040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2541,7 +2541,7 @@ MonoBehaviour:
   _name: Knockback
   damage: 4
   heal: 0
-  cooldown: 0
+  cooldown: 1
   range: 1
   minRange: 1
   targetType: 0
@@ -2565,8 +2565,11 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "Single Target, 4 Direction, Deal 4 Damage, Knockback target 1 tile\r\n\nCooldown:
-    1 Turns\r"
+  description: 'Deal <color=red>4 Damage</color> to target, <color=yellow>Knockback</color>
+    <color=#ff00ffff> 1 tile
+
+
+    Cooldown: <color=yellow>1 Round</color>'
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4

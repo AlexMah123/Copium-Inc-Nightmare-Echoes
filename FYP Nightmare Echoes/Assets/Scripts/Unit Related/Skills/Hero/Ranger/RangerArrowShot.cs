@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace NightmareEchoes.Unit
 {
@@ -28,7 +27,7 @@ namespace NightmareEchoes.Unit
             {
                 if (cacheHealth != target.stats.Health)
                 {
-                    target.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+                    target.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.CRIPPLED_DEBUFF, 1, 2));
                 }
             }
 

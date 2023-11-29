@@ -2797,7 +2797,7 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: Single Target, 4 Direction, Deal 6 Damage
+  description: Deal <color=red>6 Damage</color> to target.
 --- !u!114 &4212859529687142437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2840,8 +2840,8 @@ MonoBehaviour:
   placableCount: 0
   maxCount: 0
   placableGameObject: {fileID: 0}
-  description: "Single Target, 4 Direction, Move 1 tiles and Attack the tile ahead,
-    Deal 5 Damage\r\n\nCooldown: 1 Turn\r"
+  description: "Move <color=#ff00ffff>1 tile</color> and attack the tile ahead, \ndealing
+    <color=red>5 Damage</color> to target\n\nCooldown: <color=yellow>1 Round</color>"
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4
