@@ -562,7 +562,7 @@ namespace NightmareEchoes.Unit
                 else
                 {
                     if (deathCoroutine == null)
-                        deathCoroutine = StartCoroutine(CombatManager.Instance.PlayVFX(destroyVfx, transform.position));
+                        deathCoroutine = StartCoroutine(CombatManager.Instance.PlayVFX(destroyVfx, transform.position + new Vector3(0,0.5f,0)));
                     Destroy(gameObject, 0.75f);
                 }
             }
