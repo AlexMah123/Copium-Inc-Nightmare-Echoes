@@ -132,9 +132,13 @@ namespace NightmareEchoes.TurnOrder
                 {
                     GeneralUIController.Instance.GuideButton();
                 }
-                else if(GeneralUIController.Instance.settingPanel.activeSelf)
+                else if(GeneralUIController.Instance.settingPanel.activeSelf && !GameUIManager.Instance.glossaryPanel.activeSelf)
                 {
                     GeneralUIController.Instance.SettingsButton();
+                }
+                else if(GameUIManager.Instance.glossaryPanel.activeSelf)
+                {
+                    GameUIManager.Instance.CharacterGlossary("");
                 }
                 else
                 {

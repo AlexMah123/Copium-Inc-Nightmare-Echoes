@@ -82,7 +82,7 @@ namespace NightmareEchoes.TurnOrder
         List<GameObject> currentUnitStatusEffectPool = new List<GameObject>();
 
         [Space(20), Header("Character Glossary Related")]
-        [SerializeField] GameObject glossaryPanel;
+        public GameObject glossaryPanel;
         [SerializeField] GameObject glossaryContainer;
         [SerializeField] Image glossaryImage;
         [SerializeField] TextMeshProUGUI glossaryName;
