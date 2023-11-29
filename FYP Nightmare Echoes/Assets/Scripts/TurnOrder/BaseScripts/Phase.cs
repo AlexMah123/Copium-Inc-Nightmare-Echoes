@@ -132,6 +132,10 @@ namespace NightmareEchoes.TurnOrder
                 {
                     GeneralUIController.Instance.GuideButton();
                 }
+                else if(GeneralUIController.Instance.settingPanel.activeSelf)
+                {
+                    GeneralUIController.Instance.SettingsButton();
+                }
                 else
                 {
                     GeneralUIController.Instance.PauseButton();

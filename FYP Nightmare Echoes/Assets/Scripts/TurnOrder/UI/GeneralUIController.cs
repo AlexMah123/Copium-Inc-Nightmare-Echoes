@@ -27,7 +27,7 @@ namespace NightmareEchoes.TurnOrder
         [Header("Pause + Settings UI")]
         public Button pauseButton;
         [SerializeField] GameObject pausePanel;
-        [SerializeField] GameObject settingPanel;
+        public GameObject settingPanel;
         public static bool gameIsPaused = false;
 
         [Space(20), Header("Guide Related")]
