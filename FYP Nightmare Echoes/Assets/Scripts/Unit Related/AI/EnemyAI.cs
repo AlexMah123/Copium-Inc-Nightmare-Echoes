@@ -688,7 +688,7 @@ namespace NightmareEchoes.Unit.AI
 
         public void AttackProcess(Entity thisUnit, OverlayTile targetTile)
         {
-            if(thisUnit != null)
+            if(thisUnit != null && thisUnit.stats.Health > 0)
             {
                 if (targetTile.CheckEntityGameObjectOnTile()?.GetComponent<Entity>() != null)
                 {
