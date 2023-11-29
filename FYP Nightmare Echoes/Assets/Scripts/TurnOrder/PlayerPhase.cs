@@ -235,6 +235,11 @@ namespace NightmareEchoes.TurnOrder
             PathfindingManager.Instance.RevertUnitPosition = null;
             controller.CurrentUnit.HasAttacked = true;
 
+            if(controller.CurrentUnit.DoesModifierExist(STATUS_EFFECT.STEALTH_TOKEN))
+            {
+                controller.CurrentUnit.UpdateTokenLifeTime(STATUS_EFFECT.STEALTH_TOKEN);
+            }
+
             controller.StartCoroutine(controller.PassTurn());
         }
 
