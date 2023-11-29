@@ -1175,8 +1175,10 @@ namespace NightmareEchoes.Unit.Combat
             return vfxObj; 
         }
 
-        IEnumerator PlayVFX(VisualEffectAsset vfx, Vector3 location)
+        public IEnumerator PlayVFX(VisualEffectAsset vfx, Vector3 location)
         {
+            if (!vfx) yield return null;
+            
             var vfxObj = Instantiate(gameObject);
             vfxObj.SetActive(false);
             var vfxComponent = vfxObj.AddComponent<VisualEffect>();
@@ -1184,7 +1186,7 @@ namespace NightmareEchoes.Unit.Combat
             vfxComponent.GetComponent<Renderer>().sortingLayerID = SortingLayer.NameToID("UI");
             vfxObj.transform.position = location;
             vfxObj.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.5f);
             Destroy(vfxObj);
         }
         

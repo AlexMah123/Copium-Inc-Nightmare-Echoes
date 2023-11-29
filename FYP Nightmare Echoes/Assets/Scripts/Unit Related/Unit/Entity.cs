@@ -10,6 +10,7 @@ using NightmareEchoes.Unit.AI;
 using NightmareEchoes.Unit.Combat;
 using NightmareEchoes.UI;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 //created by Alex, edited by Ter
 namespace NightmareEchoes.Unit
@@ -94,7 +95,12 @@ namespace NightmareEchoes.Unit
 
         [Header("On Screen UI")]
         [SerializeField] Slider healthSlider;
+        
+        [Header("VFX")]
+        [SerializeField] VisualEffectAsset destroyVfx;
 
+        private Coroutine deathCoroutine;
+        
         #region Class Properties
 
         #region Unit Info Properties
@@ -555,6 +561,8 @@ namespace NightmareEchoes.Unit
                 }
                 else
                 {
+                    if (deathCoroutine == null)
+                        deathCoroutine = StartCoroutine(CombatManager.Instance.PlayVFX(destroyVfx, transform.position));
                     Destroy(gameObject, 0.75f);
                 }
             }
