@@ -668,6 +668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -1818959691, guid: ff0dff30735c6594aa23b1a650fc347c, type: 3}
   skillExample: {fileID: 21300000, guid: f876bb21a7966194eb9deab6671da817, type: 3}
+  vfxGraph: {fileID: 8926484042661614526, guid: 9b0229cc0ffd3bd4f9451dd0faee0b00, type: 3}
   _name: Slash
   damage: 5
   heal: 0
@@ -710,6 +711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 708956167, guid: ff0dff30735c6594aa23b1a650fc347c, type: 3}
   skillExample: {fileID: 21300000, guid: f481005481a20244db109cdbe4858cd2, type: 3}
+  vfxGraph: {fileID: 8926484042661614526, guid: 763db534ec2094945b5ed0a06ea803b9, type: 3}
   _name: Rune Trap
   damage: 3
   heal: 0
@@ -753,6 +755,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -1831310629, guid: ff0dff30735c6594aa23b1a650fc347c, type: 3}
   skillExample: {fileID: 21300000, guid: 9158a9f561fc6b641ad6c20b806e47de, type: 3}
+  vfxGraph: {fileID: 0}
   _name: Death Mark
   damage: 0
   heal: 0
@@ -797,6 +800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: -1290795187, guid: ff0dff30735c6594aa23b1a650fc347c, type: 3}
   skillExample: {fileID: 21300000, guid: d7958fdc4b20af846b952fe3aea02922, type: 3}
+  vfxGraph: {fileID: 0}
   _name: Shadow Step
   damage: 0
   heal: 0
@@ -843,7 +847,7 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 1.1279621, y: 1.1232227}
     newSize: {x: 0.13, y: 0.16}
     adaptiveTilingThreshold: 0.5

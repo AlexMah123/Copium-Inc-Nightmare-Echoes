@@ -907,11 +907,17 @@ namespace NightmareEchoes.Unit.Combat
 
         IEnumerator WaitForSkill(Entity target)
         {
+            var targetTransform = target.transform.position;
             if (activeSkill.Cast(target))
             {
                 skillIsCasting = true;
                 lockInput = true;
 
+                if (activeSkill.VFXGraph)
+                {
+                    StartCoroutine(PlayVFX(activeSkill.VFXGraph, targetTransform));
+                }
+                
                 #region Animations
                 RenderOverlayTile.Instance.ClearTargetingRenders();
                 var activeUnit = activeSkill.gameObject.GetComponent<Entity>();
@@ -921,13 +927,6 @@ namespace NightmareEchoes.Unit.Combat
                     yield return StartCoroutine(WaitForAnimationCompletion(activeUnit));
                 }
                 #endregion
-                
-                if (activeSkill.VFXGraph)
-                {
-                    var vfx = GetVfx(activeSkill.VFXGraph);
-                    vfx.transform.position = target.transform.position;
-                    vfx.SetActive(true);
-                }
 
                 yield return new WaitForSeconds(0.1f);
 
@@ -940,6 +939,11 @@ namespace NightmareEchoes.Unit.Combat
                 yield return new WaitUntil(() => activeSkill.Cast(target));
                 skillIsCasting = true;
                 lockInput = true;
+                
+                if (activeSkill.VFXGraph)
+                {
+                    StartCoroutine(PlayVFX(activeSkill.VFXGraph, targetTransform));
+                }
 
                 #region Animations
                 //wait for animations
@@ -952,14 +956,7 @@ namespace NightmareEchoes.Unit.Combat
                 }
 
                 #endregion
-                
-                if (activeSkill.VFXGraph)
-                {
-                    var vfx = GetVfx(activeSkill.VFXGraph);
-                    vfx.transform.position = target.transform.position;
-                    vfx.SetActive(true);
-                }
-                
+
                 yield return new WaitForSeconds(0.1f);
 
                 EndTurn();
@@ -973,6 +970,11 @@ namespace NightmareEchoes.Unit.Combat
                 skillIsCasting = true;
                 lockInput = true;
                 
+                if (activeSkill.VFXGraph)
+                {
+                    StartCoroutine(PlayVFX(activeSkill.VFXGraph, target.transform.position));
+                }
+                
                 #region Animations
                 //wait for animations
                 RenderOverlayTile.Instance.ClearTargetingRenders();
@@ -985,13 +987,6 @@ namespace NightmareEchoes.Unit.Combat
 
                 #endregion
 
-                if (activeSkill.VFXGraph)
-                {
-                    var vfx = GetVfx(activeSkill.VFXGraph);
-                    vfx.transform.position = target.transform.position;
-                    vfx.SetActive(true);
-                }
-                
                 yield return new WaitForSeconds(0.1f);
 
                 EndTurn();
@@ -1004,6 +999,11 @@ namespace NightmareEchoes.Unit.Combat
                 skillIsCasting = true;
                 lockInput = true;
 
+                if (activeSkill.VFXGraph)
+                {
+                    StartCoroutine(PlayVFX(activeSkill.VFXGraph, target.transform.position));
+                }
+                
                 #region Animations
                 //wait for animations
                 RenderOverlayTile.Instance.ClearTargetingRenders();
@@ -1015,14 +1015,7 @@ namespace NightmareEchoes.Unit.Combat
                 }
 
                 #endregion
-                
-                if (activeSkill.VFXGraph)
-                {
-                    var vfx = GetVfx(activeSkill.VFXGraph);
-                    vfx.transform.position = target.transform.position;
-                    vfx.SetActive(true);
-                }
-                
+
                 yield return new WaitForSeconds(0.1f);
 
                 EndTurn();
@@ -1161,7 +1154,6 @@ namespace NightmareEchoes.Unit.Combat
             }
 
             var vfxObj = Instantiate(gameObject);
-            vfxObj.name = $"VFX Container {vfxCount++}";
             vfxObj.SetActive(false);
             var vfxComponent = vfxObj.AddComponent<VisualEffect>();
             vfxComponent.visualEffectAsset = vfx;
@@ -1169,6 +1161,19 @@ namespace NightmareEchoes.Unit.Combat
     
             vfxPool.Add(vfxObj); 
             return vfxObj; 
+        }
+
+        IEnumerator PlayVFX(VisualEffectAsset vfx, Vector3 location)
+        {
+            var vfxObj = Instantiate(gameObject);
+            vfxObj.SetActive(false);
+            var vfxComponent = vfxObj.AddComponent<VisualEffect>();
+            vfxComponent.visualEffectAsset = vfx;
+            vfxComponent.GetComponent<Renderer>().sortingLayerID = SortingLayer.NameToID("UI");
+            vfxObj.transform.position = location;
+            vfxObj.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            Destroy(vfxObj);
         }
         
         #endregion

@@ -1986,6 +1986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 1615403911, guid: ec2aaf2a6f5704d45848a250429eb6c8, type: 3}
   skillExample: {fileID: 21300000, guid: 8c1abeb32897393418e46f963a40e5ce, type: 3}
+  vfxGraph: {fileID: 8926484042661614526, guid: 373bec9dc208704448a160c510f07996, type: 3}
   _name: Arrow Shot
   damage: 3
   heal: 0
@@ -2028,6 +2029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 1617280432, guid: ec2aaf2a6f5704d45848a250429eb6c8, type: 3}
   skillExample: {fileID: 21300000, guid: f876bb21a7966194eb9deab6671da817, type: 3}
+  vfxGraph: {fileID: 8926484042661614526, guid: 373bec9dc208704448a160c510f07996, type: 3}
   _name: Kick
   damage: 2
   heal: 0
@@ -2070,6 +2072,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 732477111, guid: ec2aaf2a6f5704d45848a250429eb6c8, type: 3}
   skillExample: {fileID: 21300000, guid: 6d6e775fb5ac03e43b5f2300c63776ab, type: 3}
+  vfxGraph: {fileID: 0}
   _name: Watchful
   damage: 3
   heal: 0
@@ -2123,7 +2126,7 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 4.22, y: 4.74}
     newSize: {x: 1, y: 1.1232227}
     adaptiveTilingThreshold: 0.5
