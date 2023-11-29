@@ -409,8 +409,15 @@ namespace NightmareEchoes.Unit.Combat
         #region Enemy Targeting
         public IEnumerator EnemyTargetUnit(Entity target, Skill skill)
         {
+            var targetPosition = target.transform.position;
+            
             activeSkill = skill;
             activeSkill.Cast(target);
+            
+            if (activeSkill.VFXGraph)
+            {
+                StartCoroutine(PlayVFX(activeSkill.VFXGraph, targetPosition));
+            }
 
             #region Animations
             RenderOverlayTile.Instance.ClearTargetingRenders();
@@ -442,6 +449,11 @@ namespace NightmareEchoes.Unit.Combat
             }
 
             activeSkill.Cast(targetTile, aoePreviewTiles);
+            
+            if (activeSkill.VFXGraph)
+            {
+                StartCoroutine(PlayVFX(activeSkill.VFXGraph, targetTile.transform.position));
+            }
 
             #region Animations
             RenderOverlayTile.Instance.ClearTargetingRenders();
