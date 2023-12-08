@@ -182,6 +182,8 @@ namespace NightmareEchoes.TurnOrder
             {
                 ChangePhase(endPhase);
             }
+
+            CurrentUnitQueue = new Queue<Entity>(CurrentUnitQueue.Where(x => x != null));
         }
 
         public List<Entity> FindAllHeros()
@@ -216,7 +218,6 @@ namespace NightmareEchoes.TurnOrder
             totalUnitList = FindObjectsOfType<Entity>().ToList();
 
             //filter by heroes
-
             for (int i = totalUnitList.Count - 1; i >= 0; i--)
             {
                 if (totalUnitList[i].IsHostile && !totalUnitList[i].IsProp)
@@ -279,27 +280,23 @@ namespace NightmareEchoes.TurnOrder
 
         private void OnUnitDestroy(Entity destroyedUnit)
         {
-            if(destroyedUnit == currentUnit)
-            {
-                CurrentUnitQueue = new Queue<Entity>(CurrentUnitQueue.Where(x => x != destroyedUnit));
-                StartCoroutine(PassTurn());
-            }
-            else
-            {
-                CurrentUnitQueue = new Queue<Entity>(CurrentUnitQueue.Where(x => x != destroyedUnit));
-            }
-
             //unsub the destroyed unit's events
             destroyedUnit.OnDestroyedEvent -= OnUnitDestroy;
             destroyedUnit.OnAddBuffEvent -= GameUIManager.Instance.UpdateStatusEffectUI;
 
+            if (currentUnit == destroyedUnit)
+            {
+                StartCoroutine(PassTurn());
+            }
+            else
+            {
+                //clears the destroyed unit from the queue
+                CurrentUnitQueue = new Queue<Entity>(CurrentUnitQueue.Where(x => x != destroyedUnit));
+            }
 
             if (GameUIManager.Instance != null) 
             {
-                if(GameUIManager.Instance.turnOrderSpritePool.Count > 0)
-                {
-                    GameUIManager.Instance.UpdateTurnOrderUI();
-                }
+                GameUIManager.Instance.UpdateTurnOrderUI();
             }
 
             Destroy(destroyedUnit.gameObject, 0.75f);

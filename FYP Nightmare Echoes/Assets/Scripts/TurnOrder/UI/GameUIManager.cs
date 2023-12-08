@@ -653,10 +653,7 @@ namespace NightmareEchoes.TurnOrder
             //resets the turn order bar, calculate turn order
             for (int i = 0; i < turnOrderSpritePool.Count; i++)
             {
-                if (turnOrderSpritePool[i] != null)
-                {
-                    turnOrderSpritePool[i].SetActive(false);
-                }
+                turnOrderSpritePool[i].SetActive(false);
             }
 
 

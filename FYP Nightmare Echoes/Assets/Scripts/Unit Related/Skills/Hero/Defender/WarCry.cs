@@ -34,7 +34,7 @@ namespace NightmareEchoes.Unit
                         if (debuffChance - entity.stats.Resist > Random.Range(1, 101))
                         {
                             entity.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.WEAKEN_TOKEN, 1, 1));
-                            entity.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.SPEED_DEBUFF, 3, 1));
+                            entity.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.SPEED_DEBUFF, 3, 2));
                         }
                         break;
                 }

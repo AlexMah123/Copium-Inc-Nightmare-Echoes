@@ -24,7 +24,7 @@ namespace NightmareEchoes.Unit
                 {
                     if (cacheHealth != target.stats.Health)
                     {
-                        target.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+                        target.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 1));
                     }
                 }
                 return true;
@@ -77,7 +77,7 @@ namespace NightmareEchoes.Unit
             {
                 if (cacheHealth != target.stats.Health)
                 {
-                    target.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 2));
+                    target.AddBuff(GetStatusEffect.CreateModifier(STATUS_EFFECT.WOUND_DEBUFF, 1, 1));
                 }
             }
         }

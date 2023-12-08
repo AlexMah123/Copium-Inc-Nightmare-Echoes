@@ -132,22 +132,23 @@ namespace NightmareEchoes.TurnOrder
             // unit dependant updates
             if (controller.CurrentUnit != null)
             {
-                var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
-                if (aoeDmg)
-                {
-                    if (aoeSkillsPassed.Contains(aoeDmg))
-                        return;
-                    if (aoeDmg.Cast(controller.CurrentUnit))
-                        aoeSkillsPassed.Add(aoeDmg);
-                }
-
-                PathfindingManager.Instance.PlayerInputPathfinding();
-
                 //check inputs
                 CheckHotkeyInputs();
 
                 // stealth token check
                 CheckIfDetectedByEnemy();
+
+                PathfindingManager.Instance.PlayerInputPathfinding();
+
+
+                var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
+                if (aoeDmg)
+                {
+                    if (!aoeSkillsPassed.Contains(aoeDmg))
+                        return;
+                    if (aoeDmg.Cast(controller.CurrentUnit))
+                        aoeSkillsPassed.Add(aoeDmg);
+                }
             }
             else
             {

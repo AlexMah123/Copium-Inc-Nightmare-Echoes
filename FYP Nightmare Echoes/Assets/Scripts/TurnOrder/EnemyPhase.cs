@@ -115,14 +115,14 @@ namespace NightmareEchoes.TurnOrder
                     trapDmg.Cast(controller.CurrentUnit);
                 }
             }
-            else if(controller.CurrentUnit == null || enemyAI == null)
+            /*else if(controller.CurrentUnit == null || enemyAI == null)
             {
                 if (!passTurnOnce)
                 {
                     controller.StartCoroutine(controller.PassTurn());
                     passTurnOnce = true;
                 }
-            }
+            }*/
         }
 
         protected override void OnExit()
@@ -238,11 +238,7 @@ namespace NightmareEchoes.TurnOrder
             {
                 enemyAI.AttackProcess(controller.CurrentUnit, enemyAI.targetTileToAttack);
             }
-            else if (!enemyAI.detectedStealthHero) //if you are just moving normally
-            {
-                controller.StartCoroutine(controller.PassTurn());
-            }
-            else //default catch if nothing is happening
+            else if(enemyAI != null)//default catch if nothing is happening
             {
                 controller.StartCoroutine(controller.PassTurn());
             }

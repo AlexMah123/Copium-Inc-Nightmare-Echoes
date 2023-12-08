@@ -1087,7 +1087,8 @@ namespace NightmareEchoes.Unit.Combat
 
             for (int i = 0; i < directionButton.Length; i++)
             {
-                directionButton[i].gameObject.SetActive(false);
+                if (directionButton[i] != null)
+                    directionButton[i].gameObject.SetActive(false);
             }
 
             activeUnit.Direction = chosenDirection;

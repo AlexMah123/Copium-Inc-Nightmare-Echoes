@@ -725,7 +725,7 @@ namespace NightmareEchoes.Unit.AI
             yield return new WaitForSeconds(1f);
 
             StartCoroutine(PathfindingManager.Instance.MoveTowardsTile(thisUnit, redirectTile, 0.25f));
-            yield return new WaitUntil(() => Vector2.Distance(thisUnit.transform.position, redirectTile.transform.position) < 0.01f);
+            yield return new WaitUntil(() => Vector2.Distance(thisUnit.transform.position, redirectTile.transform.position) < 0.001f);
 
             AttackProcess(thisUnit, targetTileToAttack);
         }

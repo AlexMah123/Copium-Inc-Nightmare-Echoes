@@ -2841,7 +2841,8 @@ MonoBehaviour:
   maxCount: 0
   placableGameObject: {fileID: 0}
   description: "Move <color=#ff00ffff>1 tile</color> and attack the tile ahead, \ndealing
-    <color=red>5 Damage</color> to target\n\nCooldown: <color=yellow>1 Round</color>"
+    <color=red>5 Damage</color> to target and <color=red>1 Wound Stack </color> (Lose
+    1 hp per stack at the start of turn)\n\nCooldown: <color=yellow>1 Round</color>"
 --- !u!50 &5583804447610931213
 Rigidbody2D:
   serializedVersion: 4
