@@ -115,14 +115,6 @@ namespace NightmareEchoes.TurnOrder
                     trapDmg.Cast(controller.CurrentUnit);
                 }
             }
-            /*else if(controller.CurrentUnit == null || enemyAI == null)
-            {
-                if (!passTurnOnce)
-                {
-                    controller.StartCoroutine(controller.PassTurn());
-                    passTurnOnce = true;
-                }
-            }*/
         }
 
         protected override void OnExit()
