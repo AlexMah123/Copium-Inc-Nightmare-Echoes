@@ -144,7 +144,7 @@ namespace NightmareEchoes.TurnOrder
                 var aoeDmg = CombatManager.Instance.CheckAoe(controller.CurrentUnit);
                 if (aoeDmg)
                 {
-                    if (!aoeSkillsPassed.Contains(aoeDmg))
+                    if (aoeSkillsPassed.Contains(aoeDmg))
                         return;
                     if (aoeDmg.Cast(controller.CurrentUnit))
                         aoeSkillsPassed.Add(aoeDmg);
